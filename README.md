@@ -1,36 +1,200 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lloyd Dela Cruz - Portfolio Website
 
-## Getting Started
+A modern, responsive portfolio website showcasing expertise in Full-Stack Development, Data Science, and Healthcare Technology. Built with Next.js 15 and designed to highlight the unique intersection of engineering, healthcare, and technology skills.
 
-First, run the development server:
+## 🚀 Live Demo
 
+[View Live Portfolio](https://your-domain.com) <!-- Update with your actual domain -->
+
+## 📋 About This Project
+
+This portfolio website serves as a comprehensive showcase of my professional journey, combining:
+- **Industrial Engineering** background
+- **Healthcare Experience** as a Rehabilitation Assistant
+- **Data Science** Master's degree
+- **AWS Artificial Intelligence Practitioner ** certifications
+- **Full-Stack Development** expertise
+
+### Key Features
+
+- 🎨 Modern, responsive design following 2025 UI/UX standards
+- ⚡ Optimized performance with Next.js 15 App Router
+- 📱 Mobile-first responsive design
+- ♿ WCAG accessibility compliance
+- 🎯 SEO optimized for tech recruiters and healthcare organizations
+- 🔄 Smooth animations and micro-interactions
+- 📊 Interactive project showcases with live demos
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Fonts**: Geist (Vercel's optimized font family)
+- **Deployment**: Vercel Platform
+- **Performance**: Optimized for Core Web Vitals
+
+## 🏃‍♂️ Getting Started
+
+### Prerequisites
+
+- Node.js 18+ installed
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/portfolio-website.git
+cd portfolio-website
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+npm run dev:3005
+# or
+npm run dev:3005-local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3005](http://localhost:3005) in your browser
 
-## Learn More
+### Development Scripts
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Development server on port 3005
+npm run dev:3005
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Local development with specific configurations
+npm run dev:3005-local
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Build for production
+npm run build
 
-## Deploy on Vercel
+# Start production server
+npm run start
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Run linting
+npm run lint
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📁 Project Structure
+
+```
+├── app/
+│   ├── components/          # Reusable UI components
+│   ├── sections/           # Page sections (Hero, About, Projects, etc.)
+│   ├── globals.css         # Global styles
+│   ├── layout.tsx          # Root layout
+│   └── page.tsx           # Homepage
+├── public/
+│   ├── images/            # Static images and assets
+│   └── icons/             # Icon files
+├── lib/                   # Utility functions and configurations
+├── types/                 # TypeScript type definitions
+└── README.md
+```
+
+## 🎯 Target Audience
+
+This portfolio is designed for:
+- **Tech Recruiters** seeking full-stack developers with healthcare domain expertise
+- **Healthcare Technology Companies** looking for technical talent with industry knowledge  
+- **Consulting Firms** interested in data science and process optimization expertise
+- **Startup Founders** seeking technical co-founders or early employees
+
+## 🌟 Unique Value Proposition
+
+The portfolio emphasizes my unique positioning at the intersection of:
+- Healthcare domain knowledge from hands-on experience
+- Engineering problem-solving methodologies
+- Advanced data science and machine learning capabilities
+- Modern full-stack development skills
+- Cloud infrastructure expertise (AWS certified)
+
+## 📊 Performance Optimizations
+
+- **Image Optimization**: Next.js automatic image optimization with WebP
+- **Font Loading**: Optimized with `next/font` and Geist font family
+- **Code Splitting**: Automatic code splitting with App Router
+- **SEO**: Structured data and meta tags for better discoverability
+- **Core Web Vitals**: Optimized for excellent Lighthouse scores
+
+## 🔧 Customization
+
+The website is built with modularity in mind:
+
+1. **Content Updates**: Modify data in `/lib/data.ts`
+2. **Styling**: Customize Tailwind configuration in `tailwind.config.js`
+3. **Components**: Add or modify components in `/app/components/`
+4. **Sections**: Update portfolio sections in `/app/sections/`
+
+## 📱 Responsive Design
+
+Breakpoints optimized for:
+- **Mobile**: 320px - 767px
+- **Tablet**: 768px - 1023px  
+- **Desktop**: 1024px - 1439px
+- **Large Desktop**: 1440px+
+
+## ♿ Accessibility Features
+
+- Semantic HTML structure
+- Proper heading hierarchy
+- Alt text for all images
+- Keyboard navigation support
+- Screen reader optimization
+- High contrast color ratios
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Push code to GitHub repository
+2. Connect repository to Vercel
+3. Deploy automatically with each push to main branch
+
+### Other Platforms
+
+The project can be deployed on:
+- Netlify
+- AWS Amplify  
+- Railway
+- Render
+
+## 📈 Analytics & Monitoring
+
+- Google Analytics 4 integration
+- Performance monitoring with Vercel Analytics
+- Error tracking and monitoring
+
+## 🤝 Contributing
+
+While this is a personal portfolio, suggestions and improvements are welcome:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## 📧 Contact
+
+**Lloyd Dela Cruz**
+- Email: [your-email@domain.com]
+- LinkedIn: [linkedin.com/in/your-profile]
+- GitHub: [github.com/your-username]
+- Location: Vancouver, BC, Canada
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+**Built with ❤️ in Vancouver** | Bridging Healthcare and Technology through Code

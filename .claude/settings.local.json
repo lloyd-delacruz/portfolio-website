@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app:*)",
+      "Bash(mv:*)",
+      "Bash(true)",
+      "Bash(rmdir:*)",
+      "Bash(npm install:*)",
+      "Bash(npx shadcn@latest init:*)",
+      "Bash(mkdir:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(npm run dev:*)",
+      "Bash(pkill:*)",
+      "Bash(npm run build:*)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)",
+      "Bash(ls:*)",
+      "Bash(rm:*)",
+      "Bash(PORT=3000 npm run dev)",
+      "Bash(curl:*)",
+      "Bash(npx next dev:*)",
+      "Bash(cat:*)",
+      "Bash(PORT=3005 npm run dev)",
+      "Bash(node:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(npm run lint)",
+      "Bash(npx kill-port:*)",
+      "Bash(ping:*)",
+      "Bash(telnet:*)",
+      "Bash(nc:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(chmod:*)",
+      "Bash(npm run type-check:*)",
+      "Bash(grep:*)",
+      "Bash(cp:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}
