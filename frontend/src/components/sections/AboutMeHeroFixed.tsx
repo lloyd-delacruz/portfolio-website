@@ -35,26 +35,26 @@ export function AboutMeHeroFixed() {
                             </h2>
                             
                             <p className="text-xl text-blue-100 mb-6 leading-relaxed">
-                                My journey began in the structured world of Industrial Engineering, where I learned to optimize systems and solve complex problems. But I discovered my true passion lay at the intersection of healthcare and technology.
+                                A results-driven analytics professional with 20+ years of healthcare, project management, and operational optimization experience. Currently completing my MSc in Data Analytics (Eastern University, Dec 2025) while serving as a Rehabilitation Assistant at Vancouver Coastal Health, supporting multidisciplinary teams across Neurology, General Surgery, Orthopedics/Trauma, ICU, and Rehabilitation units.
                             </p>
                             
                             <p className="text-lg text-blue-200 mb-8 leading-relaxed">
-                                Today, I combine my engineering mindset with data science expertise and full-stack development skills to create innovative solutions that bridge the gap between healthcare professionals and cutting-edge technology.
+                                AWS AI Practitioner certified with expertise in SQL, Python, R, and Tableau. I excel at designing performance measurement frameworks, streamlining workflows, and delivering actionable insights through data visualization. Previously led large-scale projects at IEQ Global Singapore, implementing Lean Six Sigma methodologies that reduced project timelines by 15% and costs by 20%.
                             </p>
                             
                             {/* Key Stats */}
                             <div className="grid grid-cols-3 gap-6">
                                 <div className="text-center">
-                                    <div className="text-3xl font-bold text-cyan-300">5+</div>
+                                    <div className="text-3xl font-bold text-cyan-300">20+</div>
                                     <div className="text-sm text-blue-300">Years Experience</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-3xl font-bold text-cyan-300">20+</div>
-                                    <div className="text-sm text-blue-300">Projects Completed</div>
+                                    <div className="text-3xl font-bold text-cyan-300">200+</div>
+                                    <div className="text-sm text-blue-300">Patient Plans Annually</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-3xl font-bold text-cyan-300">100%</div>
-                                    <div className="text-sm text-blue-300">Healthcare Focused</div>
+                                    <div className="text-3xl font-bold text-cyan-300">3</div>
+                                    <div className="text-sm text-blue-300">VCH Hospital Sites</div>
                                 </div>
                             </div>
                         </div>
@@ -117,26 +117,26 @@ export function AboutMeHeroFixed() {
                         </h2>
                         
                         <p className="text-xl text-blue-100 mb-6 leading-relaxed">
-                            My journey began in the structured world of Industrial Engineering, where I learned to optimize systems and solve complex problems. But I discovered my true passion lay at the intersection of healthcare and technology.
+                            A results-driven analytics professional with 20+ years of healthcare, project management, and operational optimization experience. Currently completing my MSc in Data Analytics (Eastern University, Dec 2025) while serving as a Rehabilitation Assistant at Vancouver Coastal Health, supporting multidisciplinary teams across Neurology, General Surgery, Orthopedics/Trauma, ICU, and Rehabilitation units.
                         </p>
                         
                         <p className="text-lg text-blue-200 mb-8 leading-relaxed">
-                            Today, I combine my engineering mindset with data science expertise and full-stack development skills to create innovative solutions that bridge the gap between healthcare professionals and cutting-edge technology.
+                            AWS AI Practitioner certified with expertise in SQL, Python, R, and Tableau. I excel at designing performance measurement frameworks, streamlining workflows, and delivering actionable insights through data visualization. Previously led large-scale projects at IEQ Global Singapore, implementing Lean Six Sigma methodologies that reduced project timelines by 15% and costs by 20%.
                         </p>
                         
                         {/* Key Stats */}
                         <div className="grid grid-cols-3 gap-6">
                             <div className="text-center">
-                                <div className="text-3xl font-bold text-cyan-300">5+</div>
+                                <div className="text-3xl font-bold text-cyan-300">20+</div>
                                 <div className="text-sm text-blue-300">Years Experience</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-3xl font-bold text-cyan-300">20+</div>
-                                <div className="text-sm text-blue-300">Projects Completed</div>
+                                <div className="text-3xl font-bold text-cyan-300">200+</div>
+                                <div className="text-sm text-blue-300">Patient Plans Annually</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-3xl font-bold text-cyan-300">100%</div>
-                                <div className="text-sm text-blue-300">Healthcare Focused</div>
+                                <div className="text-3xl font-bold text-cyan-300">3</div>
+                                <div className="text-sm text-blue-300">VCH Hospital Sites</div>
                             </div>
                         </div>
                     </motion.div>

@@ -27,9 +27,6 @@ npm run start
 npm run lint
 npm run type-check
 
-# Backend commands
-npm run backend:dev
-npm run backend:start
 ```
 
 ### Frontend Commands (run from frontend/)
@@ -42,13 +39,6 @@ npm run lint     # ESLint
 npm run type-check # TypeScript check
 ```
 
-### Backend Commands (run from backend/)
-```bash
-cd backend
-npm run dev      # Node.js with --watch
-npm run start    # Production server
-npm run lint     # ESLint
-```
 
 ## Architecture & Structure
 
@@ -61,11 +51,6 @@ npm run lint     # ESLint
 - **Icons**: Lucide React
 - **Fonts**: Inter from Google Fonts
 
-**Backend:**
-- **Runtime**: Node.js with Express.js
-- **Language**: JavaScript (with TypeScript support)
-- **CORS**: Enabled for frontend communication
-- **Environment**: dotenv for configuration
 
 ### Project Structure
 ```
@@ -84,21 +69,14 @@ portfolio-website/
 │   │   │   └── utils.ts       # Utility functions (cn, animations)
 │   │   └── types/
 │   │       └── index.ts       # TypeScript type definitions
-│   ├── config/               # Configuration files
-│   │   ├── tailwind.config.js
-│   │   ├── postcss.config.js
-│   │   ├── components.json
-│   │   └── .eslintrc.json
+│   ├── components.json         # shadcn/ui components config
+│   ├── eslint.config.mjs       # ESLint configuration
+│   ├── postcss.config.js       # PostCSS configuration  
+│   ├── tailwind.config.js      # Tailwind CSS configuration
 │   ├── public/               # Static assets
 │   ├── package.json
 │   ├── tsconfig.json
 │   └── next.config.js
-├── backend/                  # Express.js backend server
-│   ├── src/
-│   │   └── server.js         # Main server file
-│   ├── config/               # Backend configuration files
-│   ├── package.json
-│   └── .env.example
 ├── package.json              # Workspace root package.json
 ├── CLAUDE.md
 ├── PRD.md
@@ -123,26 +101,23 @@ portfolio-website/
 - **Development Port**: Forced to 3001 via environment variables
 - **Path Aliases**: `@/*` maps to `src/*` with specific component and lib aliases
 - **Images**: Unoptimized for static export compatibility
-- **Config Location**: All configuration files moved to `frontend/config/`
-
-**Backend:**
-- **Development Port**: 3002 (configurable via .env)
-- **CORS**: Enabled for frontend communication
-- **Watch Mode**: Uses Node.js `--watch` flag for development
-- **Environment**: Uses dotenv for configuration management
+- **Config Files**: Located in frontend root (tailwind.config.js, postcss.config.js, etc.)
 
 **Workspace:**
-- **Monorepo**: npm workspaces for frontend/backend coordination
-- **Scripts**: Root package.json provides convenient workspace commands
+- **Structure**: npm workspaces for project organization
+- **Scripts**: Root package.json provides convenient frontend commands
+- **Note**: README.md mentions port 3005 but actual config uses port 3001
 
 ## Key Features
 
 ### Current Implementation
 - ✅ Responsive hero section with animated background elements
-- ✅ Professional portfolio sections (About, Experience, Projects, Contact)
+- ✅ Professional portfolio sections (Hero, About, Experience, Projects, Skills, Education)
 - ✅ Smooth scroll navigation with section anchors
 - ✅ Framer Motion animations throughout
 - ✅ Mobile-responsive design
+- ✅ Journey timeline and core values sections
+- ✅ Contact and call-to-action sections
 
 ### Planned Enhancements (from PRD.md)
 - Contact form with validation

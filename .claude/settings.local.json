@@ -34,7 +34,11 @@
       "Bash(grep:*)",
       "Bash(cp:*)",
       "Bash(npm uninstall:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(npm update:*)",
+      "Bash(find:*)",
+      "Bash(cd:*)",
+      "Bash(git reset:*)"
     ],
     "deny": []
   }

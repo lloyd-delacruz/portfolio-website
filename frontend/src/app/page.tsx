@@ -3,6 +3,7 @@
 import Navigation from '@/components/layout/Navigation'
 import { AboutSection } from '@/components/sections/AboutSection'
 import { ExperienceSection } from '@/components/sections/ExperienceSection'
+import EducationSection from '@/components/sections/EducationSection'
 import { ProjectsSection } from '@/components/sections/ProjectsSection'
 import { motion } from 'framer-motion'
 import { MapPin, Eye, Mail, Download } from 'lucide-react'
@@ -49,7 +50,7 @@ export default function Home() {
               className="mb-8"
             >
               <span className="px-4 py-2 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-full text-sm">
-                Available for new opportunities
+                MSc Data Analytics | AWS AI Practitioner | VCH Healthcare
               </span>
             </motion.div>
 
@@ -70,7 +71,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 1.2, ease: "easeOut" }}
               className="text-2xl md:text-4xl lg:text-5xl font-light text-blue-200 mb-8"
             >
-              Code Architect
+              Data Analytics Professional
             </motion.h2>
 
             {/* Description */}
@@ -80,8 +81,8 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 1.5, ease: "easeOut" }}
               className="text-lg md:text-xl text-white/70 mb-6 max-w-2xl mx-auto"
             >
-              Industrial Engineer turned Data Scientist, bridging healthcare and technology 
-              through innovative full-stack solutions.
+              Results-driven analytics professional with BSc Industrial Engineering and 20+ years healthcare experience. 
+              AWS AI Practitioner specializing in data analytics, Lean Six Sigma, and operational optimization.
             </motion.p>
             
             {/* Location */}
@@ -143,6 +144,11 @@ export default function Home() {
         <ExperienceSection />
       </section>
 
+      {/* Education Section */}
+      <section id="education">
+        <EducationSection />
+      </section>
+
       {/* Projects Section */}
       <section id="projects">
         <ProjectsSection />
@@ -167,7 +173,7 @@ export default function Home() {
               transition={{ delay: 0.2 }}
               className="text-xl text-white/70 mb-12"
             >
-              Ready to transform your healthcare data into actionable insights? Let&apos;s discuss your next project.
+              Ready to optimize your healthcare operations through data analytics and AI implementation? Let&apos;s collaborate on driving evidence-based improvements.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -200,8 +206,8 @@ export default function Home() {
               transition={{ delay: 0.6 }}
               className="mt-16 pt-8 border-t border-white/20"
             >
-              <p className="text-white/60 mb-4">Vancouver, BC • Available for remote work</p>
-              <p className="text-white/60">lloyd.delacruz@email.com</p>
+              <p className="text-white/60 mb-4">Vancouver, BC • VCH Healthcare • Remote Available</p>
+              <p className="text-white/60">lloyd.delacruz@vch.ca • 604-358-7378</p>
             </motion.div>
           </div>
         </div>

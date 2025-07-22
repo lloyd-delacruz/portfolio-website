@@ -38,7 +38,7 @@ export function JourneyTimeline() {
                         My Professional Journey
                     </h2>
                     <p className="text-xl md:text-2xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
-                        From optimizing manufacturing processes to architecting healthcare solutions
+                        From Industrial Engineering to Healthcare Analytics - A 20+ year evolution
                     </p>
                 </motion.div>
 
@@ -58,7 +58,7 @@ export function JourneyTimeline() {
                     {/* Timeline Items with Enhanced Animations */}
                     <div className="space-y-16">
                         
-                        {/* Industrial Engineering Era */}
+                        {/* Industrial Engineering Foundation */}
                         <motion.div
                             initial={{ opacity: 0, x: -100, scale: 0.8 }}
                             whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -83,20 +83,20 @@ export function JourneyTimeline() {
                                         <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                             <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                                         </svg>
-                                        2018-2020
+                                        2007-2012
                                     </motion.div>
 
                                     <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 group-hover:text-cyan-200 transition-colors">
-                                        Industrial Engineering Foundation
+                                        Industrial Engineering & Early Career
                                     </h3>
                                     <p className="text-blue-200 leading-relaxed text-lg">
-                                        Built strong analytical and problem-solving skills optimizing manufacturing processes 
-                                        and improving operational efficiency. Developed systematic thinking and process optimization expertise.
+                                        BSc Industrial Engineering foundation followed by project management roles in Singapore. 
+                                        Led sustainable energy projects, implemented Lean Six Sigma methodologies, reducing timelines by 15% and costs by 20%.
                                     </p>
 
                                     {/* Skills Tags */}
                                     <div className="flex flex-wrap gap-2 mt-6">
-                                        {['Process Optimization', 'Data Analysis', 'Systems Thinking'].map((skill) => (
+                                        {['Project Management', 'Lean Six Sigma', 'Process Optimization', 'Contract Management'].map((skill) => (
                                             <motion.span
                                                 key={skill}
                                                 whileHover={{ scale: 1.1 }}
@@ -122,7 +122,7 @@ export function JourneyTimeline() {
                             <div className="w-5/12"></div>
                         </motion.div>
 
-                        {/* Healthcare Technology Discovery */}
+                        {/* Healthcare Transition & Education */}
                         <motion.div
                             initial={{ opacity: 0, x: 100, scale: 0.8 }}
                             whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -160,20 +160,20 @@ export function JourneyTimeline() {
                                         <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
-                                        2020-2021
+                                        2013-2016
                                     </motion.div>
 
                                     <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 group-hover:text-purple-200 transition-colors">
-                                        Healthcare Technology Discovery
+                                        Healthcare Transition & Education
                                     </h3>
                                     <p className="text-blue-200 leading-relaxed text-lg">
-                                        Discovered passion for healthcare technology while working on patient data optimization 
-                                        projects and medical device efficiency improvements. First exposure to healthcare challenges.
+                                        Pivotal transition into healthcare through Sustainability Management and Occupational/Physical Therapy Assistant education.
+                                        Gained direct patient care experience and healthcare system insights.
                                     </p>
 
                                     {/* Skills Tags */}
                                     <div className="flex flex-wrap gap-2 mt-6">
-                                        {['Healthcare Systems', 'Data Optimization', 'Medical Devices'].map((skill) => (
+                                        {['Healthcare Systems', 'Patient Care', 'Rehabilitation', 'Sustainability'].map((skill) => (
                                             <motion.span
                                                 key={skill}
                                                 whileHover={{ scale: 1.1 }}
@@ -187,7 +187,7 @@ export function JourneyTimeline() {
                             </div>
                         </motion.div>
 
-                        {/* Data Science Transformation */}
+                        {/* Healthcare Practice & Data Discovery */}
                         <motion.div
                             initial={{ opacity: 0, x: -100, scale: 0.8 }}
                             whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -213,20 +213,20 @@ export function JourneyTimeline() {
                                             <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
                                             <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
                                         </svg>
-                                        2021-2023
+                                        2016-2022
                                     </motion.div>
 
                                     <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 group-hover:text-green-200 transition-colors">
-                                        Data Science Transformation
+                                        Healthcare Practice & Data Discovery
                                     </h3>
                                     <p className="text-blue-200 leading-relaxed text-lg">
-                                        Evolved into data science, mastering machine learning, statistical analysis, 
-                                        and predictive modeling for healthcare applications. Deep dive into Python and ML frameworks.
+                                        8 years at Vancouver Coastal Health as Rehabilitation Assistant, supporting 200+ patient plans annually.
+                                        Identified data-driven opportunities, including wheelchair inventory optimization with Cerner integration.
                                     </p>
 
                                     {/* Skills Tags */}
                                     <div className="flex flex-wrap gap-2 mt-6">
-                                        {['Machine Learning', 'Python', 'Statistical Analysis', 'Predictive Modeling'].map((skill) => (
+                                        {['Patient Care', 'Healthcare Systems', 'Process Improvement', 'Multidisciplinary Collaboration'].map((skill) => (
                                             <motion.span
                                                 key={skill}
                                                 whileHover={{ scale: 1.1 }}
@@ -252,7 +252,7 @@ export function JourneyTimeline() {
                             <div className="w-5/12"></div>
                         </motion.div>
 
-                        {/* Full-Stack Code Architect */}
+                        {/* Data Analytics Mastery */}
                         <motion.div
                             initial={{ opacity: 0, x: 100, scale: 0.8 }}
                             whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -304,20 +304,20 @@ export function JourneyTimeline() {
                                         className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-400/20 to-red-400/20 rounded-full text-orange-200 text-sm font-medium mb-4 relative z-10"
                                     >
                                         <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
-                                        2023-Present
+                                        2022-Present
                                     </motion.div>
 
                                     <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-200 to-yellow-200 bg-clip-text text-transparent mb-4 relative z-10">
-                                        Full-Stack Code Architect
+                                        Data Analytics & AI Transformation
                                     </h3>
                                     <p className="text-blue-100 leading-relaxed text-lg relative z-10">
-                                        Now building end-to-end healthcare technology solutions, combining data science 
-                                        insights with robust full-stack applications. Creating innovative solutions that bridge healthcare and technology.
+                                        Mastering data analytics through multiple certifications and AWS AI Practitioner credential.
+                                        Currently pursuing Master's in Data Analytics while building full-stack healthcare solutions.
                                     </p>
 
                                     {/* Enhanced Skills Tags for Current Role */}
                                     <div className="flex flex-wrap gap-2 mt-6 relative z-10">
-                                        {['React/TypeScript', 'Node.js', 'Healthcare APIs', 'Cloud Architecture', 'AI/ML Integration'].map((skill) => (
+                                        {['Python', 'SQL', 'Tableau', 'AWS AI', 'Data Engineering', 'Prompt Engineering'].map((skill) => (
                                             <motion.span
                                                 key={skill}
                                                 whileHover={{ scale: 1.1, backgroundColor: "rgba(251, 191, 36, 0.4)" }}

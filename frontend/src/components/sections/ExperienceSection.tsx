@@ -6,53 +6,53 @@ import { Calendar, MapPin, ChevronRight } from "lucide-react";
 const experiences = [
   {
     id: 1,
-    title: "Senior Data Scientist",
-    company: "HealthTech Innovations",
+    title: "Rehabilitation Assistant",
+    company: "Vancouver Coastal Health",
     location: "Vancouver, BC",
-    period: "2022 - Present",
+    period: "2016 - Present",
     type: "Full-time",
-    description: "Leading data science initiatives to improve patient care through predictive analytics and machine learning models. Developed solutions that reduced hospital readmission rates by 15% and improved diagnostic accuracy.",
+    description: "Deliver physiotherapy and occupational therapy interventions across various healthcare sites, including Vancouver General Hospital, Richmond Hospital, and Lions Gate Hospital. Collaborate with multidisciplinary teams supporting over 200+ patient plans annually.",
     achievements: [
-      "Built predictive models reducing readmission rates by 15%",
-      "Led a team of 4 data scientists on healthcare AI projects",
-      "Implemented real-time patient monitoring systems",
-      "Published 3 research papers on healthcare analytics"
+      "Support 200+ patient plans annually across multiple healthcare sites",
+      "Collaborate with multidisciplinary teams in Neurology, General Surgery, Orthopedics/Trauma, ICU, and Rehabilitation",
+      "Spearheaded wheelchair inventory optimization project with Cerner integration",
+      "Maintain compassionate patient care with high service standards"
     ],
-    technologies: ["Python", "TensorFlow", "Apache Spark", "PostgreSQL", "Docker", "Kubernetes"],
+    technologies: ["Cerner", "Healthcare Systems", "Patient Care", "Data Analysis", "Process Optimization", "Inventory Management"],
     color: "blue"
   },
   {
     id: 2,
-    title: "Full-Stack Developer",
-    company: "MedSystems Canada",
-    location: "Vancouver, BC", 
-    period: "2020 - 2022",
+    title: "Project Engineer (Project Management)",
+    company: "IEQ GLOBAL PTE LTD",
+    location: "Singapore", 
+    period: "2010 - 2012",
     type: "Full-time",
-    description: "Built and maintained healthcare management systems serving over 10,000 patients. Implemented real-time monitoring dashboards and automated reporting systems with HIPAA compliance.",
+    description: "Directed large-scale sustainable and energy-efficient projects involving contract management, system analysis, workflow design, and cross-functional coordination with architects, engineers, contractors, and government agencies.",
     achievements: [
-      "Developed patient management system for 10,000+ users",
-      "Reduced system downtime by 40% through optimization",
-      "Implemented automated HIPAA-compliant reporting",
-      "Led migration to cloud infrastructure"
+      "Achieved 35% increase in successful bids through comprehensive tender documents",
+      "Implemented Lean Six Sigma methodologies reducing project timelines by 15%",
+      "Reduced project costs by 20% through process optimization",
+      "Improved compliance rates by 10% through effective stakeholder communication"
     ],
-    technologies: ["React", "Node.js", "Express", "MongoDB", "AWS", "Redis"],
+    technologies: ["Lean Six Sigma", "Project Management", "Financial Analysis", "Database Systems", "Risk Assessment", "Contract Management"],
     color: "purple"
   },
   {
     id: 3,
-    title: "Industrial Engineer",
-    company: "Manufacturing Solutions Inc.",
-    location: "Toronto, ON",
-    period: "2018 - 2020", 
+    title: "Pharmaceutical Sales Representative",
+    company: "United Laboratories",
+    location: "Philippines",
+    period: "2008 - 2010", 
     type: "Full-time",
-    description: "Optimized manufacturing processes and implemented lean methodologies. Reduced production costs by 20% while improving quality metrics across multiple product lines.",
+    description: "Successfully reached and exceeded sales quota targets, achieving up to $1 million in total sales. Developed new market segments among ENT specialists and expanded territory coverage through strategic data analysis.",
     achievements: [
-      "Reduced production costs by 20% through process optimization",
-      "Implemented lean manufacturing across 3 facilities",
-      "Improved product quality metrics by 25%",
-      "Led cross-functional teams of 15+ engineers"
+      "Achieved $1M in total sales with 20% increase in overall performance",
+      "Developed ENT specialist market segment with 30% increase in product adoption",
+      "Expanded territory coverage resulting in 25% growth in territory sales",
+      "Exceeded sales targets by 15% through strategic data analysis"
     ],
-    technologies: ["Python", "MATLAB", "Six Sigma", "Lean Manufacturing", "AutoCAD", "SQL"],
+    technologies: ["Sales Analytics", "Market Analysis", "CRM Systems", "Data Analysis", "Territory Management", "Client Relationship Management"],
     color: "cyan"
   }
 ];

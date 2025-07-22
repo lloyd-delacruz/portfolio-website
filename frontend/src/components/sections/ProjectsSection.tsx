@@ -1,33 +1,39 @@
 "use client";
 
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Github, ArrowRight, Activity, MapPin, Database } from "lucide-react";
+import { ExternalLink, Github, ArrowRight, Activity, MapPin, Database, Heart, Eye, ChevronDown, ChevronUp, TrendingUp } from "lucide-react";
+import { HealthcareAnalyticsDashboard } from "../dashboards/HealthcareAnalyticsDashboard";
+import { OperationalOptimizationDashboard } from "../dashboards/OperationalOptimizationDashboard";
+import { InventoryManagementDashboard } from "../dashboards/InventoryManagementDashboard";
+import { SalesPerformanceDashboard } from "../dashboards/SalesPerformanceDashboard";
+import { HeartDiseasePredictionDashboard } from "../dashboards/HeartDiseasePredictionDashboard";
 
 const projects = [
   {
     id: 1,
-    title: "Healthcare Analytics Dashboard",
-    subtitle: "Real-time Patient Monitoring & Predictive Analytics",
-    description: "Comprehensive healthcare analytics platform that processes real-time patient data to provide predictive insights, reduce readmission rates, and improve patient outcomes through advanced machine learning algorithms.",
-    longDescription: "Built for a major healthcare network serving 50,000+ patients, this platform integrates with existing EHR systems to provide real-time monitoring and predictive analytics. The system has successfully reduced patient readmission rates by 15% and improved early warning detection by 30%.",
+    title: "Wheelchair Inventory Optimization System",
+    subtitle: "Cerner Integration & Data-Driven Healthcare Management",
+    description: "Proposed integration system for wheelchair inventory management at Vancouver General Hospital, designed to integrate with Cerner EHR for data-driven decision-making and streamlined maintenance processes.",
+    longDescription: "Spearheaded project proposal for Vancouver Coastal Health to optimize wheelchair inventory across multiple sites (VGH, Richmond Hospital, Lions Gate Hospital). The proposed system integrates with existing Cerner infrastructure to enable real-time tracking, automated maintenance scheduling, and data analytics for improved patient care delivery.",
     image: "/api/placeholder/600/400",
-    category: "Healthcare Analytics",
-    status: "Live in Production",
+    category: "Healthcare Operations",
+    status: "Project Proposal - VCH",
     impact: {
-      patients: "50,000+",
-      reduction: "15%",
-      detection: "30%"
+      hospitals: "3 Sites",
+      patients: "200+",
+      efficiency: "Proposed"
     },
     technologies: [
-      "Python", "TensorFlow", "React", "Node.js", 
-      "PostgreSQL", "Apache Kafka", "Docker", "AWS"
+      "SQL", "Python", "Tableau", "Cerner Integration", 
+      "Excel", "Data Analysis", "Process Optimization"
     ],
     features: [
-      "Real-time patient monitoring",
-      "Predictive readmission models", 
-      "Automated alert systems",
-      "Interactive data visualizations",
-      "HIPAA-compliant architecture"
+      "Cerner EHR integration proposal",
+      "Inventory tracking optimization", 
+      "Maintenance scheduling automation",
+      "Data-driven decision making",
+      "Multi-site coordination system"
     ],
     links: {
       demo: "#",
@@ -39,28 +45,28 @@ const projects = [
   },
   {
     id: 2,
-    title: "Wheelchair Tracking System", 
-    subtitle: "IoT-Based Medical Equipment Management",
-    description: "Smart IoT solution for tracking and managing medical equipment in healthcare facilities. Features real-time location tracking, maintenance scheduling, and utilization analytics to optimize equipment usage.",
-    longDescription: "Deployed across 3 major hospitals, this system tracks over 500 pieces of medical equipment in real-time. The solution has reduced equipment search time by 60% and improved maintenance compliance by 40%, resulting in significant cost savings.",
+    title: "Project Management Analytics Dashboard", 
+    subtitle: "Lean Six Sigma & Performance Optimization",
+    description: "Comprehensive project analytics solution implementing Lean Six Sigma methodologies for large-scale construction and engineering projects, achieving 15% timeline reduction and 20% cost savings.",
+    longDescription: "Developed for IEQ Global PTE LTD, this analytics platform transformed project management processes through data-driven insights. Implemented advanced financial planning models and variance analysis, resulting in 35% increase in successful bids and improved stakeholder communication across government agencies and contractors.",
     image: "/api/placeholder/600/400",
-    category: "IoT & Hardware",
-    status: "Deployed at 3 Hospitals",
+    category: "Project Management",
+    status: "Successfully Implemented",
     impact: {
-      equipment: "500+",
-      time_saved: "60%",
-      compliance: "40%"
+      savings: "20%",
+      timeline: "15%↓", 
+      bids: "35%↑"
     },
     technologies: [
-      "Node.js", "MongoDB", "React Native", "Arduino", 
-      "LoRaWAN", "GPS", "AWS IoT", "Express.js"
+      "Excel Advanced", "SQL", "Lean Six Sigma", "Financial Modeling", 
+      "Risk Assessment", "Tableau", "Process Analytics"
     ],
     features: [
-      "Real-time GPS tracking",
-      "Automated maintenance alerts",
-      "Usage analytics dashboard",
-      "Mobile app for staff",
-      "Integration with facility systems"
+      "Advanced financial planning & analysis",
+      "Variance reporting & insights",
+      "Lean Six Sigma implementation",
+      "Cross-functional coordination tools",
+      "Risk assessment frameworks"
     ],
     links: {
       demo: "#",
@@ -72,28 +78,28 @@ const projects = [
   },
   {
     id: 3,
-    title: "Medical Data Pipeline",
-    subtitle: "HIPAA-Compliant ETL & Analytics Infrastructure", 
-    description: "Scalable data pipeline processing millions of medical records with automated ETL processes, data validation, and real-time analytics. Built with enterprise-grade security and HIPAA compliance.",
-    longDescription: "This enterprise data pipeline processes over 2 million medical records daily across multiple healthcare systems. The automated ETL processes ensure data quality and compliance while providing real-time analytics capabilities for clinical decision support.",
+    title: "Healthcare Data Analytics Platform",
+    subtitle: "Multi-Unit Patient Care Analytics & Insights", 
+    description: "Data analytics framework supporting multidisciplinary healthcare teams across Neurology, Surgery, Orthopedics/Trauma, ICU, and Rehabilitation units, analyzing 200+ patient care plans annually.",
+    longDescription: "Leveraging 8+ years of healthcare experience at Vancouver Coastal Health, this analytics platform integrates patient care data across multiple specialized units. Combines clinical expertise with advanced data analysis skills (Python, R, SQL, Tableau) to deliver actionable insights for improved patient outcomes and operational efficiency.",
     image: "/api/placeholder/600/400",
-    category: "Data Engineering",
-    status: "Processing 2M+ Records Daily",
+    category: "Healthcare Analytics",
+    status: "Current Development",
     impact: {
-      records: "2M+",
-      systems: "15+",
-      uptime: "99.9%"
+      units: "5+ Depts",
+      plans: "200+",
+      experience: "8 Years"
     },
     technologies: [
-      "Apache Kafka", "Apache Spark", "PostgreSQL", "Redis",
-      "Docker", "Kubernetes", "Python", "FastAPI"
+      "Python", "R", "SQL", "Tableau", "AWS AI Practitioner",
+      "Advanced Excel", "Statistical Analysis", "Healthcare Systems"
     ],
     features: [
-      "Real-time data processing",
-      "Automated data validation",
-      "HIPAA compliance monitoring", 
-      "Scalable microservices architecture",
-      "Advanced error handling & recovery"
+      "Multi-unit patient data integration",
+      "Clinical outcome analytics",
+      "Operational efficiency metrics", 
+      "Multidisciplinary team insights",
+      "Evidence-based care optimization"
     ],
     links: {
       demo: "#",
@@ -102,6 +108,183 @@ const projects = [
     },
     color: "cyan",
     icon: Database
+  },
+  {
+    id: 4,
+    title: "Heart Disease Prediction Dashboard",
+    subtitle: "Machine Learning & Interactive Analytics Platform",
+    description: "Comprehensive heart disease prediction system using Kaggle's Heart Disease UCI dataset. Features ML model comparison, interactive Tableau dashboard, and clinical decision support tools with 87.7% Random Forest accuracy.",
+    longDescription: "Built using the renowned Heart Disease UCI dataset from Kaggle (303 patients, 14 clinical attributes including age, chest pain type, cholesterol, and exercise-induced angina). This end-to-end ML project demonstrates the complete data science pipeline from EDA to deployment, combining statistical analysis, feature engineering, and multiple algorithm comparison with clinical interpretability for healthcare decision support.",
+    image: "/api/placeholder/600/400",
+    category: "Healthcare ML & Analytics",
+    status: "Live Demo Available",
+    impact: {
+      accuracy: "87.7%",
+      precision: "89.1%",
+      recall: "84.6%"
+    },
+    technologies: [
+      "Python", "Scikit-learn", "Pandas", "NumPy", "Tableau", 
+      "Jupyter", "Seaborn", "Matplotlib", "SHAP", "Statistical Analysis"
+    ],
+    features: [
+      "Complete ML pipeline: EDA → Feature Engineering → Model Training → Validation",
+      "5 Algorithm comparison: Random Forest (87.7%), Logistic Regression, SVM, Decision Tree, KNN",
+      "Interactive Tableau dashboard with 8+ clinical visualizations",
+      "Feature importance analysis using SHAP values and permutation importance",
+      "Comprehensive model evaluation: Confusion Matrix, ROC-AUC (0.93), Precision-Recall curves",
+      "Statistical significance testing and correlation analysis of clinical features",
+      "Cross-validation with hyperparameter tuning using GridSearchCV",
+      "Clinical decision support with probability thresholds and risk categorization"
+    ],
+    methodology: {
+      dataset: "Kaggle Heart Disease UCI Dataset (303 patients, 14 clinical features)",
+      preprocessing: "Missing value analysis, outlier detection, feature scaling with StandardScaler",
+      algorithms: ["Random Forest", "Logistic Regression", "SVM (RBF)", "Decision Tree", "K-Nearest Neighbors"],
+      validation: "5-fold Cross-validation with stratified sampling",
+      metrics: "Accuracy, Precision, Recall, F1-Score, ROC-AUC, Confusion Matrix"
+    },
+    codeExamples: {
+      dataPreprocessing: `# Data preprocessing and feature engineering
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+
+# Load and explore dataset
+df = pd.read_csv('heart_disease_uci.csv')
+print(f"Dataset shape: {df.shape}")
+print(df.info())
+
+# Feature engineering
+df['age_group'] = pd.cut(df['age'], bins=[0, 40, 55, 70, 100], labels=['<40', '40-55', '55-70', '70+'])
+df['high_cholesterol'] = (df['chol'] > 240).astype(int)
+
+# Handle categorical variables
+df = pd.get_dummies(df, columns=['chest_pain_type', 'rest_ecg'], drop_first=True)
+
+# Scale numerical features
+scaler = StandardScaler()
+numerical_cols = ['age', 'resting_bp', 'chol', 'max_heart_rate']
+df[numerical_cols] = scaler.fit_transform(df[numerical_cols])`,
+      
+      modelTraining: `# Model training and comparison
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.metrics import classification_report, roc_auc_score
+
+# Split data
+X = df.drop('target', axis=1)
+y = df['target']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+# Random Forest with hyperparameter tuning
+rf_params = {
+    'n_estimators': [100, 200, 300],
+    'max_depth': [3, 5, 7, None],
+    'min_samples_split': [2, 5, 10]
+}
+rf_grid = GridSearchCV(RandomForestClassifier(random_state=42), rf_params, cv=5, scoring='accuracy')
+rf_grid.fit(X_train, y_train)
+
+# Best model evaluation
+best_rf = rf_grid.best_estimator_
+y_pred = best_rf.predict(X_test)
+accuracy = best_rf.score(X_test, y_test)
+roc_auc = roc_auc_score(y_test, best_rf.predict_proba(X_test)[:, 1])
+
+print(f"Random Forest Accuracy: {accuracy:.3f}")
+print(f"ROC-AUC Score: {roc_auc:.3f}")
+print(f"Best parameters: {rf_grid.best_params_}")`,
+      
+      visualization: `# Comprehensive visualizations and feature importance
+import matplotlib.pyplot as plt
+import seaborn as sns
+import shap
+
+# Feature importance analysis
+feature_importance = best_rf.feature_importances_
+feature_names = X.columns
+importance_df = pd.DataFrame({
+    'feature': feature_names,
+    'importance': feature_importance
+}).sort_values('importance', ascending=False)
+
+plt.figure(figsize=(10, 8))
+sns.barplot(data=importance_df.head(10), x='importance', y='feature')
+plt.title('Top 10 Feature Importance - Random Forest')
+plt.xlabel('Importance Score')
+plt.tight_layout()
+plt.show()
+
+# SHAP explanations
+explainer = shap.TreeExplainer(best_rf)
+shap_values = explainer.shap_values(X_test)
+shap.summary_plot(shap_values[1], X_test, max_display=10)
+
+# Correlation heatmap
+plt.figure(figsize=(12, 10))
+correlation_matrix = df.select_dtypes(include=[np.number]).corr()
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0)
+plt.title('Feature Correlation Matrix')
+plt.tight_layout()
+plt.show()`
+    },
+    dashboard: {
+      description: "Interactive Tableau dashboard with 8 comprehensive visualizations",
+      visualizations: [
+        "Age distribution by heart disease status with statistical significance",
+        "Chest pain types correlation with heart disease probability",
+        "Cholesterol levels vs. Maximum heart rate scatter plot with trend analysis",
+        "Exercise-induced angina impact on heart disease prediction",
+        "Model performance comparison across 5 algorithms with ROC curves",
+        "Feature importance ranking with SHAP value explanations",
+        "Confusion matrix heatmap with precision/recall breakdown",
+        "Risk categorization dashboard for clinical decision support"
+      ]
+    },
+    links: {
+      demo: "https://public.tableau.com/views/HeartDiseasePrediction/Dashboard",
+      github: "https://github.com/lloyddelacruz/heart-disease-prediction",
+      case_study: "#heart-disease-case-study"
+    },
+    color: "red",
+    icon: Heart
+  },
+  {
+    id: 5,
+    title: "Pharmaceutical Sales Analytics",
+    subtitle: "Territory & Performance Optimization Platform",
+    description: "Comprehensive sales performance analytics system that achieved $1M+ in total sales and 20% quota exceeding through strategic data analysis of market trends, customer needs, and territory expansion.",
+    longDescription: "Developed during pharmaceutical sales role at United Laboratories, this analytics platform transformed sales performance through data-driven insights. Successfully expanded ENT specialist segment by 30%, increased territory coverage by 25%, and achieved 15% target exceeding through strategic market analysis and customer relationship optimization.",
+    image: "/api/placeholder/600/400",
+    category: "Sales Analytics",
+    status: "Successfully Implemented",
+    impact: {
+      sales: "$1M+",
+      growth: "20%↑", 
+      territory: "25%"
+    },
+    technologies: [
+      "Excel Advanced", "CRM Analytics", "Market Analysis", "Territory Mapping", 
+      "Customer Segmentation", "Performance Metrics", "Sales Forecasting"
+    ],
+    features: [
+      "Territory performance optimization",
+      "Customer segmentation analysis", 
+      "Market trend identification",
+      "Sales quota tracking & forecasting",
+      "Product line performance analytics"
+    ],
+    links: {
+      demo: "#",
+      github: "#", 
+      case_study: "#"
+    },
+    color: "green",
+    icon: TrendingUp
   }
 ];
 
@@ -128,6 +311,19 @@ const cardVariants = {
 };
 
 export function ProjectsSection() {
+  const [expandedProject, setExpandedProject] = useState<number | null>(null);
+
+  const getDashboardComponent = (projectId: number) => {
+    switch (projectId) {
+      case 1: return <InventoryManagementDashboard />;
+      case 2: return <OperationalOptimizationDashboard />;
+      case 3: return <HealthcareAnalyticsDashboard />;
+      case 4: return <HeartDiseasePredictionDashboard />;
+      case 5: return <SalesPerformanceDashboard />;
+      default: return null;
+    }
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -157,13 +353,13 @@ export function ProjectsSection() {
           className="space-y-16"
         >
           {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              variants={cardVariants}
-              className={`flex flex-col ${
-                index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-              } gap-12 items-center`}
-            >
+            <React.Fragment key={project.id}>
+              <motion.div
+                variants={cardVariants}
+                className={`flex flex-col ${
+                  index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                } gap-12 items-center`}
+              >
               {/* Project Image/Visual */}
               <div className="lg:w-1/2">
                 <motion.div
@@ -173,11 +369,15 @@ export function ProjectsSection() {
                 >
                   <div className={`h-80 bg-gradient-to-br ${
                     project.color === 'blue' ? 'from-blue-100 to-blue-200' : 
-                    project.color === 'purple' ? 'from-purple-100 to-purple-200' : 'from-cyan-100 to-cyan-200'
+                    project.color === 'purple' ? 'from-purple-100 to-purple-200' : 
+                    project.color === 'red' ? 'from-red-100 to-red-200' : 
+                    project.color === 'green' ? 'from-green-100 to-green-200' : 'from-cyan-100 to-cyan-200'
                   } flex items-center justify-center`}>
                     <project.icon className={`w-24 h-24 ${
                       project.color === 'blue' ? 'text-blue-600' : 
-                      project.color === 'purple' ? 'text-purple-600' : 'text-cyan-600'
+                      project.color === 'purple' ? 'text-purple-600' : 
+                      project.color === 'red' ? 'text-red-600' : 
+                      project.color === 'green' ? 'text-green-600' : 'text-cyan-600'
                     }`} />
                   </div>
                   <div className="absolute inset-0 bg-black/10"></div>
@@ -191,7 +391,9 @@ export function ProjectsSection() {
                   <div className="flex items-center gap-3 mb-2">
                     <span className={`px-3 py-1 ${
                       project.color === 'blue' ? 'bg-blue-100 text-blue-800' : 
-                      project.color === 'purple' ? 'bg-purple-100 text-purple-800' : 'bg-cyan-100 text-cyan-800'
+                      project.color === 'purple' ? 'bg-purple-100 text-purple-800' : 
+                      project.color === 'red' ? 'bg-red-100 text-red-800' : 
+                      project.color === 'green' ? 'bg-green-100 text-green-800' : 'bg-cyan-100 text-cyan-800'
                     } rounded-full text-sm font-semibold`}>
                       {project.category}
                     </span>
@@ -206,7 +408,9 @@ export function ProjectsSection() {
                   
                   <h4 className={`text-xl ${
                     project.color === 'blue' ? 'text-blue-600' : 
-                    project.color === 'purple' ? 'text-purple-600' : 'text-cyan-600'
+                    project.color === 'purple' ? 'text-purple-600' : 
+                    project.color === 'red' ? 'text-red-600' : 
+                    project.color === 'green' ? 'text-green-600' : 'text-cyan-600'
                   } font-semibold mb-4`}>
                     {project.subtitle}
                   </h4>
@@ -223,7 +427,9 @@ export function ProjectsSection() {
                     <div key={key} className="text-center p-4 bg-gray-50 rounded-lg">
                       <div className={`text-2xl font-bold ${
                         project.color === 'blue' ? 'text-blue-600' : 
-                        project.color === 'purple' ? 'text-purple-600' : 'text-cyan-600'
+                        project.color === 'purple' ? 'text-purple-600' : 
+                        project.color === 'red' ? 'text-red-600' : 
+                        project.color === 'green' ? 'text-green-600' : 'text-cyan-600'
                       }`}>
                         {value}
                       </div>
@@ -242,7 +448,9 @@ export function ProjectsSection() {
                       <div key={i} className="flex items-center gap-2">
                         <div className={`w-2 h-2 ${
                           project.color === 'blue' ? 'bg-blue-500' : 
-                          project.color === 'purple' ? 'bg-purple-500' : 'bg-cyan-500'
+                          project.color === 'purple' ? 'bg-purple-500' : 
+                          project.color === 'red' ? 'bg-red-500' : 
+                          project.color === 'green' ? 'bg-green-500' : 'bg-cyan-500'
                         } rounded-full`}></div>
                         <span className="text-gray-600 text-sm">{feature}</span>
                       </div>
@@ -268,15 +476,23 @@ export function ProjectsSection() {
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-4 pt-4">
                   <motion.button
+                    onClick={() => setExpandedProject(expandedProject === project.id ? null : project.id)}
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     className={`inline-flex items-center px-6 py-3 ${
                       project.color === 'blue' ? 'bg-blue-600' : 
-                      project.color === 'purple' ? 'bg-purple-600' : 'bg-cyan-600'
+                      project.color === 'purple' ? 'bg-purple-600' : 
+                      project.color === 'red' ? 'bg-red-600' : 
+                      project.color === 'green' ? 'bg-green-600' : 'bg-cyan-600'
                     } text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all`}
                   >
-                    View Case Study
-                    <ExternalLink className="w-4 h-4 ml-2" />
+                    <Eye className="w-4 h-4 mr-2" />
+                    {expandedProject === project.id ? 'Hide Dashboard' : 'View Live Dashboard'}
+                    {expandedProject === project.id ? (
+                      <ChevronUp className="w-4 h-4 ml-2" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 ml-2" />
+                    )}
                   </motion.button>
                   
                   <motion.button
@@ -287,9 +503,37 @@ export function ProjectsSection() {
                     <Github className="w-4 h-4 mr-2" />
                     View Code
                   </motion.button>
+                  
+                  <motion.button
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-flex items-center px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                  >
+                    Case Study
+                    <ExternalLink className="w-4 h-4 ml-2" />
+                  </motion.button>
                 </div>
               </div>
-            </motion.div>
+              </motion.div>
+            
+            {/* Dashboard Component */}
+            {expandedProject === project.id && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="mt-8 overflow-hidden"
+              >
+                <div className="relative">
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 rounded-full" />
+                  <div className="bg-white p-2 rounded-2xl shadow-xl border border-gray-200">
+                    {getDashboardComponent(project.id)}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+            </React.Fragment>
           ))}
         </motion.div>
 

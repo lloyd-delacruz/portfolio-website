@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "frontend",
-    "backend"
+    "frontend"
   ],
   "scripts": {
     "dev": "npm run dev --workspace=frontend",
@@ -14,10 +13,7 @@
     "type-check": "npm run type-check --workspace=frontend",
     "frontend:dev": "npm run dev --workspace=frontend",
     "frontend:build": "npm run build --workspace=frontend",
-    "frontend:start": "npm run start --workspace=frontend",
-    "backend:dev": "npm run dev --workspace=backend",
-    "backend:build": "npm run build --workspace=backend",
-    "backend:start": "npm run start --workspace=backend"
+    "frontend:start": "npm run start --workspace=frontend"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
