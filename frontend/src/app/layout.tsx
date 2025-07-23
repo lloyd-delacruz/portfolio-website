@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import { inter } from '@/lib/fonts'
 
 export const metadata: Metadata = {
-  title: 'Lloyd Dela Cruz - Code Architect',
-  description: 'Industrial Engineer turned Data Scientist, bridging healthcare and technology through code.',
-  keywords: ['Lloyd Dela Cruz', 'Full Stack Developer', 'Data Scientist', 'Healthcare Technology'],
+  title: 'Lloyd Dela Cruz - Data Analytics Professional',
+  description: 'Results-driven analytics professional with BSc Industrial Engineering and 20+ years healthcare experience. AWS AI Practitioner specializing in data analytics, Lean Six Sigma, and operational optimization.',
+  keywords: ['Lloyd Dela Cruz', 'Data Analytics', 'Healthcare Technology', 'AWS AI Practitioner', 'Data Science', 'Healthcare Analytics'],
   authors: [{ name: 'Lloyd Dela Cruz' }],
+  viewport: 'width=device-width, initial-scale=1',
+  themeColor: '#1e40af',
 }
 
 export default function RootLayout({
@@ -18,6 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body className={inter.className}>
         {children}
       </body>

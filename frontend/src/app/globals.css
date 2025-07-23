@@ -60,6 +60,20 @@
   
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    font-display: swap;
+  }
+  
+  /* Font loading optimization */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  
+  /* Prevent font loading flicker */
+  .font-inter {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-display: swap;
   }
 }
 

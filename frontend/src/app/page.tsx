@@ -1,12 +1,9 @@
 'use client'
 
 import Navigation from '@/components/layout/Navigation'
-import { AboutSection } from '@/components/sections/AboutSection'
-import { ExperienceSection } from '@/components/sections/ExperienceSection'
-import EducationSection from '@/components/sections/EducationSection'
-import { ProjectsSection } from '@/components/sections/ProjectsSection'
 import { motion } from 'framer-motion'
-import { MapPin, Eye, Mail, Download } from 'lucide-react'
+import { MapPin, Eye, Mail, Download, User, Briefcase, FolderOpen, GraduationCap, Brain, MessageSquare, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -90,7 +87,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 1.8, ease: "easeOut" }}
-              className="flex items-center justify-center text-white/60 mb-8"
+              className="flex items-center justify-center text-white/60 mb-12"
             >
               <MapPin className="h-4 w-4 mr-2" />
               <span>Vancouver, BC • Available Now</span>
@@ -101,25 +98,29 @@ export default function Home() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 2, ease: "easeOut" }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
             >
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center px-6 py-3 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
-              >
-                <Eye className="h-4 w-4 mr-2" />
-                View My Work
-              </motion.button>
+              <Link href="/projects">
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center px-6 py-3 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  View My Work
+                </motion.button>
+              </Link>
               
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold border border-white/20 hover:bg-white/20 transition-colors"
-              >
-                <Mail className="h-4 w-4 mr-2" />
-                Contact Me
-              </motion.button>
+              <Link href="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold border border-white/20 hover:bg-white/20 transition-colors"
+                >
+                  <Mail className="h-4 w-4 mr-2" />
+                  Contact Me
+                </motion.button>
+              </Link>
               
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -134,82 +135,236 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about">
-        <AboutSection />
+      {/* Portfolio Navigation Section */}
+      <section className="py-20 bg-gray-900">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-white mb-6">Explore My Portfolio</h2>
+            <p className="text-xl text-white/70 max-w-3xl mx-auto">
+              Discover my expertise across healthcare analytics, data science, and technology innovation
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {/* About Me Card */}
+            <Link href="/about">
+              <motion.div 
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-xl p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <User className="h-10 w-10 text-blue-300 group-hover:scale-110 transition-transform" />
+                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">About Me</h3>
+                <p className="text-white/80 mb-4">
+                  Learn about my journey from industrial engineering to healthcare analytics leadership
+                </p>
+                <div className="text-sm text-blue-300 font-medium">20+ Years Experience</div>
+              </motion.div>
+            </Link>
+
+            {/* Experience Card */}
+            <Link href="/experience">
+              <motion.div 
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-br from-green-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <Briefcase className="h-10 w-10 text-green-300 group-hover:scale-110 transition-transform" />
+                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">Experience</h3>
+                <p className="text-white/80 mb-4">
+                  Explore my professional journey and key achievements in healthcare transformation
+                </p>
+                <div className="text-sm text-green-300 font-medium">VCH Healthcare Leader</div>
+              </motion.div>
+            </Link>
+
+            {/* Projects Card */}
+            <Link href="/projects">
+              <motion.div 
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-xl p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <FolderOpen className="h-10 w-10 text-purple-300 group-hover:scale-110 transition-transform" />
+                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">Projects</h3>
+                <p className="text-white/80 mb-4">
+                  Discover innovative solutions in healthcare analytics and AI implementation
+                </p>
+                <div className="text-sm text-purple-300 font-medium">AI & Data Analytics</div>
+              </motion.div>
+            </Link>
+
+            {/* Skills Card */}
+            <Link href="/skills">
+              <motion.div 
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-sm rounded-xl p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <Brain className="h-10 w-10 text-orange-300 group-hover:scale-110 transition-transform" />
+                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">Skills & Expertise</h3>
+                <p className="text-white/80 mb-4">
+                  Comprehensive technical skills across data science, AI, and healthcare domains
+                </p>
+                <div className="text-sm text-orange-300 font-medium">Technical Proficiency</div>
+              </motion.div>
+            </Link>
+
+            {/* Education Card */}
+            <Link href="/education">
+              <motion.div 
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-br from-indigo-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <GraduationCap className="h-10 w-10 text-indigo-300 group-hover:scale-110 transition-transform" />
+                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">Education</h3>
+                <p className="text-white/80 mb-4">
+                  Academic foundation and continuous learning in data analytics and engineering
+                </p>
+                <div className="text-sm text-indigo-300 font-medium">MSc Data Analytics</div>
+              </motion.div>
+            </Link>
+
+            {/* Contact Card */}
+            <Link href="/contact">
+              <motion.div 
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-br from-teal-500/20 to-green-500/20 backdrop-blur-sm rounded-xl p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <MessageSquare className="h-10 w-10 text-teal-300 group-hover:scale-110 transition-transform" />
+                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">Get In Touch</h3>
+                <p className="text-white/80 mb-4">
+                  Ready to collaborate? Let&apos;s discuss your healthcare analytics needs
+                </p>
+                <div className="text-sm text-teal-300 font-medium">Start Conversation</div>
+              </motion.div>
+            </Link>
+          </motion.div>
+        </div>
       </section>
 
-      {/* Experience Section */}
-      <section id="experience">
-        <ExperienceSection />
+      {/* Quick Stats Section */}
+      <section className="py-20 bg-gradient-to-r from-blue-900 to-purple-900">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-white mb-6">Quick Overview</h2>
+            <p className="text-xl text-white/70 max-w-3xl mx-auto">
+              Key metrics that define my professional impact
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8"
+          >
+            <div className="text-center">
+              <div className="text-4xl font-bold text-white mb-2">20+</div>
+              <div className="text-white/70">Years Experience</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-white mb-2">MSc</div>
+              <div className="text-white/70">Data Analytics</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-white mb-2">AWS</div>
+              <div className="text-white/70">AI Certified</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-white mb-2">VCH</div>
+              <div className="text-white/70">Healthcare Leader</div>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
-      {/* Education Section */}
-      <section id="education">
-        <EducationSection />
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects">
-        <ProjectsSection />
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
-        <div className="container mx-auto px-4 py-20">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-4xl font-bold text-white mb-8"
-            >
-              Let&apos;s Work Together
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-xl text-white/70 mb-12"
-            >
-              Ready to optimize your healthcare operations through data analytics and AI implementation? Let&apos;s collaborate on driving evidence-based improvements.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
+      {/* Call to Action */}
+      <section className="py-20 bg-gray-900">
+        <div className="container mx-auto px-4 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl font-bold text-white mb-8"
+          >
+            Ready to Transform Healthcare?
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-xl text-white/70 mb-12 max-w-3xl mx-auto"
+          >
+            Let&apos;s collaborate on optimizing your healthcare operations through data analytics, 
+            AI implementation, and process excellence.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <Link href="/contact">
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center px-8 py-4 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
               >
                 <Mail className="h-5 w-5 mr-2" />
-                Send Message
+                Start Conversation
               </motion.button>
+            </Link>
+            <Link href="/projects">
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold border border-white/20 hover:bg-white/20 transition-colors"
               >
-                <Download className="h-5 w-5 mr-2" />
-                Download Resume
+                <Eye className="h-5 w-5 mr-2" />
+                View Portfolio
               </motion.button>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-              className="mt-16 pt-8 border-t border-white/20"
-            >
-              <p className="text-white/60 mb-4">Vancouver, BC • VCH Healthcare • Remote Available</p>
-              <p className="text-white/60">lloyd.delacruz@vch.ca • 604-358-7378</p>
-            </motion.div>
-          </div>
+            </Link>
+          </motion.div>
         </div>
       </section>
     </main>

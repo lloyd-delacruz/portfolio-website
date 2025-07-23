@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const Navigation = () => {
@@ -19,20 +19,14 @@ const Navigation = () => {
   }, [])
 
   const navItems = [
-    { href: '#about', label: 'About' },
-    { href: '#experience', label: 'Experience' },
-    { href: '#projects', label: 'Projects' },
-    { href: '#contact', label: 'Contact' },
+    { href: '/about', label: 'About' },
+    { href: '/experience', label: 'Experience' },
+    { href: '/projects', label: 'Projects' },
+    { href: '/skills', label: 'Skills' },
+    { href: '/education', label: 'Education' },
+    { href: '/blog', label: 'Blog' },
+    { href: '/contact', label: 'Contact' },
   ]
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      const offsetTop = element.offsetTop - 80
-      window.scrollTo({ top: offsetTop, behavior: 'smooth' })
-    }
-    setIsOpen(false)
-  }
 
   return (
     <motion.nav
@@ -49,47 +43,49 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Clean Logo Design */}
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="flex items-center space-x-3 cursor-pointer"
-            onClick={() => scrollToSection('home')}
-          >
-            {/* Simple Icon */}
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">LD</span>
-            </div>
-            {/* Clean Typography */}
-            <div>
-              <div className="text-lg font-semibold text-white">Lloyd Dela Cruz</div>
-              <div className="text-xs text-blue-200 -mt-1">Code Architect</div>
-            </div>
-          </motion.div>
+          <Link href="/">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="flex items-center space-x-3 cursor-pointer"
+            >
+              {/* Simple Icon */}
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg">LD</span>
+              </div>
+              {/* Clean Typography */}
+              <div>
+                <div className="text-lg font-semibold text-white">Lloyd Dela Cruz</div>
+                <div className="text-xs text-blue-200 -mt-1">Data Analytics Professional</div>
+              </div>
+            </motion.div>
+          </Link>
 
           {/* Clean Menu Items - Desktop */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <motion.button
-                key={item.href}
-                onClick={() => scrollToSection(item.href.substring(1))}
-                whileHover={{ y: -2 }}
-                className="text-white/80 hover:text-white font-medium transition-all duration-200 relative group"
-              >
-                {item.label}
-                {/* Simple underline effect */}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-              </motion.button>
+              <Link key={item.href} href={item.href}>
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  className="text-white/80 hover:text-white font-medium transition-all duration-200 relative group cursor-pointer"
+                >
+                  {item.label}
+                  {/* Simple underline effect */}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                </motion.div>
+              </Link>
             ))}
           </div>
 
           {/* Simple CTA Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => scrollToSection('contact')}
-            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
-          >
-            Contact Me
-          </motion.button>
+          <Link href="/contact">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
+            >
+              Contact Me
+            </motion.button>
+          </Link>
 
           {/* Mobile Menu Button */}
           <button 
@@ -119,20 +115,23 @@ const Navigation = () => {
           >
             <div className="px-4 py-6 space-y-4">
               {navItems.map((item) => (
-                <button
-                  key={item.href}
-                  onClick={() => scrollToSection(item.href.substring(1))}
-                  className="block w-full text-left text-white/80 hover:text-white font-medium py-2 transition-colors"
-                >
-                  {item.label}
-                </button>
+                <Link key={item.href} href={item.href}>
+                  <div
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full text-left text-white/80 hover:text-white font-medium py-2 transition-colors"
+                  >
+                    {item.label}
+                  </div>
+                </Link>
               ))}
-              <button 
-                className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors" 
-                onClick={() => scrollToSection('contact')}
-              >
-                Contact Me
-              </button>
+              <Link href="/contact">
+                <button 
+                  className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors" 
+                  onClick={() => setIsOpen(false)}
+                >
+                  Contact Me
+                </button>
+              </Link>
             </div>
           </motion.div>
         )}

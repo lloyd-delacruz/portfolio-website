@@ -1,16 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Force development server settings
-  env: {
-    HOSTNAME: '0.0.0.0',
-    PORT: '3001'
-  },
-  // Enable static export as fallback
-  output: 'export',
-  trailingSlash: true,
+  // Only use export mode in production
+  ...(process.env.NODE_ENV === 'production' && {
+    output: 'export',
+    trailingSlash: true,
+  }),
   images: {
     unoptimized: true
-  }
+  },
+  // Enable font optimization
+  optimizeFonts: true,
+  // Disable font optimization warnings in development
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
+  typescript: {
+    ignoreBuildErrors: false,
+  },
 }
 
 module.exports = nextConfig
