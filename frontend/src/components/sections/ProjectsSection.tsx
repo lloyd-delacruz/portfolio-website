@@ -280,7 +280,7 @@ plt.show()`
     ],
     links: {
       demo: "#",
-      github: "#", 
+      github: "https://github.com/lloyd-delacruz/LifeExpectancy.git", 
       case_study: "#"
     },
     color: "green",
@@ -495,14 +495,17 @@ export function ProjectsSection() {
                     )}
                   </motion.button>
                   
-                  <motion.button
+                  <motion.a
+                    href={project.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     className="inline-flex items-center px-6 py-3 bg-gray-800 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                   >
                     <Github className="w-4 h-4 mr-2" />
                     View Code
-                  </motion.button>
+                  </motion.a>
                   
                   <motion.button
                     whileHover={{ scale: 1.05, y: -2 }}
