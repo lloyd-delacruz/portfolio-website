@@ -1,13 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Github, ArrowRight, Activity, MapPin, Database, Heart, Eye, ChevronDown, ChevronUp, TrendingUp } from "lucide-react";
-import { HealthcareAnalyticsDashboard } from "../dashboards/HealthcareAnalyticsDashboard";
-import { OperationalOptimizationDashboard } from "../dashboards/OperationalOptimizationDashboard";
-import { InventoryManagementDashboard } from "../dashboards/InventoryManagementDashboard";
-import { LifeExpectancyDashboard } from "../dashboards/LifeExpectancyDashboard";
-import { HeartDiseasePredictionDashboard } from "../dashboards/HeartDiseasePredictionDashboard";
+import { ExternalLink, Github, ArrowRight, Activity, MapPin, Database, Heart, Eye, TrendingUp } from "lucide-react";
+import Link from "next/link";
 
 const projects = [
   {
@@ -268,8 +264,7 @@ plt.show()`
       factors: "22"
     },
     technologies: [
-      "Python", "Pandas", "NumPy", "Seaborn", "Matplotlib", "Plotly", 
-      "Statistical Analysis", "WHO Data", "Jupyter", "Data Visualization"
+      "PostgreSQL", "Tableau", "Excel", "ChatGPT", "Claude AI", "Perplexity"
     ],
     features: [
       "Multi-country life expectancy trend analysis",
@@ -311,16 +306,14 @@ const cardVariants = {
 };
 
 export function ProjectsSection() {
-  const [expandedProject, setExpandedProject] = useState<number | null>(null);
-
-  const getDashboardComponent = (projectId: number) => {
+  const getDashboardRoute = (projectId: number) => {
     switch (projectId) {
-      case 1: return <InventoryManagementDashboard />;
-      case 2: return <OperationalOptimizationDashboard />;
-      case 3: return <HealthcareAnalyticsDashboard />;
-      case 4: return <HeartDiseasePredictionDashboard />;
-      case 5: return <LifeExpectancyDashboard />;
-      default: return null;
+      case 1: return '/dashboards/inventory-management';
+      case 2: return '/dashboards/operational-optimization';
+      case 3: return '/dashboards/healthcare-analytics';
+      case 4: return '/dashboards/heart-disease-prediction';
+      case 5: return '/dashboards/life-expectancy';
+      default: return '/projects';
     }
   };
 
@@ -475,25 +468,22 @@ export function ProjectsSection() {
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-4 pt-4">
-                  <motion.button
-                    onClick={() => setExpandedProject(expandedProject === project.id ? null : project.id)}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`inline-flex items-center px-6 py-3 ${
-                      project.color === 'blue' ? 'bg-blue-600' : 
-                      project.color === 'purple' ? 'bg-purple-600' : 
-                      project.color === 'red' ? 'bg-red-600' : 
-                      project.color === 'green' ? 'bg-green-600' : 'bg-cyan-600'
-                    } text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all`}
-                  >
-                    <Eye className="w-4 h-4 mr-2" />
-                    {expandedProject === project.id ? 'Hide Dashboard' : 'View Live Dashboard'}
-                    {expandedProject === project.id ? (
-                      <ChevronUp className="w-4 h-4 ml-2" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4 ml-2" />
-                    )}
-                  </motion.button>
+                  <Link href={getDashboardRoute(project.id)}>
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`inline-flex items-center px-6 py-3 ${
+                        project.color === 'blue' ? 'bg-blue-600' : 
+                        project.color === 'purple' ? 'bg-purple-600' : 
+                        project.color === 'red' ? 'bg-red-600' : 
+                        project.color === 'green' ? 'bg-green-600' : 'bg-cyan-600'
+                      } text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all`}
+                    >
+                      <Eye className="w-4 h-4 mr-2" />
+                      View Full Dashboard
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </motion.button>
+                  </Link>
                   
                   <motion.a
                     href={project.links.github}
@@ -519,23 +509,6 @@ export function ProjectsSection() {
               </div>
               </motion.div>
             
-            {/* Dashboard Component */}
-            {expandedProject === project.id && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="mt-8 overflow-hidden"
-              >
-                <div className="relative">
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 rounded-full" />
-                  <div className="bg-white p-2 rounded-2xl shadow-xl border border-gray-200">
-                    {getDashboardComponent(project.id)}
-                  </div>
-                </div>
-              </motion.div>
-            )}
             </React.Fragment>
           ))}
         </motion.div>
