@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Script from 'next/script';
 
-export function LifeExpectancyDashboard() {
+export default function LifeExpectancyDashboard() {
   const [isChartsLoaded, setIsChartsLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
 
@@ -14,7 +14,7 @@ export function LifeExpectancyDashboard() {
   }, [isChartsLoaded, activeTab]);
 
   const initializeAllCharts = () => {
-    // @ts-ignore
+    // @ts-expect-error - Chart.js is loaded globally
     const Chart = window.Chart;
     if (!Chart) return;
     
@@ -829,7 +829,7 @@ export function LifeExpectancyDashboard() {
             <div className="insight-item"><strong>Efficiency Champion:</strong> Bangladesh achieves 72 years life expectancy with only 3% GDP on health</div>
             <div className="insight-item"><strong>Critical Threshold:</strong> Countries above $4,000 GDP/capita show accelerated health improvements</div>
             <div className="insight-item"><strong>Education Impact:</strong> Each additional year of schooling correlates with ~2 years life expectancy</div>
-            <div className="insight-item"><strong>HIV/AIDS Effect:</strong> Countries with >10 deaths/1000 have 20+ years lower life expectancy</div>
+            <div className="insight-item"><strong>HIV/AIDS Effect:</strong> Countries with {'>'} 10 deaths/1000 have 20+ years lower life expectancy</div>
             <div className="insight-item"><strong>Immunization Power:</strong> 95%+ coverage associated with 15 years higher life expectancy</div>
           </div>
 
