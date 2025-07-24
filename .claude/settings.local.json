@@ -38,7 +38,14 @@
       "Bash(npm update:*)",
       "Bash(find:*)",
       "Bash(cd:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(git rm:*)",
+      "Bash(git push:*)",
+      "Bash(npx next lint:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nConvert single-page portfolio to multi-page application with enhanced navigation and font optimization\n\nMajor Changes:\n- Transform single-page layout to individual page routes (/about, /experience, /projects, /skills, /education, /contact)\n- Create rich, vibrant full-page layouts for each section with unique gradient themes\n- Add consistent back button navigation across all pages\n- Fix navigation bar routing from hash-based to proper Next.js routing\n- Implement comprehensive font loading optimization to resolve 404 errors and preload warnings\n\nNew Pages Created:\n- About page: Personal journey with timeline and core values\n- Experience page: Professional achievements and career highlights  \n- Projects page: Technical showcase with skills matrix\n- Skills page: Comprehensive expertise and proficiency display\n- Education page: Academic background and continuous learning\n- Contact page: Professional contact form and information\n- Enhanced blog pages with proper back button navigation\n\nTechnical Improvements:\n- Optimize Inter font configuration with proper fallbacks and preloading\n- Fix Next.js config for development vs production environments\n- Add proper font preconnect hints and display strategies\n- Update navigation component to use Next.js Link routing\n- Maintain responsive design and animation consistency\n- Resolve port mismatch issues causing font loading errors\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(cut:*)",
+      "Bash(tree:*)",
+      "Bash(npm run frontend:dev:*)"
     ],
     "deny": []
   }

@@ -24,6 +24,7 @@ const Navigation = () => {
     { href: '/projects', label: 'Projects' },
     { href: '/skills', label: 'Skills' },
     { href: '/education', label: 'Education' },
+    { href: '/health-dashboard', label: 'Health Analytics' },
     { href: '/blog', label: 'Blog' },
     { href: '/contact', label: 'Contact' },
   ]

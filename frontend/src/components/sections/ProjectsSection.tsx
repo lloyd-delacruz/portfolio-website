@@ -6,7 +6,7 @@ import { ExternalLink, Github, ArrowRight, Activity, MapPin, Database, Heart, Ey
 import { HealthcareAnalyticsDashboard } from "../dashboards/HealthcareAnalyticsDashboard";
 import { OperationalOptimizationDashboard } from "../dashboards/OperationalOptimizationDashboard";
 import { InventoryManagementDashboard } from "../dashboards/InventoryManagementDashboard";
-import { SalesPerformanceDashboard } from "../dashboards/SalesPerformanceDashboard";
+import { LifeExpectancyDashboard } from "../dashboards/LifeExpectancyDashboard";
 import { HeartDiseasePredictionDashboard } from "../dashboards/HeartDiseasePredictionDashboard";
 
 const projects = [
@@ -255,28 +255,28 @@ plt.show()`
   },
   {
     id: 5,
-    title: "Pharmaceutical Sales Analytics",
-    subtitle: "Territory & Performance Optimization Platform",
-    description: "Comprehensive sales performance analytics system that achieved $1M+ in total sales and 20% quota exceeding through strategic data analysis of market trends, customer needs, and territory expansion.",
-    longDescription: "Developed during pharmaceutical sales role at United Laboratories, this analytics platform transformed sales performance through data-driven insights. Successfully expanded ENT specialist segment by 30%, increased territory coverage by 25%, and achieved 15% target exceeding through strategic market analysis and customer relationship optimization.",
+    title: "Global Life Expectancy Analytics Dashboard",
+    subtitle: "WHO Health Data Analysis & Visualization Platform",
+    description: "Comprehensive life expectancy analysis platform using WHO Global Health Observatory data, examining socioeconomic factors, healthcare indicators, and demographic trends across 193 countries over 15 years (2000-2015).",
+    longDescription: "Advanced data analytics project utilizing the WHO Life Expectancy dataset to uncover global health patterns and determinants. Features comprehensive exploratory data analysis, statistical modeling, and interactive visualizations to identify key factors influencing life expectancy across different countries and regions. Combines healthcare domain expertise with advanced analytical techniques to deliver actionable insights for public health policy and healthcare system optimization.",
     image: "/api/placeholder/600/400",
-    category: "Sales Analytics",
-    status: "Successfully Implemented",
+    category: "Healthcare Analytics",
+    status: "Live Demo Available",
     impact: {
-      sales: "$1M+",
-      growth: "20%↑", 
-      territory: "25%"
+      countries: "193",
+      years: "15+", 
+      factors: "22"
     },
     technologies: [
-      "Excel Advanced", "CRM Analytics", "Market Analysis", "Territory Mapping", 
-      "Customer Segmentation", "Performance Metrics", "Sales Forecasting"
+      "Python", "Pandas", "NumPy", "Seaborn", "Matplotlib", "Plotly", 
+      "Statistical Analysis", "WHO Data", "Jupyter", "Data Visualization"
     ],
     features: [
-      "Territory performance optimization",
-      "Customer segmentation analysis", 
-      "Market trend identification",
-      "Sales quota tracking & forecasting",
-      "Product line performance analytics"
+      "Multi-country life expectancy trend analysis",
+      "Socioeconomic factor correlation studies", 
+      "Healthcare indicator impact assessment",
+      "Regional comparison dashboards",
+      "Predictive modeling for health outcomes"
     ],
     links: {
       demo: "#",
@@ -319,7 +319,7 @@ export function ProjectsSection() {
       case 2: return <OperationalOptimizationDashboard />;
       case 3: return <HealthcareAnalyticsDashboard />;
       case 4: return <HeartDiseasePredictionDashboard />;
-      case 5: return <SalesPerformanceDashboard />;
+      case 5: return <LifeExpectancyDashboard />;
       default: return null;
     }
   };
