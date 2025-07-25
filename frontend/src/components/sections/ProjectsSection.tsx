@@ -12,7 +12,7 @@ const projects = [
     subtitle: "Cerner Integration & Data-Driven Healthcare Management",
     description: "Proposed integration system for wheelchair inventory management at Vancouver General Hospital, designed to integrate with Cerner EHR for data-driven decision-making and streamlined maintenance processes.",
     longDescription: "Spearheaded project proposal for Vancouver Coastal Health to optimize wheelchair inventory across multiple sites (VGH, Richmond Hospital, Lions Gate Hospital). The proposed system integrates with existing Cerner infrastructure to enable real-time tracking, automated maintenance scheduling, and data analytics for improved patient care delivery.",
-    image: "/api/placeholder/600/400",
+    image: "/images/Wheelchair_tracking.png",
     category: "Healthcare Operations",
     status: "Project Proposal - VCH",
     impact: {
@@ -34,7 +34,7 @@ const projects = [
     links: {
       demo: "#",
       github: "#",
-      case_study: "#"
+      case_study: "/case-studies/wheelchair-inventory-optimization"
     },
     color: "blue",
     icon: Activity
@@ -45,7 +45,7 @@ const projects = [
     subtitle: "Lean Six Sigma & Performance Optimization",
     description: "Comprehensive project analytics solution implementing Lean Six Sigma methodologies for large-scale construction and engineering projects, achieving 15% timeline reduction and 20% cost savings.",
     longDescription: "Developed for IEQ Global PTE LTD, this analytics platform transformed project management processes through data-driven insights. Implemented advanced financial planning models and variance analysis, resulting in 35% increase in successful bids and improved stakeholder communication across government agencies and contractors.",
-    image: "/api/placeholder/600/400",
+    image: "/images/Project_Management.png",
     category: "Project Management",
     status: "Successfully Implemented",
     impact: {
@@ -67,7 +67,7 @@ const projects = [
     links: {
       demo: "#",
       github: "#", 
-      case_study: "#"
+      case_study: "/case-studies/project-management-analytics"
     },
     color: "purple",
     icon: MapPin
@@ -78,7 +78,7 @@ const projects = [
     subtitle: "Global Well-being Data Analysis & Visualization Platform", 
     description: "Comprehensive happiness analytics platform analyzing 5 years of World Happiness Report data (2015-2019) across 156 countries, examining socioeconomic factors, regional trends, and policy implications for global well-being.",
     longDescription: "Advanced data visualization and analytics project utilizing the World Happiness Report dataset to uncover global well-being patterns and determinants. Features comprehensive statistical analysis, interactive dashboards, and policy recommendations to identify key factors influencing national happiness levels across different countries and regions.",
-    image: "/api/placeholder/600/400",
+    image: "/images/World_Happiness.png",
     category: "Data Analytics",
     status: "Live Demo Available",
     impact: {
@@ -100,7 +100,7 @@ const projects = [
     links: {
       demo: "/dashboards/happiness-analytics",
       github: "#",
-      case_study: "#"
+      case_study: "/case-studies/world-happiness-analytics"
     },
     color: "cyan",
     icon: Globe
@@ -111,7 +111,7 @@ const projects = [
     subtitle: "Machine Learning & Interactive Analytics Platform",
     description: "Comprehensive heart disease prediction system using Kaggle's Heart Disease UCI dataset. Features ML model comparison, interactive Tableau dashboard, and clinical decision support tools with 87.7% Random Forest accuracy.",
     longDescription: "Built using the renowned Heart Disease UCI dataset from Kaggle (303 patients, 14 clinical attributes including age, chest pain type, cholesterol, and exercise-induced angina). This end-to-end ML project demonstrates the complete data science pipeline from EDA to deployment, combining statistical analysis, feature engineering, and multiple algorithm comparison with clinical interpretability for healthcare decision support.",
-    image: "/api/placeholder/600/400",
+    image: "/images/Heart_Prediction.png",
     category: "Healthcare ML & Analytics",
     status: "Live Demo Available",
     impact: {
@@ -244,7 +244,7 @@ plt.show()`
     links: {
       demo: "https://public.tableau.com/views/HeartDiseasePrediction/Dashboard",
       github: "https://github.com/lloyddelacruz/heart-disease-prediction",
-      case_study: "#heart-disease-case-study"
+      case_study: "/case-studies/heart-disease-prediction"
     },
     color: "red",
     icon: Heart
@@ -255,7 +255,7 @@ plt.show()`
     subtitle: "WHO Health Data Analysis & Visualization Platform",
     description: "Comprehensive life expectancy analysis platform using WHO Global Health Observatory data, examining socioeconomic factors, healthcare indicators, and demographic trends across 193 countries over 15 years (2000-2015).",
     longDescription: "Advanced data analytics project utilizing the WHO Life Expectancy dataset to uncover global health patterns and determinants. Features comprehensive exploratory data analysis, statistical modeling, and interactive visualizations to identify key factors influencing life expectancy across different countries and regions. Combines healthcare domain expertise with advanced analytical techniques to deliver actionable insights for public health policy and healthcare system optimization.",
-    image: "/api/placeholder/600/400",
+    image: "/images/Life_Expectancy.png",
     category: "Healthcare Analytics",
     status: "Live Demo Available",
     impact: {
@@ -276,7 +276,7 @@ plt.show()`
     links: {
       demo: "#",
       github: "https://github.com/lloyd-delacruz/LifeExpectancy.git", 
-      case_study: "#"
+      case_study: "/case-studies/life-expectancy-analytics"
     },
     color: "green",
     icon: TrendingUp
@@ -320,22 +320,6 @@ export function ProjectsSection() {
   return (
     <section className="py-20 bg-gradient-to-br from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Featured Projects
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Healthcare technology solutions that bridge the gap between complex data 
-            and actionable insights, improving patient outcomes and operational efficiency.
-          </p>
-        </motion.div>
 
         {/* Projects Grid */}
         <motion.div
@@ -356,24 +340,18 @@ export function ProjectsSection() {
               {/* Project Image/Visual */}
               <div className="lg:w-1/2">
                 <motion.div
-                  whileHover={{ scale: 1.05, rotateY: 5 }}
+                  whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
-                  className="relative rounded-2xl overflow-hidden shadow-2xl"
+                  className="relative rounded-2xl overflow-hidden shadow-lg bg-white p-4"
                 >
-                  <div className={`h-80 bg-gradient-to-br ${
-                    project.color === 'blue' ? 'from-blue-100 to-blue-200' : 
-                    project.color === 'purple' ? 'from-purple-100 to-purple-200' : 
-                    project.color === 'red' ? 'from-red-100 to-red-200' : 
-                    project.color === 'green' ? 'from-green-100 to-green-200' : 'from-cyan-100 to-cyan-200'
-                  } flex items-center justify-center`}>
-                    <project.icon className={`w-24 h-24 ${
-                      project.color === 'blue' ? 'text-blue-600' : 
-                      project.color === 'purple' ? 'text-purple-600' : 
-                      project.color === 'red' ? 'text-red-600' : 
-                      project.color === 'green' ? 'text-green-600' : 'text-cyan-600'
-                    }`} />
+                  <div className="relative rounded-xl overflow-hidden bg-gray-50">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full aspect-[4/3] object-contain object-center"
+                    />
                   </div>
-                  <div className="absolute inset-0 bg-black/10"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none"></div>
                 </motion.div>
               </div>
 
@@ -485,26 +463,17 @@ export function ProjectsSection() {
                     </motion.button>
                   </Link>
                   
-                  <motion.a
-                    href={project.links.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="inline-flex items-center px-6 py-3 bg-gray-800 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
-                  >
-                    <Github className="w-4 h-4 mr-2" />
-                    View Code
-                  </motion.a>
                   
-                  <motion.button
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="inline-flex items-center px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
-                  >
-                    Case Study
-                    <ExternalLink className="w-4 h-4 ml-2" />
-                  </motion.button>
+                  <Link href={project.links.case_study}>
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="inline-flex items-center px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                    >
+                      Case Study
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </motion.button>
+                  </Link>
                 </div>
               </div>
               </motion.div>

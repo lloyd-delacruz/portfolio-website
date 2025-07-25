@@ -112,29 +112,33 @@ export default function ProjectsPage() {
           </motion.div>
 
           {/* Featured Project Highlight */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-            className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-8 border border-white/20 max-w-4xl mx-auto"
-          >
-            <div className="flex items-center justify-center mb-4">
-              <ExternalLink className="h-6 w-6 text-white mr-2" />
-              <span className="text-white font-semibold">Featured Project</span>
-            </div>
-            <h3 className="text-3xl font-bold text-white mb-4">Healthcare Analytics Dashboard</h3>
-            <p className="text-white/80 leading-relaxed mb-6">
-              A comprehensive real-time analytics platform that transformed VCH's operational 
-              efficiency by 35%, integrating machine learning models for predictive insights 
-              and automated reporting systems.
-            </p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <span className="px-3 py-1 bg-blue-500/30 text-blue-200 rounded-full text-sm">Python</span>
-              <span className="px-3 py-1 bg-green-500/30 text-green-200 rounded-full text-sm">React</span>
-              <span className="px-3 py-1 bg-purple-500/30 text-purple-200 rounded-full text-sm">AWS</span>
-              <span className="px-3 py-1 bg-orange-500/30 text-orange-200 rounded-full text-sm">TensorFlow</span>
-            </div>
-          </motion.div>
+          <Link href="/dashboards/happiness-analytics">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              whileHover={{ scale: 1.02, y: -5 }}
+              whileTap={{ scale: 0.98 }}
+              className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-8 border border-white/20 max-w-4xl mx-auto cursor-pointer hover:border-white/40 transition-all duration-300"
+            >
+              <div className="flex items-center justify-center mb-4">
+                <ExternalLink className="h-6 w-6 text-white mr-2" />
+                <span className="text-white font-semibold">Featured Project</span>
+              </div>
+              <h3 className="text-3xl font-bold text-white mb-4">Happiness Analytics Dashboard</h3>
+              <p className="text-white/80 leading-relaxed mb-6">
+              A comprehensive employee wellbeing analytics platform that provides real-time insights 
+                into workplace happiness, satisfaction metrics, and organizational health across 
+                departments and teams.
+              </p>
+              <div className="flex flex-wrap justify-center gap-2">
+                <span className="px-3 py-1 bg-blue-500/30 text-blue-200 rounded-full text-sm">Python</span>
+                <span className="px-3 py-1 bg-green-500/30 text-green-200 rounded-full text-sm">React</span>
+                <span className="px-3 py-1 bg-purple-500/30 text-purple-200 rounded-full text-sm">AWS</span>
+                <span className="px-3 py-1 bg-orange-500/30 text-orange-200 rounded-full text-sm">TensorFlow</span>
+              </div>
+            </motion.div>
+          </Link>
         </div>
       </section>
 

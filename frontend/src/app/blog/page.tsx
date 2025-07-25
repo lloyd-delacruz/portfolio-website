@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, Clock, ArrowRight, Search, Play, Eye, ArrowLeft } from 'lucide-react'
+import { Calendar, Clock, ArrowRight, Search, Eye, ArrowLeft, Brain, BarChart3, Stethoscope, PieChart, Cpu, Code, Heart, Database, Smartphone, Cloud, Lightbulb } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
@@ -14,10 +14,10 @@ const BlogPage = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
 
   const categories = [
-    { id: 'all', label: 'All Posts', count: 12 },
-    { id: 'healthcare', label: 'Healthcare Tech', count: 5 },
-    { id: 'development', label: 'Development', count: 4 },
-    { id: 'data-science', label: 'Data Science', count: 3 }
+    { id: 'all', label: 'All Posts', count: 13 },
+    { id: 'healthcare', label: 'Healthcare Tech', count: 6 },
+    { id: 'development', label: 'Development', count: 5 },
+    { id: 'data-science', label: 'Data Science', count: 2 }
   ]
 
   const blogPosts = [
@@ -28,13 +28,14 @@ const BlogPage = () => {
       excerpt: "Exploring how machine learning transforms patient outcomes and operational efficiency in modern healthcare systems.",
       category: "healthcare",
       readTime: "8 min read",
-      date: "2024-01-15",
+      date: "2024-06-15",
       author: "Lloyd Dela Cruz",
       image: "/api/placeholder/600/400",
       video: false,
       interactive: true,
       tags: ["AI", "Healthcare", "Analytics"],
-      gradient: "from-blue-600 via-purple-600 to-indigo-800"
+      gradient: "from-blue-600 via-purple-600 to-indigo-800",
+      icon: Brain
     },
     {
       id: 2,
@@ -43,13 +44,14 @@ const BlogPage = () => {
       excerpt: "A deep dive into creating responsive, real-time dashboards that tell compelling data stories.",
       category: "development",
       readTime: "12 min read",
-      date: "2024-01-10",
+      date: "2024-07-10",
       author: "Lloyd Dela Cruz",
       image: "/api/placeholder/600/400",
       video: true,
       interactive: true,
       tags: ["React", "D3.js", "Dashboards"],
-      gradient: "from-emerald-600 via-teal-600 to-cyan-800"
+      gradient: "from-emerald-600 via-teal-600 to-cyan-800",
+      icon: BarChart3
     },
     {
       id: 3,
@@ -58,13 +60,14 @@ const BlogPage = () => {
       excerpt: "How emerging technologies are reshaping remote healthcare delivery and patient engagement.",
       category: "healthcare",
       readTime: "6 min read",
-      date: "2024-01-05",
+      date: "2024-08-05",
       author: "Lloyd Dela Cruz",
       image: "/api/placeholder/600/400",
       video: false,
       interactive: false,
       tags: ["Telemedicine", "Innovation", "Patient Care"],
-      gradient: "from-rose-600 via-pink-600 to-purple-800"
+      gradient: "from-rose-600 via-pink-600 to-purple-800",
+      icon: Stethoscope
     },
     {
       id: 4,
@@ -73,13 +76,158 @@ const BlogPage = () => {
       excerpt: "Transform complex datasets into beautiful, actionable visualizations that drive decision-making.",
       category: "data-science",
       readTime: "10 min read",
-      date: "2023-12-28",
+      date: "2024-09-28",
       author: "Lloyd Dela Cruz",
       image: "/api/placeholder/600/400",
       video: true,
       interactive: true,
       tags: ["Visualization", "Data Science", "Analytics"],
-      gradient: "from-orange-600 via-red-600 to-pink-800"
+      gradient: "from-orange-600 via-red-600 to-pink-800",
+      icon: PieChart
+    },
+    {
+      id: 5,
+      title: "Understanding Model Context Protocol: The Future of AI Integration",
+      slug: "understanding-model-context-protocol-future-ai-integration",
+      excerpt: "Explore Anthropic's revolutionary MCP standard that's transforming how AI systems integrate with external tools and data sources, featuring rapid adoption by OpenAI and Google DeepMind.",
+      category: "development",
+      readTime: "12 min read",
+      date: "2024-10-20",
+      author: "Lloyd Dela Cruz",
+      image: "/api/placeholder/600/400",
+      video: false,
+      interactive: true,
+      tags: ["MCP", "AI Integration", "Anthropic", "Protocol"],
+      gradient: "from-indigo-600 via-blue-600 to-purple-800",
+      icon: Cpu
+    },
+    {
+      id: 6,
+      title: "Mastering Model Context Protocol: A Developer's Complete Guide",
+      slug: "mastering-model-context-protocol-developers-complete-guide",
+      excerpt: "Learn how to implement MCP servers and clients with best practices, security considerations, and real-world examples. From setup to production deployment.",
+      category: "development",
+      readTime: "15 min read",
+      date: "2024-11-18",
+      author: "Lloyd Dela Cruz",
+      image: "/api/placeholder/600/400",
+      video: true,
+      interactive: true,
+      tags: ["MCP", "Tutorial", "Development", "Best Practices"],
+      gradient: "from-green-600 via-emerald-600 to-teal-800",
+      icon: Code
+    },
+    {
+      id: 7,
+      title: "AI Revolution in Healthcare 2025: Breakthrough Innovations Transforming Patient Care",
+      slug: "ai-revolution-healthcare-2025-breakthrough-innovations",
+      excerpt: "Discover the latest AI innovations revolutionizing healthcare in 2025, from precision medicine and digital patient platforms to virtual health assistants and regulatory developments.",
+      category: "healthcare",
+      readTime: "11 min read",
+      date: "2024-12-22",
+      author: "Lloyd Dela Cruz",
+      image: "/api/placeholder/600/400",
+      video: false,
+      interactive: true,
+      tags: ["AI", "Healthcare Innovation", "Precision Medicine", "Digital Health"],
+      gradient: "from-cyan-600 via-blue-600 to-indigo-800",
+      icon: Heart
+    },
+    {
+      id: 8,
+      title: "Electronic Health Records: The Digital Transformation of Patient Data",
+      slug: "electronic-health-records-digital-transformation",
+      excerpt: "Understanding how EHR systems are evolving with AI integration, interoperability standards, and patient-centered design to improve healthcare delivery.",
+      category: "healthcare",
+      readTime: "9 min read",
+      date: "2025-01-22",
+      author: "Lloyd Dela Cruz",
+      image: "/api/placeholder/600/400",
+      video: false,
+      interactive: true,
+      tags: ["EHR", "Digital Health", "Interoperability", "Patient Care"],
+      gradient: "from-green-600 via-emerald-600 to-teal-800",
+      icon: Database
+    },
+    {
+      id: 9,
+      title: "React Performance Optimization: Building Scalable Healthcare Applications",
+      slug: "react-performance-optimization-healthcare-apps",
+      excerpt: "Advanced techniques for optimizing React applications in healthcare settings, focusing on performance, security, and user experience.",
+      category: "development",
+      readTime: "14 min read",
+      date: "2025-02-15",
+      author: "Lloyd Dela Cruz",
+      image: "/api/placeholder/600/400",
+      video: true,
+      interactive: true,
+      tags: ["React", "Performance", "Healthcare Apps", "Optimization"],
+      gradient: "from-purple-600 via-pink-600 to-rose-800",
+      icon: Code
+    },
+    {
+      id: 10,
+      title: "Healthcare Data Analytics: From Raw Data to Actionable Insights",
+      slug: "healthcare-data-analytics-actionable-insights",
+      excerpt: "Comprehensive guide to healthcare data analytics, covering data collection, processing, visualization, and turning healthcare data into meaningful insights.",
+      category: "data-science",
+      readTime: "13 min read",
+      date: "2025-03-20",
+      author: "Lloyd Dela Cruz",
+      image: "/api/placeholder/600/400",
+      video: false,
+      interactive: true,
+      tags: ["Data Analytics", "Healthcare", "Visualization", "Insights"],
+      gradient: "from-orange-600 via-amber-600 to-yellow-800",
+      icon: BarChart3
+    },
+    {
+      id: 11,
+      title: "Cloud Infrastructure for Healthcare: Security, Compliance, and Scalability",
+      slug: "cloud-infrastructure-healthcare-security-compliance",
+      excerpt: "Best practices for implementing cloud solutions in healthcare, addressing HIPAA compliance, security requirements, and scalable architecture design.",
+      category: "development",
+      readTime: "11 min read",
+      date: "2025-04-18",
+      author: "Lloyd Dela Cruz",
+      image: "/api/placeholder/600/400",
+      video: false,
+      interactive: false,
+      tags: ["Cloud", "Healthcare", "Security", "HIPAA"],
+      gradient: "from-blue-600 via-indigo-600 to-purple-800",
+      icon: Cloud
+    },
+    {
+      id: 12,
+      title: "Wearable Technology in Healthcare: Monitoring and Predictive Analytics",
+      slug: "wearable-technology-healthcare-monitoring-analytics",
+      excerpt: "Exploring the integration of wearable devices in healthcare systems, from continuous monitoring to predictive analytics and patient engagement.",
+      category: "healthcare",
+      readTime: "10 min read",
+      date: "2025-05-25",
+      author: "Lloyd Dela Cruz",
+      image: "/api/placeholder/600/400",
+      video: true,
+      interactive: true,
+      tags: ["Wearables", "IoT", "Patient Monitoring", "Predictive Analytics"],
+      gradient: "from-teal-600 via-cyan-600 to-blue-800",
+      icon: Smartphone
+    },
+    {
+      id: 13,
+      title: "Future of Healthcare Technology: Trends and Innovations for 2025",
+      slug: "future-healthcare-technology-trends-innovations-2025",
+      excerpt: "A comprehensive look at emerging healthcare technologies, from quantum computing in drug discovery to personalized medicine and digital therapeutics.",
+      category: "healthcare",
+      readTime: "12 min read",
+      date: "2025-06-20",
+      author: "Lloyd Dela Cruz",
+      image: "/api/placeholder/600/400",
+      video: false,
+      interactive: true,  
+      tags: ["Future Tech", "Innovation", "Digital Health", "Emerging Technologies"],
+      gradient: "from-violet-600 via-purple-600 to-indigo-800",
+      icon: Lightbulb
     }
   ]
 
@@ -214,7 +362,7 @@ const BlogPage = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           <AnimatePresence>
-            {filteredPosts.map((post, index) => (
+            {filteredPosts.map((post) => (
               <motion.article
                 key={post.id}
                 variants={cardVariants}
@@ -239,14 +387,23 @@ const BlogPage = () => {
                       className="absolute inset-0 bg-black/20"
                     />
                     
+                    {/* Main Icon */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <motion.div
+                        animate={{
+                          scale: hoveredCard === post.id ? 1.2 : 1,
+                          rotate: hoveredCard === post.id ? 5 : 0,
+                        }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="relative"
+                      >
+                        <div className="absolute inset-0 bg-white/10 rounded-full blur-xl transform scale-150" />
+                        <post.icon className="w-16 h-16 text-white/90 relative z-10 drop-shadow-lg" />
+                      </motion.div>
+                    </div>
+                    
                     {/* Content Type Indicators */}
                     <div className="absolute top-4 right-4 flex gap-2">
-                      {post.video && (
-                        <div className="bg-red-500/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
-                          <Play className="w-3 h-3 text-white" />
-                          <span className="text-xs text-white font-medium">Video</span>
-                        </div>
-                      )}
                       {post.interactive && (
                         <div className="bg-green-500/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
                           <Eye className="w-3 h-3 text-white" />
