@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Github, ArrowRight, Activity, MapPin, Database, Heart, Eye, TrendingUp } from "lucide-react";
+import { ExternalLink, Github, ArrowRight, Activity, MapPin, Database, Heart, Eye, TrendingUp, Globe } from "lucide-react";
 import Link from "next/link";
 
 const projects = [
@@ -74,36 +74,36 @@ const projects = [
   },
   {
     id: 3,
-    title: "Healthcare Data Analytics Platform",
-    subtitle: "Multi-Unit Patient Care Analytics & Insights", 
-    description: "Data analytics framework supporting multidisciplinary healthcare teams across Neurology, Surgery, Orthopedics/Trauma, ICU, and Rehabilitation units, analyzing 200+ patient care plans annually.",
-    longDescription: "Leveraging 8+ years of healthcare experience at Vancouver Coastal Health, this analytics platform integrates patient care data across multiple specialized units. Combines clinical expertise with advanced data analysis skills (Python, R, SQL, Tableau) to deliver actionable insights for improved patient outcomes and operational efficiency.",
+    title: "World Happiness Analytics Dashboard",
+    subtitle: "Global Well-being Data Analysis & Visualization Platform", 
+    description: "Comprehensive happiness analytics platform analyzing 5 years of World Happiness Report data (2015-2019) across 156 countries, examining socioeconomic factors, regional trends, and policy implications for global well-being.",
+    longDescription: "Advanced data visualization and analytics project utilizing the World Happiness Report dataset to uncover global well-being patterns and determinants. Features comprehensive statistical analysis, interactive dashboards, and policy recommendations to identify key factors influencing national happiness levels across different countries and regions.",
     image: "/api/placeholder/600/400",
-    category: "Healthcare Analytics",
-    status: "Current Development",
+    category: "Data Analytics",
+    status: "Live Demo Available",
     impact: {
-      units: "5+ Depts",
-      plans: "200+",
-      experience: "8 Years"
+      countries: "156",
+      years: "5",
+      factors: "6 Key"
     },
     technologies: [
-      "Python", "R", "SQL", "Tableau", "AWS AI Practitioner",
-      "Advanced Excel", "Statistical Analysis", "Healthcare Systems"
+      "Python", "Pandas", "NumPy", "React", "TypeScript", "Next.js", "Recharts", "Tailwind CSS",
+      "Framer Motion", "Statistical Analysis", "Data Visualization", "Claude AI", "Perplexity AI", "Model Context Protocol",
     ],
     features: [
-      "Multi-unit patient data integration",
-      "Clinical outcome analytics",
-      "Operational efficiency metrics", 
-      "Multidisciplinary team insights",
-      "Evidence-based care optimization"
+      "Global happiness trend analysis",
+      "Regional comparison dashboards",
+      "Factor correlation studies", 
+      "Country progress tracking",
+      "Policy recommendation framework"
     ],
     links: {
-      demo: "#",
+      demo: "/dashboards/happiness-analytics",
       github: "#",
       case_study: "#"
     },
     color: "cyan",
-    icon: Database
+    icon: Globe
   },
   {
     id: 4,
@@ -310,7 +310,7 @@ export function ProjectsSection() {
     switch (projectId) {
       case 1: return '/dashboards/inventory-management';
       case 2: return '/dashboards/operational-optimization';
-      case 3: return '/dashboards/healthcare-analytics';
+      case 3: return '/dashboards/happiness-analytics';
       case 4: return '/dashboards/heart-disease-prediction';
       case 5: return '/dashboards/life-expectancy';
       default: return '/projects';
