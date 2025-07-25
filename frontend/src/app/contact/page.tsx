@@ -20,6 +20,11 @@ export default function ContactPage() {
     })
   }
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Form will be handled by Formspree action
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
       {/* Back Button */}
@@ -110,7 +115,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Email</p>
-                      <p className="text-white/80">lloyd.delacruz@vch.ca</p>
+                      <p className="text-white/80">lloyd.delacruz@outlook.com</p>
                     </div>
                   </div>
 
@@ -190,7 +195,12 @@ export default function ContactPage() {
                 <h2 className="text-2xl font-bold text-white">Send a Message</h2>
               </div>
 
-              <form className="space-y-6">
+              <form 
+                action="https://formspree.io/f/xpwldjol" 
+                method="POST"
+                onSubmit={handleSubmit}
+                className="space-y-6"
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="name" className="block text-white font-medium mb-2">
@@ -266,8 +276,8 @@ export default function ContactPage() {
               <div className="mt-6 pt-6 border-t border-white/20">
                 <p className="text-white/60 text-sm text-center">
                   Prefer direct contact? Email me at{' '}
-                  <a href="mailto:lloyd.delacruz@vch.ca" className="text-blue-300 hover:text-blue-200 transition-colors">
-                    lloyd.delacruz@vch.ca
+                  <a href="mailto:lloyd.delacruz@outlook.com" className="text-blue-300 hover:text-blue-200 transition-colors">
+                    lloyd.delacruz@outlook.com
                   </a>
                 </p>
               </div>
@@ -363,7 +373,7 @@ export default function ContactPage() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <motion.a
-              href="mailto:lloyd.delacruz@vch.ca"
+              href="mailto:lloyd.delacruz@outlook.com"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center px-8 py-4 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
