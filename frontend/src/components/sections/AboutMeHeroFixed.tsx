@@ -35,11 +35,11 @@ export function AboutMeHeroFixed() {
                             </h2>
                             
                             <p className="text-xl text-blue-100 mb-6 leading-relaxed">
-                                A results-driven analytics professional with 20+ years of healthcare, project management, and operational optimization experience. Currently completing my MSc in Data Analytics (Eastern University, Dec 2025) while serving as a Rehabilitation Assistant at Vancouver Coastal Health, supporting multidisciplinary teams across Neurology, General Surgery, Orthopedics/Trauma, ICU, and Rehabilitation units.
+                                Results-driven data analytics professional with 20+ years of cross-functional experience—8 of which are in healthcare operations, project management, and clinical optimization. Currently completing an MSc in Data Analytics at Eastern University (expected Dec 2025), while contributing to patient care and interdisciplinary collaboration as a Rehabilitation Assistant at Vancouver Coastal Health, supporting Neurology, General Surgery, Orthopedics/Trauma, ICU, and Rehab units.
                             </p>
                             
                             <p className="text-lg text-blue-200 mb-8 leading-relaxed">
-                                AWS AI Practitioner certified with expertise in SQL, Python, R, and Tableau. I excel at designing performance measurement frameworks, streamlining workflows, and delivering actionable insights through data visualization. Previously led large-scale projects at IEQ Global Singapore, implementing Lean Six Sigma methodologies that reduced project timelines by 15% and costs by 20%.
+                                Certified in BrainStation Data Analytics, Google Data Analytics, DeepLearning.AI Data Engineering, and AWS AI Practitioner. Proficient in SQL, Python, R, and Tableau, with a strong focus on data-driven decision-making, workflow optimization, and visual storytelling. Adept at designing performance measurement frameworks and building insightful dashboards that enhance clinical and operational efficiency. Successfully led large-scale initiatives at IEQ Global Singapore, applying Lean Six Sigma methodologies to reduce project timelines by 15% and cut operational costs by 20%, demonstrating the power of analytics in real-world impact.
                             </p>
                             
                             {/* Key Stats */}
@@ -117,11 +117,11 @@ export function AboutMeHeroFixed() {
                         </h2>
                         
                         <p className="text-xl text-blue-100 mb-6 leading-relaxed">
-                            A results-driven analytics professional with 20+ years of healthcare, project management, and operational optimization experience. Currently completing my MSc in Data Analytics (Eastern University, Dec 2025) while serving as a Rehabilitation Assistant at Vancouver Coastal Health, supporting multidisciplinary teams across Neurology, General Surgery, Orthopedics/Trauma, ICU, and Rehabilitation units.
+                            Results-driven data analytics professional with 20+ years of cross-functional experience—8 of which are in healthcare operations, project management, and clinical optimization. Currently completing an MSc in Data Analytics at Eastern University (expected Dec 2025), while contributing to patient care and interdisciplinary collaboration as a Rehabilitation Assistant at Vancouver Coastal Health, supporting Neurology, General Surgery, Orthopedics/Trauma, ICU, and Rehab units.
                         </p>
                         
                         <p className="text-lg text-blue-200 mb-8 leading-relaxed">
-                            AWS AI Practitioner certified with expertise in SQL, Python, R, and Tableau. I excel at designing performance measurement frameworks, streamlining workflows, and delivering actionable insights through data visualization. Previously led large-scale projects at IEQ Global Singapore, implementing Lean Six Sigma methodologies that reduced project timelines by 15% and costs by 20%.
+                            Certified in BrainStation Data Analytics, Google Data Analytics, DeepLearning.AI Data Engineering, and AWS AI Practitioner. Proficient in SQL, Python, R, and Tableau, with a strong focus on data-driven decision-making, workflow optimization, and visual storytelling. Adept at designing performance measurement frameworks and building insightful dashboards that enhance clinical and operational efficiency. Successfully led large-scale initiatives at IEQ Global Singapore, applying Lean Six Sigma methodologies to reduce project timelines by 15% and cut operational costs by 20%, demonstrating the power of analytics in real-world impact.
                         </p>
                         
                         {/* Key Stats */}

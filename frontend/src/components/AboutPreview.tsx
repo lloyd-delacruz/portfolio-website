@@ -22,20 +22,20 @@ const values = [
 ];
 
 const skills = [
-  "React & Next.js",
-  "Python & Django", 
+  "HTML, CSS, JavaScript",
+  "TypeScript & React",
+  "Python & R",
+  "SQL (Multiple Flavors)",
   "Healthcare Analytics",
   "Machine Learning",
-  "Cloud Architecture",
   "Data Visualization",
-  "API Development",
-  "Database Design"
+  "Full-Stack Development"
 ];
 
 const achievements = [
-  { number: "50+", label: "Healthcare Projects", color: "text-success" },
-  { number: "98%", label: "Client Satisfaction", color: "text-primary" },
-  { number: "3+", label: "Years Experience", color: "text-secondary" }
+  { number: "10+", label: "Years Healthcare", color: "text-success" },
+  { number: "MSc", label: "Data Analytics", color: "text-primary" },
+  { number: "5+", label: "Years Coding", color: "text-secondary" }
 ];
 
 export default function AboutPreview() {
@@ -164,18 +164,19 @@ export default function AboutPreview() {
                 <h3 className="text-2xl font-semibold">My Journey</h3>
                 <div className="space-y-4 text-foreground-muted">
                   <p>
-                    I&apos;m passionate about leveraging data and technology to solve complex problems in healthcare. 
-                    My work spans from developing full-stack applications to conducting in-depth healthcare analytics, 
-                    always with a focus on creating meaningful impact.
+                    As a healthcare professional with an engineering background, I hold an MSc in Data Analytics 
+                    and multiple certifications from BrainStation, Google, Deep Learning AI, DataCamp, and Udemy. 
+                    My coding journey began in 2019 with Colt Steele&apos;s Full-Stack Web Development course.
                   </p>
                   <p>
-                    With expertise in both data science and full-stack development, I bridge the gap between 
-                    technical innovation and practical healthcare solutions, ensuring that cutting-edge technology 
-                    translates into real-world benefits for healthcare professionals and patients.
+                    With nearly a decade of hospital experience across acute, sub-acute, outpatient, and community 
+                    settings, I&apos;ve collaborated with diverse healthcare teams - from doctors and nurses to 
+                    management and support staff. This deep domain knowledge shapes my approach to technology solutions.
                   </p>
                   <p>
-                    My unique combination of technical skills and healthcare domain knowledge allows me to 
-                    understand complex medical workflows and translate them into efficient, user-friendly digital solutions.
+                    Self-taught in HTML, CSS, JavaScript, TypeScript, Python, R, and various SQL flavors, 
+                    I leverage both traditional programming and modern AI tools while maintaining a solid 
+                    understanding of syntax and best practices. I bridge healthcare challenges with data-driven solutions.
                   </p>
                 </div>
               </div>

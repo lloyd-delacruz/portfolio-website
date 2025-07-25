@@ -46,7 +46,12 @@
       "Bash(cut:*)",
       "Bash(tree:*)",
       "Bash(npm run frontend:dev:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "Bash(cd:*)",
+      "Bash(/dev/null)",
+      "Bash(cd:*)"
     ],
     "deny": []
   }
