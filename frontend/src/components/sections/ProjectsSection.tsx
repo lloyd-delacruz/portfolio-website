@@ -41,39 +41,6 @@ const projects = [
   },
   {
     id: 2,
-    title: "Project Management Analytics Dashboard", 
-    subtitle: "Lean Six Sigma & Performance Optimization",
-    description: "Comprehensive project analytics solution implementing Lean Six Sigma methodologies for large-scale construction and engineering projects, achieving 15% timeline reduction and 20% cost savings.",
-    longDescription: "Developed for IEQ Global PTE LTD, this analytics platform transformed project management processes through data-driven insights. Implemented advanced financial planning models and variance analysis, resulting in 35% increase in successful bids and improved stakeholder communication across government agencies and contractors.",
-    image: "/images/Project_Management.png",
-    category: "Project Management",
-    status: "Successfully Implemented",
-    impact: {
-      savings: "20%",
-      timeline: "15%↓", 
-      bids: "35%↑"
-    },
-    technologies: [
-      "Excel Advanced", "SQL", "Lean Six Sigma", "Financial Modeling", 
-      "Risk Assessment", "Tableau", "Process Analytics"
-    ],
-    features: [
-      "Advanced financial planning & analysis",
-      "Variance reporting & insights",
-      "Lean Six Sigma implementation",
-      "Cross-functional coordination tools",
-      "Risk assessment frameworks"
-    ],
-    links: {
-      demo: "#",
-      github: "#", 
-      case_study: "/case-studies/project-management-analytics"
-    },
-    color: "purple",
-    icon: MapPin
-  },
-  {
-    id: 3,
     title: "World Happiness Analytics Dashboard",
     subtitle: "Global Well-being Data Analysis & Visualization Platform", 
     description: "Comprehensive happiness analytics platform analyzing 5 years of World Happiness Report data (2015-2019) across 156 countries, examining socioeconomic factors, regional trends, and policy implications for global well-being.",
@@ -106,7 +73,7 @@ const projects = [
     icon: Globe
   },
   {
-    id: 4,
+    id: 3,
     title: "Heart Disease Prediction Dashboard",
     subtitle: "Machine Learning & Interactive Analytics Platform",
     description: "Comprehensive heart disease prediction system using Kaggle's Heart Disease UCI dataset. Features ML model comparison, interactive Tableau dashboard, and clinical decision support tools with 87.7% Random Forest accuracy.",
@@ -250,7 +217,7 @@ plt.show()`
     icon: Heart
   },
   {
-    id: 5,
+    id: 4,
     title: "Global Life Expectancy Analytics Dashboard",
     subtitle: "WHO Health Data Analysis & Visualization Platform",
     description: "Comprehensive life expectancy analysis platform using WHO Global Health Observatory data, examining socioeconomic factors, healthcare indicators, and demographic trends across 193 countries over 15 years (2000-2015).",
@@ -282,7 +249,7 @@ plt.show()`
     icon: TrendingUp
   },
   {
-    id: 6,
+    id: 5,
     title: "Hospital Spending Analytics Dashboard",
     subtitle: "Canadian Healthcare Expenditure Analysis & Insights",
     description: "Comprehensive hospital spending analysis platform using Canadian MIS Database data, examining healthcare expenditure patterns, regional distributions, and cost trends across provinces (2005-2023).",
@@ -314,7 +281,7 @@ plt.show()`
     icon: Activity
   },
   {
-    id: 7,
+    id: 6,
     title: "National Health Expenditure Dashboard",
     subtitle: "Canadian Health Spending Trends & Policy Analysis",
     description: "Interactive national health expenditure platform analyzing Canadian health spending from 1975-2022, examining total expenditure, per capita costs, GDP percentage, and sector distribution for policy insights.",
@@ -373,12 +340,11 @@ export function ProjectsSection() {
   const getDashboardRoute = (projectId: number) => {
     switch (projectId) {
       case 1: return '/dashboards/inventory-management';
-      case 2: return '/dashboards/operational-optimization';
-      case 3: return '/dashboards/happiness-analytics';
-      case 4: return '/dashboards/heart-disease-prediction';
-      case 5: return '/dashboards/life-expectancy';
-      case 6: return '/dashboards/hospital-spending';
-      case 7: return '/dashboards/national-health-expenditure';
+      case 2: return '/dashboards/happiness-analytics';
+      case 3: return '/dashboards/heart-disease-prediction';
+      case 4: return '/dashboards/life-expectancy';
+      case 5: return '/dashboards/hospital-spending';
+      case 6: return '/dashboards/national-health-expenditure';
       default: return '/projects';
     }
   };

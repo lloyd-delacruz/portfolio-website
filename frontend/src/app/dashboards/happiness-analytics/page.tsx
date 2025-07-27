@@ -27,6 +27,26 @@ export default function HappinessAnalyticsPage() {
         </Link>
       </motion.div>
 
+      {/* Data Source Disclaimer */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.1 }}
+        className="pt-24 px-4 pb-8"
+      >
+        <div className="container mx-auto max-w-7xl">
+          <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-lg mb-8">
+            <div className="flex">
+              <div className="ml-3">
+                <p className="text-sm text-blue-700">
+                  <strong>Data Source:</strong> World Happiness data sourced from Kaggle.com. Analysis performed using multiple programming languages including Python with Pandas for data processing, and Excel for additional data analysis and visualization.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Main Dashboard Component */}
       <HappinessAnalysisDashboard />
     </div>

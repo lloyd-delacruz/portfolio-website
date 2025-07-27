@@ -46,6 +46,27 @@ export default function InventoryManagementPage() {
         </div>
       </section>
 
+      {/* Data Disclaimer */}
+      <section className="px-4 pb-8">
+        <div className="container mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-lg mb-8"
+          >
+            <div className="flex">
+              <div className="ml-3">
+                <p className="text-sm text-amber-700">
+                  <strong>Data Disclaimer:</strong> The data presented in this dashboard is generated and randomly selected for demonstration purposes only. 
+                  This system has not yet been implemented and is presented as a proposal to assist management in making informed decisions about potential implementation.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Dashboard */}
       <section className="px-4 pb-16">
         <div className="container mx-auto max-w-7xl">

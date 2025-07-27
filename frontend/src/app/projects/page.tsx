@@ -1,11 +1,99 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowLeft, Code, Database, Brain, BarChart3, Zap, ExternalLink } from 'lucide-react'
+import { ArrowLeft, Code, Database, Brain, BarChart3, Zap, ExternalLink, X } from 'lucide-react'
 import Link from 'next/link'
 import { ProjectsSection } from '@/components/sections/ProjectsSection'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Badge } from '@/components/ui/badge'
+import { useState } from 'react'
 
 export default function ProjectsPage() {
+  const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
+
+  const skillsData = {
+    'Data Analytics': {
+      icon: Database,
+      color: 'blue',
+      description: 'Advanced data processing, statistical analysis, and insights generation for healthcare systems.',
+      details: [
+        'ETL pipeline development for clinical data integration',
+        'Statistical modeling for patient outcome prediction',
+        'Real-time analytics dashboards for operational insights',
+        'Data quality assessment and cleansing protocols'
+      ],
+      technologies: ['Python', 'SQL', 'Pandas', 'NumPy', 'Apache Spark', 'Databricks', 'PostgreSQL'],
+      projects: [
+        { name: 'Hospital Spending Analytics', description: 'Comprehensive analysis of healthcare expenditure patterns' },
+        { name: 'National Health Expenditure Dashboard', description: 'Canadian health spending trends visualization' }
+      ]
+    },
+    'AI/ML': {
+      icon: Brain,
+      color: 'purple',
+      description: 'Machine learning models and AI solutions for predictive healthcare analytics.',
+      details: [
+        'Predictive models for disease risk assessment',
+        'Natural language processing for clinical notes',
+        'Computer vision for medical imaging analysis',
+        'Automated decision support systems'
+      ],
+      technologies: ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Keras', 'OpenCV', 'Hugging Face', 'MLflow'],
+      projects: [
+        { name: 'Heart Disease Prediction Model', description: 'ML model predicting cardiovascular risk factors' },
+        { name: 'Life Expectancy Analysis', description: 'AI-driven population health outcome forecasting' }
+      ]
+    },
+    'Visualization': {
+      icon: BarChart3,
+      color: 'green',
+      description: 'Interactive data visualization and business intelligence solutions.',
+      details: [
+        'Executive dashboard development',
+        'Real-time monitoring systems',
+        'Interactive patient journey mapping',
+        'Performance metrics visualization'
+      ],
+      technologies: ['D3.js', 'Recharts', 'Plotly', 'Tableau', 'Power BI', 'Chart.js', 'Observable'],
+      projects: [
+        { name: 'Happiness Analytics Dashboard', description: 'Employee wellbeing metrics visualization' },
+        { name: 'Inventory Management System', description: 'Real-time supply chain analytics' }
+      ]
+    },
+    'Full Stack': {
+      icon: Code,
+      color: 'yellow',
+      description: 'End-to-end application development with modern web technologies.',
+      details: [
+        'Responsive web application development',
+        'RESTful API design and implementation',
+        'Database architecture and optimization',
+        'Cloud deployment and DevOps practices'
+      ],
+      technologies: ['React', 'Next.js', 'TypeScript', 'Node.js', 'Express', 'FastAPI', 'AWS'],
+      projects: [
+        { name: 'Healthcare Portfolio Platform', description: 'This comprehensive portfolio website' },
+        { name: 'Clinical Data Platform', description: 'Secure patient data management system' }
+      ]
+    },
+    'Automation': {
+      icon: Zap,
+      color: 'orange',
+      description: 'Process automation and workflow optimization for healthcare operations.',
+      details: [
+        'Automated report generation systems',
+        'Data pipeline orchestration',
+        'Clinical workflow automation',
+        'Quality assurance automation'
+      ],
+      technologies: ['Python', 'Apache Airflow', 'Docker', 'Kubernetes', 'Jenkins', 'GitHub Actions', 'Terraform'],
+      projects: [
+        { name: 'Automated Analytics Pipeline', description: 'Self-updating healthcare metrics system' },
+        { name: 'Report Generation Engine', description: 'Automated clinical reporting workflow' }
+      ]
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900">
       {/* Back Button */}
@@ -89,26 +177,72 @@ export default function ProjectsPage() {
             transition={{ duration: 0.8, delay: 1 }}
             className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-16 max-w-3xl mx-auto"
           >
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 text-center">
-              <Database className="h-8 w-8 text-blue-300 mx-auto mb-2" />
-              <div className="text-white/80 text-sm font-medium">Data Analytics</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 text-center">
-              <Brain className="h-8 w-8 text-purple-300 mx-auto mb-2" />
-              <div className="text-white/80 text-sm font-medium">AI/ML</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 text-center">
-              <BarChart3 className="h-8 w-8 text-green-300 mx-auto mb-2" />
-              <div className="text-white/80 text-sm font-medium">Visualization</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 text-center">
-              <Code className="h-8 w-8 text-yellow-300 mx-auto mb-2" />
-              <div className="text-white/80 text-sm font-medium">Full Stack</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 text-center">
-              <Zap className="h-8 w-8 text-orange-300 mx-auto mb-2" />
-              <div className="text-white/80 text-sm font-medium">Automation</div>
-            </div>
+            {Object.entries(skillsData).map(([skillName, skillData], index) => {
+              const IconComponent = skillData.icon
+              return (
+                <Dialog key={skillName}>
+                  <DialogTrigger asChild>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1 + index * 0.1 }}
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 text-center cursor-pointer hover:bg-white/20 hover:border-white/40 transition-all duration-300"
+                    >
+                      <IconComponent className={`h-8 w-8 text-${skillData.color}-300 mx-auto mb-2`} />
+                      <div className="text-white/80 text-sm font-medium">{skillName}</div>
+                    </motion.div>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-3 text-2xl">
+                        <IconComponent className={`h-8 w-8 text-${skillData.color}-600`} />
+                        {skillName}
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-6 mt-6">
+                      <p className="text-gray-700 leading-relaxed">{skillData.description}</p>
+                      
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3">Key Capabilities</h4>
+                        <ul className="space-y-2">
+                          {skillData.details.map((detail, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-gray-600">
+                              <div className={`w-2 h-2 rounded-full bg-${skillData.color}-500 mt-2 flex-shrink-0`} />
+                              {detail}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3">Technologies & Tools</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {skillData.technologies.map((tech, idx) => (
+                            <Badge key={idx} variant="secondary" className={`bg-${skillData.color}-50 text-${skillData.color}-700 border-${skillData.color}-200`}>
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3">Featured Projects</h4>
+                        <div className="space-y-3">
+                          {skillData.projects.map((project, idx) => (
+                            <div key={idx} className={`p-4 bg-${skillData.color}-50 rounded-lg border border-${skillData.color}-100`}>
+                              <h5 className={`font-medium text-${skillData.color}-900 mb-1`}>{project.name}</h5>
+                              <p className={`text-sm text-${skillData.color}-700`}>{project.description}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              )
+            })}
           </motion.div>
 
           {/* Featured Project Highlight */}
