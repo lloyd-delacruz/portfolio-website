@@ -510,7 +510,7 @@ export function HeartDiseasePredictionDashboard() {
 
                 {/* Fasting BS */}
                 <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                  <span className="text-sm font-medium text-gray-700">Fasting BS > 120</span>
+                  <span className="text-sm font-medium text-gray-700">Fasting BS &gt; 120</span>
                   <select
                     value={patientData.fastingBS}
                     onChange={(e) => updatePatientData('fastingBS', parseInt(e.target.value))}
