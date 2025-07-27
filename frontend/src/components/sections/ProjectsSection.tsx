@@ -280,6 +280,70 @@ plt.show()`
     },
     color: "green",
     icon: TrendingUp
+  },
+  {
+    id: 6,
+    title: "Hospital Spending Analytics Dashboard",
+    subtitle: "Canadian Healthcare Expenditure Analysis & Insights",
+    description: "Comprehensive hospital spending analysis platform using Canadian MIS Database data, examining healthcare expenditure patterns, regional distributions, and cost trends across provinces (2005-2023).",
+    longDescription: "Advanced healthcare expenditure analytics project utilizing the Canadian MIS Database to uncover hospital spending patterns and cost drivers. Features comprehensive analysis of compensation, supplies, drugs, and infrastructure costs across different provinces and territories, providing insights for healthcare policy and budget optimization.",
+    image: "/images/Hospital_Spending.png",
+    category: "Healthcare Analytics",
+    status: "Live Demo Available",
+    impact: {
+      provinces: "11",
+      years: "18+",
+      categories: "7"
+    },
+    technologies: [
+      "React", "TypeScript", "Recharts", "Excel", "Data Analysis", "Healthcare Data"
+    ],
+    features: [
+      "Multi-provincial spending trend analysis",
+      "Expense category breakdown and evolution",
+      "Compensation vs operational cost analysis",
+      "Year-over-year growth tracking",
+      "Regional comparison dashboards"
+    ],
+    links: {
+      demo: "/dashboards/hospital-spending",
+      github: "#",
+      case_study: "/case-studies/hospital-spending-analytics"
+    },
+    color: "blue",
+    icon: Activity
+  },
+  {
+    id: 7,
+    title: "National Health Expenditure Dashboard",
+    subtitle: "Canadian Health Spending Trends & Policy Analysis",
+    description: "Interactive national health expenditure platform analyzing Canadian health spending from 1975-2022, examining total expenditure, per capita costs, GDP percentage, and sector distribution for policy insights.",
+    longDescription: "Comprehensive national health expenditure analysis using 48 years of Canadian health spending data. Features interactive visualizations, sector distribution analysis, and policy-relevant insights for understanding healthcare cost trends and their impact on the Canadian economy.",
+    image: "/images/National_Health_Expenditure.png",
+    category: "Healthcare Policy Analytics",
+    status: "Live Demo Available",
+    impact: {
+      years: "48",
+      growth: "27x",
+      sectors: "4"
+    },
+    technologies: [
+      "React", "TypeScript", "Chart.js", "Next.js", "Statistical Analysis", "Policy Research"
+    ],
+    features: [
+      "48-year historical spending analysis",
+      "Per capita expenditure tracking",
+      "GDP percentage trend analysis",
+      "Public vs private sector breakdown",
+      "Multi-metric comparison dashboard"
+    ],
+    links: {
+      demo: "/dashboards/national-health-expenditure",
+      github: "#",
+      case_study: "/case-studies/national-health-expenditure"
+    },
+    color: "purple",
+    icon: TrendingUp
   }
 ];
 
@@ -313,6 +377,8 @@ export function ProjectsSection() {
       case 3: return '/dashboards/happiness-analytics';
       case 4: return '/dashboards/heart-disease-prediction';
       case 5: return '/dashboards/life-expectancy';
+      case 6: return '/dashboards/hospital-spending';
+      case 7: return '/dashboards/national-health-expenditure';
       default: return '/projects';
     }
   };
