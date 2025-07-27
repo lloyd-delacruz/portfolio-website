@@ -52,7 +52,13 @@
       "Bash(cd:*)",
       "Bash(/dev/null)",
       "Bash(cd:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(curl:*)",
+      "Bash(open http://localhost:3001/dashboards/hospital-spending)",
+      "Bash(open http://localhost:3001/dashboards/national-health-expenditure)",
+      "Bash(open http://localhost:3001/projects)",
+      "WebFetch(domain:github.com)",
+      "Bash(git merge:*)"
     ],
     "deny": []
   }
