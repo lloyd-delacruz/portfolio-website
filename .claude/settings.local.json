@@ -58,7 +58,10 @@
       "Bash(open http://localhost:3001/dashboards/national-health-expenditure)",
       "Bash(open http://localhost:3001/projects)",
       "WebFetch(domain:github.com)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(timeout 10s npm run dev)",
+      "Bash(touch:*)",
+      "Bash(timeout:*)"
     ],
     "deny": []
   }

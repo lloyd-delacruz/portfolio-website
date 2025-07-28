@@ -1,3 +1,11 @@
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Only use export mode in production
@@ -17,6 +25,8 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  // Configure MDX
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
 }
 
-module.exports = nextConfig
+module.exports = withMDX(nextConfig)

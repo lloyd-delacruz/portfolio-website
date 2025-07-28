@@ -261,94 +261,77 @@ export default function EducationPage() {
                   <div className="w-1/2 pl-8">
                     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
                       <h3 className="text-xl font-bold text-white mb-2">AWS AI Practitioner</h3>
-                      <p className="text-purple-200 mb-2">2023</p>
+                      <p className="text-purple-200 mb-2">2025</p>
                       <p className="text-white/80 text-sm">Cloud-based AI and machine learning certification</p>
                     </div>
                   </div>
                 </motion.div>
 
                 <motion.div
-                  initial={{ opacity: 0, x: -50 }}
+                  initial={{ opacity: 0, x: 50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   className="flex items-center"
                 >
-                  <div className="w-1/2 pr-8 text-right">
+                  <div className="w-1/2 pr-8"></div>
+                  <div className="w-4 h-4 bg-green-500 rounded-full border-4 border-white relative z-10"></div>
+                  <div className="w-1/2 pl-8">
                     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
                       <h3 className="text-xl font-bold text-white mb-2">Data Engineering - Deep Learning</h3>
                       <p className="text-green-200 mb-2">2025</p>
                       <p className="text-white/80 text-sm">Advanced data engineering and deep learning techniques</p>
                     </div>
                   </div>
-                  <div className="w-4 h-4 bg-green-500 rounded-full border-4 border-white relative z-10"></div>
-                  <div className="w-1/2 pl-8"></div>
                 </motion.div>
 
                 <motion.div
-                  initial={{ opacity: 0, x: 50 }}
+                  initial={{ opacity: 0, x: -50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   className="flex items-center"
                 >
-                  <div className="w-1/2 pr-8"></div>
-                  <div className="w-4 h-4 bg-orange-500 rounded-full border-4 border-white relative z-10"></div>
-                  <div className="w-1/2 pl-8">
+                  <div className="w-1/2 pr-8 text-right">
                     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
                       <h3 className="text-xl font-bold text-white mb-2">Data Analytics Certificate - BrainStation IO</h3>
                       <p className="text-orange-200 mb-2">2024</p>
                       <p className="text-white/80 text-sm">Professional data analytics certification</p>
                     </div>
                   </div>
+                  <div className="w-4 h-4 bg-orange-500 rounded-full border-4 border-white relative z-10"></div>
+                  <div className="w-1/2 pl-8"></div>
                 </motion.div>
 
                 <motion.div
-                  initial={{ opacity: 0, x: -50 }}
+                  initial={{ opacity: 0, x: 50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   className="flex items-center"
                 >
-                  <div className="w-1/2 pr-8 text-right">
+                  <div className="w-1/2 pr-8"></div>
+                  <div className="w-4 h-4 bg-yellow-500 rounded-full border-4 border-white relative z-10"></div>
+                  <div className="w-1/2 pl-8">
                     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
                       <h3 className="text-xl font-bold text-white mb-2">Google Data Analytics Certificate</h3>
                       <p className="text-yellow-200 mb-2">2022</p>
                       <p className="text-white/80 text-sm">Google professional data analytics certification</p>
                     </div>
                   </div>
-                  <div className="w-4 h-4 bg-yellow-500 rounded-full border-4 border-white relative z-10"></div>
-                  <div className="w-1/2 pl-8"></div>
                 </motion.div>
 
                 <motion.div
-                  initial={{ opacity: 0, x: 50 }}
+                  initial={{ opacity: 0, x: -50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   className="flex items-center"
                 >
-                  <div className="w-1/2 pr-8"></div>
-                  <div className="w-4 h-4 bg-red-500 rounded-full border-4 border-white relative z-10"></div>
-                  <div className="w-1/2 pl-8">
+                  <div className="w-1/2 pr-8 text-right">
                     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
                       <h3 className="text-xl font-bold text-white mb-2">Fullstack Web Development - Udemy</h3>
                       <p className="text-red-200 mb-2">2021</p>
                       <p className="text-white/80 text-sm">Comprehensive fullstack web development training</p>
                     </div>
                   </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="flex items-center"
-                >
-                  <div className="w-1/2 pr-8 text-right">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-                      <h3 className="text-xl font-bold text-white mb-2">Physiotherapy and Occupational Therapy Assistant</h3>
-                      <p className="text-teal-200 mb-2">2016</p>
-                      <p className="text-white/80 text-sm">Vancouver Community College</p>
-                    </div>
-                  </div>
-                  <div className="w-4 h-4 bg-teal-500 rounded-full border-4 border-white relative z-10"></div>
+                  <div className="w-4 h-4 bg-red-500 rounded-full border-4 border-white relative z-10"></div>
                   <div className="w-1/2 pl-8"></div>
                 </motion.div>
 
@@ -359,31 +342,14 @@ export default function EducationPage() {
                   className="flex items-center"
                 >
                   <div className="w-1/2 pr-8"></div>
-                  <div className="w-4 h-4 bg-cyan-500 rounded-full border-4 border-white relative z-10"></div>
+                  <div className="w-4 h-4 bg-blue-500 rounded-full border-4 border-white relative z-10"></div>
                   <div className="w-1/2 pl-8">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-                      <h3 className="text-xl font-bold text-white mb-2">Sustainability Management Certificate</h3>
-                      <p className="text-cyan-200 mb-2">2013</p>
-                      <p className="text-white/80 text-sm">University of British Columbia</p>
-                    </div>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="flex items-center"
-                >
-                  <div className="w-1/2 pr-8 text-right">
                     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
                       <h3 className="text-xl font-bold text-white mb-2">BSc Industrial Engineering</h3>
                       <p className="text-blue-200 mb-2">2007</p>
                       <p className="text-white/80 text-sm">Foundation in process optimization and systems analysis</p>
                     </div>
                   </div>
-                  <div className="w-4 h-4 bg-blue-500 rounded-full border-4 border-white relative z-10"></div>
-                  <div className="w-1/2 pl-8"></div>
                 </motion.div>
               </div>
             </div>

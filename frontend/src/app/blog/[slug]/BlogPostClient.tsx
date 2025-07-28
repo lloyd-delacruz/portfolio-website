@@ -1,30 +1,47 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Calendar, Clock, Share2, BookOpen, Eye, Play } from 'lucide-react'
 import Link from 'next/link'
-
-interface BlogPost {
-  id: number
-  title: string
-  slug: string
-  excerpt: string
-  category: string
-  readTime: string
-  date: string
-  author: string
-  video: boolean
-  interactive: boolean
-  tags: string[]
-  gradient: string
-  content: string
-}
+import { processMarkdown } from '@/lib/blog'
+import type { BlogPost } from '@/lib/blog'
 
 interface BlogPostClientProps {
   post: BlogPost
 }
 
 const BlogPostClient = ({ post }: BlogPostClientProps) => {
+  const [processedContent, setProcessedContent] = useState<string>('')
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const processContent = async () => {
+      try {
+        const html = await processMarkdown(post.content)
+        setProcessedContent(html)
+      } catch (error) {
+        console.error('Error processing markdown:', error)
+        setProcessedContent(post.content)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    processContent()
+  }, [post.content])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
+          <p className="text-white text-lg">Processing content...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className={`min-h-screen bg-gradient-to-br ${post.gradient} relative overflow-hidden`}>
       {/* Background Effects */}
@@ -130,9 +147,9 @@ const BlogPostClient = ({ post }: BlogPostClientProps) => {
           <div className="prose prose-lg prose-invert max-w-none">
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
               <div 
-                className="text-gray-200 leading-relaxed"
+                className="blog-content text-gray-200 leading-relaxed"
                 dangerouslySetInnerHTML={{ 
-                  __html: post.content.replace(/\n/g, '<br>').replace(/#{1,6} /g, '<h2 class="text-2xl font-bold text-white mt-8 mb-4">').replace(/<h2 class="text-2xl font-bold text-white mt-8 mb-4">/g, '</p><h2 class="text-2xl font-bold text-white mt-8 mb-4">').replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>').replace(/^\s*<\/p>/, '')
+                  __html: processedContent
                 }}
               />
             </div>
