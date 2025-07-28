@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Calendar, MapPin, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const experiences = [
   {
@@ -237,14 +238,16 @@ export function ExperienceSection() {
           <p className="text-lg text-gray-600 mb-6">
             Interested in my professional journey and how I can contribute to your team?
           </p>
-          <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
-          >
-            Download Full Resume
-            <ChevronRight className="w-4 h-4 ml-2" />
-          </motion.button>
+          <Link href="/contact">
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+            >
+              Get In Touch
+              <ChevronRight className="w-4 h-4 ml-2" />
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </section>

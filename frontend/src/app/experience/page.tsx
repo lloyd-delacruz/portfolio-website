@@ -86,11 +86,11 @@ export default function ExperiencePage() {
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 text-center">
               <Briefcase className="h-8 w-8 text-blue-300 mx-auto mb-3" />
               <div className="text-2xl font-bold text-white mb-2">20+ Years</div>
-              <div className="text-white/80 text-sm">Healthcare Operations</div>
+              <div className="text-white/80 text-sm">Professional Experience</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 text-center">
               <Award className="h-8 w-8 text-green-300 mx-auto mb-3" />
-              <div className="text-2xl font-bold text-white mb-2">Lean Six Sigma</div>
+              <div className="text-2xl font-bold text-white mb-2">Project Management</div>
               <div className="text-white/80 text-sm">Process Excellence</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 text-center">
@@ -100,8 +100,8 @@ export default function ExperiencePage() {
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 text-center">
               <Users className="h-8 w-8 text-yellow-300 mx-auto mb-3" />
-              <div className="text-2xl font-bold text-white mb-2">Team Leadership</div>
-              <div className="text-white/80 text-sm">Strategic Management</div>
+              <div className="text-2xl font-bold text-white mb-2">Innovation & AI</div>
+              <div className="text-white/80 text-sm">Prompt Engineering • MCP • LLMs • ML</div>
             </div>
           </motion.div>
 
@@ -116,9 +116,9 @@ export default function ExperiencePage() {
               <Target className="h-6 w-6 text-white mr-2" />
               <span className="text-white font-semibold">Current Focus</span>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-3">VCH Healthcare Analytics</h3>
+            <h3 className="text-2xl font-bold text-white mb-3">Healthcare Analytics Projects</h3>
             <p className="text-white/80 leading-relaxed">
-              Leading data analytics initiatives to optimize healthcare delivery, 
+              Developing innovative data analytics solutions to optimize healthcare delivery, 
               reduce operational costs, and improve patient outcomes through 
               evidence-based decision making and AI implementation.
             </p>

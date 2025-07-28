@@ -12,6 +12,8 @@ export default function ContactPage() {
     subject: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -20,9 +22,44 @@ export default function ContactPage() {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Form will be handled by Formspree action
+    
+    // Basic validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setSubmitStatus('error')
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+
+    try {
+      const response = await fetch('https://formspree.io/f/xpwldjol', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          _replyto: formData.email,
+        }),
+      })
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', subject: '', message: '' })
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch {
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -196,8 +233,6 @@ export default function ContactPage() {
               </div>
 
               <form 
-                action="https://formspree.io/f/xpwldjol" 
-                method="POST"
                 onSubmit={handleSubmit}
                 className="space-y-6"
               >
@@ -212,6 +247,7 @@ export default function ContactPage() {
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
+                      required
                       className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="Your full name"
                     />
@@ -226,6 +262,7 @@ export default function ContactPage() {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
+                      required
                       className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="your.email@company.com"
                     />
@@ -256,20 +293,53 @@ export default function ContactPage() {
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
+                    required
                     rows={6}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                     placeholder="Tell me about your project, challenges, or how I can help optimize your healthcare operations..."
                   />
                 </div>
 
+                {/* Success/Error Messages */}
+                {submitStatus === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 bg-green-500/20 border border-green-500/30 rounded-lg"
+                  >
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
+                      <p className="text-green-200 font-medium">Message sent successfully! I'll get back to you within 24 hours.</p>
+                    </div>
+                  </motion.div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 bg-red-500/20 border border-red-500/30 rounded-lg"
+                  >
+                    <div className="flex items-center">
+                      <Mail className="h-5 w-5 text-red-400 mr-2" />
+                      <p className="text-red-200 font-medium">There was an error sending your message. Please try again or email me directly.</p>
+                    </div>
+                  </motion.div>
+                )}
+
                 <motion.button
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.02, y: isSubmitting ? 0 : -2 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                   type="submit"
-                  className="w-full inline-flex items-center justify-center px-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg"
+                  disabled={isSubmitting}
+                  className={`w-full inline-flex items-center justify-center px-6 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg ${
+                    isSubmitting 
+                      ? 'bg-gray-600 cursor-not-allowed' 
+                      : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
+                  } text-white`}
                 >
-                  <Send className="h-5 w-5 mr-2" />
-                  Send Message
+                  <Send className={`h-5 w-5 mr-2 ${isSubmitting ? 'animate-pulse' : ''}`} />
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </motion.button>
               </form>
 

@@ -76,10 +76,11 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.5, ease: "easeOut" }}
-              className="text-lg md:text-xl text-white/70 mb-6 max-w-2xl mx-auto"
+              className="text-lg md:text-xl text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed text-center"
             >
-              Results-driven analytics professional with BSc Industrial Engineering and 20+ years healthcare experience. 
-              AWS AI Practitioner specializing in data analytics, Lean Six Sigma, and operational optimization.
+              Results‑driven analytics leader with a BSc in Industrial Engineering, 20+ years of professional experience, 
+              and an MSc in Data Analytics (Dec 2025). AWS AI Practitioner skilled in data analytics, 
+              prompt & context engineering, and apps & web development—leveraging LLMs like Claude code.
             </motion.p>
             
             {/* Location */}
@@ -87,7 +88,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 1.8, ease: "easeOut" }}
-              className="flex items-center justify-center text-white/60 mb-12"
+              className="flex items-center justify-center text-white/60 mb-16"
             >
               <MapPin className="h-4 w-4 mr-2" />
               <span>Vancouver, BC • Available Now</span>
@@ -110,26 +111,6 @@ export default function Home() {
                   View My Work
                 </motion.button>
               </Link>
-              
-              <Link href="/contact">
-                <motion.button
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold border border-white/20 hover:bg-white/20 transition-colors"
-                >
-                  <Mail className="h-4 w-4 mr-2" />
-                  Contact Me
-                </motion.button>
-              </Link>
-              
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold border border-white/20 hover:bg-white/20 transition-colors"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Download CV
-              </motion.button>
             </motion.div>
           </div>
         </div>
@@ -252,24 +233,6 @@ export default function Home() {
               </motion.div>
             </Link>
 
-            {/* Contact Card */}
-            <Link href="/contact">
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-br from-teal-500/20 to-green-500/20 backdrop-blur-sm rounded-xl p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <MessageSquare className="h-10 w-10 text-teal-300 group-hover:scale-110 transition-transform" />
-                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-4">Get In Touch</h3>
-                <p className="text-white/80 mb-4">
-                  Ready to collaborate? Let&apos;s discuss your healthcare analytics needs
-                </p>
-                <div className="text-sm text-teal-300 font-medium">Start Conversation</div>
-              </motion.div>
-            </Link>
           </motion.div>
         </div>
       </section>
@@ -344,16 +307,6 @@ export default function Home() {
             transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Link href="/contact">
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center px-8 py-4 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
-              >
-                <Mail className="h-5 w-5 mr-2" />
-                Start Conversation
-              </motion.button>
-            </Link>
             <Link href="/projects">
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
