@@ -111,9 +111,9 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-white/80 mb-6 max-w-2xl mx-auto"
+            className="text-lg text-white/80 mb-8 max-w-2xl mx-auto"
           >
-            Ready to collaborate on transforming healthcare through data analytics and AI?
+            Ready to collaborate on transforming healthcare through data and AI?
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
