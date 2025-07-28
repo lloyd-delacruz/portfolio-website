@@ -165,13 +165,6 @@ const NationalHealthExpenditureDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <button
-                onClick={() => router.back()}
-                className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
-                aria-label="Go back"
-              >
-                <ArrowLeft className="h-6 w-6 text-gray-600" />
-              </button>
               <div className="p-2 bg-blue-100 rounded-lg">
                 <Activity className="h-8 w-8 text-blue-600" />
               </div>

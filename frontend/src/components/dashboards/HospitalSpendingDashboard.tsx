@@ -103,14 +103,10 @@ const HospitalSpendingDashboard = () => {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <button className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-                <FileText className="h-4 w-4 text-gray-600" />
-                <span className="text-sm text-gray-700">Report</span>
-              </button>
-              <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
-                <Download className="h-4 w-4" />
-                <span className="text-sm">Export</span>
-              </button>
+              <div className="flex items-center space-x-2 px-3 py-1 bg-blue-50 rounded-full text-sm text-blue-700">
+                <Calendar className="h-4 w-4" />
+                <span>2005 - 2023 Dataset</span>
+              </div>
             </div>
           </div>
           <div className="mt-4 flex items-center text-sm text-gray-500">

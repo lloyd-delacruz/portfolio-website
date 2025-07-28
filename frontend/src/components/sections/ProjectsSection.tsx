@@ -8,36 +8,35 @@ import Link from "next/link";
 const projects = [
   {
     id: 1,
-    title: "Wheelchair Inventory Optimization System",
-    subtitle: "Cerner Integration & Data-Driven Healthcare Management",
-    description: "Proposed integration system for wheelchair inventory management at Vancouver General Hospital, designed to integrate with Cerner EHR for data-driven decision-making and streamlined maintenance processes.",
-    longDescription: "Spearheaded project proposal for Vancouver Coastal Health to optimize wheelchair inventory across multiple sites (VGH, Richmond Hospital, Lions Gate Hospital). The proposed system integrates with existing Cerner infrastructure to enable real-time tracking, automated maintenance scheduling, and data analytics for improved patient care delivery.",
-    image: "/images/Wheelchair_tracking.png",
-    category: "Healthcare Operations",
-    status: "Project Proposal - VCH",
+    title: "Global Life Expectancy Analytics Dashboard",
+    subtitle: "WHO Health Data Analysis & Visualization Platform",
+    description: "Comprehensive life expectancy analysis platform using WHO Global Health Observatory data, examining socioeconomic factors, healthcare indicators, and demographic trends across 193 countries over 15 years (2000-2015).",
+    longDescription: "Advanced data analytics project utilizing the WHO Life Expectancy dataset to uncover global health patterns and determinants. Features comprehensive exploratory data analysis, statistical modeling, and interactive visualizations to identify key factors influencing life expectancy across different countries and regions. Combines healthcare domain expertise with advanced analytical techniques to deliver actionable insights for public health policy and healthcare system optimization.",
+    image: "/images/Life_Expectancy.png",
+    category: "Healthcare Analytics",
+    status: "Live Demo Available",
     impact: {
-      hospitals: "3 Sites",
-      patients: "200+",
-      efficiency: "Proposed"
+      countries: "193",
+      years: "15+", 
+      factors: "22"
     },
     technologies: [
-      "SQL", "Python", "Tableau", "Cerner Integration", 
-      "Excel", "Data Analysis", "Process Optimization"
+      "PostgreSQL", "Tableau", "Excel", "ChatGPT", "Claude AI", "Perplexity"
     ],
     features: [
-      "Cerner EHR integration proposal",
-      "Inventory tracking optimization", 
-      "Maintenance scheduling automation",
-      "Data-driven decision making",
-      "Multi-site coordination system"
+      "Multi-country life expectancy trend analysis",
+      "Socioeconomic factor correlation studies", 
+      "Healthcare indicator impact assessment",
+      "Regional comparison dashboards",
+      "Predictive modeling for health outcomes"
     ],
     links: {
-      demo: "#",
-      github: "#",
-      case_study: "/case-studies/wheelchair-inventory-optimization"
+      demo: "/dashboards/life-expectancy",
+      github: "https://github.com/lloyd-delacruz/LifeExpectancy.git", 
+      case_study: "/case-studies/life-expectancy-analytics"
     },
-    color: "blue",
-    icon: Activity
+    color: "green",
+    icon: TrendingUp
   },
   {
     id: 2,
@@ -54,8 +53,7 @@ const projects = [
       factors: "6 Key"
     },
     technologies: [
-      "Python", "Pandas", "NumPy", "React", "TypeScript", "Next.js", "Recharts", "Tailwind CSS",
-      "Framer Motion", "Statistical Analysis", "Data Visualization", "Claude AI", "Perplexity AI", "Model Context Protocol",
+      "Python", "Pandas", "NumPy", "JupyterNotebook", "Mathplotlib", "Excel", "React", "TypeScript", "Next.js", "Claude AI", "Perplexity AI", "Model Context Protocol",
     ],
     features: [
       "Global happiness trend analysis",
@@ -218,35 +216,36 @@ plt.show()`
   },
   {
     id: 4,
-    title: "Global Life Expectancy Analytics Dashboard",
-    subtitle: "WHO Health Data Analysis & Visualization Platform",
-    description: "Comprehensive life expectancy analysis platform using WHO Global Health Observatory data, examining socioeconomic factors, healthcare indicators, and demographic trends across 193 countries over 15 years (2000-2015).",
-    longDescription: "Advanced data analytics project utilizing the WHO Life Expectancy dataset to uncover global health patterns and determinants. Features comprehensive exploratory data analysis, statistical modeling, and interactive visualizations to identify key factors influencing life expectancy across different countries and regions. Combines healthcare domain expertise with advanced analytical techniques to deliver actionable insights for public health policy and healthcare system optimization.",
-    image: "/images/Life_Expectancy.png",
-    category: "Healthcare Analytics",
-    status: "Live Demo Available",
+    title: "Wheelchair Inventory Optimization System",
+    subtitle: "Cerner Integration & Data-Driven Healthcare Management",
+    description: "Proposed integration system for wheelchair inventory management at Vancouver General Hospital, designed to integrate with Cerner EHR for data-driven decision-making and streamlined maintenance processes.",
+    longDescription: "Spearheaded project proposal for Vancouver Coastal Health to optimize wheelchair inventory across multiple sites (VGH, Richmond Hospital, Lions Gate Hospital). The proposed system integrates with existing Cerner infrastructure to enable real-time tracking, automated maintenance scheduling, and data analytics for improved patient care delivery.",
+    image: "/images/Wheelchair_tracking.png",
+    category: "Healthcare Operations",
+    status: "Project Proposal - VCH",
     impact: {
-      countries: "193",
-      years: "15+", 
-      factors: "22"
+      hospitals: "3 Sites",
+      patients: "200+",
+      efficiency: "Proposed"
     },
     technologies: [
-      "PostgreSQL", "Tableau", "Excel", "ChatGPT", "Claude AI", "Perplexity"
+      "SQL", "Python", "Tableau", "Cerner Integration", 
+      "Excel", "Data Analysis", "Process Optimization"
     ],
     features: [
-      "Multi-country life expectancy trend analysis",
-      "Socioeconomic factor correlation studies", 
-      "Healthcare indicator impact assessment",
-      "Regional comparison dashboards",
-      "Predictive modeling for health outcomes"
+      "Cerner EHR integration proposal",
+      "Inventory tracking optimization", 
+      "Maintenance scheduling automation",
+      "Data-driven decision making",
+      "Multi-site coordination system"
     ],
     links: {
       demo: "#",
-      github: "https://github.com/lloyd-delacruz/LifeExpectancy.git", 
-      case_study: "/case-studies/life-expectancy-analytics"
+      github: "#",
+      case_study: "/case-studies/wheelchair-inventory-optimization"
     },
-    color: "green",
-    icon: TrendingUp
+    color: "blue",
+    icon: Activity
   },
   {
     id: 5,
@@ -254,7 +253,7 @@ plt.show()`
     subtitle: "Canadian Healthcare Expenditure Analysis & Insights",
     description: "Comprehensive hospital spending analysis platform using Canadian MIS Database data, examining healthcare expenditure patterns, regional distributions, and cost trends across provinces (2005-2023).",
     longDescription: "Advanced healthcare expenditure analytics project utilizing the Canadian MIS Database to uncover hospital spending patterns and cost drivers. Features comprehensive analysis of compensation, supplies, drugs, and infrastructure costs across different provinces and territories, providing insights for healthcare policy and budget optimization.",
-    image: "/images/Hospital_Spending.png",
+    image: "/images/hospital-spending.png",
     category: "Healthcare Analytics",
     status: "Live Demo Available",
     impact: {
@@ -263,7 +262,7 @@ plt.show()`
       categories: "7"
     },
     technologies: [
-      "React", "TypeScript", "Recharts", "Excel", "Data Analysis", "Healthcare Data"
+      "Python", "Jupyter Notebook", "Pandas", "Mathplotlib", "React", "TypeScript", "Recharts", "Excel", "Data Analysis", "Healthcare Data"
     ],
     features: [
       "Multi-provincial spending trend analysis",
@@ -286,7 +285,7 @@ plt.show()`
     subtitle: "Canadian Health Spending Trends & Policy Analysis",
     description: "Interactive national health expenditure platform analyzing Canadian health spending from 1975-2022, examining total expenditure, per capita costs, GDP percentage, and sector distribution for policy insights.",
     longDescription: "Comprehensive national health expenditure analysis using 48 years of Canadian health spending data. Features interactive visualizations, sector distribution analysis, and policy-relevant insights for understanding healthcare cost trends and their impact on the Canadian economy.",
-    image: "/images/National_Health_Expenditure.png",
+    image: "/images/national-health-expenditure.png",
     category: "Healthcare Policy Analytics",
     status: "Live Demo Available",
     impact: {
@@ -295,7 +294,7 @@ plt.show()`
       sectors: "4"
     },
     technologies: [
-      "React", "TypeScript", "Chart.js", "Next.js", "Statistical Analysis", "Policy Research"
+      "Python", "Matplotlib", "Jupyter Notebook", "Excel"
     ],
     features: [
       "48-year historical spending analysis",
@@ -339,10 +338,10 @@ const cardVariants = {
 export function ProjectsSection() {
   const getDashboardRoute = (projectId: number) => {
     switch (projectId) {
-      case 1: return '/dashboards/inventory-management';
+      case 1: return '/dashboards/life-expectancy';
       case 2: return '/dashboards/happiness-analytics';
       case 3: return '/dashboards/heart-disease-prediction';
-      case 4: return '/dashboards/life-expectancy';
+      case 4: return '/dashboards/inventory-management';
       case 5: return '/dashboards/hospital-spending';
       case 6: return '/dashboards/national-health-expenditure';
       default: return '/projects';
@@ -514,26 +513,6 @@ export function ProjectsSection() {
           ))}
         </motion.div>
 
-        {/* View All Projects CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-20"
-        >
-          <p className="text-lg text-gray-600 mb-6">
-            Want to see more of my work and detailed case studies?
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
-          >
-            View All Projects
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </motion.button>
-        </motion.div>
       </div>
     </section>
   );

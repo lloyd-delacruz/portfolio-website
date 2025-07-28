@@ -264,82 +264,107 @@ const HappinessAnalysisDashboard: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gray-50/50">
 
-      {/* Enhanced Header */}
-      <header className="bg-white shadow-xl border-b border-gray-100">
-        <div className="relative overflow-hidden">
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-5"></div>
-            <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400 rounded-full opacity-5 blur-3xl"></div>
-            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-400 rounded-full opacity-5 blur-3xl"></div>
-          </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                  <Globe className="w-10 h-10 text-white transform -rotate-3" />
-                </div>
-                <div className="ml-6">
-                  <h1 className="text-4xl font-bold">
-                    <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                      World Happiness Report
-                    </span>
-                  </h1>
-                  <p className="text-gray-600 mt-1 flex items-center">
-                    <Calendar className="w-4 h-4 mr-2" />
-                    Comprehensive Analysis of Global Well-being (2015-2019)
-                  </p>
-                </div>
+      {/* Modern Header - SHADCN Style */}
+      <header className="border-b bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center">
+                <Globe className="h-6 w-6 text-blue-600" />
               </div>
-              <div className="flex items-center space-x-3">
-                <button className="p-2.5 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-all duration-200">
-                  <Download className="w-5 h-5" />
-                </button>
-                <button className="p-2.5 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-all duration-200">
-                  <Filter className="w-5 h-5" />
-                </button>
-                <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  className="px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white shadow-sm hover:shadow-md transition-shadow duration-200"
-                >
-                  {[2015, 2016, 2017, 2018, 2019].map(year => (
-                    <option key={year} value={year}>{year}</option>
-                  ))}
-                </select>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+                  World Happiness Report
+                </h1>
+                <p className="text-sm text-gray-600">
+                  Comprehensive Analysis of Global Well-being (2015-2019)
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2 px-3 py-1.5 bg-blue-50 rounded-full text-sm text-blue-700">
+                <Calendar className="h-4 w-4" />
+                <span>2015 - 2019 Dataset</span>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Enhanced Navigation */}
-      <nav className="bg-white border-b sticky top-0 z-20 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-8 overflow-x-auto">
+      {/* Prominent Creative Navigation - Large & Centered */}
+      <nav className="bg-gradient-to-r from-blue-50 via-white to-blue-50 border-b border-blue-200 sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/95 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          {/* Large Centered Navigation */}
+          <div className="flex items-center justify-center">
+            {/* Main Navigation Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-3 bg-white/80 backdrop-blur p-3 rounded-2xl shadow-lg border border-blue-100">
+              {[
+                { id: 'overview', label: 'Overview', icon: BarChart3, color: 'blue' },
+                { id: 'trends', label: 'Trends', icon: TrendingUp, color: 'green' },
+                { id: 'regions', label: 'Regions', icon: Globe, color: 'purple' },
+                { id: 'factors', label: 'Factors', icon: Brain, color: 'amber' },
+                { id: 'distribution', label: 'Distribution', icon: PieChartIcon, color: 'rose' },
+                { id: 'changes', label: 'Changes', icon: Activity, color: 'orange' },
+                { id: 'insights', label: 'Insights', icon: Sparkles, color: 'indigo' }
+              ].map((section) => {
+                const Icon = section.icon;
+                const colorClasses = {
+                  blue: activeSection === section.id ? 'bg-blue-500 text-white shadow-blue-200' : 'text-blue-600 hover:bg-blue-50 border-blue-200',
+                  green: activeSection === section.id ? 'bg-green-500 text-white shadow-green-200' : 'text-green-600 hover:bg-green-50 border-green-200',
+                  purple: activeSection === section.id ? 'bg-purple-500 text-white shadow-purple-200' : 'text-purple-600 hover:bg-purple-50 border-purple-200',
+                  amber: activeSection === section.id ? 'bg-amber-500 text-white shadow-amber-200' : 'text-amber-600 hover:bg-amber-50 border-amber-200',
+                  rose: activeSection === section.id ? 'bg-rose-500 text-white shadow-rose-200' : 'text-rose-600 hover:bg-rose-50 border-rose-200',
+                  orange: activeSection === section.id ? 'bg-orange-500 text-white shadow-orange-200' : 'text-orange-600 hover:bg-orange-50 border-orange-200',
+                  indigo: activeSection === section.id ? 'bg-indigo-500 text-white shadow-indigo-200' : 'text-indigo-600 hover:bg-indigo-50 border-indigo-200'
+                };
+                
+                return (
+                  <button
+                    key={section.id}
+                    onClick={() => setActiveSection(section.id)}
+                    className={`inline-flex items-center px-6 py-4 text-base font-semibold rounded-xl transition-all duration-300 whitespace-nowrap border-2 transform hover:scale-105 active:scale-95 ${
+                      activeSection === section.id
+                        ? `${colorClasses[section.color as keyof typeof colorClasses]} shadow-lg`
+                        : `bg-white ${colorClasses[section.color as keyof typeof colorClasses]} hover:shadow-md`
+                    }`}
+                  >
+                    <Icon className="w-5 h-5 mr-3" />
+                    {section.label}
+                  </button>
+                );
+              })}
+            </div>
+            
+          </div>
+        </div>
+        
+        {/* Mobile Navigation - Vertical Pills */}
+        <div className="lg:hidden px-4 pb-4">
+          <div className="grid grid-cols-2 gap-3">
             {[
-              { id: 'overview', label: 'Overview', icon: BarChart3 },
-              { id: 'trends', label: 'Trends', icon: TrendingUp },
-              { id: 'regions', label: 'Regions', icon: Globe },
-              { id: 'factors', label: 'Factors', icon: Brain },
-              { id: 'distribution', label: 'Distribution', icon: PieChartIcon },
-              { id: 'changes', label: 'Changes', icon: Activity },
-              { id: 'insights', label: 'Insights', icon: Sparkles }
+              { id: 'overview', label: 'Overview', icon: BarChart3, color: 'blue' },
+              { id: 'trends', label: 'Trends', icon: TrendingUp, color: 'green' },
+              { id: 'regions', label: 'Regions', icon: Globe, color: 'purple' },
+              { id: 'factors', label: 'Factors', icon: Brain, color: 'amber' },
+              { id: 'distribution', label: 'Distribution', icon: PieChartIcon, color: 'rose' },
+              { id: 'changes', label: 'Changes', icon: Activity, color: 'orange' },
+              { id: 'insights', label: 'Insights', icon: Sparkles, color: 'indigo' }
             ].map((section) => {
               const Icon = section.icon;
               return (
                 <button
                   key={section.id}
                   onClick={() => setActiveSection(section.id)}
-                  className={`py-4 px-2 border-b-3 font-medium text-sm transition-all duration-200 flex items-center space-x-2 whitespace-nowrap ${
+                  className={`inline-flex items-center justify-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 ${
                     activeSection === section.id
-                      ? 'border-blue-600 text-blue-600'
-                      : 'border-transparent text-gray-600 hover:text-gray-800 hover:border-gray-300'
+                      ? 'bg-blue-500 text-white shadow-lg'
+                      : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
-                  <span>{section.label}</span>
+                  <Icon className="w-4 h-4 mr-2" />
+                  {section.label}
                 </button>
               );
             })}
@@ -348,7 +373,7 @@ const HappinessAnalysisDashboard: React.FC = () => {
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Enhanced Overview Section */}
         {activeSection === 'overview' && (
           <div className="space-y-8">
@@ -359,97 +384,71 @@ const HappinessAnalysisDashboard: React.FC = () => {
             />
             
             {/* Key Metrics Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white rounded-2xl shadow-xl p-6 relative overflow-hidden group hover:shadow-2xl transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600"></div>
-                <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500 rounded-full opacity-5 group-hover:scale-110 transition-transform duration-500"></div>
-                
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 bg-blue-100 rounded-xl">
-                      <Globe className="w-7 h-7 text-blue-600" />
-                    </div>
-                    <div className="flex items-center space-x-1 bg-green-100 text-green-700 px-3 py-1 rounded-full">
-                      <ArrowUpRight className="w-4 h-4" />
-                      <span className="text-sm font-semibold">0.6%</span>
-                    </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="rounded-lg border bg-white p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="h-8 w-8 rounded-md bg-blue-100 flex items-center justify-center">
+                    <Globe className="h-4 w-4 text-blue-600" />
                   </div>
-                  
-                  <div>
-                    <h3 className="text-4xl font-bold text-gray-800 mb-1">5.41</h3>
-                    <p className="text-sm font-semibold text-gray-700">Global Happiness Index</p>
-                    <p className="text-xs text-gray-500 mt-2">2019 Average (↑ 0.6% from 2015)</p>
+                  <div className="flex items-center space-x-1 text-green-600">
+                    <ArrowUpRight className="w-3 h-3" />
+                    <span className="text-xs font-medium">0.6%</span>
                   </div>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">5.41</h3>
+                  <p className="text-sm text-gray-600">Global Happiness Index</p>
+                  <p className="text-xs text-gray-500 mt-1">2019 Average</p>
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-xl p-6 relative overflow-hidden group hover:shadow-2xl transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 to-green-600"></div>
-                <div className="absolute -top-24 -right-24 w-48 h-48 bg-green-500 rounded-full opacity-5 group-hover:scale-110 transition-transform duration-500"></div>
-                
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 bg-green-100 rounded-xl">
-                      <Award className="w-7 h-7 text-green-600" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-                        <span className="text-xs font-bold text-white">#1</span>
-                      </div>
-                    </div>
+              <div className="rounded-lg border bg-white p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="h-8 w-8 rounded-md bg-green-100 flex items-center justify-center">
+                    <Award className="h-4 w-4 text-green-600" />
                   </div>
-                  
-                  <div>
-                    <h3 className="text-4xl font-bold text-gray-800 mb-1">Finland</h3>
-                    <p className="text-sm font-semibold text-gray-700">Happiest Country</p>
-                    <p className="text-xs text-gray-500 mt-2">Score: 7.769 (Rank #1)</p>
+                  <div className="h-6 w-6 bg-yellow-400 rounded-full flex items-center justify-center">
+                    <span className="text-xs font-bold text-white">#1</span>
                   </div>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">Finland</h3>
+                  <p className="text-sm text-gray-600">Happiest Country</p>
+                  <p className="text-xs text-gray-500 mt-1">Score: 7.769</p>
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-xl p-6 relative overflow-hidden group hover:shadow-2xl transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-amber-600"></div>
-                <div className="absolute -top-24 -right-24 w-48 h-48 bg-amber-500 rounded-full opacity-5 group-hover:scale-110 transition-transform duration-500"></div>
-                
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 bg-amber-100 rounded-xl">
-                      <Flag className="w-7 h-7 text-amber-600" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Globe className="w-4 h-4 text-amber-600" />
-                      <span className="text-sm font-semibold text-amber-700">98%</span>
-                    </div>
+              <div className="rounded-lg border bg-white p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="h-8 w-8 rounded-md bg-amber-100 flex items-center justify-center">
+                    <Flag className="h-4 w-4 text-amber-600" />
                   </div>
-                  
-                  <div>
-                    <h3 className="text-4xl font-bold text-gray-800 mb-1">156</h3>
-                    <p className="text-sm font-semibold text-gray-700">Countries Analyzed</p>
-                    <p className="text-xs text-gray-500 mt-2">Covering 98% of world population</p>
+                  <div className="flex items-center space-x-1 text-amber-600">
+                    <Globe className="w-3 h-3" />
+                    <span className="text-xs font-medium">98%</span>
                   </div>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">156</h3>
+                  <p className="text-sm text-gray-600">Countries Analyzed</p>
+                  <p className="text-xs text-gray-500 mt-1">98% world population</p>
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-xl p-6 relative overflow-hidden group hover:shadow-2xl transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-400 to-red-600"></div>
-                <div className="absolute -top-24 -right-24 w-48 h-48 bg-red-500 rounded-full opacity-5 group-hover:scale-110 transition-transform duration-500"></div>
-                
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 bg-red-100 rounded-xl">
-                      <Target className="w-7 h-7 text-red-600" />
-                    </div>
-                    <div className="flex items-center space-x-1 bg-red-100 text-red-700 px-3 py-1 rounded-full">
-                      <ArrowDownRight className="w-4 h-4" />
-                      <span className="text-sm font-semibold">2.3%</span>
-                    </div>
+              <div className="rounded-lg border bg-white p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="h-8 w-8 rounded-md bg-red-100 flex items-center justify-center">
+                    <Target className="h-4 w-4 text-red-600" />
                   </div>
-                  
-                  <div>
-                    <h3 className="text-4xl font-bold text-gray-800 mb-1">4.92</h3>
-                    <p className="text-sm font-semibold text-gray-700">Happiness Gap</p>
-                    <p className="text-xs text-gray-500 mt-2">Difference between top & bottom</p>
+                  <div className="flex items-center space-x-1 text-red-600">
+                    <ArrowDownRight className="w-3 h-3" />
+                    <span className="text-xs font-medium">2.3%</span>
                   </div>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">4.92</h3>
+                  <p className="text-sm text-gray-600">Happiness Gap</p>
+                  <p className="text-xs text-gray-500 mt-1">Top & bottom difference</p>
                 </div>
               </div>
             </div>
@@ -1030,15 +1029,10 @@ const HappinessAnalysisDashboard: React.FC = () => {
                   <h3 className="text-2xl font-bold text-gray-800">Distribution Overview</h3>
                   <p className="text-sm text-gray-600 mt-1">Countries grouped by happiness score ranges</p>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
-                    <Filter className="w-4 h-4 inline mr-2" />
-                    Filter
-                  </button>
-                  <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
-                    <Download className="w-4 h-4 inline mr-2" />
-                    Export
-                  </button>
+                <div className="text-right">
+                  <p className="text-sm text-gray-600">
+                    Data sourced from World Happiness Report
+                  </p>
                 </div>
               </div>
 

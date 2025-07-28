@@ -86,25 +86,10 @@ export function InventoryManagementDashboard() {
           </p>
         </div>
         <div className="flex items-center gap-3 mt-4 md:mt-0">
-          <select 
-            value={selectedSite}
-            onChange={(e) => setSelectedSite(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="all">All Sites</option>
-            {mockData.sitesData.map(site => (
-              <option key={site.id} value={site.name}>{site.name}</option>
-            ))}
-          </select>
-          <button
-            onClick={handleRefresh}
-            className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
-          >
-            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-          </button>
-          <button className="p-2 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
-            <Download className="w-4 h-4" />
-          </button>
+          <div className="flex items-center space-x-2 px-3 py-1 bg-blue-50 rounded-full text-sm text-blue-700">
+            <Activity className="h-4 w-4" />
+            <span>VCH Demo System</span>
+          </div>
         </div>
       </div>
 

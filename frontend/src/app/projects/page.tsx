@@ -267,9 +267,17 @@ export default function ProjectsPage() {
               </p>
               <div className="flex flex-wrap justify-center gap-2">
                 <span className="px-3 py-1 bg-blue-500/30 text-blue-200 rounded-full text-sm">Python</span>
-                <span className="px-3 py-1 bg-green-500/30 text-green-200 rounded-full text-sm">React</span>
-                <span className="px-3 py-1 bg-purple-500/30 text-purple-200 rounded-full text-sm">AWS</span>
-                <span className="px-3 py-1 bg-orange-500/30 text-orange-200 rounded-full text-sm">TensorFlow</span>
+                <span className="px-3 py-1 bg-green-500/30 text-green-200 rounded-full text-sm">Pandas</span>
+                <span className="px-3 py-1 bg-purple-500/30 text-purple-200 rounded-full text-sm">NumPy</span>
+                <span className="px-3 py-1 bg-orange-500/30 text-orange-200 rounded-full text-sm">JupyterNotebook</span>
+                <span className="px-3 py-1 bg-red-500/30 text-red-200 rounded-full text-sm">Mathplotlib</span>
+                <span className="px-3 py-1 bg-yellow-500/30 text-yellow-200 rounded-full text-sm">Excel</span>
+                <span className="px-3 py-1 bg-cyan-500/30 text-cyan-200 rounded-full text-sm">React</span>
+                <span className="px-3 py-1 bg-indigo-500/30 text-indigo-200 rounded-full text-sm">TypeScript</span>
+                <span className="px-3 py-1 bg-pink-500/30 text-pink-200 rounded-full text-sm">Next.js</span>
+                <span className="px-3 py-1 bg-teal-500/30 text-teal-200 rounded-full text-sm">Claude AI</span>
+                <span className="px-3 py-1 bg-lime-500/30 text-lime-200 rounded-full text-sm">Perplexity AI</span>
+                <span className="px-3 py-1 bg-violet-500/30 text-violet-200 rounded-full text-sm">Model Context Protocol</span>
               </div>
             </motion.div>
           </Link>
@@ -299,35 +307,50 @@ export default function ProjectsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <Database className="h-12 w-12 text-blue-300 mb-4" />
-              <h3 className="text-xl font-bold text-white mb-3">Data Engineering</h3>
-              <p className="text-white/80 mb-4">ETL pipelines, data warehousing, and real-time processing</p>
-              <div className="flex flex-wrap gap-2">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
+              <BarChart3 className="h-10 w-10 text-cyan-300 mb-3" />
+              <h3 className="text-lg font-bold text-white mb-2">Data Analysis</h3>
+              <p className="text-white/80 mb-3 text-sm">Statistical analysis, data visualization, and insights generation</p>
+              <div className="flex flex-wrap gap-1">
+                <span className="px-2 py-1 bg-cyan-500/30 text-cyan-200 rounded text-xs">Python</span>
+                <span className="px-2 py-1 bg-cyan-500/30 text-cyan-200 rounded text-xs">SQL</span>
+                <span className="px-2 py-1 bg-cyan-500/30 text-cyan-200 rounded text-xs">R</span>
+                <span className="px-2 py-1 bg-cyan-500/30 text-cyan-200 rounded text-xs">ggplot2</span>
+                <span className="px-2 py-1 bg-cyan-500/30 text-cyan-200 rounded text-xs">dplyr</span>
+                <span className="px-2 py-1 bg-cyan-500/30 text-cyan-200 rounded text-xs">Tableau</span>
+                <span className="px-2 py-1 bg-cyan-500/30 text-cyan-200 rounded text-xs">Excel</span>
+              </div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
+              <Database className="h-10 w-10 text-blue-300 mb-3" />
+              <h3 className="text-lg font-bold text-white mb-2">Data Engineering</h3>
+              <p className="text-white/80 mb-3 text-sm">ETL pipelines, data warehousing, and real-time processing</p>
+              <div className="flex flex-wrap gap-1">
                 <span className="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-xs">SQL</span>
                 <span className="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-xs">Python</span>
                 <span className="px-2 py-1 bg-blue-500/30 text-blue-200 rounded text-xs">Apache Spark</span>
               </div>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <Brain className="h-12 w-12 text-purple-300 mb-4" />
-              <h3 className="text-xl font-bold text-white mb-3">Machine Learning</h3>
-              <p className="text-white/80 mb-4">Predictive modeling, NLP, and computer vision solutions</p>
-              <div className="flex flex-wrap gap-2">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
+              <Brain className="h-10 w-10 text-purple-300 mb-3" />
+              <h3 className="text-lg font-bold text-white mb-2">Machine Learning</h3>
+              <p className="text-white/80 mb-3 text-sm">Predictive modeling, NLP, and computer vision solutions</p>
+              <div className="flex flex-wrap gap-1">
                 <span className="px-2 py-1 bg-purple-500/30 text-purple-200 rounded text-xs">TensorFlow</span>
                 <span className="px-2 py-1 bg-purple-500/30 text-purple-200 rounded text-xs">PyTorch</span>
                 <span className="px-2 py-1 bg-purple-500/30 text-purple-200 rounded text-xs">Scikit-learn</span>
               </div>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <Code className="h-12 w-12 text-green-300 mb-4" />
-              <h3 className="text-xl font-bold text-white mb-3">Full Stack Development</h3>
-              <p className="text-white/80 mb-4">End-to-end application development and deployment</p>
-              <div className="flex flex-wrap gap-2">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
+              <Code className="h-10 w-10 text-green-300 mb-3" />
+              <h3 className="text-lg font-bold text-white mb-2">Full Stack Development</h3>
+              <p className="text-white/80 mb-3 text-sm">End-to-end application development and deployment</p>
+              <div className="flex flex-wrap gap-1">
                 <span className="px-2 py-1 bg-green-500/30 text-green-200 rounded text-xs">React</span>
                 <span className="px-2 py-1 bg-green-500/30 text-green-200 rounded text-xs">Node.js</span>
                 <span className="px-2 py-1 bg-green-500/30 text-green-200 rounded text-xs">AWS</span>
