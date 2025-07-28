@@ -4,12 +4,10 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import { AboutSection } from '@/components/sections/AboutSection'
-import { CoreValues } from '@/components/sections/CoreValues'
-import { JourneyTimeline } from '@/components/sections/JourneyTimeline'
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+    <main className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900">
       {/* Back Button */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
@@ -29,93 +27,82 @@ export default function AboutPage() {
         </Link>
       </motion.div>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 2, ease: "easeOut" }}
-            className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/20 rounded-full blur-xl"
-          />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 2.5, delay: 0.3, ease: "easeOut" }}
-            className="absolute top-3/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-xl"
-          />
-        </div>
-
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto pt-20">
-          <motion.h1
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold mb-6"
-          >
-            About Lloyd
-          </motion.h1>
+      {/* Hero Section - Redesigned to match AboutMeHeroFixed */}
+      <section className="py-20 bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 text-white">
+        <div className="max-w-6xl mx-auto px-4">
           
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-xl md:text-2xl text-blue-200 mb-8 max-w-3xl mx-auto"
-          >
-            Bridging Healthcare Excellence with Data-Driven Innovation
-          </motion.p>
-
+          {/* Section Badge */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="flex items-center justify-center text-white/60 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
           >
-            <MapPin className="h-5 w-5 mr-2" />
-            <span className="text-lg">Vancouver, BC • Healthcare Technology Leader</span>
+            <span className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-medium">
+              About Lloyd Dela Cruz
+            </span>
           </motion.div>
 
-          {/* Key Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
-          >
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-              <div className="text-3xl font-bold text-blue-300 mb-2">20+</div>
-              <div className="text-white/80">Years Healthcare Experience</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-              <div className="text-3xl font-bold text-purple-300 mb-2">MSc</div>
-              <div className="text-white/80">Data Analytics</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-              <div className="text-3xl font-bold text-green-300 mb-2">AWS</div>
-              <div className="text-white/80">AI Practitioner Certified</div>
-            </div>
-          </motion.div>
+          {/* Main Content */}
+          <div className="max-w-4xl mx-auto text-center">
+            
+            {/* Text Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+                Bridging Healthcare Excellence with
+                <span className="bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
+                  {" "}Data-Driven Innovation
+                </span>
+              </h1>
+              
+              <div className="flex items-center justify-center text-blue-200 mb-6">
+                <MapPin className="h-5 w-5 mr-2" />
+                <span className="text-lg">Vancouver, BC • Healthcare Technology Leader</span>
+              </div>
+              
+              <p className="text-xl text-blue-100 mb-6 leading-relaxed max-w-3xl mx-auto">
+                Results-driven data analytics professional with 20+ years of cross-functional experience—8 of which are in healthcare operations, project management, and clinical optimization.
+              </p>
+              
+              <p className="text-lg text-blue-200 mb-8 leading-relaxed max-w-3xl mx-auto">
+                Currently completing an MSc in Data Analytics at Eastern University (expected Dec 2025), while contributing to patient care and interdisciplinary collaboration as a Rehabilitation Assistant at Vancouver Coastal Health.
+              </p>
+              
+              {/* Key Stats */}
+              <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-cyan-300">20+</div>
+                  <div className="text-sm text-blue-300">Years Experience</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-cyan-300">MSc</div>
+                  <div className="text-sm text-blue-300">Data Analytics</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-cyan-300">AWS</div>
+                  <div className="text-sm text-blue-300">AI Practitioner</div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* About Content */}
       <AboutSection />
-      
-      {/* Core Values */}
-      <CoreValues />
-      
-      {/* Journey Timeline */}
-      <JourneyTimeline />
 
-      {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-r from-blue-900 to-purple-900">
+      {/* Call to Action - Reduced spacing */}
+      <section className="py-16 bg-gradient-to-r from-blue-900 to-purple-900">
         <div className="container mx-auto px-4 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl font-bold text-white mb-8"
+            className="text-3xl font-bold text-white mb-6"
           >
             Let&apos;s Connect
           </motion.h2>
@@ -124,7 +111,7 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-white/80 mb-8 max-w-2xl mx-auto"
+            className="text-lg text-white/80 mb-6 max-w-2xl mx-auto"
           >
             Ready to collaborate on transforming healthcare through data analytics and AI?
           </motion.p>

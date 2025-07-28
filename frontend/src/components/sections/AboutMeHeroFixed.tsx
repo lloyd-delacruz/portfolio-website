@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export function AboutMeHeroFixed() {
     const [isMounted, setIsMounted] = useState(false);
@@ -62,20 +63,27 @@ export function AboutMeHeroFixed() {
                         {/* Visual Element */}
                         <div className="relative">
                             <div className="relative z-10">
-                                <div className="w-full h-96 bg-gradient-to-br from-cyan-400/20 to-purple-400/20 rounded-2xl shadow-2xl flex items-center justify-center border border-white/10">
-                                    <div className="text-center">
-                                        <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                            <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                            </svg>
-                                        </div>
-                                        <p className="text-white/60 text-sm">Professional Photo</p>
-                                        <p className="text-white/40 text-xs">Coming Soon</p>
+                                {/* Main photo container */}
+                                <div className="relative w-80 h-96 mx-auto">
+                                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400/30 to-purple-400/30 blur-sm"></div>
+                                    <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl">
+                                        <Image
+                                            src="/images/my_photo.jpeg"
+                                            alt="Lloyd Dela Cruz - Professional Photo"
+                                            fill
+                                            sizes="(max-width: 768px) 320px, 320px"
+                                            className="object-cover object-top scale-90"
+                                            priority
+                                        />
+                                        {/* Subtle overlay for depth */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent"></div>
                                     </div>
                                 </div>
+                                
                                 {/* Floating Background Elements */}
-                                <div className="absolute -top-4 -right-4 w-24 h-24 bg-cyan-400/20 rounded-full blur-xl"></div>
-                                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-purple-400/20 rounded-full blur-xl"></div>
+                                <div className="absolute -top-6 -right-6 w-20 h-20 bg-cyan-400/20 rounded-full blur-xl animate-pulse"></div>
+                                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-purple-400/20 rounded-full blur-xl animate-pulse animation-delay-1000"></div>
+                                <div className="absolute top-1/2 -right-8 w-16 h-16 bg-blue-400/15 rounded-full blur-lg"></div>
                             </div>
                         </div>
                     </div>
@@ -149,20 +157,27 @@ export function AboutMeHeroFixed() {
                         className="relative"
                     >
                         <div className="relative z-10">
-                            <div className="w-full h-96 bg-gradient-to-br from-cyan-400/20 to-purple-400/20 rounded-2xl shadow-2xl flex items-center justify-center border border-white/10">
-                                <div className="text-center">
-                                    <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
-                                    </div>
-                                    <p className="text-white/60 text-sm">Professional Photo</p>
-                                    <p className="text-white/40 text-xs">Coming Soon</p>
+                            {/* Main photo container */}
+                            <div className="relative w-80 h-96 mx-auto">
+                                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400/30 to-purple-400/30 blur-sm"></div>
+                                <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl">
+                                    <Image
+                                        src="/images/my_photo.jpeg"
+                                        alt="Lloyd Dela Cruz - Professional Photo"
+                                        fill
+                                        sizes="(max-width: 768px) 320px, 320px"
+                                        className="object-cover object-top scale-90"
+                                        priority
+                                    />
+                                    {/* Subtle overlay for depth */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent"></div>
                                 </div>
                             </div>
+                            
                             {/* Floating Background Elements */}
-                            <div className="absolute -top-4 -right-4 w-24 h-24 bg-cyan-400/20 rounded-full blur-xl"></div>
-                            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-purple-400/20 rounded-full blur-xl"></div>
+                            <div className="absolute -top-6 -right-6 w-20 h-20 bg-cyan-400/20 rounded-full blur-xl animate-pulse"></div>
+                            <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-purple-400/20 rounded-full blur-xl animate-pulse animation-delay-1000"></div>
+                            <div className="absolute top-1/2 -right-8 w-16 h-16 bg-blue-400/15 rounded-full blur-lg"></div>
                         </div>
                     </motion.div>
                 </div>
