@@ -55,12 +55,12 @@ export default function EducationSection() {
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <h4 className="text-lg font-bold text-gray-900 mb-2">Data Analytics Certificate</h4>
                 <p className="text-blue-600 font-semibold mb-1">BrainStation IO Vancouver BC, Canada</p>
-                <p className="text-gray-500">2025</p>
+                <p className="text-gray-500">2024</p>
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-md">
-                <h4 className="text-lg font-bold text-gray-900 mb-2">Introduction to Data Engineering</h4>
-                <p className="text-blue-600 font-semibold mb-1">Deep Learning AI & AWS</p>
+                <h4 className="text-lg font-bold text-gray-900 mb-2">Data Engineering - Deep Learning</h4>
+                <p className="text-blue-600 font-semibold mb-1">Deep Learning AI</p>
                 <p className="text-gray-500">2025</p>
               </div>
 
@@ -80,6 +80,12 @@ export default function EducationSection() {
                 <h4 className="text-lg font-bold text-gray-900 mb-2">Google Data Analytics Certificate</h4>
                 <p className="text-blue-600 font-semibold mb-1">Google</p>
                 <p className="text-gray-500">2022</p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h4 className="text-lg font-bold text-gray-900 mb-2">Fullstack Web Development</h4>
+                <p className="text-blue-600 font-semibold mb-1">Udemy</p>
+                <p className="text-gray-500">2021</p>
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-md">

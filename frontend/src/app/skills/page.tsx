@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowLeft, Code, Database, Brain, Shield, Cloud, Award } from 'lucide-react'
+import { ArrowLeft, Code, Database, Brain, Shield, Cloud, Award, Cpu } from 'lucide-react'
 import Link from 'next/link'
 import { SkillsExpertise } from '@/components/sections/SkillsExpertise'
 
@@ -105,9 +105,9 @@ export default function SkillsPage() {
               <div className="text-white/80 text-sm">React, Node.js, Next.js</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 text-center group hover:bg-white/20 transition-all duration-300">
-              <Cloud className="h-10 w-10 text-yellow-300 mx-auto mb-3 group-hover:scale-110 transition-transform" />
-              <div className="text-lg font-bold text-white mb-2">Cloud Platforms</div>
-              <div className="text-white/80 text-sm">AWS, Azure, GCP</div>
+              <Cpu className="h-10 w-10 text-yellow-300 mx-auto mb-3 group-hover:scale-110 transition-transform" />
+              <div className="text-lg font-bold text-white mb-2">Artificial Intelligence</div>
+              <div className="text-white/80 text-sm">Context & Prompt Engineering, LLMs, Claude Code, Gemini, OpenAI, Copilot</div>
             </div>
           </motion.div>
 
@@ -128,8 +128,8 @@ export default function SkillsPage() {
                 <div className="text-white/80 text-sm">Amazon Web Services</div>
               </div>
               <div className="bg-white/10 rounded-lg p-4">
-                <div className="text-lg font-semibold text-white mb-2">Lean Six Sigma</div>
-                <div className="text-white/80 text-sm">Process Excellence</div>
+                <div className="text-lg font-semibold text-white mb-2">Data Analytics</div>
+                <div className="text-white/80 text-sm">Information Discovery</div>
               </div>
               <div className="bg-white/10 rounded-lg p-4">
                 <div className="text-lg font-semibold text-white mb-2">MSc Data Analytics</div>
