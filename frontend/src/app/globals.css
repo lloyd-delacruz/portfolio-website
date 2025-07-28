@@ -155,6 +155,27 @@
     font-display: swap;
   }
   
+  /* Responsive improvements */
+  @media (max-width: 320px) {
+    .container {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+  }
+  
+  /* Ensure text doesn't break on very small screens */
+  .text-responsive {
+    word-break: break-word;
+    hyphens: auto;
+  }
+  
+  /* Max width containers for ultra-wide screens */
+  @media (min-width: 1920px) {
+    .container {
+      max-width: 1600px;
+    }
+  }
+  
   /* Font loading optimization */
   @media (prefers-reduced-motion: no-preference) {
     html {

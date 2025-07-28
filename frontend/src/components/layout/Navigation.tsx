@@ -39,22 +39,22 @@ const Navigation = () => {
           : 'bg-black/20 backdrop-blur-md border-b border-white/10'
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-14 xs:h-16">
           {/* Clean Logo Design */}
           <Link href="/">
             <motion.div
               whileHover={{ scale: 1.02 }}
-              className="flex items-center space-x-3 cursor-pointer"
+              className="flex items-center space-x-2 xs:space-x-3 cursor-pointer"
             >
               {/* Simple Icon */}
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">LD</span>
+              <div className="w-8 h-8 xs:w-10 xs:h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm xs:text-lg">LD</span>
               </div>
-              {/* Clean Typography */}
-              <div>
-                <div className="text-lg font-semibold text-white">Lloyd Dela Cruz</div>
-                <div className="text-xs text-blue-200 -mt-1">Data Analytics Professional</div>
+              {/* Clean Typography - Hidden on very small screens */}
+              <div className="hidden xs:block">
+                <div className="text-base xs:text-lg font-semibold text-white">Lloyd Dela Cruz</div>
+                <div className="text-xs text-blue-200 -mt-1 hidden sm:block">Data Analytics Professional</div>
               </div>
             </motion.div>
           </Link>
@@ -75,21 +75,23 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Simple CTA Button */}
-          <Link href="/contact">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
-            >
-              Contact Me
-            </motion.button>
-          </Link>
+          {/* Simple CTA Button - Hidden on small screens */}
+          <div className="hidden lg:block">
+            <Link href="/contact">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-4 xl:px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 text-sm xl:text-base"
+              >
+                Contact Me
+              </motion.button>
+            </Link>
+          </div>
 
           {/* Mobile Menu Button */}
           <button 
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-white hover:text-blue-300 transition-colors"
+            className="md:hidden p-1 xs:p-2 text-white hover:text-blue-300 transition-colors"
             aria-label="Toggle menu"
           >
             {isOpen ? (
