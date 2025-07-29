@@ -62,7 +62,8 @@
       "Bash(timeout 10s npm run dev)",
       "Bash(touch:*)",
       "Bash(timeout:*)",
-      "WebFetch(domain:ourworldindata.org)"
+      "WebFetch(domain:ourworldindata.org)",
+      "Bash(python3:*)"
     ],
     "deny": []
   }

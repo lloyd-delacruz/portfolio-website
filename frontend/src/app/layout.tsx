@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   authors: [{ name: 'Lloyd Dela Cruz' }],
   viewport: 'width=device-width, initial-scale=1',
   themeColor: '#1e40af',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
