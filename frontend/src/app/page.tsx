@@ -275,7 +275,7 @@ export default function Home() {
             </div>
             <div className="text-center">
               <div className="text-2xl xs:text-3xl sm:text-4xl font-bold text-white mb-1 xs:mb-2">VCH</div>
-              <div className="text-xs xs:text-sm sm:text-base text-white/70">Healthcare Leader</div>
+              <div className="text-xs xs:text-sm sm:text-base text-white/70">Frontline Worker</div>
             </div>
           </motion.div>
         </div>

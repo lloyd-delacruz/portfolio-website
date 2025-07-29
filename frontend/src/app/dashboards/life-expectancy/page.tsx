@@ -51,9 +51,6 @@ export default function LifeExpectancyDashboard() {
         case 'trends':
           initTrendsCharts(Chart);
           break;
-        case 'efficiency':
-          initEfficiencyCharts(Chart);
-          break;
         case 'determinants':
           initDeterminantsCharts(Chart);
           break;
@@ -366,122 +363,6 @@ export default function LifeExpectancyDashboard() {
     }
   };
 
-  const initEfficiencyCharts = (Chart: any) => {
-    // Efficiency Scatter
-    const efficiencyCtx = document.getElementById('efficiencyChart') as HTMLCanvasElement;
-    if (efficiencyCtx) {
-      const ctx = efficiencyCtx.getContext('2d');
-      if (ctx) {
-        new Chart(ctx, {
-          type: 'scatter',
-          data: {
-            datasets: [{
-              label: 'Efficient Systems',
-              data: [
-                {x: 3.08, y: 72.0}, {x: 3.55, y: 74.9}, {x: 3.60, y: 74.9},
-                {x: 3.76, y: 75.9}, {x: 4.92, y: 83.1}
-              ],
-              backgroundColor: '#4ade80',
-              pointRadius: 8
-            }, {
-              label: 'Average Efficiency',
-              data: [
-                {x: 6.14, y: 74.6}, {x: 7.21, y: 73.4},
-                {x: 8.21, y: 79.2}, {x: 9.21, y: 80.4}
-              ],
-              backgroundColor: '#f59e0b',
-              pointRadius: 8
-            }, {
-              label: 'High Spending',
-              data: [
-                {x: 10.93, y: 83.7}, {x: 11.88, y: 83.4}, {x: 16.84, y: 79.2}
-              ],
-              backgroundColor: '#ef4444',
-              pointRadius: 8
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                labels: {
-                  color: '#475569'
-                }
-              }
-            },
-            scales: {
-              x: {
-                title: { 
-                  display: true, 
-                  text: 'Health Expenditure (% GDP)',
-                  color: '#475569'
-                },
-                grid: { color: 'rgba(71, 85, 105, 0.1)' },
-                ticks: { color: '#475569' }
-              },
-              y: {
-                title: { 
-                  display: true, 
-                  text: 'Life Expectancy (Years)',
-                  color: '#475569'
-                },
-                grid: { color: 'rgba(71, 85, 105, 0.1)' },
-                ticks: { color: '#475569' }
-              }
-            }
-          }
-        });
-      }
-    }
-
-    // Optimal Spending
-    const spendingCtx = document.getElementById('spendingChart') as HTMLCanvasElement;
-    if (spendingCtx) {
-      const ctx = spendingCtx.getContext('2d');
-      if (ctx) {
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: ['<3%', '3-5%', '5-7%', '7-10%', '>10%'],
-            datasets: [{
-              label: 'Developed Countries',
-              data: [76.2, 79.8, 80.9, 81.3, 81.7],
-              borderColor: '#667eea',
-              tension: 0.4
-            }, {
-              label: 'Developing Countries',
-              data: [65.8, 72.1, 73.4, 74.2, 75.1],
-              borderColor: '#764ba2',
-              tension: 0.4
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                labels: {
-                  color: '#475569'
-                }
-              }
-            },
-            scales: {
-              y: {
-                beginAtZero: false,
-                min: 60,
-                grid: { color: 'rgba(71, 85, 105, 0.1)' },
-                ticks: { color: '#475569' }
-              },
-              x: {
-                ticks: { color: '#475569' }
-              }
-            }
-          }
-        });
-      }
-    }
-  };
 
   const initDeterminantsCharts = (Chart: any) => {
     // Key Factors
@@ -728,17 +609,17 @@ export default function LifeExpectancyDashboard() {
             datasets: [{
               label: 'Low Income Success',
               data: [
-                {x: 711, y: 68.1, r: 20}, // Rwanda
-                {x: 645, y: 66.8, r: 18}, // Ethiopia
-                {x: 359, y: 62.8, r: 15}  // Niger
+                {x: 748, y: 68.7, r: 20}, // Rwanda
+                {x: 619, y: 65.5, r: 18}, // Ethiopia
+                {x: 400, y: 62.0, r: 15}  // Madagascar
               ],
               backgroundColor: '#4ade80'
             }, {
               label: 'Lower Middle Success',
               data: [
-                {x: 1987, y: 72.0, r: 25}, // Bangladesh
-                {x: 2500, y: 75.9, r: 22}, // Vietnam
-                {x: 3500, y: 74.9, r: 20}  // Thailand
+                {x: 1355, y: 72.3, r: 25}, // Bangladesh
+                {x: 2088, y: 76.0, r: 22}, // Vietnam
+                {x: 3926, y: 75.1, r: 20}  // Sri Lanka
               ],
               backgroundColor: '#667eea'
             }]
@@ -1248,12 +1129,6 @@ export default function LifeExpectancyDashboard() {
               Trends & Progress
             </button>
             <button 
-              className={`tab-btn ${activeTab === 'efficiency' ? 'active' : ''}`}
-              onClick={() => setActiveTab('efficiency')}
-            >
-              Healthcare Efficiency
-            </button>
-            <button 
               className={`tab-btn ${activeTab === 'determinants' ? 'active' : ''}`}
               onClick={() => setActiveTab('determinants')}
             >
@@ -1278,7 +1153,6 @@ export default function LifeExpectancyDashboard() {
             <div className="insight-item"><strong>Global Progress:</strong> Developing countries improved 48% faster than developed countries (4.9 vs 3.3 years)</div>
             <div className="insight-item"><strong>Gap Reduction:</strong> Life expectancy gap narrowed from 12.8 to 11.2 years (-12.5%)</div>
             <div className="insight-item"><strong>Success Story:</strong> Rwanda achieved +19.8 years improvement through healthcare reforms</div>
-            <div className="insight-item"><strong>Efficiency Champion:</strong> Bangladesh achieves 72 years life expectancy with only 3% GDP on health</div>
             <div className="insight-item"><strong>Critical Threshold:</strong> Countries above $4,000 GDP/capita show accelerated health improvements</div>
             <div className="insight-item"><strong>Education Impact:</strong> Each additional year of schooling correlates with ~2 years life expectancy</div>
             <div className="insight-item"><strong>HIV/AIDS Effect:</strong> Countries with {'>'} 10 deaths/1000 have 20+ years lower life expectancy</div>
@@ -1312,9 +1186,9 @@ export default function LifeExpectancyDashboard() {
               <div className="metric-detail">Income Composition Index</div>
             </div>
             <div className="metric-card">
-              <div className="metric-value">7%</div>
-              <div className="metric-label">Optimal Health Spending</div>
-              <div className="metric-detail">Diminishing returns above this</div>
+              <div className="metric-value">15</div>
+              <div className="metric-label">Years Gained</div>
+              <div className="metric-detail">From high immunization coverage</div>
             </div>
           </div>
 
@@ -1379,48 +1253,6 @@ export default function LifeExpectancyDashboard() {
             </div>
           </div>
 
-          {/* EFFICIENCY TAB */}
-          <div className={`tab-content ${activeTab === 'efficiency' ? 'active' : ''}`}>
-            <div className="chart-container">
-              <h3 className="chart-title">Healthcare Efficiency: Life Expectancy vs Health Spending</h3>
-              <p className="chart-description">Some countries achieve more with less through efficient systems</p>
-              <div className="chart-wrapper">
-                <canvas id="efficiencyChart"></canvas>
-              </div>
-            </div>
-            
-            <div className="chart-container">
-              <h3 className="chart-title">Optimal Healthcare Spending Levels</h3>
-              <p className="chart-description">Diminishing returns evident above 7% GDP for developed countries</p>
-              <div className="chart-wrapper">
-                <canvas id="spendingChart"></canvas>
-              </div>
-            </div>
-            
-            <div className="chart-container">
-              <h3 className="chart-title">Most Efficient Health Systems</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Country</th>
-                    <th>Life Expectancy</th>
-                    <th>Health Spending (% GDP)</th>
-                    <th>Efficiency Score</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>Bangladesh</td><td>72.0</td><td>3.08%</td><td className="success">23.4</td><td>Very Efficient</td></tr>
-                  <tr><td>Thailand</td><td>74.9</td><td>3.55%</td><td className="success">21.1</td><td>Very Efficient</td></tr>
-                  <tr><td>Sri Lanka</td><td>74.9</td><td>3.60%</td><td className="success">20.8</td><td>Very Efficient</td></tr>
-                  <tr><td>Vietnam</td><td>75.9</td><td>3.76%</td><td className="success">20.2</td><td>Very Efficient</td></tr>
-                  <tr><td>Singapore</td><td>83.1</td><td>4.92%</td><td className="success">16.9</td><td>Very Efficient</td></tr>
-                  <tr><td>Japan</td><td>83.7</td><td>10.93%</td><td className="warning">7.7</td><td>Moderate</td></tr>
-                  <tr><td>USA</td><td>79.2</td><td>16.84%</td><td className="danger">4.7</td><td>Low Efficiency</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
 
           {/* DETERMINANTS TAB */}
           <div className={`tab-content ${activeTab === 'determinants' ? 'active' : ''}`}>
@@ -1492,7 +1324,7 @@ export default function LifeExpectancyDashboard() {
           {/* COUNTRIES TAB */}
           <div className={`tab-content ${activeTab === 'countries' ? 'active' : ''}`}>
             <div className="chart-container">
-              <h3 className="chart-title">Top 25 Countries by Life Expectancy (2015)</h3>
+              <h3 className="chart-title">Top 10 Countries by Life Expectancy (2015)</h3>
               <table>
                 <thead>
                   <tr>
