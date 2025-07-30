@@ -1,6 +1,7 @@
 'use client'
 
 import Navigation from '@/components/layout/Navigation'
+import PortfolioNavigation from '@/components/sections/PortfolioNavigation'
 import { motion } from 'framer-motion'
 import { MapPin, Eye, Mail, Download, User, Briefcase, FolderOpen, GraduationCap, Brain, MessageSquare, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
@@ -119,125 +120,7 @@ export default function Home() {
       </section>
 
       {/* Portfolio Navigation Section */}
-      <section className="py-20 bg-gray-900">
-        <div className="container mx-auto px-3 xs:px-4 sm:px-6 2xl:px-8 3xl:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-bold text-white mb-4 xs:mb-6">Explore My Portfolio</h2>
-            <p className="text-sm xs:text-base sm:text-lg md:text-xl text-white/70 max-w-3xl mx-auto">
-              Discover my expertise across healthcare analytics, data science, and technology innovation
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-4 gap-4 xs:gap-6 sm:gap-8 xl:gap-10"
-          >
-            {/* About Me Card */}
-            <Link href="/about">
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-xl p-4 xs:p-6 sm:p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <User className="h-10 w-10 text-blue-300 group-hover:scale-110 transition-transform" />
-                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
-                </div>
-                <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-white mb-3 xs:mb-4">About Me</h3>
-                <p className="text-sm xs:text-base text-white/80 mb-3 xs:mb-4">
-                  Learn about my journey from industrial engineering to healthcare frontline worker 
-                </p>
-                <div className="text-xs xs:text-sm text-blue-300 font-medium">20+ Years Experience</div>
-              </motion.div>
-            </Link>
-
-            {/* Experience Card */}
-            <Link href="/experience">
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-br from-green-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-4 xs:p-6 sm:p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <Briefcase className="h-10 w-10 text-green-300 group-hover:scale-110 transition-transform" />
-                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
-                </div>
-                <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-white mb-3 xs:mb-4">Experience</h3>
-                <p className="text-sm xs:text-base text-white/80 mb-3 xs:mb-4">
-                  Explore my professional journey and key achievements in healthcare transformation
-                </p>
-                <div className="text-xs xs:text-sm text-green-300 font-medium">VCH Healthcare Leader</div>
-              </motion.div>
-            </Link>
-
-            {/* Projects Card */}
-            <Link href="/projects">
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-xl p-4 xs:p-6 sm:p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <FolderOpen className="h-10 w-10 text-purple-300 group-hover:scale-110 transition-transform" />
-                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
-                </div>
-                <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-white mb-3 xs:mb-4">Projects</h3>
-                <p className="text-sm xs:text-base text-white/80 mb-3 xs:mb-4">
-                  Discover innovative solutions in healthcare analytics and AI implementation
-                </p>
-                <div className="text-xs xs:text-sm text-purple-300 font-medium">AI & Data Analytics</div>
-              </motion.div>
-            </Link>
-
-            {/* Skills Card */}
-            <Link href="/skills">
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-sm rounded-xl p-4 xs:p-6 sm:p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <Brain className="h-10 w-10 text-orange-300 group-hover:scale-110 transition-transform" />
-                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
-                </div>
-                <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-white mb-3 xs:mb-4">Skills & Expertise</h3>
-                <p className="text-sm xs:text-base text-white/80 mb-3 xs:mb-4">
-                  Comprehensive technical skills across data science, AI, and healthcare domains
-                </p>
-                <div className="text-xs xs:text-sm text-orange-300 font-medium">Technical Proficiency</div>
-              </motion.div>
-            </Link>
-
-            {/* Education Card */}
-            <Link href="/education">
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-br from-indigo-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl p-4 xs:p-6 sm:p-8 border border-white/20 cursor-pointer transition-all duration-300 group"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <GraduationCap className="h-10 w-10 text-indigo-300 group-hover:scale-110 transition-transform" />
-                  <ArrowRight className="h-5 w-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
-                </div>
-                <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-white mb-3 xs:mb-4">Education</h3>
-                <p className="text-sm xs:text-base text-white/80 mb-3 xs:mb-4">
-                  Academic foundation and continuous learning in data analytics and engineering
-                </p>
-                <div className="text-xs xs:text-sm text-indigo-300 font-medium">MSc Data Analytics</div>
-              </motion.div>
-            </Link>
-
-          </motion.div>
-        </div>
-      </section>
+      <PortfolioNavigation />
 
       {/* Quick Stats Section */}
       <section className="py-20 bg-gradient-to-r from-blue-900 to-purple-900">
