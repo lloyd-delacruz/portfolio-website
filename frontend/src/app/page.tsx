@@ -80,9 +80,9 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 1.5, ease: "easeOut" }}
               className="text-sm xs:text-base sm:text-lg md:text-xl text-white/80 mb-6 xs:mb-8 max-w-3xl mx-auto leading-relaxed text-center"
             >
-              Results‑driven analytics leader with a BSc in Industrial Engineering, 20+ years of professional experience, 
+              Results‑driven analytics professional with a BSc in Industrial Engineering, 20+ years' experience, 
               and an MSc in Data Analytics (Dec 2025). AWS AI Practitioner skilled in data analytics, 
-              prompt & context engineering, and apps & web development—leveraging LLMs like Claude code.
+              prompt engineering, and app/web development—leveraging advanced LLMs for impactful solutions.
             </motion.p>
             
             {/* Location */}
