@@ -1,7 +1,7 @@
 ---
 title: "Understanding Model Context Protocol: The Future of AI Integration"
 excerpt: "Explore Anthropic's revolutionary MCP standard that's transforming how AI systems integrate with external tools and data sources, featuring rapid adoption by OpenAI and Google DeepMind."
-date: "2025-01-20"
+date: "2025-06-20"
 author: "Lloyd Dela Cruz"
 category: "development"
 tags: ["MCP", "AI Integration", "Anthropic", "Protocol"]
@@ -10,7 +10,7 @@ featured: true
 image: "/images/blog/mcp-integration.jpg"
 video: false
 interactive: true
-gradient: "from-cyan-600 via-blue-600 to-indigo-800"
+gradient: "from-indigo-600 via-blue-600 to-purple-800"
 published: true
 ---
 

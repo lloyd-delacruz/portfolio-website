@@ -116,30 +116,22 @@ export function ExperienceSection() {
             <motion.div
               key={exp.id}
               variants={itemVariants}
-              className={`relative mb-16 ${
-                index % 2 === 0 ? 'md:pr-1/2' : 'md:pl-1/2 md:text-right'
-              }`}
+              className="relative mb-16 md:pr-1/2"
             >
               {/* Timeline Dot */}
-              <div className={`hidden md:block absolute top-8 ${
-                index % 2 === 0 ? 'right-0' : 'left-0'
-              } w-4 h-4 ${
+              <div className={`hidden md:block absolute top-8 right-0 w-4 h-4 ${
                 exp.color === 'blue' ? 'bg-blue-500' : 
                 exp.color === 'purple' ? 'bg-purple-500' : 'bg-cyan-500'
-              } rounded-full border-4 border-white shadow-lg transform ${
-                index % 2 === 0 ? 'translate-x-2' : '-translate-x-2'
-              }`}></div>
+              } rounded-full border-4 border-white shadow-lg transform translate-x-2`}></div>
 
               {/* Content Card */}
               <motion.div
                 whileHover={{ y: -5, scale: 1.02 }}
                 transition={{ duration: 0.3 }}
-                className={`bg-white rounded-2xl shadow-xl p-8 border border-gray-100 ${
-                  index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'
-                }`}
+                className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 md:mr-8"
               >
                 {/* Header */}
-                <div className={`mb-6 ${index % 2 === 1 ? 'md:text-right' : ''}`}>
+                <div className="mb-6">
                   <div className="flex items-center gap-2 mb-2 text-sm text-gray-500">
                     <Calendar className="w-4 h-4" />
                     <span>{exp.period}</span>
@@ -165,50 +157,33 @@ export function ExperienceSection() {
                 </div>
 
                 {/* Description */}
-                <p className={`text-gray-600 mb-6 leading-relaxed ${
-                  index % 2 === 1 ? 'md:text-right' : ''
-                }`}>
+                <p className="text-gray-600 mb-6 leading-relaxed">
                   {exp.description}
                 </p>
 
                 {/* Key Achievements */}
-                <div className={`mb-6 ${index % 2 === 1 ? 'md:text-right' : ''}`}>
+                <div className="mb-6">
                   <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                    {index % 2 === 0 && <ChevronRight className="w-4 h-4 text-blue-500" />}
+                    <ChevronRight className="w-4 h-4 text-blue-500" />
                     Key Achievements
-                    {index % 2 === 1 && <ChevronRight className="w-4 h-4 text-blue-500 rotate-180" />}
                   </h4>
-                  <ul className={`space-y-2 ${index % 2 === 1 ? 'md:text-right' : ''}`}>
+                  <ul className="space-y-2">
                     {exp.achievements.map((achievement, i) => (
                       <li key={i} className="text-gray-600 flex items-start gap-2">
-                        {index % 2 === 0 ? (
-                          <>
-                            <div className={`w-2 h-2 ${
-                          exp.color === 'blue' ? 'bg-blue-400' : 
-                          exp.color === 'purple' ? 'bg-purple-400' : 'bg-cyan-400'
-                        } rounded-full mt-2 flex-shrink-0`}></div>
-                            <span>{achievement}</span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="flex-1">{achievement}</span>
-                            <div className={`w-2 h-2 ${
-                          exp.color === 'blue' ? 'bg-blue-400' : 
-                          exp.color === 'purple' ? 'bg-purple-400' : 'bg-cyan-400'
-                        } rounded-full mt-2 flex-shrink-0`}></div>
-                          </>
-                        )}
+                        <div className={`w-2 h-2 ${
+                      exp.color === 'blue' ? 'bg-blue-400' : 
+                      exp.color === 'purple' ? 'bg-purple-400' : 'bg-cyan-400'
+                    } rounded-full mt-2 flex-shrink-0`}></div>
+                        <span>{achievement}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 {/* Technologies */}
-                <div className={`${index % 2 === 1 ? 'md:text-right' : ''}`}>
+                <div>
                   <h4 className="font-semibold text-gray-800 mb-3">Technologies Used</h4>
-                  <div className={`flex flex-wrap gap-2 ${
-                    index % 2 === 1 ? 'md:justify-end' : ''
-                  }`}>
+                  <div className="flex flex-wrap gap-2">
                     {exp.technologies.map((tech, i) => (
                       <span
                         key={i}

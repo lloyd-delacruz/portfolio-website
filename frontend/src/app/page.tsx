@@ -153,7 +153,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-white mb-3 xs:mb-4">About Me</h3>
                 <p className="text-sm xs:text-base text-white/80 mb-3 xs:mb-4">
-                  Learn about my journey from industrial engineering to healthcare analytics leadership
+                  Learn about my journey from industrial engineering to healthcare frontline worker 
                 </p>
                 <div className="text-xs xs:text-sm text-blue-300 font-medium">20+ Years Experience</div>
               </motion.div>
