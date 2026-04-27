@@ -2,6 +2,7 @@
 
 import Navigation from '@/components/layout/Navigation'
 import PortfolioNavigation from '@/components/sections/PortfolioNavigation'
+import { GLSLHills } from '@/components/ui/glsl-hills'
 import { motion } from 'framer-motion'
 import { MapPin, Eye, Mail, Download, User, Briefcase, FolderOpen, GraduationCap, Brain, MessageSquare, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
@@ -13,16 +14,21 @@ export default function Home() {
       
       {/* Hero Section with Animations */}
       <section className="relative min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 overflow-hidden">
+        {/* GLSL Hills WebGL Background */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <GLSLHills width="100%" height="100%" />
+        </div>
+
         {/* Navigation Bridge */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/20 to-transparent"
+          className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/20 to-transparent z-[1]"
         />
-        
+
         {/* Animated Background Elements */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 z-[1] pointer-events-none">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
