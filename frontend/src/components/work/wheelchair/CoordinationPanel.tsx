@@ -67,7 +67,7 @@ export function CoordinationPanel() {
 
             <button
               type="button"
-              className="w-full mb-2 inline-flex items-center justify-between rounded-md border border-surface-strong/60 bg-surface-elevated px-3 py-2 text-xs text-surface-fg hover:border-gold/30 transition-colors"
+              className="w-full mb-2 inline-flex items-center justify-between rounded-md border border-surface-strong/60 bg-surface-elevated px-3 py-2 text-xs text-surface-fg hover:border-gold/30 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2"
             >
               <span className="inline-flex items-center gap-2">
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -78,7 +78,7 @@ export function CoordinationPanel() {
 
             <button
               type="button"
-              className="w-full mb-2 inline-flex items-center justify-between rounded-md border border-surface-subtle bg-surface-card px-3 py-2 text-xs text-surface-fg-secondary hover:border-gold/30 hover:text-surface-fg transition-colors"
+              className="w-full mb-2 inline-flex items-center justify-between rounded-md border border-surface-subtle bg-surface-card px-3 py-2 text-xs text-surface-fg-secondary hover:border-gold/30 hover:text-surface-fg transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2"
             >
               <span className="inline-flex items-center gap-2">
                 <Scan className="h-3.5 w-3.5" />
@@ -89,7 +89,7 @@ export function CoordinationPanel() {
 
             <button
               type="button"
-              className="w-full inline-flex items-center justify-between rounded-md border border-signal-live/40 bg-signal-live/10 px-3 py-2 text-xs text-signal-live"
+              className="w-full inline-flex items-center justify-between rounded-md border border-signal-live/40 bg-signal-live/10 px-3 py-2 text-xs text-signal-live focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2"
             >
               <span className="inline-flex items-center gap-2">
                 <Check className="h-3.5 w-3.5" />

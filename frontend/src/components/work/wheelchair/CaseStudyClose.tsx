@@ -16,7 +16,7 @@ export function CaseStudyClose() {
 
         <Link
           href="/work/equitrackr"
-          className="group flex items-center justify-between gap-6 rounded-xl border border-surface-subtle px-6 py-6 transition-colors hover:border-gold/40 hover:bg-surface-card"
+          className="group flex items-center justify-between gap-6 rounded-xl border border-surface-subtle px-6 py-6 transition-colors hover:border-gold/40 hover:bg-surface-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2"
         >
           <div>
             <MonoLabel className="block mb-2 text-gold">02 · healthcare workflow systems</MonoLabel>
@@ -29,7 +29,7 @@ export function CaseStudyClose() {
         <div className="mt-12 pt-8 border-t border-surface-subtle flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wide-label text-surface-fg-secondary hover:text-surface-fg transition-colors"
+            className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wide-label text-surface-fg-secondary hover:text-surface-fg transition-colors rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             back to systems
@@ -39,7 +39,7 @@ export function CaseStudyClose() {
             <li>
               <a
                 href="mailto:lloyd.vince1985@gmail.com"
-                className="font-mono text-xs text-surface-fg hover:text-gold transition-colors"
+                className="font-mono text-xs text-surface-fg hover:text-gold transition-colors rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2"
               >
                 lloyd.vince1985@gmail.com
               </a>
@@ -50,7 +50,7 @@ export function CaseStudyClose() {
                   href={l.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-mono text-xs uppercase tracking-wide-label text-surface-fg-secondary hover:text-surface-fg transition-colors"
+                  className="font-mono text-xs uppercase tracking-wide-label text-surface-fg-secondary hover:text-surface-fg transition-colors rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2"
                 >
                   {l.label}
                 </a>
