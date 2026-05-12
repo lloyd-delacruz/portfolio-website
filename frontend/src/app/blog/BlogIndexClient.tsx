@@ -125,6 +125,7 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
                       className={cn(
                         'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 transition-colors',
                         'font-mono text-[10px] uppercase tracking-wide-label',
+                        'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40',
                         active
                           ? 'border-gold/50 bg-surface-elevated text-surface-fg'
                           : 'border-surface-subtle bg-surface-card/50 text-surface-fg-secondary hover:text-surface-fg hover:border-surface-strong'
@@ -152,6 +153,7 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
                     aria-pressed={active}
                     className={cn(
                       'rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-wide-label transition-colors',
+                      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40',
                       active
                         ? 'bg-surface-elevated text-surface-fg'
                         : 'text-surface-fg-secondary hover:text-surface-fg'
@@ -176,37 +178,51 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
               </MonoLabel>
             </div>
 
-            {visiblePosts.length === 0 ? (
-              <div className="border-y border-surface-subtle px-2 py-16 text-center">
-                <MonoLabel className="block">no entries match</MonoLabel>
-                <p className="mt-3 font-serif text-base text-surface-fg-secondary">
-                  Try a different search term or clear the active filters.
-                </p>
-                <button
-                  type="button"
-                  onClick={clearFilters}
-                  className={cn(
-                    'mt-5 inline-flex items-center gap-1.5 rounded-full border border-surface-subtle bg-surface-card/50 px-3 py-1',
-                    'font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-secondary',
-                    'transition-colors hover:text-surface-fg hover:border-surface-strong',
-                    'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40'
-                  )}
+            <AnimatePresence mode="wait" initial={false}>
+              {visiblePosts.length === 0 ? (
+                <motion.div
+                  key="empty"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="border-y border-surface-subtle px-2 py-16 text-center"
                 >
-                  clear filters
-                </button>
-              </div>
-            ) : (
-              <motion.ul
-                layout
-                className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
-              >
-                <AnimatePresence mode="popLayout">
-                  {visiblePosts.map((post, idx) => (
-                    <EssayCard key={post.slug} post={post} index={idx} />
-                  ))}
-                </AnimatePresence>
-              </motion.ul>
-            )}
+                  <MonoLabel className="block">no entries match</MonoLabel>
+                  <p className="mt-3 font-serif text-base text-surface-fg-secondary">
+                    Try a different search term or clear the active filters.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={clearFilters}
+                    className={cn(
+                      'mt-5 inline-flex items-center gap-1.5 rounded-full border border-surface-subtle bg-surface-card/50 px-3 py-1',
+                      'font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-secondary',
+                      'transition-colors hover:text-surface-fg hover:border-surface-strong',
+                      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40'
+                    )}
+                  >
+                    clear filters
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.ul
+                  key="grid"
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
+                >
+                  <AnimatePresence mode="popLayout">
+                    {visiblePosts.map((post, idx) => (
+                      <EssayCard key={post.slug} post={post} index={idx} />
+                    ))}
+                  </AnimatePresence>
+                </motion.ul>
+              )}
+            </AnimatePresence>
           </div>
         </section>
       </main>
