@@ -1,7 +1,7 @@
 // frontend/src/components/home/ValuesRow.tsx
 import { Network, Workflow, Database, Cpu, Users } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { IconBadge, MonoLabel } from './primitives'
+import { IconBadge } from './primitives'
 
 type Value = { icon: LucideIcon; title: string; statement: string }
 

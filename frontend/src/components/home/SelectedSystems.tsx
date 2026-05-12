@@ -26,7 +26,7 @@ export function SelectedSystems() {
                 <MonoLabel className="text-gold">{e.number}</MonoLabel>
                 <div>
                   <div className="flex items-baseline gap-3">
-                    <h3 className="text-lg font-medium text-surface-fg">{e.title}</h3>
+                    <h3 className="font-serif text-lg font-medium text-surface-fg">{e.title}</h3>
                     <MonoLabel>{e.capability}</MonoLabel>
                   </div>
                   <p className="mt-1 text-sm text-surface-fg-secondary">{e.description}</p>

@@ -15,7 +15,7 @@ export function LiveStatusPanel() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-10 lg:items-end">
           <div>
             <MonoLabel className="block mb-3">live · currently running</MonoLabel>
-            <h2 className="text-2xl md:text-3xl font-medium tracking-tight-h text-surface-fg max-w-[26ch]">
+            <h2 className="font-serif text-2xl md:text-3xl font-medium tracking-tight-h text-surface-fg max-w-[26ch]">
               The system isn&apos;t a slide deck. It&apos;s running right now.
             </h2>
             <p className="mt-3 max-w-[44ch] text-sm text-surface-fg-secondary">

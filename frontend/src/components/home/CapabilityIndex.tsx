@@ -18,7 +18,7 @@ export function CapabilityIndex() {
     <section id="systems" className="bg-surface-canvas border-t border-surface-subtle">
       <div className="mx-auto max-w-6xl px-6 py-20">
         <MonoLabel className="block mb-4">capabilities · system map</MonoLabel>
-        <h2 className="text-2xl md:text-3xl font-medium tracking-tight-h text-surface-fg max-w-[28ch] mb-10">
+        <h2 className="font-serif text-2xl md:text-3xl font-medium tracking-tight-h text-surface-fg max-w-[28ch] mb-10">
           The patterns I build across domains.
         </h2>
 

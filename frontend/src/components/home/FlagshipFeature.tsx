@@ -19,7 +19,7 @@ export function FlagshipFeature() {
             </div>
 
             <MonoLabel className="block">01 · healthcare workflow systems</MonoLabel>
-            <h3 className="mt-4 text-3xl md:text-5xl font-medium tracking-tight-display leading-[1.05] text-surface-fg max-w-[22ch]">
+            <h3 className="mt-4 font-serif text-3xl md:text-5xl font-medium tracking-tight-display leading-[1.05] text-surface-fg max-w-[22ch]">
               Wheelchair Tracking System
             </h3>
             <p className="mt-5 max-w-[58ch] text-sm md:text-base text-surface-fg-secondary leading-relaxed">
