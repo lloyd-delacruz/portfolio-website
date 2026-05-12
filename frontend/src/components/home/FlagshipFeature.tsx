@@ -11,7 +11,7 @@ export function FlagshipFeature() {
           className="group block rounded-2xl border border-surface-subtle overflow-hidden transition-colors hover:border-gold/40"
         >
           <div className="relative bg-gradient-to-br from-surface-card via-surface-elevated to-[#1c2233] p-8 md:p-12">
-            <div className="absolute right-6 top-6">
+            <div className="absolute right-4 top-4 hidden sm:flex">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1">
                 <MonoLabel className="text-gold/90">featured · cathedral case study</MonoLabel>
                 <ArrowUpRight className="h-3 w-3 text-gold/90 group-hover:translate-x-0.5 transition-transform" />

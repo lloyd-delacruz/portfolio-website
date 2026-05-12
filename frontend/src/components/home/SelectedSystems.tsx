@@ -21,7 +21,7 @@ export function SelectedSystems() {
             <li key={e.number}>
               <Link
                 href={e.href}
-                className="group grid grid-cols-[auto_1fr_auto] items-center gap-6 px-2 py-6 transition-colors hover:bg-surface-card"
+                className="group grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6 px-2 py-6 transition-colors hover:bg-surface-card"
               >
                 <MonoLabel className="text-gold">{e.number}</MonoLabel>
                 <div>
