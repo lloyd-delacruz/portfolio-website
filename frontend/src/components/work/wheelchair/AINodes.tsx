@@ -1,125 +1,118 @@
-import { RegisterHandoff } from './primitives'
+import { Wrench, TrendingUp, MessagesSquare } from 'lucide-react'
 import { MonoLabel } from '@/components/home/primitives'
+
+type Kind = 'maintenance' | 'forecast' | 'copilot'
 
 type Card = {
   slug: string
   title: string
-  description: string
-  diagram: 'lifecycle' | 'sites' | 'chat'
+  icon: typeof Wrench
+  reads: string
+  does: string
+  kind: Kind
 }
 
 const CARDS: Card[] = [
   {
     slug: 'predictive_maintenance_node',
     title: 'Predictive maintenance',
-    description:
-      'Reads the lifecycle state machine. Flags chairs likely to fail within 14 days based on cumulative state-transit history. Surfaces in maintenance lead\'s dashboard.',
-    diagram: 'lifecycle',
+    icon: Wrench,
+    reads: 'reads the lifecycle state machine',
+    does: 'flags chairs likely to fail within 14 days, in the maintenance lead’s view.',
+    kind: 'maintenance',
   },
   {
     slug: 'demand_forecast_node',
     title: 'Site demand forecast',
-    description:
-      'Reads patient-flow signals and scan cadence across sites. Predicts equipment shortfall by site by hour. Triggers proactive cross-site transfers before a shortage materialises.',
-    diagram: 'sites',
+    icon: TrendingUp,
+    reads: 'reads scan cadence + patient flow',
+    does: 'predicts shortfall by site by hour, triggers transfers before a shortage hits.',
+    kind: 'forecast',
   },
   {
     slug: 'operational_copilot_node',
     title: 'Operational copilot',
-    description:
-      'Reads the registry. Answers operational queries in natural language ("where are the bariatric chairs at UBC right now?") and drafts cross-site transfer requests for human approval.',
-    diagram: 'chat',
+    icon: MessagesSquare,
+    reads: 'reads the registry',
+    does: 'answers “where are the bariatric chairs at UBC?” and drafts transfers for approval.',
+    kind: 'copilot',
   },
 ]
 
-function MiniDiagram({ kind }: { kind: Card['diagram'] }) {
-  if (kind === 'lifecycle') {
-    return (
-      <svg viewBox="0 0 100 30" className="w-full h-auto" aria-hidden="true">
-        {[10, 30, 50, 70, 90].map((x) => (
-          <circle key={x} cx={x} cy={15} r={1.6} fill="hsl(var(--surface-canvas))" stroke="rgba(255,255,255,0.32)" strokeWidth={0.22} />
-        ))}
-        {[[10,30],[30,50],[50,70],[70,90]].map(([a,b]) => (
-          <line key={a} x1={a+2} y1={15} x2={b-2} y2={15} stroke="rgba(255,255,255,0.18)" strokeWidth={0.22} />
-        ))}
-        {/* Risk overlay arrow */}
-        <path d="M 50 10 Q 60 4 70 10" fill="none" stroke="hsl(var(--accent-gold) / 0.85)" strokeWidth={0.4} />
-        <text x="60" y="6" fontSize="2.5" textAnchor="middle" fontFamily="var(--font-geist-mono), monospace" fill="hsl(var(--accent-gold))">maintenance_risk</text>
-      </svg>
-    )
-  }
-  if (kind === 'sites') {
-    return (
-      <svg viewBox="0 0 100 40" className="w-full h-auto" aria-hidden="true">
-        {[[20,12],[80,12],[20,28],[80,28]].map(([x,y], i) => (
-          <g key={i}>
-            <circle cx={x} cy={y} r={2} fill="hsl(var(--surface-canvas))" stroke="rgba(255,255,255,0.32)" strokeWidth={0.22} />
-            <text x={x} y={y + 0.8} fontSize="2.2" textAnchor="middle" fontFamily="var(--font-geist-mono), monospace" fill="rgba(170,176,191,0.7)">{i === 1 ? 'ubc!' : ['vgh','ubc','lg','rch'][i]}</text>
-          </g>
-        ))}
-        {/* Shortfall pulse on ubc */}
-        <circle cx={80} cy={12} r={3.5} fill="none" stroke="hsl(var(--accent-gold) / 0.6)" strokeWidth={0.3} />
-        {/* Proactive transfer arrow */}
-        <line x1={22} y1={12} x2={78} y2={12} stroke="hsl(var(--accent-gold) / 0.7)" strokeWidth={0.3} markerEnd="" />
-        <polygon points="76,11 80,12 76,13" fill="hsl(var(--accent-gold))" />
-      </svg>
-    )
-  }
-  // chat
+/** Shared visual grammar: a small workflow_core hub with the AI node hanging off it. */
+function NodeDiagram({ kind }: { kind: Kind }) {
   return (
-    <div className="font-mono text-[10px] space-y-1.5">
-      <div className="text-surface-fg-secondary">
-        <span className="text-surface-fg-muted">user · </span>
-        where are the bariatric chairs at UBC right now?
-      </div>
-      <div className="text-surface-fg">
-        <span className="text-gold">copilot · </span>
-        3 available at UBC · 4N. Most recently scanned 14:11.
-        <span className="ml-1 inline-flex items-center rounded-full border border-gold/40 bg-gold/10 px-1.5 py-0.5 text-[9px] text-gold">
-          EQ-UBC-0192
-        </span>
-      </div>
-    </div>
+    <svg viewBox="0 0 200 64" className="h-auto w-full" aria-hidden="true">
+      {/* connector */}
+      <line x1="46" y1="32" x2="118" y2="32" stroke="hsl(var(--accent-gold) / 0.5)" strokeWidth="1" strokeDasharray="3 3" />
+      {/* core hub */}
+      <circle cx="32" cy="32" r="15" fill="hsl(var(--surface-canvas))" stroke="hsl(var(--accent-gold) / 0.6)" strokeWidth="1" />
+      <text x="32" y="34.5" textAnchor="middle" fontSize="6.5" fontFamily="var(--font-geist-mono), monospace" fill="hsl(var(--accent-gold))">
+        core
+      </text>
+      {/* AI node body */}
+      <rect x="120" y="14" width="74" height="36" rx="6" fill="hsl(var(--surface-canvas))" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
+
+      {kind === 'maintenance' && (
+        <>
+          {/* small risk curve inside the node */}
+          <polyline points="128,40 138,36 148,38 158,30 168,24 186,18" fill="none" stroke="hsl(var(--accent-gold) / 0.85)" strokeWidth="1.4" strokeLinecap="round" />
+          <circle cx="186" cy="18" r="2" fill="hsl(var(--accent-gold))" />
+          <text x="128" y="26" fontSize="6" fontFamily="var(--font-geist-mono), monospace" fill="rgba(170,176,191,0.8)">risk ↑</text>
+        </>
+      )}
+      {kind === 'forecast' && (
+        <>
+          {/* mini bars + a shortfall marker */}
+          {[0, 1, 2, 3, 4].map((i) => (
+            <rect key={i} x={128 + i * 12} y={42 - (i === 3 ? 22 : 8 + i * 3)} width="7" height={i === 3 ? 22 : 8 + i * 3}
+              fill={i === 3 ? 'hsl(var(--accent-gold) / 0.8)' : 'rgba(255,255,255,0.22)'} rx="1" />
+          ))}
+          <text x="160" y="14" textAnchor="middle" fontSize="6" fontFamily="var(--font-geist-mono), monospace" fill="hsl(var(--accent-gold))">short</text>
+        </>
+      )}
+      {kind === 'copilot' && (
+        <>
+          {/* chat bubbles */}
+          <rect x="127" y="19" width="40" height="9" rx="4.5" fill="rgba(255,255,255,0.14)" />
+          <rect x="143" y="33" width="46" height="9" rx="4.5" fill="hsl(var(--accent-gold) / 0.22)" />
+          <text x="170" y="48" textAnchor="middle" fontSize="5.5" fontFamily="var(--font-geist-mono), monospace" fill="rgba(170,176,191,0.8)">EQ-UBC-0192</text>
+        </>
+      )}
+    </svg>
   )
 }
 
 export function AINodes() {
   return (
-    <>
-      <RegisterHandoff direction="paper-to-surface" />
-      <section className="bg-surface-canvas text-surface-fg">
-        <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-          <MonoLabel className="block mb-4 text-gold">next nodes · ai integration · concept</MonoLabel>
-          <h2 className="text-3xl md:text-4xl font-medium tracking-tight-h text-surface-fg max-w-[28ch] mb-6">
-            AI as a node in the system. Not the centre of the universe.
-          </h2>
-          <p className="text-base text-surface-fg-secondary max-w-[58ch] mb-12">
-            Three nodes that would plug into the existing registry. Each reads from the state machine, writes back through audited events, and ships behind the same workflow gestures the system already uses.
-          </p>
+    <section className="border-t border-surface-subtle bg-surface-canvas text-surface-fg">
+      <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
+        <MonoLabel className="block mb-4 text-gold">07 · what&apos;s next · ai integration · concept</MonoLabel>
+        <h2 className="text-3xl md:text-4xl font-medium tracking-tight-h text-surface-fg max-w-[26ch]">
+          AI as a node in the system — not the centre of it.
+        </h2>
+        <p className="mt-4 text-base md:text-lg text-surface-fg-secondary max-w-[56ch]">
+          Three nodes that plug into the same registry. Each reads the state machine, writes back through audited events, and ships behind the gestures the system already uses.
+        </p>
 
-          <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {CARDS.map((c) => (
-              <li key={c.slug} className="flex flex-col rounded-xl border border-surface-subtle bg-surface-card p-6">
+        <ul className="mt-10 grid grid-cols-1 gap-4 md:mt-12 md:grid-cols-3">
+          {CARDS.map((c) => (
+            <li key={c.slug} className="flex flex-col rounded-xl border border-surface-subtle bg-surface-card p-6">
+              <div className="flex items-center gap-2">
+                <c.icon className="h-4 w-4 text-gold" aria-hidden />
                 <MonoLabel className="text-gold">{c.slug}</MonoLabel>
-                <h3 className="mt-3 text-lg font-medium text-surface-fg">{c.title}</h3>
-                <p className="mt-3 text-sm text-surface-fg-secondary leading-relaxed">
-                  {c.description}
-                </p>
-                <div className="mt-6 rounded-md border border-surface-subtle bg-surface-canvas p-4 min-h-[80px] flex items-center">
-                  <MiniDiagram kind={c.diagram} />
-                </div>
-                <p className="mt-3 font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-muted">
-                  concept · not deployed
-                </p>
-              </li>
-            ))}
-          </ul>
-
-          <p className="mt-10 font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-muted">
-            AI nodes read from workflow_core · the registry remains the source of truth
-          </p>
-        </div>
-      </section>
-    </>
+              </div>
+              <h3 className="mt-3 text-lg font-medium text-surface-fg">{c.title}</h3>
+              <p className="mt-1 font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-muted">{c.reads}</p>
+              <p className="mt-3 text-[13px] leading-relaxed text-surface-fg-secondary">{c.does}</p>
+              <div className="mt-6 rounded-md border border-surface-subtle bg-surface-canvas p-4">
+                <NodeDiagram kind={c.kind} />
+              </div>
+              <p className="mt-3 font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-muted">concept · not deployed</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   )
 }

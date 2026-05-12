@@ -1,14 +1,22 @@
 import { ArrowRight, ChevronRight, Scan, Check } from 'lucide-react'
 import { LiveDot, MonoLabel } from '@/components/home/primitives'
 
-type SiteTile = { id: string; name: string; available: number; inUse: number }
+type SiteTile = { id: string; name: string; available: number; inUse: number; short?: boolean }
 
 const SITES: SiteTile[] = [
   { id: 'vgh',        name: 'VGH',         available: 187, inUse: 134 },
   { id: 'ubc',        name: 'UBC',         available: 162, inUse: 119 },
   { id: 'lions_gate', name: 'Lions Gate',  available: 144, inUse: 102 },
-  { id: 'richmond',   name: 'Richmond',    available: 138, inUse: 96  },
+  { id: 'richmond',   name: 'Richmond',    available: 9,   inUse: 96, short: true },
 ]
+
+function StepBadge({ n }: { n: number }) {
+  return (
+    <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-gold/40 bg-gold/10 font-mono text-[9px] text-gold">
+      {n}
+    </span>
+  )
+}
 
 export function CoordinationPanel() {
   return (
@@ -25,14 +33,24 @@ export function CoordinationPanel() {
 
         <ul className="grid grid-cols-2 gap-3">
           {SITES.map((s) => (
-            <li key={s.id} className="rounded-lg border border-surface-subtle bg-surface-card p-4 hover:border-gold/30 transition-colors">
+            <li
+              key={s.id}
+              className={`rounded-lg border bg-surface-card p-4 transition-colors ${s.short ? 'border-gold/40' : 'border-surface-subtle hover:border-gold/30'}`}
+            >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm text-surface-fg">{s.name}</span>
-                <LiveDot pulse={false} />
+                <span className="inline-flex items-center gap-1.5 text-sm text-surface-fg">
+                  {s.short && <StepBadge n={1} />}
+                  {s.name}
+                </span>
+                {s.short ? (
+                  <span className="font-mono text-[9px] uppercase tracking-wide-label text-gold">short</span>
+                ) : (
+                  <LiveDot pulse={false} />
+                )}
               </div>
               <dl className="grid grid-cols-2 gap-y-1.5 gap-x-4">
                 <dt className="font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-muted">available</dt>
-                <dd className="font-mono text-sm text-surface-fg text-right">{s.available}</dd>
+                <dd className={`font-mono text-sm text-right ${s.short ? 'text-gold' : 'text-surface-fg'}`}>{s.available}</dd>
                 <dt className="font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-muted">in use</dt>
                 <dd className="font-mono text-sm text-surface-fg-secondary text-right">{s.inUse}</dd>
               </dl>
@@ -41,7 +59,7 @@ export function CoordinationPanel() {
         </ul>
 
         <p className="mt-5 font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-muted">
-          shared registry · same state, different surfaces per role
+          ① spot the shortage on the board · ② tap transfer on the chair · ③ confirm the handoff
         </p>
       </div>
 
@@ -70,8 +88,9 @@ export function CoordinationPanel() {
               className="w-full mb-2 inline-flex items-center justify-between rounded-md border border-surface-strong/60 bg-surface-elevated px-3 py-2 text-xs text-surface-fg hover:border-gold/30 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2"
             >
               <span className="inline-flex items-center gap-2">
+                <StepBadge n={2} />
                 <ArrowRight className="h-3.5 w-3.5" />
-                Transfer to UBC
+                Transfer to Richmond
               </span>
               <ChevronRight className="h-3.5 w-3.5 text-surface-fg-muted" />
             </button>
@@ -92,6 +111,7 @@ export function CoordinationPanel() {
               className="w-full inline-flex items-center justify-between rounded-md border border-signal-live/40 bg-signal-live/10 px-3 py-2 text-xs text-signal-live focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2"
             >
               <span className="inline-flex items-center gap-2">
+                <StepBadge n={3} />
                 <Check className="h-3.5 w-3.5" />
                 Confirm handoff
               </span>
@@ -101,7 +121,7 @@ export function CoordinationPanel() {
         </div>
 
         <p className="mt-4 font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-muted text-center">
-          maintenance lead&apos;s view would surface different actions
+          a maintenance lead&apos;s view would surface different actions
         </p>
       </div>
     </div>
