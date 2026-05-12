@@ -1,3 +1,4 @@
+// frontend/src/components/home/SystemsMap.tsx
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -6,53 +7,43 @@ import { cn } from '@/lib/utils'
 import { usePrefersReducedMotion } from '@/lib/hooks/usePrefersReducedMotion'
 import { useInViewPause } from '@/lib/hooks/useInViewPause'
 
-type Node = { id: string; label: string; x: number; y: number; r: number; kind: 'core' | 'hospital' | 'system' }
+type Hospital = { id: string; label: string; x: number; y: number }
 
-const NODES: Node[] = [
-  { id: 'core',         label: 'workflow_core', x: 50, y: 50, r: 2.2, kind: 'core' },
-  { id: 'vgh',          label: 'vgh',           x: 20, y: 22, r: 1.4, kind: 'hospital' },
-  { id: 'ubc',          label: 'ubc',           x: 80, y: 22, r: 1.4, kind: 'hospital' },
-  { id: 'lions_gate',   label: 'lions_gate',    x: 22, y: 78, r: 1.4, kind: 'hospital' },
-  { id: 'richmond',     label: 'richmond',      x: 78, y: 78, r: 1.4, kind: 'hospital' },
-  { id: 'equitrackr',   label: 'equitrackr',    x: 92, y: 92, r: 0.9, kind: 'system' },
-  { id: 'ai_systems',   label: 'ai_systems',    x: 8,  y: 92, r: 0.9, kind: 'system' },
+// viewBox is 0..120 wide, 0..96 tall (5:4-ish). Core at center.
+const CORE = { x: 60, y: 48 }
+const HOSPITALS: Hospital[] = [
+  { id: 'vgh',        label: 'VGH',         x: 20, y: 18 },
+  { id: 'ubc',        label: 'UBC',         x: 100, y: 18 },
+  { id: 'lions_gate', label: 'LIONS GATE',  x: 20, y: 78 },
+  { id: 'richmond',   label: 'RICHMOND',    x: 100, y: 78 },
 ]
 
-const EDGES: [string, string, 'flag' | 'subtle'][] = [
-  ['core', 'vgh', 'flag'],
-  ['core', 'ubc', 'flag'],
-  ['core', 'lions_gate', 'flag'],
-  ['core', 'richmond', 'flag'],
-  ['vgh', 'ubc', 'subtle'],
-  ['lions_gate', 'richmond', 'subtle'],
-  ['vgh', 'lions_gate', 'subtle'],
-  ['ubc', 'richmond', 'subtle'],
-  ['richmond', 'equitrackr', 'subtle'],
-  ['lions_gate', 'ai_systems', 'subtle'],
-]
-
-function nodeById(id: string) {
-  const n = NODES.find((node) => node.id === id)
-  if (!n) throw new Error(`SystemsMap: unknown node ${id}`)
-  return n
+// SVG "building" glyph: a few rects, drawn relative to a node center.
+function HospitalGlyph({ cx, cy }: { cx: number; cy: number }) {
+  return (
+    <g stroke="hsl(var(--accent-gold))" strokeWidth={0.5} fill="none">
+      <rect x={cx - 2.4} y={cy - 2.6} width={4.8} height={5.6} rx={0.4} />
+      <line x1={cx - 1.1} y1={cy - 1.4} x2={cx - 1.1} y2={cy - 0.6} />
+      <line x1={cx + 1.1} y1={cy - 1.4} x2={cx + 1.1} y2={cy - 0.6} />
+      <line x1={cx - 1.1} y1={cy + 0.4} x2={cx - 1.1} y2={cy + 1.2} />
+      <line x1={cx + 1.1} y1={cy + 0.4} x2={cx + 1.1} y2={cy + 1.2} />
+    </g>
+  )
 }
-
-const flagEdges = EDGES.filter(([, , k]) => k === 'flag')
 
 export function SystemsMap({ className }: { className?: string }) {
   const reduced = usePrefersReducedMotion()
   const { ref, inView } = useInViewPause<HTMLDivElement>()
-  const [fireIndex, setFireIndex] = useState<number | null>(null)
   const animate = !reduced && inView
+  const [fireIndex, setFireIndex] = useState<number | null>(null)
 
   useEffect(() => {
     if (!animate) return
     let timeout: ReturnType<typeof setTimeout>
     const schedule = () => {
-      const delay = 6000 + Math.random() * 4000
+      const delay = 5000 + Math.random() * 4000
       timeout = setTimeout(() => {
-        const next = Math.floor(Math.random() * flagEdges.length)
-        setFireIndex(next)
+        setFireIndex(Math.floor(Math.random() * HOSPITALS.length))
         setTimeout(() => setFireIndex(null), 1100)
         schedule()
       }, delay)
@@ -61,48 +52,40 @@ export function SystemsMap({ className }: { className?: string }) {
     return () => clearTimeout(timeout)
   }, [animate])
 
-  const firingEdge = fireIndex !== null ? flagEdges[fireIndex] : null
-  const firingFrom = firingEdge ? nodeById(firingEdge[0]) : null
-  const firingTo   = firingEdge ? nodeById(firingEdge[1]) : null
+  const firingTo = fireIndex !== null ? HOSPITALS[fireIndex] : null
 
   return (
-    <div ref={ref} className={cn('absolute inset-0', className)}>
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="xMidYMid slice"
-        className="h-full w-full"
-        aria-hidden="true"
-      >
+    <div ref={ref} className={cn('w-full', className)}>
+      <svg viewBox="0 0 120 96" className="h-full w-full" aria-hidden="true">
         <defs>
-          <radialGradient id="sm-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="hsl(var(--accent-gold))" stopOpacity="0.10" />
+          <pattern id="sm-grid" width="4" height="4" patternUnits="userSpaceOnUse">
+            <circle cx="0.4" cy="0.4" r="0.25" fill="rgba(255,255,255,0.05)" />
+          </pattern>
+          <radialGradient id="sm-core-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="hsl(var(--accent-gold))" stopOpacity="0.12" />
             <stop offset="100%" stopColor="hsl(var(--accent-gold))" stopOpacity="0" />
           </radialGradient>
         </defs>
 
-        <circle cx="50" cy="50" r="42" fill="url(#sm-glow)" />
+        <rect x="0" y="0" width="120" height="96" fill="url(#sm-grid)" />
+        <circle cx={CORE.x} cy={CORE.y} r="34" fill="url(#sm-core-glow)" />
 
-        {EDGES.map(([from, to, kind], i) => {
-          const a = nodeById(from)
-          const b = nodeById(to)
-          return (
-            <line
-              key={`${from}-${to}-${i}`}
-              x1={a.x} y1={a.y} x2={b.x} y2={b.y}
-              stroke={kind === 'flag' ? 'hsl(var(--accent-gold) / 0.42)' : 'rgba(255,255,255,0.10)'}
-              strokeWidth={kind === 'flag' ? 0.25 : 0.18}
-              strokeDasharray={kind === 'subtle' ? '0.8 0.8' : undefined}
-            />
-          )
-        })}
+        {/* connectors */}
+        {HOSPITALS.map((h) => (
+          <line
+            key={`edge-${h.id}`}
+            x1={CORE.x} y1={CORE.y} x2={h.x} y2={h.y}
+            stroke="hsl(var(--accent-gold) / 0.4)" strokeWidth={0.35}
+          />
+        ))}
 
+        {/* traveling pulse */}
         <AnimatePresence>
-          {firingFrom && firingTo && (
+          {firingTo && (
             <motion.circle
-              key={`fire-${fireIndex}`}
-              r="0.7"
-              fill="hsl(var(--accent-gold))"
-              initial={{ cx: firingFrom.x, cy: firingFrom.y, opacity: 1 }}
+              key={`pulse-${fireIndex}`}
+              r="0.9" fill="hsl(var(--accent-gold))"
+              initial={{ cx: CORE.x, cy: CORE.y, opacity: 1 }}
               animate={{ cx: firingTo.x, cy: firingTo.y, opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1.0, ease: 'easeInOut' }}
@@ -110,35 +93,44 @@ export function SystemsMap({ className }: { className?: string }) {
           )}
         </AnimatePresence>
 
-        {NODES.map((n) => (
-          <g key={n.id}>
-            {n.kind === 'core' && animate && (
-              <motion.circle
-                cx={n.x} cy={n.y} r={n.r}
-                fill="hsl(var(--accent-gold))"
-                opacity={0.18}
-                animate={{ r: [n.r, n.r * 2.4, n.r], opacity: [0.18, 0, 0.18] }}
-                transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
-              />
-            )}
-            <circle
-              cx={n.x} cy={n.y} r={n.r}
-              fill="hsl(var(--surface-canvas))"
-              stroke={n.kind === 'core' ? 'hsl(var(--accent-gold) / 0.7)' : 'rgba(255,255,255,0.22)'}
-              strokeWidth={n.kind === 'core' ? 0.35 : 0.22}
-            />
-            <text
-              x={n.x + n.r + 1.6}
-              y={n.y + 0.6}
-              fontSize="1.3"
-              fontFamily="var(--font-geist-mono), monospace"
-              fill={n.kind === 'core' ? 'hsl(var(--accent-gold))' : 'rgba(170,176,191,0.7)'}
-              letterSpacing="0.02"
-            >
-              {n.label}
-            </text>
-          </g>
-        ))}
+        {/* core node */}
+        {animate && (
+          <motion.circle
+            cx={CORE.x} cy={CORE.y} r="9"
+            fill="none" stroke="hsl(var(--accent-gold))" strokeWidth={0.3}
+            animate={{ r: [9, 16, 9], opacity: [0.5, 0, 0.5] }}
+            transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        )}
+        <circle cx={CORE.x} cy={CORE.y} r="11" fill="hsl(var(--surface-canvas))"
+          stroke="hsl(var(--accent-gold) / 0.7)" strokeWidth={0.4} />
+        <text x={CORE.x} y={CORE.y - 0.5} textAnchor="middle"
+          fontSize="2.6" fontFamily="var(--font-geist-mono), monospace"
+          fill="hsl(var(--accent-gold))">workflow_core</text>
+        <text x={CORE.x} y={CORE.y + 3} textAnchor="middle"
+          fontSize="2.4" fontFamily="var(--font-geist-mono), monospace"
+          fill="hsl(var(--surface-fg-secondary))">v3.x</text>
+
+        {/* hospital nodes */}
+        {HOSPITALS.map((h) => {
+          const labelLeft = h.x > CORE.x // node on the right side → label to its right; otherwise left
+          return (
+            <g key={h.id}>
+              <circle cx={h.x} cy={h.y} r="5.4" fill="hsl(var(--surface-canvas))"
+                stroke="hsl(var(--accent-gold) / 0.55)" strokeWidth={0.35} />
+              <HospitalGlyph cx={h.x} cy={h.y} />
+              <text
+                x={labelLeft ? h.x + 7 : h.x - 7}
+                y={h.y - 4.5}
+                textAnchor={labelLeft ? 'start' : 'end'}
+                fontSize="2.2" fontFamily="var(--font-geist-mono), monospace"
+                fill="hsl(var(--signal-live))"
+              >LIVE</text>
+              <circle cx={labelLeft ? h.x + 5.6 : h.x - 5.6} cy={h.y - 5.2} r="0.7"
+                fill="hsl(var(--signal-live))" />
+            </g>
+          )
+        })}
       </svg>
     </div>
   )
