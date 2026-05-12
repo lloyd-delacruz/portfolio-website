@@ -3,6 +3,7 @@ import { ColdOpen } from '@/components/work/wheelchair/ColdOpen'
 import { PillarVisibility } from '@/components/work/wheelchair/PillarVisibility'
 import { PillarArchitecture } from '@/components/work/wheelchair/PillarArchitecture'
 import { PillarScan } from '@/components/work/wheelchair/PillarScan'
+import { PillarLifecycle } from '@/components/work/wheelchair/PillarLifecycle'
 
 export default function Page() {
   return (
@@ -13,6 +14,7 @@ export default function Page() {
         <PillarVisibility />
         <PillarArchitecture />
         <PillarScan />
+        <PillarLifecycle />
       </main>
     </>
   )
