@@ -52,22 +52,22 @@ Open `frontend/src/app/globals.css`. After the existing `:root { ... }` block (t
 @layer base {
   :root {
     /* Dual Register — surface (dark) */
-    --surface-canvas: 240 8% 5%;          /* #0a0a0c */
-    --surface-card:   228 16% 9%;          /* #11131a */
-    --surface-elevated: 228 12% 11%;       /* #16181d */
-    --surface-fg:     220 12% 92%;         /* #e8eaed */
-    --surface-fg-secondary: 222 11% 71%;   /* #aab0bf */
-    --surface-fg-muted: 222 5% 45%;        /* #6a6f7a */
+    --surface-canvas: 240 9% 4%;           /* #0a0a0c */
+    --surface-card:   227 21% 8%;          /* #11131a */
+    --surface-elevated: 223 14% 10%;       /* #16181d */
+    --surface-fg:     216 12% 92%;         /* #e8eaed */
+    --surface-fg-secondary: 223 14% 71%;   /* #aab0bf */
+    --surface-fg-muted: 221 7% 45%;        /* #6a6f7a */
 
     /* Dual Register — paper (depth) */
-    --paper-bg:       38 50% 93%;          /* #f4eee3 */
-    --paper-ink:      30 14% 14%;          /* #2a2520 */
-    --paper-ink-soft: 33 21% 24%;          /* #4a3f2f */
+    --paper-bg:       39 44% 92%;          /* #f4eee3 */
+    --paper-ink:      30 14% 15%;          /* #2a2520 */
+    --paper-ink-soft: 36 22% 24%;          /* #4a3f2f */
 
     /* Accents & signals */
-    --accent-gold:    30 49% 60%;          /* #c79d6a */
-    --accent-gold-ink: 30 41% 34%;         /* #7a5a32 — paper register accent */
-    --signal-live:    140 56% 64%;         /* #6cd99a */
+    --accent-gold:    33 45% 60%;          /* #c79d6a */
+    --accent-gold-ink: 33 42% 34%;         /* #7a5a32 — paper register accent */
+    --signal-live:    145 59% 64%;         /* #6cd99a */
   }
 }
 ```
