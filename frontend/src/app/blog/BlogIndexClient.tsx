@@ -48,6 +48,11 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
     })
   }, [initialPosts, selectedCategory, searchTerm, sortMode])
 
+  const clearFilters = () => {
+    setSelectedCategory('all')
+    setSearchTerm('')
+  }
+
   const stats = useMemo(() => {
     const essays = initialPosts.length
     const topics = new Set(initialPosts.map((p) => p.category)).size
@@ -171,16 +176,37 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
               </MonoLabel>
             </div>
 
-            <motion.ul
-              layout
-              className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
-            >
-              <AnimatePresence mode="popLayout">
-                {visiblePosts.map((post, idx) => (
-                  <EssayCard key={post.slug} post={post} index={idx} />
-                ))}
-              </AnimatePresence>
-            </motion.ul>
+            {visiblePosts.length === 0 ? (
+              <div className="border-y border-surface-subtle px-2 py-16 text-center">
+                <MonoLabel className="block">no entries match</MonoLabel>
+                <p className="mt-3 font-serif text-base text-surface-fg-secondary">
+                  Try a different search term or clear the active filters.
+                </p>
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className={cn(
+                    'mt-5 inline-flex items-center gap-1.5 rounded-full border border-surface-subtle bg-surface-card/50 px-3 py-1',
+                    'font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-secondary',
+                    'transition-colors hover:text-surface-fg hover:border-surface-strong',
+                    'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40'
+                  )}
+                >
+                  clear filters
+                </button>
+              </div>
+            ) : (
+              <motion.ul
+                layout
+                className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
+              >
+                <AnimatePresence mode="popLayout">
+                  {visiblePosts.map((post, idx) => (
+                    <EssayCard key={post.slug} post={post} index={idx} />
+                  ))}
+                </AnimatePresence>
+              </motion.ul>
+            )}
           </div>
         </section>
       </main>
