@@ -4,6 +4,7 @@ import { PillarVisibility } from '@/components/work/wheelchair/PillarVisibility'
 import { PillarArchitecture } from '@/components/work/wheelchair/PillarArchitecture'
 import { PillarScan } from '@/components/work/wheelchair/PillarScan'
 import { PillarLifecycle } from '@/components/work/wheelchair/PillarLifecycle'
+import { PillarCoordination } from '@/components/work/wheelchair/PillarCoordination'
 
 export default function Page() {
   return (
@@ -15,6 +16,7 @@ export default function Page() {
         <PillarArchitecture />
         <PillarScan />
         <PillarLifecycle />
+        <PillarCoordination />
       </main>
     </>
   )
