@@ -1,9 +1,12 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { Search } from 'lucide-react'
+import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowUpRight, Search } from 'lucide-react'
 import { NavBar } from '@/components/home/NavBar'
 import { MonoLabel } from '@/components/home/primitives'
+import { PreviewCanvas, variantFromCategory } from '@/components/blog/PreviewCanvas'
 import { cn } from '@/lib/utils'
 import type { BlogPost } from '@/lib/blog'
 
@@ -20,6 +23,30 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
   )
   const [searchTerm, setSearchTerm] = useState('')
   const [sortMode, setSortMode] = useState<SortMode>('latest')
+
+  const visiblePosts = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase()
+    const filtered = initialPosts.filter((post) => {
+      const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory
+      if (!term) return matchesCategory
+      const matchesSearch =
+        post.title.toLowerCase().includes(term) ||
+        post.excerpt.toLowerCase().includes(term) ||
+        post.tags.some((tag) => tag.toLowerCase().includes(term))
+      return matchesCategory && matchesSearch
+    })
+
+    const byDateDesc = (a: BlogPost, b: BlogPost) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+
+    if (sortMode === 'latest') {
+      return [...filtered].sort(byDateDesc)
+    }
+    return [...filtered].sort((a, b) => {
+      if (a.category !== b.category) return a.category.localeCompare(b.category)
+      return byDateDesc(a, b)
+    })
+  }, [initialPosts, selectedCategory, searchTerm, sortMode])
 
   const stats = useMemo(() => {
     const essays = initialPosts.length
@@ -133,14 +160,115 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
           </div>
         </section>
 
-        {/* Grid — filled in Task 4 */}
+        {/* Card grid */}
         <section>
           <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
-            <MonoLabel>grid — coming in task 4</MonoLabel>
+            <div className="mb-6 flex items-baseline justify-between">
+              <MonoLabel>selected writing</MonoLabel>
+              <MonoLabel>
+                {visiblePosts.length.toString().padStart(2, '0')} /{' '}
+                {initialPosts.length.toString().padStart(2, '0')}
+              </MonoLabel>
+            </div>
+
+            <motion.ul
+              layout
+              className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
+            >
+              <AnimatePresence mode="popLayout">
+                {visiblePosts.map((post, idx) => (
+                  <EssayCard key={post.slug} post={post} index={idx} />
+                ))}
+              </AnimatePresence>
+            </motion.ul>
           </div>
         </section>
       </main>
     </>
+  )
+}
+
+type EssayCardProps = { post: BlogPost; index: number }
+
+function EssayCard({ post, index }: EssayCardProps) {
+  const [hovered, setHovered] = useState(false)
+  const variant = variantFromCategory(post.category)
+  const dateLabel = new Date(post.date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
+
+  return (
+    <motion.li
+      layout
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className="list-none"
+    >
+      <Link
+        href={`/blog/${post.slug}`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onFocus={() => setHovered(true)}
+        onBlur={() => setHovered(false)}
+        aria-label={`${post.title} — ${post.readTime}`}
+        className={cn(
+          'group block h-full rounded-lg border bg-surface-card p-5 transition-all',
+          'border-surface-subtle hover:border-surface-strong hover:-translate-y-0.5',
+          'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40'
+        )}
+      >
+        {/* Header strip */}
+        <div className="mb-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <MonoLabel className="text-gold">
+              {(index + 1).toString().padStart(2, '0')}
+            </MonoLabel>
+            <MonoLabel>·</MonoLabel>
+            <MonoLabel>{post.category.replace(/-/g, ' ')}</MonoLabel>
+            <MonoLabel>·</MonoLabel>
+            <MonoLabel>{post.readTime}</MonoLabel>
+          </div>
+          <ArrowUpRight
+            className={cn(
+              'h-4 w-4 transition-all',
+              hovered
+                ? 'text-gold translate-x-0.5 -translate-y-0.5'
+                : 'text-surface-fg-muted'
+            )}
+          />
+        </div>
+
+        {/* Preview */}
+        <PreviewCanvas variant={variant} active={hovered} className="mb-5" />
+
+        {/* Title */}
+        <h2
+          className={cn(
+            'text-lg md:text-xl font-medium tracking-tight-h leading-snug line-clamp-2 transition-colors',
+            hovered ? 'text-gold' : 'text-surface-fg'
+          )}
+        >
+          {post.title}
+        </h2>
+
+        {/* Excerpt */}
+        <p className="mt-2 font-serif text-base leading-[1.7] text-surface-fg-secondary line-clamp-2">
+          {post.excerpt}
+        </p>
+
+        {/* Footer strip */}
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1">
+          <MonoLabel>{dateLabel}</MonoLabel>
+          {post.tags.slice(0, 2).map((tag) => (
+            <MonoLabel key={tag}>· {tag}</MonoLabel>
+          ))}
+        </div>
+      </Link>
+    </motion.li>
   )
 }
 
