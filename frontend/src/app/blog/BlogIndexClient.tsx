@@ -15,7 +15,9 @@ interface BlogIndexClientProps {
 }
 
 const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientProps) => {
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    () => initialCategories[0]?.id ?? 'all'
+  )
   const [searchTerm, setSearchTerm] = useState('')
   const [sortMode, setSortMode] = useState<SortMode>('latest')
 
@@ -73,7 +75,7 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
                   'w-full rounded-md border border-surface-subtle bg-surface-card/50 py-2 pl-9 pr-3',
                   'font-mono text-xs tracking-wide-label text-surface-fg placeholder:text-surface-fg-muted',
                   'transition-colors focus:outline-none focus:border-surface-strong',
-                  'focus-visible:ring-1 focus-visible:ring-gold/40'
+                  'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40'
                 )}
               />
             </label>
