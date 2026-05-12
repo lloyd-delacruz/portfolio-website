@@ -1,16 +1,24 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import { Search } from 'lucide-react'
 import { NavBar } from '@/components/home/NavBar'
 import { MonoLabel } from '@/components/home/primitives'
+import { cn } from '@/lib/utils'
 import type { BlogPost } from '@/lib/blog'
+
+type SortMode = 'latest' | 'topic'
 
 interface BlogIndexClientProps {
   initialPosts: BlogPost[]
   initialCategories: Array<{ id: string; label: string; count: number }>
 }
 
-const BlogIndexClient = ({ initialPosts }: BlogIndexClientProps) => {
+const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientProps) => {
+  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [searchTerm, setSearchTerm] = useState('')
+  const [sortMode, setSortMode] = useState<SortMode>('latest')
+
   const stats = useMemo(() => {
     const essays = initialPosts.length
     const topics = new Set(initialPosts.map((p) => p.category)).size
@@ -49,10 +57,77 @@ const BlogIndexClient = ({ initialPosts }: BlogIndexClientProps) => {
           </div>
         </section>
 
-        {/* Control band — filled in Task 3 */}
+        {/* Control band */}
         <section className="border-b border-surface-subtle">
-          <div className="mx-auto max-w-6xl px-6 py-6">
-            <MonoLabel>controls — coming in task 3</MonoLabel>
+          <div className="mx-auto max-w-6xl px-6 py-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            {/* Search */}
+            <label className="relative flex items-center w-full md:w-72">
+              <Search className="pointer-events-none absolute left-3 h-3.5 w-3.5 text-surface-fg-muted" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="search the index"
+                aria-label="Search the writing index"
+                className={cn(
+                  'w-full rounded-md border border-surface-subtle bg-surface-card/50 py-2 pl-9 pr-3',
+                  'font-mono text-xs tracking-wide-label text-surface-fg placeholder:text-surface-fg-muted',
+                  'transition-colors focus:outline-none focus:border-surface-strong',
+                  'focus-visible:ring-1 focus-visible:ring-gold/40'
+                )}
+              />
+            </label>
+
+            {/* Category chips */}
+            <ul className="flex flex-wrap items-center gap-2">
+              {initialCategories.map((category) => {
+                const active = selectedCategory === category.id
+                return (
+                  <li key={category.id}>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCategory(category.id)}
+                      aria-pressed={active}
+                      className={cn(
+                        'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 transition-colors',
+                        'font-mono text-[10px] uppercase tracking-wide-label',
+                        active
+                          ? 'border-gold/50 bg-surface-elevated text-surface-fg'
+                          : 'border-surface-subtle bg-surface-card/50 text-surface-fg-secondary hover:text-surface-fg hover:border-surface-strong'
+                      )}
+                    >
+                      <span>{category.label.toLowerCase()}</span>
+                      <span className={cn('text-[10px]', active ? 'text-gold' : 'text-surface-fg-muted')}>
+                        {category.count.toString().padStart(2, '0')}
+                      </span>
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+
+            {/* Sort toggle */}
+            <div className="flex items-center gap-1 rounded-full border border-surface-subtle bg-surface-card/50 p-1">
+              {(['latest', 'topic'] as SortMode[]).map((mode) => {
+                const active = sortMode === mode
+                return (
+                  <button
+                    key={mode}
+                    type="button"
+                    onClick={() => setSortMode(mode)}
+                    aria-pressed={active}
+                    className={cn(
+                      'rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-wide-label transition-colors',
+                      active
+                        ? 'bg-surface-elevated text-surface-fg'
+                        : 'text-surface-fg-secondary hover:text-surface-fg'
+                    )}
+                  >
+                    {mode === 'latest' ? 'latest' : 'by topic'}
+                  </button>
+                )
+              })}
+            </div>
           </div>
         </section>
 
