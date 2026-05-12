@@ -21,7 +21,7 @@ export function EssayStrip() {
         </div>
 
         <Link
-          href="/writing"
+          href="/blog"
           className="mt-10 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wide-label text-paper-ink-soft hover:text-paper-ink transition-colors"
         >
           read more
