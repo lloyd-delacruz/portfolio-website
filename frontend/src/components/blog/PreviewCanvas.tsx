@@ -66,7 +66,7 @@ function HealthcareScene({ active }: { active: boolean }) {
         cx="20" cy="50" r="3.5"
         fill="currentColor"
         className="text-gold"
-        animate={active ? { cx: [20, 100, 180], opacity: [0, 1, 1, 0] } : { cx: 20, opacity: 0 }}
+        animate={active ? { cx: [20, 100, 180, 180], opacity: [0, 1, 1, 0] } : { cx: 20, opacity: 0 }}
         transition={{ duration: 1.6, ease: 'easeInOut', times: [0, 0.5, 0.9, 1] }}
       />
     </svg>
@@ -88,9 +88,12 @@ function AIScene({ active }: { active: boolean }) {
           key={`in-${y}`}
           x1="20" y1={y} x2="83" y2={y === 35 ? 42 : 58}
           stroke="currentColor" strokeWidth="1"
-          className={active ? 'text-gold' : 'text-surface-fg-muted'}
+          className={cn(
+            'transition-colors duration-300',
+            active ? 'text-gold' : 'text-surface-fg-muted'
+          )}
           animate={active ? { opacity: [0.3, 1, 0.3] } : { opacity: 0.4 }}
-          transition={{ duration: 1.2, repeat: Infinity, delay: arrowDelays[i] }}
+          transition={{ duration: 1.2, repeat: active ? Infinity : 0, delay: arrowDelays[i] }}
         />
       ))}
       {/* right output arrows */}
@@ -99,9 +102,12 @@ function AIScene({ active }: { active: boolean }) {
           key={`out-${y}`}
           x1="117" y1={y} x2="180" y2={y === 42 ? 35 : 65}
           stroke="currentColor" strokeWidth="1"
-          className={active ? 'text-gold' : 'text-surface-fg-muted'}
+          className={cn(
+            'transition-colors duration-300',
+            active ? 'text-gold' : 'text-surface-fg-muted'
+          )}
           animate={active ? { opacity: [0.3, 1, 0.3] } : { opacity: 0.4 }}
-          transition={{ duration: 1.2, repeat: Infinity, delay: arrowDelays[i + 2] }}
+          transition={{ duration: 1.2, repeat: active ? Infinity : 0, delay: arrowDelays[i + 2] }}
         />
       ))}
     </svg>
@@ -128,7 +134,7 @@ function DataScienceScene({ active }: { active: boolean }) {
         strokeLinejoin="round"
         className="text-gold"
         initial={{ pathLength: 0 }}
-        animate={{ pathLength: active ? 1 : 0.15 }}
+        animate={{ pathLength: active ? 1 : 0 }}
         transition={{ duration: 1.2, ease: 'easeInOut' }}
       />
     </svg>
