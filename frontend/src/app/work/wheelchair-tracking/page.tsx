@@ -7,6 +7,7 @@ import { PillarLifecycle } from '@/components/work/wheelchair/PillarLifecycle'
 import { PillarCoordination } from '@/components/work/wheelchair/PillarCoordination'
 import { ImpactGrid } from '@/components/work/wheelchair/ImpactGrid'
 import { Reflection } from '@/components/work/wheelchair/Reflection'
+import { AINodes } from '@/components/work/wheelchair/AINodes'
 
 export default function Page() {
   return (
@@ -21,6 +22,7 @@ export default function Page() {
         <PillarCoordination />
         <ImpactGrid />
         <Reflection />
+        <AINodes />
       </main>
     </>
   )
