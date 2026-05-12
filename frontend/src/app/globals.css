@@ -139,6 +139,26 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 94.1%;
   }
+
+  :root {
+    /* Dual Register — surface (dark) */
+    --surface-canvas: 240 8% 5%;          /* #0a0a0c */
+    --surface-card:   228 16% 9%;          /* #11131a */
+    --surface-elevated: 228 12% 11%;       /* #16181d */
+    --surface-fg:     220 12% 92%;         /* #e8eaed */
+    --surface-fg-secondary: 222 11% 71%;   /* #aab0bf */
+    --surface-fg-muted: 222 5% 45%;        /* #6a6f7a */
+
+    /* Dual Register — paper (depth) */
+    --paper-bg:       38 50% 93%;          /* #f4eee3 */
+    --paper-ink:      30 14% 14%;          /* #2a2520 */
+    --paper-ink-soft: 33 21% 24%;          /* #4a3f2f */
+
+    /* Accents & signals */
+    --accent-gold:    30 49% 60%;          /* #c79d6a */
+    --accent-gold-ink: 30 41% 34%;         /* #7a5a32 — paper register accent */
+    --signal-live:    140 56% 64%;         /* #6cd99a */
+  }
 }
 
 @layer base {

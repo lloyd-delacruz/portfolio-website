@@ -58,11 +58,36 @@ module.exports = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        surface: {
+          canvas:    'hsl(var(--surface-canvas))',
+          card:      'hsl(var(--surface-card))',
+          elevated:  'hsl(var(--surface-elevated))',
+          fg:        'hsl(var(--surface-fg))',
+          'fg-secondary': 'hsl(var(--surface-fg-secondary))',
+          'fg-muted':     'hsl(var(--surface-fg-muted))',
+        },
+        paper: {
+          bg:       'hsl(var(--paper-bg))',
+          ink:      'hsl(var(--paper-ink))',
+          'ink-soft': 'hsl(var(--paper-ink-soft))',
+        },
+        gold: {
+          DEFAULT: 'hsl(var(--accent-gold))',
+          ink:     'hsl(var(--accent-gold-ink))',
+        },
+        signal: {
+          live: 'hsl(var(--signal-live))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      borderColor: {
+        'surface-subtle': 'rgba(255,255,255,0.06)',
+        'surface-strong': 'rgba(255,255,255,0.12)',
+        'paper-subtle':   'rgba(0,0,0,0.08)',
       },
     },
   },
