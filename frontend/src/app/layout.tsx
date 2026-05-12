@@ -1,14 +1,12 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
-import { inter } from '@/lib/fonts'
+import '@fontsource-variable/source-serif-4'
+import { geistSans, geistMono } from '@/lib/fonts'
 
 export const metadata: Metadata = {
-  title: 'Lloyd Dela Cruz - Data Analytics Professional',
-  description: 'Results-driven analytics professional with BSc Industrial Engineering and 20+ years healthcare experience. AWS AI Practitioner specializing in data analytics, Lean Six Sigma, and operational optimization.',
-  keywords: ['Lloyd Dela Cruz', 'Data Analytics', 'Healthcare Technology', 'AWS AI Practitioner', 'Data Science', 'Healthcare Analytics'],
+  title: 'Lloyd Dela Cruz — Applied AI Systems',
+  description: 'Applied AI engineer building the workflow infrastructure that makes operational AI work in the real world.',
   authors: [{ name: 'Lloyd Dela Cruz' }],
-  viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#1e40af',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
@@ -16,18 +14,19 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#0a0a0c',
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
-      <body className={inter.className}>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
+    >
+      <body className="font-sans antialiased bg-surface-canvas text-surface-fg">
         {children}
       </body>
     </html>
