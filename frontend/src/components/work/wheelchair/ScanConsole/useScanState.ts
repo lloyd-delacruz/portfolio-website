@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { usePrefersReducedMotion } from '@/lib/hooks/usePrefersReducedMotion'
 
 export type EquipmentState =
@@ -52,6 +52,13 @@ export function useScanState(config: Config) {
   const [scanInFlight, setScanInFlight] = useState(false)
   const flightTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const settleTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (flightTimer.current) clearTimeout(flightTimer.current)
+      if (settleTimer.current) clearTimeout(settleTimer.current)
+    }
+  }, [])
 
   const commit = useCallback(
     (from: EquipmentState, to: EquipmentState) => {
