@@ -48,3 +48,12 @@ frontend/*.tsbuildinfo
 # temp files
 .DS_Store
 *.log
+
+# local visual-regression scratch (do not commit)
+/_live-capture/
+/_local-capture/
+/_capture-live.mjs
+/_capture-local.mjs
+
+# brainstorming companion (do not commit)
+.superpowers/
