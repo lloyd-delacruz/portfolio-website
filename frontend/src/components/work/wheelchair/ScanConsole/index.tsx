@@ -20,14 +20,15 @@ export function ScanConsole() {
   const state = useScanState({ initialState: 'in_use', siteId: 'vgh-3w', staffId: '4471' })
   const allowed = TRANSITIONS[state.current]
 
-  // Derive a live VGH-available count from the log. Decrement on (any → in_use),
-  // increment on (in_use → returned). Other transitions don't move the available pool.
+  // Derive a live VGH-available count from the log. Decrement on (→ in_use),
+  // increment on (→ available). The 'returned' state is the chair scanned at
+  // the return point awaiting cleaning — not yet rejoined the available pool.
   const vghAvailable = useMemo(() => {
     let n = VGH_BASE_AVAILABLE
     // log is newest-first; iterate oldest-first
     for (const e of [...state.log].reverse()) {
       if (e.to === 'in_use') n -= 1
-      else if (e.from === 'in_use' && e.to === 'returned') n += 1
+      else if (e.to === 'available') n += 1
     }
     return n
   }, [state.log])
