@@ -40,7 +40,9 @@ export function ScanConsole() {
         scanInFlight={state.scanInFlight}
         reducedMotion={state.reducedMotion}
         allowed={allowed}
+        hasLog={state.log.length > 0}
         onScan={state.scan}
+        onReset={state.reset}
       />
       <EquipmentRecord
         current={state.current}

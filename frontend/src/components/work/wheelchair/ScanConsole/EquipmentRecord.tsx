@@ -8,8 +8,8 @@ import { cn } from '@/lib/utils'
 const STATE_COLOR: Record<EquipmentState, string> = {
   in_use:         'border-gold/40 bg-gold/10 text-gold',
   returned:       'border-surface-strong bg-surface-elevated text-surface-fg',
-  needs_cleaning: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400',
-  cleaning:       'border-blue-500/30 bg-blue-500/10 text-blue-300',
+  needs_cleaning: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
+  cleaning:       'border-sky-500/30 bg-sky-500/10 text-sky-300',
   available:      'border-signal-live/40 bg-signal-live/10 text-signal-live',
 }
 
