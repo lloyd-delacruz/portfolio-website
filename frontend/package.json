@@ -13,6 +13,7 @@
     "preview-posts": "find content/blog -name '*.md' -exec echo '📝 {}' \\; -exec head -10 {} \\; -exec echo '' \\;"
   },
   "dependencies": {
+    "@fontsource-variable/source-serif-4": "^5.2.9",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.4.4",
@@ -34,6 +35,7 @@
     "clsx": "^2.1.0",
     "d3-geo": "^3.1.1",
     "framer-motion": "^11.0.0",
+    "geist": "^1.7.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.400.0",
     "next": "^14.2.0",

@@ -89,6 +89,16 @@ module.exports = {
         'surface-strong': 'rgba(255,255,255,0.12)',
         'paper-subtle':   'rgba(0,0,0,0.08)',
       },
+      fontFamily: {
+        sans:  ['var(--font-geist-sans)', 'system-ui', '-apple-system', 'sans-serif'],
+        mono:  ['var(--font-geist-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        serif: ['"Source Serif 4 Variable"', 'Georgia', 'serif'],
+      },
+      letterSpacing: {
+        'tight-display': '-0.02em',
+        'tight-h':       '-0.01em',
+        'wide-label':    '0.14em',
+      },
     },
   },
   plugins: [],
