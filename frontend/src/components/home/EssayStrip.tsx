@@ -10,10 +10,10 @@ export function EssayStrip() {
         </p>
         <div className="font-serif text-lg md:text-xl leading-[1.7] text-paper-ink space-y-5">
           <p>
-            Operational AI doesn't fail in the model. It fails in the workflow around the model — the scan, the handoff, the missing step, the place where the human and the system stop agreeing.
+            Operational AI doesn&apos;t fail in the model. It fails in the workflow around the model — the scan, the handoff, the missing step, the place where the human and the system stop agreeing.
           </p>
           <p>
-            Ten years on the frontline taught me to look there first. The interesting engineering problem is rarely the algorithm; it's the system <em>around</em> the algorithm: how it gets data, how it surfaces decisions, how it survives a real shift with real people.
+            Ten years on the frontline taught me to look there first. The interesting engineering problem is rarely the algorithm; it&apos;s the system <em>around</em> the algorithm: how it gets data, how it surfaces decisions, how it survives a real shift with real people.
           </p>
           <p>
             So when I build, I start from the workflow and work inward. The AI is a node in the system, not the centre of the universe.

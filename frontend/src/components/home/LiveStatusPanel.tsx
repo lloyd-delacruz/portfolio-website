@@ -16,7 +16,7 @@ export function LiveStatusPanel() {
           <div>
             <MonoLabel className="block mb-3">live · currently running</MonoLabel>
             <h2 className="text-2xl md:text-3xl font-medium tracking-tight-h text-surface-fg max-w-[26ch]">
-              The system isn't a slide deck. It's running right now.
+              The system isn&apos;t a slide deck. It&apos;s running right now.
             </h2>
             <p className="mt-3 max-w-[44ch] text-sm text-surface-fg-secondary">
               Workflow infrastructure across four hospitals in Vancouver Coastal Health.
