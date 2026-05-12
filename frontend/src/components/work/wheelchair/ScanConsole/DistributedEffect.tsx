@@ -89,7 +89,7 @@ export function DistributedEffect({ scanInFlight, reducedMotion, activeSite, vgh
                 fill="none"
                 stroke="hsl(var(--accent-gold) / 0.6)"
                 strokeWidth={0.2}
-                initial={{ r: 1.5, opacity: 0 }}
+                initial={{ r: 1.5, opacity: 0.8 }}
                 animate={{ r: 3.2, opacity: 0 }}
                 transition={{ duration: 0.5, delay: 0.35, ease: 'easeOut' }}
                 exit={{ opacity: 0 }}
