@@ -28,7 +28,9 @@ export function FooterCTA() {
 
         <div>
           <p className="text-sm leading-relaxed text-ink-soft">
-            I&apos;m open to exciting opportunities and collaborations. Let&apos;s connect!
+            I&apos;m currently shipping a multi-site healthcare deployment and have capacity for one more
+            applied-AI engagement. The best way in is a 20-minute conversation about the system you&apos;re
+            trying to build.
           </p>
           <Link
             href="/contact"
