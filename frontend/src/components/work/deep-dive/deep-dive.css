@@ -1,0 +1,106 @@
+/* frontend/src/components/work/deep-dive/deep-dive.css
+ *
+ * Dark Linear/Vercel-class register for the Applied AI deep-dive pages.
+ * Scoped to .deep-dive so it cannot leak into the home2 register.
+ *
+ * No gradients. No glow. No shimmer. No emoji bullets.
+ */
+
+.deep-dive {
+  --dd-bg: #0A0A0B;
+  --dd-surface: #111114;
+  --dd-surface-2: #161619;
+  --dd-border: #1F1F22;
+  --dd-border-strong: #2A2A2E;
+  --dd-text: #ECECEE;
+  --dd-text-muted: #8B8B92;
+  --dd-text-dim: #5A5A60;
+  --dd-accent: #7DD3FC; /* desaturated electric cyan — signal hue ONLY */
+  --dd-ok: #6EE7B7;
+  --dd-warn: #FCD34D;
+  --dd-danger: #F87171;
+
+  --dd-font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
+  --dd-font-mono: var(--font-geist-mono, ui-monospace, "SF Mono", Menlo, monospace);
+
+  background: var(--dd-bg);
+  color: var(--dd-text);
+  font-family: var(--dd-font-sans);
+  min-height: 100vh;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+
+.deep-dive *::selection {
+  background: rgba(125, 211, 252, 0.25);
+  color: var(--dd-text);
+}
+
+.deep-dive .dd-card {
+  background: var(--dd-surface);
+  border: 1px solid var(--dd-border);
+  border-radius: 12px;
+}
+
+.deep-dive .dd-mono {
+  font-family: var(--dd-font-mono);
+  font-feature-settings: "calt" off, "ss01" on;
+  letter-spacing: -0.005em;
+}
+
+.deep-dive .dd-accent {
+  color: var(--dd-accent);
+}
+
+.deep-dive .dd-muted {
+  color: var(--dd-text-muted);
+}
+
+/* Single permitted motion: status-chip pulse */
+@keyframes dd-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.deep-dive .dd-pulse {
+  animation: dd-pulse 2.8s ease-in-out infinite;
+}
+
+/* Single permitted motion: signal-flow dot on hero architecture diagram */
+@keyframes dd-signal-flow {
+  0% { offset-distance: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+.deep-dive .dd-signal {
+  animation: dd-signal-flow 3.2s linear infinite;
+}
+
+/* Long-form prose measure */
+.deep-dive .dd-prose {
+  max-width: 70ch;
+  color: var(--dd-text);
+  line-height: 1.65;
+}
+
+.deep-dive .dd-prose p + p {
+  margin-top: 1em;
+}
+
+/* Section spacing rhythm */
+.deep-dive .dd-section {
+  padding: 96px 0;
+  border-top: 1px solid var(--dd-border);
+}
+
+.deep-dive .dd-section:first-child {
+  border-top: none;
+}
+
+@media (max-width: 768px) {
+  .deep-dive .dd-section {
+    padding: 64px 0;
+  }
+}
