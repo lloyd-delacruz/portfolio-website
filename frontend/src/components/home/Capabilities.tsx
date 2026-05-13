@@ -1,39 +1,39 @@
 // frontend/src/components/home/Capabilities.tsx
 import Link from 'next/link'
-import { Brain, Boxes, Code2, Database, Activity, ArrowRight } from 'lucide-react'
+import { Brain, Boxes, Workflow, Database, Activity, ArrowRight } from 'lucide-react'
 
 const CARDS = [
   {
-    title: 'AI-Native Engineering',
-    body: 'Build intelligent workflows and agents that automate complex processes.',
+    title: 'AI Orchestration',
+    body: 'Design agent workflows, decision layers, and tool integrations that coordinate real work across enterprise systems.',
     Icon: Brain,
     tint: 'var(--plum)',
     bg: 'var(--plum-soft)',
   },
   {
     title: 'Systems Architecture',
-    body: 'Design scalable, resilient systems that withstand real-world complexity.',
+    body: 'Architect resilient, observable systems — from event streams to data layers to integration boundaries.',
     Icon: Boxes,
     tint: 'var(--plum-deep)',
     bg: '#ede9fe',
   },
   {
-    title: 'Product Engineering',
-    body: 'Build full-stack products with a focus on usability, performance, and impact.',
-    Icon: Code2,
+    title: 'Workflow Automation',
+    body: 'Replace manual coordination with scalable workflow engines that span people, systems, and AI agents.',
+    Icon: Workflow,
     tint: 'var(--amber)',
     bg: '#fef3c7',
   },
   {
-    title: 'Data & Integration',
-    body: 'Turn messy data into usable, trusted, and actionable intelligence.',
+    title: 'Enterprise Integration',
+    body: 'Connect operational data, legacy systems, and AI services into coherent, deployable platforms.',
     Icon: Database,
     tint: 'var(--green)',
     bg: '#d1fae5',
   },
   {
     title: 'Operational Intelligence',
-    body: 'Create observability and automation systems that drive operational clarity.',
+    body: 'Build monitoring, automation, and feedback loops that turn raw events into operational clarity.',
     Icon: Activity,
     tint: 'var(--pink)',
     bg: '#fce7f3',
@@ -52,8 +52,8 @@ export function Capabilities() {
           Solutions that <span style={{ color: 'var(--coral)' }}>last.</span>
         </h2>
         <p className="max-w-md text-[1.02rem] leading-relaxed text-ink-soft">
-          From AI-native engineering to operational intelligence, I build reliable, scalable systems
-          that solve real problems.
+          From AI orchestration to operational intelligence, I architect reliable, scalable
+          systems that solve real problems.
         </p>
         <Link href="/work" className="group inline-flex items-center gap-1.5 text-sm font-semibold text-plum lg:pb-1">
           View all capabilities
