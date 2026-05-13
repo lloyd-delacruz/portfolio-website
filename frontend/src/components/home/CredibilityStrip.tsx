@@ -30,8 +30,8 @@ export function CredibilityStrip() {
         <div className="relative max-w-md lg:pl-2">
           <Quote size={22} className="absolute -left-1 -top-1 text-[rgba(109,40,217,0.25)]" fill="currentColor" />
           <p className="pl-7 text-[1.05rem] leading-relaxed text-ink-soft">
-            I thrive at the intersection of AI, systems, and product — building solutions that make a
-            measurable difference.
+            I design AI-native systems that run in the real world — across multi-site enterprise
+            environments where operational intelligence is non-negotiable.
           </p>
         </div>
       </div>
