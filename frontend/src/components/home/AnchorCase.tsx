@@ -10,7 +10,7 @@ import {
   Check,
   type LucideIcon,
 } from 'lucide-react'
-import { ANCHOR_CASE_HREF } from './FeaturedWork'
+import { ANCHOR_CASE_HREF, StatusPill, CapabilityPill } from './FeaturedWork'
 
 type FlowNode = { Icon: LucideIcon; label: string }
 
@@ -30,7 +30,7 @@ const BULLETS = [
 ]
 
 const STATS = [
-  { value: '3 sites',    label: 'deployed' },
+  { value: '4 sites',    label: 'deployed' },
   { value: '800+',       label: 'assets tracked' },
   { value: 'Multi-site', label: 'coordination' },
   { value: 'Chain',      label: 'of custody' },
@@ -46,7 +46,12 @@ export function AnchorCase() {
             Anchor case · Enterprise deployment
           </span>
 
-          <h3 className="mt-5 font-display text-2xl font-extrabold leading-[1.15] text-ink sm:text-[1.9rem]">
+          <div className="mt-4 flex flex-wrap items-center gap-1.5">
+            <StatusPill status="production" />
+            <CapabilityPill kind="case-study" />
+          </div>
+
+          <h3 className="mt-4 font-display text-2xl font-extrabold leading-[1.15] text-ink sm:text-[1.9rem]">
             Multi-Site Wheelchair Tracking System
           </h3>
 

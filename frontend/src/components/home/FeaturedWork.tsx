@@ -1,12 +1,25 @@
 // frontend/src/components/home/FeaturedWork.tsx
 import Link from 'next/link'
-import { ArrowRight, QrCode, Network, Wallet, Dumbbell, LineChart, Stethoscope } from 'lucide-react'
+import {
+  ArrowRight,
+  QrCode,
+  Network,
+  Wallet,
+  LineChart,
+  Stethoscope,
+  Sparkles,
+  BookOpen,
+  PlayCircle,
+} from 'lucide-react'
 import { AnchorCase } from './AnchorCase'
 
 /** Slug of the project promoted to the homepage anchor band (excluded from the grid). */
 export const ANCHOR_CASE_HREF = '/work/wheelchair-tracking'
 
 type Variant = 'states' | 'topology' | 'finance' | 'mobile' | 'forecast' | 'triage'
+
+export type ProjectStatus = 'production' | 'prototype' | 'concept'
+export type ProjectCapability = 'ai-assisted' | 'case-study' | 'demo'
 
 export type Project = {
   badge: string
@@ -18,6 +31,10 @@ export type Project = {
   body: string
   stack: string
   href: string
+  status: ProjectStatus
+  capabilities: ProjectCapability[]
+  /** Short, concrete proof point shown on flagship/featured cards. */
+  metric?: { value: string; label: string }
 }
 
 export const PROJECTS: Project[] = [
@@ -28,53 +45,12 @@ export const PROJECTS: Project[] = [
     accent: 'var(--plum)',
     wash: 'linear-gradient(135deg,#f3effe,#fbf5fe)',
     title: 'Multi-Site Wheelchair Tracking System',
-    body: 'Operational tracking platform supporting 800+ wheelchairs and clinical assets across multiple hospital sites — QR workflows, utilization tracking, lifecycle coordination, and chain-of-custody visibility.',
+    body: 'Operational tracking platform supporting 800+ wheelchairs and clinical assets across four hospital sites — QR workflows, utilization tracking, lifecycle coordination, and chain-of-custody visibility.',
     stack: 'Microsoft Lists, QR Systems, Power Platform, React, TypeScript',
     href: ANCHOR_CASE_HREF,
-  },
-  {
-    badge: 'HEALTHCARE SYSTEMS',
-    TagIcon: Network,
-    variant: 'topology',
-    accent: 'var(--blue)',
-    wash: 'linear-gradient(135deg,#eef4fe,#f5f8fe)',
-    title: 'EquiTrackr',
-    body: 'Modern healthcare equipment workflow platform for tracking equipment states, operational workflows, maintenance coordination, and hospital logistics systems.',
-    stack: 'Next.js, TypeScript, Tailwind, PostgreSQL, Prisma',
-    href: '/work/equitrackr',
-  },
-  {
-    badge: 'FINTECH & PLANNING',
-    TagIcon: Wallet,
-    variant: 'finance',
-    accent: 'var(--green)',
-    wash: 'linear-gradient(135deg,#ecfdf4,#f4fbf7)',
-    title: 'SpendWise',
-    body: 'AI-native budgeting and financial planning platform focused on operational budgeting, transaction tracking, onboarding flows, and intelligent financial planning.',
-    stack: 'React Native, Expo, Node.js, PostgreSQL, Prisma',
-    href: '/work/spendwise',
-  },
-  {
-    badge: 'AI FITNESS SYSTEMS',
-    TagIcon: Dumbbell,
-    variant: 'mobile',
-    accent: 'var(--coral)',
-    wash: 'linear-gradient(135deg,#fef0ee,#fdf6f5)',
-    title: 'Apex Protocol',
-    body: 'AI-native fitness and coaching platform combining training workflows, analytics, personalized programming, and operational athlete tracking systems.',
-    stack: 'React Native, Expo, Node.js, PostgreSQL, OpenAI',
-    href: '/work/apex-protocol',
-  },
-  {
-    badge: 'APPLIED AI / POPULATION HEALTH',
-    TagIcon: LineChart,
-    variant: 'forecast',
-    accent: 'var(--plum)',
-    wash: 'linear-gradient(135deg,#f3f0fb,#fbf7fe)',
-    title: 'Population-Health Intelligence Platform',
-    body: 'An AI-native forecasting layer over WHO, World Bank, and IMF indicators. Calibrated life-expectancy projections with explainable feature attribution for ministry-of-health planners.',
-    stack: 'TypeScript, ensemble forecasting, quantile regression, SHAP, isotonic calibration',
-    href: '/work/population-health-intelligence',
+    status: 'production',
+    capabilities: ['case-study'],
+    metric: { value: '4 sites · 800+', label: 'assets in production' },
   },
   {
     badge: 'APPLIED AI / CLINICAL DECISION SUPPORT',
@@ -86,6 +62,47 @@ export const PROJECTS: Project[] = [
     body: 'A calibrated inference system over biopsy feature vectors. Returns malignancy probability, CI band, and morphology-level attribution for clinician-in-the-loop triage.',
     stack: 'TypeScript, ensemble classifier, isotonic calibration, SHAP, ambiguity-flag triage policy',
     href: '/work/clinical-risk-engine',
+    status: 'prototype',
+    capabilities: ['ai-assisted', 'case-study', 'demo'],
+  },
+  {
+    badge: 'APPLIED AI / POPULATION HEALTH',
+    TagIcon: LineChart,
+    variant: 'forecast',
+    accent: 'var(--plum)',
+    wash: 'linear-gradient(135deg,#f3f0fb,#fbf7fe)',
+    title: 'Population-Health Intelligence Platform',
+    body: 'An AI-native forecasting layer over WHO, World Bank, and IMF indicators. Calibrated life-expectancy projections with explainable feature attribution for ministry-of-health planners.',
+    stack: 'TypeScript, ensemble forecasting, quantile regression, SHAP, isotonic calibration',
+    href: '/work/population-health-intelligence',
+    status: 'prototype',
+    capabilities: ['ai-assisted', 'case-study', 'demo'],
+  },
+  {
+    badge: 'HEALTHCARE SYSTEMS',
+    TagIcon: Network,
+    variant: 'topology',
+    accent: 'var(--blue)',
+    wash: 'linear-gradient(135deg,#eef4fe,#f5f8fe)',
+    title: 'EquiTrackr',
+    body: 'Modern healthcare equipment workflow platform for tracking equipment states, operational workflows, maintenance coordination, and hospital logistics systems.',
+    stack: 'Next.js, TypeScript, Tailwind, PostgreSQL, Prisma',
+    href: '/work/equitrackr',
+    status: 'prototype',
+    capabilities: ['case-study', 'demo'],
+  },
+  {
+    badge: 'FINTECH & PLANNING',
+    TagIcon: Wallet,
+    variant: 'finance',
+    accent: 'var(--green)',
+    wash: 'linear-gradient(135deg,#ecfdf4,#f4fbf7)',
+    title: 'SpendWise',
+    body: 'AI-native budgeting and financial planning platform focused on operational budgeting, transaction tracking, onboarding flows, and intelligent financial planning.',
+    stack: 'React Native, Expo, Node.js, PostgreSQL, Prisma',
+    href: '/work/spendwise',
+    status: 'prototype',
+    capabilities: ['case-study', 'demo'],
   },
 ]
 
@@ -278,6 +295,52 @@ function PreviewMock({ variant, accent }: { variant: Variant; accent: string }) 
   )
 }
 
+const STATUS_CFG: Record<ProjectStatus, { label: string; dot: string; tint: string }> = {
+  production: { label: 'Production',  dot: 'var(--green)',           tint: 'rgba(16,185,129,0.10)' },
+  prototype:  { label: 'Prototype',   dot: 'var(--amber)',           tint: 'rgba(245,158,11,0.10)' },
+  concept:    { label: 'Concept',     dot: 'rgba(28,22,46,0.45)',    tint: 'rgba(28,22,46,0.06)' },
+}
+
+export function StatusPill({ status }: { status: ProjectStatus }) {
+  const cfg = STATUS_CFG[status]
+  return (
+    <span
+      className="inline-flex items-center gap-1.5 rounded-full px-2 py-[3px] text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft"
+      style={{ background: cfg.tint }}
+    >
+      <span className="h-1.5 w-1.5 rounded-full" style={{ background: cfg.dot }} />
+      {cfg.label}
+    </span>
+  )
+}
+
+const CAPABILITY_CFG: Record<ProjectCapability, { label: string; Icon: typeof Sparkles }> = {
+  'ai-assisted': { label: 'AI-Assisted',    Icon: Sparkles },
+  'case-study':  { label: 'Case Study',     Icon: BookOpen },
+  'demo':        { label: 'Demo Available', Icon: PlayCircle },
+}
+
+export function CapabilityPill({ kind }: { kind: ProjectCapability }) {
+  const cfg = CAPABILITY_CFG[kind]
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-[3px] text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-muted ghair">
+      <cfg.Icon size={10} strokeWidth={2.2} />
+      {cfg.label}
+    </span>
+  )
+}
+
+export function ProjectSignals({ p }: { p: Project }) {
+  return (
+    <div className="flex flex-wrap items-center gap-1.5">
+      <StatusPill status={p.status} />
+      {p.capabilities.map((c) => (
+        <CapabilityPill key={c} kind={c} />
+      ))}
+    </div>
+  )
+}
+
 export function WorkCard({ p }: { p: Project }) {
   return (
     <Link
@@ -294,7 +357,10 @@ export function WorkCard({ p }: { p: Project }) {
 
       <div className="flex flex-1 flex-col p-5">
         <h3 className="font-display text-[15px] font-bold leading-snug text-ink">{p.title}</h3>
-        <p className="mt-2 flex-1 text-[13px] leading-relaxed text-ink-soft">{p.body}</p>
+        <div className="mt-2.5">
+          <ProjectSignals p={p} />
+        </div>
+        <p className="mt-3 flex-1 text-[13px] leading-relaxed text-ink-soft">{p.body}</p>
         <div className="mt-4 flex items-center justify-between gap-2 pt-3 ghair-t">
           <span className="text-[11px] leading-tight text-ink-muted">{p.stack}</span>
           <ArrowRight size={15} style={{ color: p.accent }} className="shrink-0 transition-transform group-hover:translate-x-0.5" />

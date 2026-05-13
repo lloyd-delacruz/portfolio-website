@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Building2, Boxes, HeartPulse, Rocket, ArrowRight } from 'lucide-react'
 
 const METRICS = [
-  { value: '3',     label: 'Hospital sites deployed',     Icon: Building2,  tint: 'var(--plum)',  bg: 'var(--plum-soft)' },
+  { value: '4',     label: 'Hospital sites deployed',     Icon: Building2,  tint: 'var(--plum)',  bg: 'var(--plum-soft)' },
   { value: '800+',  label: 'Assets under management',     Icon: Boxes,      tint: 'var(--amber)', bg: '#fef3c7' },
   { value: '10+',   label: 'Years healthcare operations', Icon: HeartPulse, tint: 'var(--green)', bg: '#d1fae5' },
   { value: '50+',   label: 'Projects shipped',            Icon: Rocket,     tint: 'var(--blue)',  bg: '#dbeafe' },
