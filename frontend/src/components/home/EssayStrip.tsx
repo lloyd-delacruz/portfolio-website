@@ -5,7 +5,7 @@ export function EssayStrip() {
   return (
     <section className="bg-paper-bg text-paper-ink border-y border-paper-subtle">
       <div className="mx-auto max-w-3xl px-6 py-20 md:py-28">
-        <p className="font-mono text-[10px] uppercase tracking-wide-label text-paper-ink-soft mb-6">
+        <p className="text-[11px] font-bold uppercase tracking-wide-label text-gold-ink mb-6">
           a short note on how I build
         </p>
         <div className="font-serif text-lg md:text-xl leading-[1.7] text-paper-ink space-y-5">
@@ -22,7 +22,7 @@ export function EssayStrip() {
 
         <Link
           href="/blog"
-          className="mt-10 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wide-label text-paper-ink-soft hover:text-paper-ink transition-colors"
+          className="mt-10 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-ink hover:text-gold-ink/80 transition-colors focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-ink focus-visible:outline-offset-2"
         >
           read more
           <ArrowUpRight className="h-3.5 w-3.5" />

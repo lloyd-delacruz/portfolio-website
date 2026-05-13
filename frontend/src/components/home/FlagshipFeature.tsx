@@ -8,7 +8,7 @@ export function FlagshipFeature() {
       <div className="mx-auto max-w-6xl px-6 py-12">
         <Link
           href="/work/wheelchair-tracking"
-          className="group block rounded-2xl border border-paper-subtle overflow-hidden transition-colors hover:border-gold-ink/40"
+          className="group block rounded-2xl border border-paper-subtle overflow-hidden transition-colors hover:border-gold-ink/40 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-ink focus-visible:outline-offset-2"
         >
           <div className="relative bg-paper-card p-8 md:p-12">
             <div className="absolute right-4 top-4 hidden sm:flex">

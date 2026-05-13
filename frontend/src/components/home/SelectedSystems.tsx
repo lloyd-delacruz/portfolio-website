@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
-import { MonoLabel } from './primitives'
+import { MonoLabel, SectionEyebrow } from './primitives'
 
 type Entry = { number: string; capability: string; title: string; description: string; href: string }
 
@@ -13,25 +13,25 @@ const ENTRIES: Entry[] = [
 
 export function SelectedSystems() {
   return (
-    <section className="bg-surface-canvas">
+    <section className="bg-paper-bg">
       <div className="mx-auto max-w-6xl px-6 py-12">
-        <MonoLabel className="block mb-4">selected systems</MonoLabel>
-        <ul className="divide-y divide-surface-subtle border-y border-surface-subtle">
+        <SectionEyebrow className="block mb-4">selected systems</SectionEyebrow>
+        <ul className="divide-y divide-paper-subtle border-y border-paper-subtle">
           {ENTRIES.map((e) => (
             <li key={e.number}>
               <Link
                 href={e.href}
-                className="group grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6 px-2 py-6 transition-colors hover:bg-surface-card"
+                className="group grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6 px-2 py-6 transition-colors hover:bg-paper-card focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-ink focus-visible:outline-offset-2"
               >
-                <MonoLabel className="text-gold">{e.number}</MonoLabel>
+                <MonoLabel className="text-gold-ink">{e.number}</MonoLabel>
                 <div>
                   <div className="flex items-baseline gap-3">
-                    <h3 className="font-serif text-lg font-medium text-surface-fg">{e.title}</h3>
+                    <h3 className="font-sans text-lg font-bold text-paper-ink">{e.title}</h3>
                     <MonoLabel>{e.capability}</MonoLabel>
                   </div>
-                  <p className="mt-1 text-sm text-surface-fg-secondary">{e.description}</p>
+                  <p className="mt-1 text-sm text-paper-ink-soft">{e.description}</p>
                 </div>
-                <ArrowUpRight className="h-4 w-4 text-surface-fg-muted group-hover:text-surface-fg group-hover:translate-x-0.5 transition-all" />
+                <ArrowUpRight className="h-4 w-4 text-paper-ink-soft group-hover:text-paper-ink group-hover:translate-x-0.5 transition-all" />
               </Link>
             </li>
           ))}
