@@ -172,55 +172,66 @@ export function AIWorkflowAlgorithm() {
             </svg>
 
             {/* Node cards / diamond, positioned in percentage-of-design-space coordinates */}
-            {STAGES.map((s) => (
-              <div
-                key={s.key}
-                className="absolute"
-                style={{
-                  width: CARD,
-                  height: CARD,
-                  left: `${(s.cx / W) * 100}%`,
-                  top: `${(ROW_Y / H) * 100}%`,
-                  transform: 'translate(-50%, -50%)',
-                }}
-              >
-                {/* Sub-caption above */}
-                <span
-                  className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted"
-                  style={{ bottom: `${CARD + 6}px` }}
+            {STAGES.map((s, i) => {
+              const delay = i * 0.2
+              return (
+                <div
+                  key={s.key}
+                  className="absolute"
+                  style={{
+                    width: CARD,
+                    height: CARD,
+                    left: `${(s.cx / W) * 100}%`,
+                    top: `${(ROW_Y / H) * 100}%`,
+                    transform: 'translate(-50%, -50%)',
+                  }}
                 >
-                  {s.sub}
-                </span>
+                  {/* Sub-caption above */}
+                  <span
+                    className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted"
+                    style={{ bottom: `${CARD + 6}px` }}
+                  >
+                    {s.sub}
+                  </span>
 
-                {/* Card or diamond */}
-                {s.diamond ? (
-                  <div className="grid h-full w-full place-items-center">
-                    <div
-                      className="absolute inset-0 rounded-md bg-white ghair-2 soft-shadow-sm"
-                      style={{ transform: 'rotate(45deg)' }}
-                    />
-                    <div className="relative flex flex-col items-center justify-center">
-                      <s.Icon size={20} style={{ color: s.color }} strokeWidth={1.9} />
-                      <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink">
-                        {s.label}
-                      </span>
-                    </div>
+                  {/* Animated inner wrapper — float keyed off the existing home2-float keyframes */}
+                  <div
+                    className="anim-float relative h-full w-full"
+                    style={{
+                      animationDelay: `${delay}s`,
+                      animationDuration: `${6 + (delay % 2)}s`,
+                    }}
+                  >
+                    {s.diamond ? (
+                      <div className="grid h-full w-full place-items-center">
+                        <div
+                          className="absolute inset-0 rounded-md bg-white ghair-2 soft-shadow-sm"
+                          style={{ transform: 'rotate(45deg)' }}
+                        />
+                        <div className="relative flex flex-col items-center justify-center">
+                          <s.Icon size={20} style={{ color: s.color }} strokeWidth={1.9} />
+                          <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink">
+                            {s.label}
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="grid h-full w-full place-items-center rounded-2xl bg-white ghair soft-shadow-sm">
+                          <s.Icon size={26} style={{ color: s.color }} strokeWidth={1.9} />
+                        </div>
+                        <span
+                          className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.16em] text-ink"
+                          style={{ top: `${CARD + 8}px` }}
+                        >
+                          {s.label}
+                        </span>
+                      </>
+                    )}
                   </div>
-                ) : (
-                  <>
-                    <div className="grid h-full w-full place-items-center rounded-2xl bg-white ghair soft-shadow-sm">
-                      <s.Icon size={26} style={{ color: s.color }} strokeWidth={1.9} />
-                    </div>
-                    <span
-                      className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.16em] text-ink"
-                      style={{ top: `${CARD + 8}px` }}
-                    >
-                      {s.label}
-                    </span>
-                  </>
-                )}
-              </div>
-            ))}
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>
