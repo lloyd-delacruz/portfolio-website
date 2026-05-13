@@ -14,7 +14,7 @@ import { Reveal } from '@/components/home/Reveal'
 export default function Home() {
   return (
     <>
-      <NavBar active="work" />
+      <NavBar active="work" register="light" />
       <main className="min-h-screen bg-paper-bg text-paper-ink">
         <HomeHero />
         <Reveal><ValuesRow /></Reveal>
