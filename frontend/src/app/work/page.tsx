@@ -32,8 +32,25 @@ export default function WorkPage() {
           </p>
         </section>
 
-        {/* Applied AI systems — flagship band */}
+        {/* Operational platforms */}
         <section className="mx-auto max-w-[1180px] px-6 pt-12 pb-8">
+          <div className="border-t border-ink/10 pt-10">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">
+              Operational platforms
+            </p>
+            <h2 className="mt-2 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl">
+              Healthcare operations, fintech, and product work
+            </h2>
+          </div>
+          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {OTHER.map((p) => (
+              <WorkCard key={p.title} p={p} />
+            ))}
+          </div>
+        </section>
+
+        {/* Applied AI systems — flagship band, below the operational projects */}
+        <section className="mx-auto max-w-[1180px] px-6 pt-4 pb-16">
           <div className="border-t border-ink/10 pt-10">
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <div>
@@ -52,23 +69,6 @@ export default function WorkPage() {
           </div>
           <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
             {APPLIED_AI.map((p) => (
-              <WorkCard key={p.title} p={p} />
-            ))}
-          </div>
-        </section>
-
-        {/* Operational platforms — the rest */}
-        <section className="mx-auto max-w-[1180px] px-6 pt-4 pb-16">
-          <div className="border-t border-ink/10 pt-10">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">
-              Operational platforms
-            </p>
-            <h2 className="mt-2 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl">
-              Healthcare operations, fintech, and product work
-            </h2>
-          </div>
-          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {OTHER.map((p) => (
               <WorkCard key={p.title} p={p} />
             ))}
           </div>
