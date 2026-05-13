@@ -15,26 +15,31 @@ const TOOLS = [
   { label: 'Tableau', Icon: BarChart3 },
 ]
 
+const PILL_BASE =
+  'group inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[13px] font-medium text-ink-soft ghair transition-colors hover:text-ink hover:border-[rgba(109,40,217,0.22)]'
+
 export function AboutCerts() {
   return (
     <section className="mx-auto max-w-[1180px] px-6 pb-12 pt-2">
       <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
-        Certified &amp; equipped with
+        Certifications
       </p>
-      <div className="mt-4 flex flex-wrap items-center gap-x-7 gap-y-3">
+      <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-3">
         {CERTS.map(({ label, Icon }) => (
-          <span
-            key={label}
-            className="group inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[13px] font-medium text-ink-soft ghair transition-colors hover:text-ink hover:border-[rgba(109,40,217,0.22)]"
-          >
+          <span key={label} className={PILL_BASE}>
             <Icon size={15} strokeWidth={1.9} className="text-plum transition-transform group-hover:scale-110" />
             {label}
           </span>
         ))}
-        <span className="hidden h-4 w-px bg-[var(--line-strong)] sm:block" aria-hidden />
+      </div>
+
+      <p className="mt-7 text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
+        Core stack
+      </p>
+      <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-3">
         {TOOLS.map(({ label, Icon }) => (
-          <span key={label} className="inline-flex items-center gap-1.5 text-[14px] font-medium text-ink-muted">
-            <Icon size={15} strokeWidth={1.8} className="text-ink-muted" />
+          <span key={label} className={PILL_BASE}>
+            <Icon size={15} strokeWidth={1.9} className="text-plum transition-transform group-hover:scale-110" />
             {label}
           </span>
         ))}
