@@ -158,7 +158,7 @@ const FRONTEND_TOOLS: Tool[] = [
     trend:
       'The default React stack in 2025. App Router and React Server Components shifted how teams think about where rendering happens — server-first by default, with islands of interactivity on the client.',
     how:
-      'Compiles your `app/` directory into routes, decides per-component whether to render on the server or ship to the client, and bundles only what each page needs. Output can be a Node server, a static export, or edge functions.',
+      'Compiles your app/ directory into routes, decides per-component whether to render on the server or ship to the client, and bundles only what each page needs. Output can be a Node server, a static export, or edge functions.',
     inWork: 'Powers every page you’re reading — this site, the case studies, and most of the work I ship to the browser.',
     projects: [
       { name: 'This site', href: '/' },
@@ -254,7 +254,7 @@ const FRONTEND_TOOLS: Tool[] = [
     trend:
       'The dominant approach for design-system primitives in React in 2025. Headless logic (Radix) plus owned, restyled markup has effectively replaced traditional component libraries like Material UI for new projects.',
     how:
-      'A CLI fetches the source for a component and writes it into your `components/ui` folder. From then on it\'s your code — no package to update, no version conflicts to manage.',
+      'A CLI fetches the source for a component and writes it into your components/ui folder. From then on it\'s your code — no package to update, no version conflicts to manage.',
     inWork: 'The base layer for buttons, dialogs, dropdowns, and other primitives — restyled to fit the warm-paper aesthetic of this site.',
     projects: [
       { name: 'This site', href: '/' },
@@ -361,7 +361,7 @@ const FRONTEND_ROW: RowContent = {
   headlineLead: 'The interface layer.',
   headlineAccent: 'What you see and touch.',
   description:
-    'What renders in the browser — component-driven, typed end-to-end, and tuned for fast pages. Same modal shape: what it is, where the field is now, how it works, and where it shows up in my work.',
+    'What renders in the browser — component-driven, typed end-to-end, and tuned for fast pages. Tap any tool to see what it is, where the field is, and where it shows up in my work.',
   tools: FRONTEND_TOOLS,
 }
 
