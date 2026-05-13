@@ -159,7 +159,7 @@ const FRONTEND_TOOLS: Tool[] = [
       'The default React stack in 2025. App Router and React Server Components shifted how teams think about where rendering happens — server-first by default, with islands of interactivity on the client.',
     how:
       'Compiles your `app/` directory into routes, decides per-component whether to render on the server or ship to the client, and bundles only what each page needs. Output can be a Node server, a static export, or edge functions.',
-    inWork: "Powers every page you're reading — this site, the case studies, and most of the work I ship to the browser.",
+    inWork: 'Powers every page you’re reading — this site, the case studies, and most of the work I ship to the browser.',
     projects: [
       { name: 'This site', href: '/' },
       { name: 'EquiTrackr', href: '/work/equitrackr' },
