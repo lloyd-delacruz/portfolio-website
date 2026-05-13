@@ -63,3 +63,6 @@ frontend/node_modules/
 
 # git worktrees (do not commit)
 .worktrees/
+
+# Claude Code runtime lock files
+.claude/*.lock
