@@ -21,8 +21,8 @@ export function FooterCTA() {
             <MessageCircle size={22} />
           </div>
           <h2 className="font-display text-2xl font-extrabold leading-tight text-ink sm:text-3xl">
-            Let&apos;s build something{' '}
-            <span className="grad-plum-text">extraordinary together.</span>
+            Let&apos;s architect{' '}
+            <span className="grad-plum-text">your next system.</span>
           </h2>
         </div>
 
