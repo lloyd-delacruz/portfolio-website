@@ -7,7 +7,7 @@ import { AboutSection } from '@/components/sections/AboutSection'
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900">
+    <main className="min-h-screen bg-paper-bg text-paper-ink">
       {/* Back Button */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
@@ -19,7 +19,7 @@ export default function AboutPage() {
           <motion.button
             whileHover={{ scale: 1.05, x: -2 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-lg font-medium border border-white/20 hover:bg-white/20 transition-colors"
+            className="inline-flex items-center px-4 py-2 rounded-lg font-medium border border-paper-ink/25 bg-paper-bg/70 text-paper-ink backdrop-blur-sm transition-colors hover:border-gold-ink/50 hover:text-gold-ink focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-ink focus-visible:outline-offset-2"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
@@ -28,9 +28,9 @@ export default function AboutPage() {
       </motion.div>
 
       {/* Hero Section - Redesigned to match AboutMeHeroFixed */}
-      <section className="py-20 bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 text-white">
+      <section className="py-20 bg-paper-bg text-paper-ink">
         <div className="max-w-6xl mx-auto px-4">
-          
+
           {/* Section Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -38,14 +38,14 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <span className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-medium">
+            <span className="inline-flex items-center px-4 py-2 rounded-full border border-paper-subtle bg-paper-card text-xs font-bold uppercase tracking-wide-label text-gold-ink">
               About Lloyd Dela Cruz
             </span>
           </motion.div>
 
           {/* Main Content */}
           <div className="max-w-4xl mx-auto text-center">
-            
+
             {/* Text Content */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -54,37 +54,37 @@ export default function AboutPage() {
             >
               <h1 className="text-4xl lg:text-5xl font-bold mb-6">
                 Bridging Healthcare Excellence with
-                <span className="bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
+                <span className="text-gold-ink">
                   {" "}Data-Driven Innovation
                 </span>
               </h1>
-              
-              <div className="flex items-center justify-center text-blue-200 mb-6">
-                <MapPin className="h-5 w-5 mr-2" />
+
+              <div className="flex items-center justify-center text-paper-ink-soft mb-6">
+                <MapPin className="h-5 w-5 mr-2 text-gold-ink" />
                 <span className="text-lg">Vancouver, BC • Healthcare Technology Leader</span>
               </div>
-              
-              <p className="text-xl text-blue-100 mb-6 leading-relaxed max-w-3xl mx-auto">
+
+              <p className="text-xl text-paper-ink-soft mb-6 leading-relaxed max-w-3xl mx-auto">
                 Results-driven data analytics professional with 20+ years of cross-functional experience—8 of which are in healthcare operations, project management, and clinical optimization.
               </p>
-              
-              <p className="text-lg text-blue-200 mb-8 leading-relaxed max-w-3xl mx-auto">
+
+              <p className="text-lg text-paper-ink-soft mb-8 leading-relaxed max-w-3xl mx-auto">
                 Currently completing an MSc in Data Analytics at Eastern University (expected Dec 2025), while contributing to patient care and interdisciplinary collaboration as a Rehabilitation Assistant at Vancouver Coastal Health.
               </p>
-              
+
               {/* Key Stats */}
               <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-cyan-300">20+</div>
-                  <div className="text-sm text-blue-300">Years Experience</div>
+                  <div className="text-3xl font-bold text-gold-ink">20+</div>
+                  <div className="text-sm text-paper-ink-soft uppercase tracking-wide-label">Years Experience</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-cyan-300">MSc</div>
-                  <div className="text-sm text-blue-300">Data Analytics</div>
+                  <div className="text-3xl font-bold text-gold-ink">MSc</div>
+                  <div className="text-sm text-paper-ink-soft uppercase tracking-wide-label">Data Analytics</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-cyan-300">AWS</div>
-                  <div className="text-sm text-blue-300">AI Practitioner</div>
+                  <div className="text-3xl font-bold text-gold-ink">AWS</div>
+                  <div className="text-sm text-paper-ink-soft uppercase tracking-wide-label">AI Practitioner</div>
                 </div>
               </div>
             </motion.div>
@@ -96,13 +96,13 @@ export default function AboutPage() {
       <AboutSection />
 
       {/* Call to Action - Reduced spacing */}
-      <section className="py-16 bg-gradient-to-r from-blue-900 to-purple-900">
+      <section className="py-16 bg-paper-bg border-t border-paper-subtle">
         <div className="container mx-auto px-4 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl font-bold text-white mb-6"
+            className="text-3xl font-bold text-paper-ink mb-6"
           >
             Let&apos;s Connect
           </motion.h2>
@@ -111,7 +111,7 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-white/80 mb-8 max-w-2xl mx-auto"
+            className="text-lg text-paper-ink-soft mb-8 max-w-2xl mx-auto"
           >
             Ready to collaborate on transforming healthcare through data and AI?
           </motion.p>
@@ -125,9 +125,9 @@ export default function AboutPage() {
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center px-8 py-4 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+                className="inline-flex items-center px-8 py-4 rounded-lg font-semibold bg-paper-ink text-paper-bg hover:bg-paper-ink/90 transition-colors"
               >
-                Get In Touch
+                Get in touch
               </motion.button>
             </Link>
           </motion.div>
