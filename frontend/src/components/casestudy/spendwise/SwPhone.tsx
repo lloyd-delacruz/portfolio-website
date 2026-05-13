@@ -24,14 +24,14 @@ export function SwPhone({
         <div className="flex items-center justify-between px-4 pb-1 pt-2 text-[9px] font-semibold text-ink">
           <span>9:41</span>
           <span className="flex items-center gap-1">
-            <span className="inline-block h-1.5 w-3 rounded-[1px] bg-ink/70" />
-            <span className="inline-block h-1.5 w-2 rounded-[1px] bg-ink/40" />
+            <span className="inline-block h-1.5 w-3 rounded-[1px]" style={{ background: 'rgba(31,26,46,0.7)' }} />
+            <span className="inline-block h-1.5 w-2 rounded-[1px]" style={{ background: 'rgba(31,26,46,0.4)' }} />
           </span>
         </div>
         {/* screen */}
         <div className="px-3 pb-7 pt-1">{children}</div>
         {/* home indicator */}
-        <div className="mx-auto mb-2 h-1 w-1/4 rounded-full bg-ink/20" aria-hidden />
+        <div className="mx-auto mb-2 h-1 w-1/4 rounded-full" style={{ background: 'rgba(31,26,46,0.2)' }} aria-hidden />
       </div>
     </div>
   )
