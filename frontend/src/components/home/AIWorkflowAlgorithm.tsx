@@ -70,6 +70,19 @@ export function AIWorkflowAlgorithm() {
           <div className="absolute inset-0">
             {/* SVG connectors */}
             <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" fill="none" aria-hidden>
+              <defs>
+                <marker
+                  id="aiwf-arrow"
+                  viewBox="0 0 10 10"
+                  refX="8"
+                  refY="5"
+                  markerWidth="6"
+                  markerHeight="6"
+                  orient="auto-start-reverse"
+                >
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--amber)" />
+                </marker>
+              </defs>
               {/* Forward path: six straight segments between adjacent node edges */}
               {STAGES.slice(0, -1).map((s, i) => {
                 const next = STAGES[i + 1]
@@ -116,20 +129,6 @@ export function AIWorkflowAlgorithm() {
 
                 return (
                   <g>
-                    <defs>
-                      <marker
-                        id="aiwf-arrow"
-                        viewBox="0 0 10 10"
-                        refX="8"
-                        refY="5"
-                        markerWidth="6"
-                        markerHeight="6"
-                        orient="auto-start-reverse"
-                      >
-                        <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--amber)" />
-                      </marker>
-                    </defs>
-
                     {/* Amber loop-back arc from the top of the diamond back to the top of Plan */}
                     <path
                       d={`M ${arcStartX} ${arcStartY} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${arcEndX} ${arcEndY}`}
