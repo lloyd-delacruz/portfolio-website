@@ -28,8 +28,7 @@ type Stage = {
 const W = 1080
 const H = 360
 const ROW_Y = 220
-const CARD = 96   // card side length
-const DIA = 96    // diamond bounding box side length (rotated 45°)
+const CARD = 96   // card side length; diamond bounding box is identical (rotated 45°)
 
 // Seven evenly spaced centres: 1080 / 7 ≈ 154.3 step, first at step/2.
 const X = (i: number) => Math.round((W / 7) * (i + 0.5))
@@ -163,7 +162,9 @@ export function AIWorkflowAlgorithm() {
       {/* Screen-reader linearization */}
       <ol className="sr-only" aria-label="How I work with AI">
         {STAGES.map((s) => (
-          <li key={s.key}>{s.longLabel}</li>
+          <li key={s.key}>
+            <strong>{s.label}</strong> — {s.sub}. {s.longLabel}
+          </li>
         ))}
       </ol>
     </section>
