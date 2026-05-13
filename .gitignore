@@ -57,3 +57,6 @@ frontend/*.tsbuildinfo
 
 # brainstorming companion (do not commit)
 .superpowers/
+
+# frontend dependencies
+frontend/node_modules/

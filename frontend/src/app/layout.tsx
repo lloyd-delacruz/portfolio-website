@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import '@fontsource-variable/source-serif-4'
-import { geistSans, geistMono } from '@/lib/fonts'
+import { geistSans, geistMono, jakarta } from '@/lib/fonts'
 
 export const metadata: Metadata = {
   title: 'Lloyd Dela Cruz — Applied AI Systems',
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
+      className={`${geistSans.variable} ${geistMono.variable} ${jakarta.variable} scroll-smooth`}
     >
       <body className="font-sans antialiased bg-surface-canvas text-surface-fg">
         {children}

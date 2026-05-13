@@ -1,40 +1,54 @@
 // frontend/src/components/home/HomeHero.tsx
-import { CtaButton, SectionEyebrow, StatItem } from './primitives'
-
-const STATS = [
-  { value: '10+', label: 'Years in healthcare' },
-  { value: 'MSc', label: 'Data Analytics' },
-  { value: 'AWS', label: 'AI Practitioner' },
-]
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+import { DiagramScene } from './DiagramScene'
 
 export function HomeHero() {
   return (
-    <section className="bg-paper-bg">
-      <div className="mx-auto max-w-6xl px-6 pb-20 pt-32 md:pt-36">
-        <div className="mx-auto max-w-3xl text-center">
-          <SectionEyebrow>Applied AI Engineer · Healthcare Systems Builder</SectionEyebrow>
+    <section className="relative overflow-hidden">
+      <div className="hero-wash pointer-events-none absolute inset-0" aria-hidden />
+      <div className="relative mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-14 px-6 pb-16 pt-14 lg:grid-cols-[1.05fr_1fr] lg:pt-20">
+        {/* left */}
+        <div>
+          <span className="anim-rise inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-soft ghair">
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--green)' }} />
+            Systems Engineer
+          </span>
 
-          <h1 className="mt-6 font-sans text-5xl font-bold leading-[1.06] tracking-tight-display text-paper-ink md:text-6xl">
-            I build healthcare systems that <span className="text-gold-ink">work</span>.
+          <h1 className="anim-rise mt-6 font-display text-[2.85rem] font-extrabold leading-[1.04] text-ink sm:text-[3.4rem] lg:text-[4rem]" style={{ animationDelay: '60ms' }}>
+            I build intelligent
+            <br />
+            systems that{' '}
+            <br className="hidden sm:block" />
+            <span className="grad-plum-text">drive impact.</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-[52ch] text-lg leading-relaxed text-paper-ink-soft">
-            I design and ship AI-native workflows that connect people, systems, and data —
-            turning frontline complexity into operational clarity.
+          <p className="anim-rise mt-6 max-w-[34ch] text-[1.05rem] leading-relaxed text-ink-soft" style={{ animationDelay: '120ms' }}>
+            I design and ship AI-native workflows and products that connect people, systems, and
+            data — turning complexity into clarity and outcomes.
           </p>
 
-          <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <CtaButton href="/work/wheelchair-tracking" variant="filled">View case study</CtaButton>
-            <CtaButton href="#systems" variant="outline">Explore the work</CtaButton>
+          <div className="anim-rise mt-9 flex flex-wrap items-center gap-3" style={{ animationDelay: '180ms' }}>
+            <Link
+              href="/work"
+              className="group inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white soft-shadow transition-transform hover:-translate-y-0.5"
+              style={{ background: 'var(--plum)' }}
+            >
+              Explore my work
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/work"
+              className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-ink ghair-2 transition-colors hover:bg-[var(--cream-2)]"
+            >
+              View case studies
+            </Link>
           </div>
+        </div>
 
-          <div className="mx-auto mt-12 flex max-w-md items-stretch justify-center sm:divide-x sm:divide-paper-subtle">
-            {STATS.map((s) => (
-              <div key={s.label} className="flex-1 px-4">
-                <StatItem value={s.value} label={s.label} />
-              </div>
-            ))}
-          </div>
+        {/* right */}
+        <div className="anim-rise" style={{ animationDelay: '220ms' }}>
+          <DiagramScene />
         </div>
       </div>
     </section>
