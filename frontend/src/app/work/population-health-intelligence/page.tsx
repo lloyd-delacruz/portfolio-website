@@ -1,26 +1,44 @@
 // frontend/src/app/work/population-health-intelligence/page.tsx
-// TEMPORARY STUB — replaced in plan task T8.
 import type { Metadata } from 'next'
 import { HomeNav } from '@/components/home/HomeNav'
 import { SiteFooter } from '@/components/home/SiteFooter'
+import { Reveal } from '@/components/home/Reveal'
+import { PhHero } from '@/components/casestudy/popHealth/PhHero'
+import { PhProblem } from '@/components/casestudy/popHealth/PhProblem'
+import { PhArchitecture } from '@/components/casestudy/popHealth/PhArchitecture'
+import { PhForecastDemo } from '@/components/casestudy/popHealth/PhForecastDemo'
+import { PhImpact } from '@/components/casestudy/popHealth/PhImpact'
+import { PhFutureAI } from '@/components/casestudy/popHealth/PhFutureAI'
+import { PhClose } from '@/components/casestudy/popHealth/PhClose'
 
 export const metadata: Metadata = {
   title: 'Population-Health Intelligence Platform — Lloyd Dela Cruz',
-  description: 'Calibrated life-expectancy forecasts for 193 nations.',
+  description:
+    'Calibrated life-expectancy forecasts for 193 nations, with the signals driving each trajectory — interactive prototype backed by a deterministic surrogate of the trained ensemble.',
 }
 
 export default function Page() {
   return (
     <div className="home2 min-h-screen">
       <HomeNav active="Work" />
-      <main className="mx-auto max-w-[1180px] px-6 py-24">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">
-          Rebuilding
-        </p>
-        <h1 className="mt-3 font-display text-3xl font-extrabold text-ink">
-          Population-Health Intelligence Platform
-        </h1>
-        <p className="mt-4 max-w-2xl text-ink-soft">This case study is being rebuilt.</p>
+      <main>
+        <PhHero />
+        <Reveal>
+          <PhProblem />
+        </Reveal>
+        <Reveal>
+          <PhArchitecture />
+        </Reveal>
+        <Reveal>
+          <PhForecastDemo />
+        </Reveal>
+        <Reveal>
+          <PhImpact />
+        </Reveal>
+        <Reveal>
+          <PhFutureAI />
+        </Reveal>
+        <PhClose />
       </main>
       <SiteFooter />
     </div>
