@@ -12,6 +12,7 @@ import {
   PlayCircle,
 } from 'lucide-react'
 import { AnchorCase } from './AnchorCase'
+import { Window } from './Window'
 
 /** Slug of the project promoted to the homepage anchor band (excluded from the grid). */
 export const ANCHOR_CASE_HREF = '/work/wheelchair-tracking'
@@ -110,19 +111,6 @@ const SOFT = 'rgba(28,22,46,0.08)'
 
 function Bar({ w, c = SOFT }: { w: string; c?: string }) {
   return <div className="h-1.5 rounded-full" style={{ width: w, background: c }} />
-}
-
-function Window({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex flex-1 flex-col gap-2 rounded-md bg-white/85 p-2.5">
-      <div className="flex items-center gap-1">
-        <span className="h-1.5 w-1.5 rounded-full bg-black/15" />
-        <span className="h-1.5 w-1.5 rounded-full bg-black/15" />
-        <span className="h-1.5 w-1.5 rounded-full bg-black/15" />
-      </div>
-      {children}
-    </div>
-  )
 }
 
 function QrGlyph({ accent }: { accent: string }) {
