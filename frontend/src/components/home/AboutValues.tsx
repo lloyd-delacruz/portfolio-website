@@ -72,7 +72,7 @@ const VALUES: Value[] = [
       'Ship things that survive Monday morning. Code that works at 2pm in a busy clinic beats elegant theory.',
     detail: {
       body:
-        "20 years on hospital floors shape how I build. Reliability, sensible fallbacks, clear ownership, and humane interfaces are non-negotiable. I optimise for the operator's worst day, not the demo.",
+        "Nine years on hospital floors shape how I build. Reliability, sensible fallbacks, clear ownership, and humane interfaces are non-negotiable. I optimise for the operator's worst day, not the demo.",
       proof: [
         {
           label: 'Frontline grounded',

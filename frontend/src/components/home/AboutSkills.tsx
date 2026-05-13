@@ -21,12 +21,12 @@ type Group = {
 
 const GROUPS: Group[] = [
   {
-    title: 'AI & product engineering',
+    title: 'Applied AI & product engineering',
     Icon: Brain,
     tint: 'var(--plum)',
     bg: 'var(--plum-soft)',
     summary:
-      'Building AI-native product experiences with LLMs as first-class components — orchestration, retrieval, tool use, and structured output.',
+      'I build LLM-powered features the way I build any other engineering — scoped, tested, and observable. Retrieval, tool use, structured generation, and human checkpoints, used where they earn their place.',
     tools: ['Claude', 'OpenAI', 'LangChain', 'RAG', 'Vector DBs', 'Cursor'],
     detail: {
       body:
@@ -72,8 +72,8 @@ const GROUPS: Group[] = [
     tint: 'var(--green)',
     bg: '#d1fae5',
     summary:
-      '20+ years across hospital operations and frontline care — domain context that informs how I scope and build healthcare products.',
-    tools: ['VCH operations', 'Lean Six Sigma', 'Workflow design', 'Stakeholder comms', 'Cerner'],
+      "Nine years inside Vancouver Coastal Health — frontline care, equipment logistics, and the operational gaps that don't show up in reports. The domain context that informs how I scope and build healthcare products.",
+    tools: ['VCH operations', 'Clinical workflows', 'Equipment logistics', 'Lean Six Sigma', 'Cerner', 'Stakeholder comms'],
     detail: {
       body:
         'I\'ve worked the floors I now design software for. That shapes what I prioritise: humane interfaces, sensible fallbacks, and a clear-eyed view of what actually changes behaviour in a clinical setting.',
@@ -120,8 +120,9 @@ export function AboutSkills() {
         Technical <span className="grad-plum-text">expertise.</span>
       </h2>
       <p className="mt-3 max-w-2xl text-[1.05rem] leading-relaxed text-ink-soft">
-        Three overlapping bodies of work: AI-native engineering, full-stack product development, and
-        20+ years of healthcare operations. Tap a card for context.
+        Three overlapping bodies of work: applied AI engineering, full-stack product development,
+        and nearly a decade inside healthcare operations. Each area reflects a different layer of
+        the systems work.
       </p>
 
       <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-3">

@@ -8,9 +8,9 @@ import { usePrefersReducedMotion } from '@/lib/hooks/usePrefersReducedMotion'
 const ENTRIES = [
   {
     period: '2007 — 2012',
-    title: 'Industrial Engineering & Early Career',
+    title: 'Industrial Engineering & early career',
     body:
-      'Graduated BSc Industrial Engineering in 2007. Started in sales (2007-2010), then transitioned to engineering roles in Singapore (2010-2012). Led sustainable energy projects, implemented Lean Six Sigma methodologies, reducing timelines by 15% and costs by 20%.',
+      'Earned a BSc in Industrial Engineering in 2007. Spent the first few years in sales, then relocated to Singapore for engineering work on sustainable-energy projects. Applied Lean Six Sigma to cut project timelines by ~15% and costs by ~20% — the foundation for how I still approach systems and operations today.',
     skills: ['Project Management', 'Lean Six Sigma', 'Process Optimization', 'Contract Management'],
     Icon: Briefcase,
     tint: 'var(--plum)',
@@ -19,21 +19,21 @@ const ENTRIES = [
   },
   {
     period: '2012 — 2016',
-    title: 'Canadian Transition & Education',
+    title: 'Starting over in Canada',
     body:
-      'Moved to Canada and worked multiple jobs (service, security, cleaning) to support myself while pursuing full-time studies. Completed Rehabilitation Assistant Diploma at Vancouver Community College and Sustainability Management program at University of British Columbia.',
-    skills: ['Adaptability', 'Work Ethic', 'Time Management', 'Resilience', 'Customer Service'],
+      'Moved to Canada in 2012 and rebuilt from the ground up. Worked service, security, and cleaning jobs to fund full-time study — Rehabilitation Assistant Diploma at Vancouver Community College, then Sustainability Management at UBC. The grind itself was the curriculum: every job taught me something about how people actually use systems.',
+    skills: ['Adaptability', 'Resilience', 'Time Management', 'Customer Service'],
     Icon: GraduationCap,
     tint: 'var(--amber)',
     soft: '#fef3c7',
     current: false,
   },
   {
-    period: '2016 — 2025',
-    title: 'Healthcare Practice & Data Evolution',
+    period: '2016 — 2022',
+    title: 'Healthcare practice at VCH',
     body:
-      "9+ years at Vancouver Coastal Health as Rehabilitation Assistant, supporting 200+ patient plans annually. Transitioned to data analytics through multiple certifications, AWS AI credentials, and Master's in Data Analytics while building healthcare solutions.",
-    skills: ['Patient Care', 'Healthcare Systems', 'Data Analytics', 'Python', 'SQL', 'AWS AI'],
+      "Joined Vancouver Coastal Health as a Rehabilitation Assistant in 2016. Supported 200+ patient care plans per year across three hospital sites — outpatient and acute. Six years close to the operational gaps that don't show up in reports: scheduling friction, equipment misplacement, handoffs that fall through. That's where the engineering work started.",
+    skills: ['Patient care', 'Clinical workflows', 'Equipment logistics', 'Cross-team coordination', 'Cerner'],
     Icon: HeartPulse,
     tint: 'var(--green)',
     soft: '#d1fae5',
@@ -41,10 +41,10 @@ const ENTRIES = [
   },
   {
     period: '2022 — Present',
-    title: 'Data Analytics & AI Transformation',
+    title: 'Engineering, analytics & applied AI',
     body:
-      "Mastering data analytics through multiple certifications and AWS AI Practitioner credential. Currently pursuing Master's in Data Analytics while building full-stack healthcare solutions.",
-    skills: ['Python', 'SQL', 'Tableau', 'AWS AI', 'Data Engineering', 'Prompt Engineering'],
+      'Began layering engineering and analytics work on top of clinical practice. Completed an MSc in Data Analytics at Eastern University; earned certifications across analytics, cloud, and applied AI (BrainStation, Google, DeepLearning.AI, AWS AI Practitioner); shipped the first version of a wheelchair-logistics platform now used across three VCH hospital sites. Still at VCH — open to product engineering, applied AI, and operational software work where healthcare context becomes an operational advantage.',
+    skills: ['Python', 'SQL', 'Tableau', 'AWS', 'Next.js', 'TypeScript', 'Applied AI', 'RAG'],
     Icon: Sparkles,
     tint: 'var(--coral)',
     soft: '#ffe4e0',
@@ -62,8 +62,8 @@ export function AboutJourney() {
         My professional <span className="grad-plum-text">journey.</span>
       </h2>
       <p className="mt-3 max-w-2xl text-[1.05rem] leading-relaxed text-ink-soft">
-        From Industrial Engineering to AI-native systems — a 20+ year evolution across continents,
-        disciplines, and industries.
+        From Industrial Engineering to applied AI — a multi-decade arc across continents,
+        disciplines, and the systems behind healthcare.
       </p>
 
       <ol className="relative mt-12 space-y-7 pl-9 sm:pl-12">

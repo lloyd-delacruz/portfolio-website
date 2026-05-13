@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { MapPin, ArrowRight } from 'lucide-react'
 
 const STATS = [
-  { value: '20+', label: 'Years Experience' },
-  { value: '200+', label: 'Patient Plans / yr' },
-  { value: '3', label: 'VCH Hospital Sites' },
+  { value: '9+', label: 'Years at VCH' },
+  { value: '200+', label: 'Patient plans / yr' },
+  { value: '3', label: 'Multi-site VCH' },
 ]
 
 export function AboutHero() {
@@ -25,8 +25,8 @@ export function AboutHero() {
             className="anim-rise mt-6 font-display text-[2.5rem] font-extrabold leading-[1.06] text-ink sm:text-[3rem] lg:text-[3.4rem]"
             style={{ animationDelay: '60ms', letterSpacing: '-0.025em' }}
           >
-            Building AI-native systems grounded in{' '}
-            <span className="grad-plum-text">real-world operations.</span>
+            Healthcare operations, engineered{' '}
+            <span className="grad-plum-text">from the inside.</span>
           </h1>
 
           <p
@@ -34,36 +34,28 @@ export function AboutHero() {
             style={{ animationDelay: '100ms' }}
           >
             <MapPin size={16} className="text-plum" strokeWidth={2} />
-            Vancouver, BC · AI Systems · Product Engineering · Operational Intelligence
+            Vancouver, BC · Healthcare workflow engineering · Analytics · Applied AI
           </p>
 
           <p
             className="anim-rise mt-6 max-w-[58ch] text-[1.08rem] leading-[1.7] text-ink-soft"
             style={{ animationDelay: '140ms' }}
           >
-            AI-native systems builder with a background in Industrial Engineering, healthcare
-            operations, and modern product development. MSc in Data Analytics graduate from Eastern
-            University with experience building operational workflow systems, AI-assisted platforms,
-            and scalable full-stack applications using Claude, Cursor, OpenAI, LangChain, RAG
-            architectures, and modern AI engineering workflows.
+            I build operational software for healthcare — workflow systems, analytics tools, and
+            AI-assisted features designed to hold up in real clinical use. My background is
+            Industrial Engineering, shaped by years working inside high-acuity hospital
+            environments.
           </p>
 
           <p
             className="anim-rise mt-4 max-w-[58ch] text-[0.98rem] leading-[1.7] text-ink-muted"
             style={{ animationDelay: '170ms' }}
           >
-            Skilled in React, Next.js, TypeScript, Node.js, PostgreSQL, Prisma, Python, AWS, and
-            modern LLM tooling, with a strong focus on operational intelligence, workflow
-            orchestration, and thoughtful systems design.
-          </p>
-
-          <p
-            className="anim-rise mt-4 max-w-[58ch] text-[0.98rem] leading-[1.7] text-ink-muted"
-            style={{ animationDelay: '200ms' }}
-          >
-            Built real-world operational systems supporting healthcare logistics, workflow
-            visibility, equipment coordination, and AI-native product experiences through a
-            combination of systems thinking, modern engineering, and practical AI integration.
+            Over the last several years I&apos;ve moved from frontline care into the systems side
+            of healthcare — an MSc in Data Analytics, certifications in analytics, cloud, and
+            applied AI, and a wheelchair-logistics platform now running across three Vancouver
+            Coastal Health sites. I&apos;m still a Rehabilitation Assistant at VCH; the engineering
+            work grew out of problems I kept watching happen on shift.
           </p>
 
           <div className="anim-rise mt-9 flex flex-wrap items-center gap-3" style={{ animationDelay: '230ms' }}>
@@ -127,7 +119,7 @@ export function AboutHero() {
           {/* available pill */}
           <div className="anim-float absolute -left-3 bottom-5 flex items-center gap-2 rounded-full bg-white px-3.5 py-2 ghair soft-shadow" style={{ animationDelay: '1.1s' }}>
             <span className="anim-pulse h-2 w-2 rounded-full" style={{ background: 'var(--green)' }} />
-            <span className="text-[12px] font-semibold text-ink">Open to AI-native product work</span>
+            <span className="text-[12px] font-semibold text-ink">Open to product engineering &amp; applied AI work</span>
           </div>
         </div>
       </div>
