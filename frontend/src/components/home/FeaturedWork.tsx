@@ -119,64 +119,72 @@ function QrGlyph({ accent }: { accent: string }) {
   )
 }
 
-function ForecastMockup() {
-  return (
-    <div className="flex flex-1 flex-col gap-2 rounded-md bg-white/85 p-2.5 ghair">
-      <div className="flex items-center gap-1.5">
-        <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--plum)' }} />
-        <span className="text-[10px] tracking-[0.12em] text-ink-muted">FORECAST · p50 38ms</span>
-      </div>
-      <div className="flex h-12 items-end gap-1">
-        {[3, 5, 6, 7, 8, 9, 10, 11, 12, 11, 12, 13].map((h, i) => (
-          <span key={i} className="w-1.5 rounded-sm" style={{ height: `${h * 6}%`, background: 'rgba(28,22,46,0.18)' }} />
-        ))}
-        <span className="ml-1 w-1.5 rounded-sm" style={{ height: '84%', background: 'var(--plum)' }} />
-      </div>
-      <Bar w="62%" c="var(--plum)" />
-      <Bar w="40%" c="rgba(28,22,46,0.10)" />
-    </div>
-  )
-}
-
-function TriageMockup() {
-  return (
-    <div className="flex flex-1 flex-col gap-2 rounded-md bg-white/85 p-2.5 ghair">
-      <div className="flex items-center gap-1.5">
-        <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--plum)' }} />
-        <span className="text-[10px] tracking-[0.12em] text-ink-muted">CASE · p(malig) 0.83</span>
-      </div>
-      <div className="grid grid-cols-5 gap-1">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <span
-            key={i}
-            className="h-3 rounded-sm"
-            style={{ background: i < 8 ? 'var(--plum)' : 'rgba(28,22,46,0.10)' }}
-          />
-        ))}
-      </div>
-      <div className="flex items-center gap-1">
-        <span className="h-2 w-2" style={{ border: '1px solid var(--amber)' }} />
-        <span className="text-[10px] tracking-[0.06em] text-ink-muted">AMBIGUITY FLAG</span>
-      </div>
-    </div>
-  )
-}
-
 function PreviewMock({ variant, accent }: { variant: Variant; accent: string }) {
   return (
     <div className="absolute inset-0 flex gap-2 p-3">
-      {/* mini sidebar — light variants only */}
-      {variant !== 'forecast' && variant !== 'triage' && <div className="hidden w-9 shrink-0 flex-col gap-1.5 rounded-md bg-white/70 p-2 sm:flex">
+      {/* mini sidebar — all variants */}
+      <div className="hidden w-9 shrink-0 flex-col gap-1.5 rounded-md bg-white/70 p-2 sm:flex">
         <div className="h-2 w-2 rounded-full" style={{ background: accent }} />
         <Bar w="100%" />
         <Bar w="70%" />
         <Bar w="85%" />
-      </div>}
+      </div>
 
-      {variant === 'forecast' && <ForecastMockup />}
-      {variant === 'triage' && <TriageMockup />}
+      <Window>
+        {variant === 'forecast' && (
+          <div className="flex flex-1 flex-col gap-1.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[9px] font-semibold tracking-[0.12em] text-ink-muted">FORECAST · BGD</span>
+              <span className="text-[10px] font-semibold" style={{ color: accent }}>72.4y ±1.8</span>
+            </div>
+            <div className="flex flex-1 items-end gap-[3px]">
+              {[3, 4, 5, 6, 7, 8, 9, 10, 11, 10, 11, 12].map((h, i) => (
+                <div key={i} className="flex-1 rounded-sm" style={{ height: `${h * 7}%`, background: SOFT }} />
+              ))}
+              <div className="ml-0.5 flex-1 rounded-sm" style={{ height: '88%', background: accent, opacity: 0.9 }} />
+            </div>
+            <div className="space-y-1">
+              <div className="flex items-center gap-1">
+                <span className="text-[8px] tracking-[0.06em] text-ink-muted">SCHOOLING</span>
+                <Bar w="62%" c={accent} />
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="text-[8px] tracking-[0.06em] text-ink-muted">INCOME COMP</span>
+                <Bar w="40%" />
+              </div>
+            </div>
+          </div>
+        )}
 
-      {(variant === 'states' || variant === 'topology' || variant === 'finance' || variant === 'mobile') && <Window>
+        {variant === 'triage' && (
+          <div className="flex flex-1 flex-col gap-1.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[9px] font-semibold tracking-[0.12em] text-ink-muted">p(MALIG)</span>
+              <span className="text-[10px] font-semibold" style={{ color: accent }}>0.83</span>
+            </div>
+            <div className="h-1.5 w-full overflow-hidden rounded-full" style={{ background: SOFT }}>
+              <div className="h-full rounded-full" style={{ width: '83%', background: accent }} />
+            </div>
+            <div className="text-[8px] tracking-[0.06em] text-ink-muted">CI 0.77 – 0.88</div>
+            <div className="space-y-1">
+              <div className="flex items-center gap-1">
+                <span className="text-[8px] tracking-[0.06em] text-ink-muted">CONCAVE PTS</span>
+                <Bar w="78%" c={accent} />
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="text-[8px] tracking-[0.06em] text-ink-muted">PERIMETER</span>
+                <Bar w="54%" c={accent} />
+              </div>
+            </div>
+            <div className="mt-auto flex items-center gap-1.5">
+              <span className="grid h-3 w-3 place-items-center rounded-sm" style={{ background: 'rgba(245,158,11,0.18)' }}>
+                <span className="h-1 w-1 rounded-[1px]" style={{ background: 'var(--amber)' }} />
+              </span>
+              <span className="text-[8px] tracking-[0.1em] text-ink-muted">AMBIGUITY FLAG</span>
+            </div>
+          </div>
+        )}
+
         {variant === 'states' && (
           <div className="relative flex flex-1 items-center">
             <div className="flex w-full items-center justify-between px-1">
@@ -265,7 +273,7 @@ function PreviewMock({ variant, accent }: { variant: Variant; accent: string }) 
             </div>
           </div>
         )}
-      </Window>}
+      </Window>
     </div>
   )
 }
