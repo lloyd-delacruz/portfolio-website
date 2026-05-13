@@ -15,16 +15,16 @@ const VALUES: Value[] = [
 
 export function ValuesRow() {
   return (
-    <section className="border-t border-surface-subtle bg-surface-canvas">
+    <section className="border-t border-paper-subtle bg-paper-bg">
       <div className="mx-auto max-w-6xl px-6 py-16">
-        <ul className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:divide-x xl:divide-surface-subtle">
+        <ul className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:divide-x xl:divide-paper-subtle">
           {VALUES.map((v) => (
             <li key={v.title} className="xl:px-6 xl:first:pl-0 xl:last:pr-0">
               <IconBadge icon={v.icon} />
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-wide-label text-surface-fg">
+              <p className="mt-4 text-[11px] font-bold uppercase tracking-wide-label text-paper-ink">
                 {v.title}
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-surface-fg-secondary">
+              <p className="mt-2 text-sm leading-relaxed text-paper-ink-soft">
                 {v.statement}
               </p>
             </li>
