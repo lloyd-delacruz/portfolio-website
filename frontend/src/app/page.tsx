@@ -4,6 +4,7 @@ import { HomeHero } from '@/components/home/HomeHero'
 import { TrustedRow } from '@/components/home/TrustedRow'
 import { MetricsStrip } from '@/components/home/MetricsStrip'
 import { Capabilities } from '@/components/home/Capabilities'
+import { AIWorkflowAlgorithm } from '@/components/home/AIWorkflowAlgorithm'
 import { FeaturedWork } from '@/components/home/FeaturedWork'
 import { CredibilityStrip } from '@/components/home/CredibilityStrip'
 import { FooterCTA } from '@/components/home/FooterCTA'
@@ -19,6 +20,7 @@ export default function Home() {
         <TrustedRow />
         <Reveal><MetricsStrip /></Reveal>
         <Reveal><Capabilities /></Reveal>
+        <Reveal><AIWorkflowAlgorithm /></Reveal>
         <Reveal><FeaturedWork /></Reveal>
         <Reveal><CredibilityStrip /></Reveal>
         <FooterCTA />
