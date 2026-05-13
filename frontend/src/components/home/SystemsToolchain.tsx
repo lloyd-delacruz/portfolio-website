@@ -147,12 +147,12 @@ const TOOLS: Tool[] = [
   },
 ]
 
-function ToolThumb({ tool, size = 22 }: { tool: Tool; size?: number }) {
+function ToolThumb({ tool }: { tool: Tool }) {
   if (tool.Icon) {
     const Icon = tool.Icon
     return (
       <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#f5f3f8] ghair">
-        <Icon size={size} className="text-ink" strokeWidth={1.75} />
+        <Icon size={22} className="text-ink" strokeWidth={1.75} />
       </span>
     )
   }
@@ -167,12 +167,15 @@ function ToolThumb({ tool, size = 22 }: { tool: Tool; size?: number }) {
       </span>
     )
   }
-  return (
-    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#f5f3f8] ghair">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={tool.logo} alt="" className="h-[22px] w-[22px]" />
-    </span>
-  )
+  if (tool.logo) {
+    return (
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#f5f3f8] ghair">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={tool.logo} alt="" className="h-[22px] w-[22px]" />
+      </span>
+    )
+  }
+  return null
 }
 
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
