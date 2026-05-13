@@ -1,12 +1,12 @@
 // frontend/src/components/home/MetricsStrip.tsx
 import Link from 'next/link'
-import { Activity, CalendarDays, Clock, MonitorSmartphone, ArrowRight } from 'lucide-react'
+import { Building2, Boxes, HeartPulse, Rocket, ArrowRight } from 'lucide-react'
 
 const METRICS = [
-  { value: '98.7%',  label: 'System Uptime',    Icon: Activity,           tint: 'var(--plum)',  bg: 'var(--plum-soft)' },
-  { value: '2.3M+',  label: 'Events Processed', Icon: CalendarDays,       tint: 'var(--amber)', bg: '#fef3c7' },
-  { value: '842ms',  label: 'Avg. Response',    Icon: Clock,              tint: 'var(--green)', bg: '#d1fae5' },
-  { value: '24/7',   label: 'Monitoring',       Icon: MonitorSmartphone,  tint: 'var(--blue)',  bg: '#dbeafe' },
+  { value: '3',     label: 'Hospital sites deployed',     Icon: Building2,  tint: 'var(--plum)',  bg: 'var(--plum-soft)' },
+  { value: '800+',  label: 'Assets under management',     Icon: Boxes,      tint: 'var(--amber)', bg: '#fef3c7' },
+  { value: '10+',   label: 'Years healthcare operations', Icon: HeartPulse, tint: 'var(--green)', bg: '#d1fae5' },
+  { value: '50+',   label: 'Projects shipped',            Icon: Rocket,     tint: 'var(--blue)',  bg: '#dbeafe' },
 ]
 
 export function MetricsStrip() {
@@ -30,11 +30,11 @@ export function MetricsStrip() {
         <div className="lg:w-52">
           <p className="flex items-center gap-2 text-sm font-medium text-ink">
             <span className="h-2 w-2 rounded-full" style={{ background: 'var(--green)' }} />
-            All systems operational
+            Currently available
           </p>
-          <p className="mt-1 text-xs text-ink-muted">Last updated 2 min ago</p>
-          <Link href="/work" className="group mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-plum">
-            View live status
+          <p className="mt-1 text-xs text-ink-muted">Open to senior architecture and AI systems roles</p>
+          <Link href="/contact" className="group mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-plum">
+            Start a conversation
             <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
