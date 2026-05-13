@@ -1,0 +1,5 @@
+// frontend/src/components/work/deep-dive/index.ts
+export * from './StatusChip'
+export * from './MonoOutputCard'
+export * from './NodeDiagram'
+export * from './SectionShell'
