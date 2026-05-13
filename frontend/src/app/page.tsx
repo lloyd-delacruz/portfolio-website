@@ -1,6 +1,6 @@
 // frontend/src/app/page.tsx
 import { NavBar } from '@/components/home/NavBar'
-import { HeroSystemsMap } from '@/components/home/HeroSystemsMap'
+import { HomeHero } from '@/components/home/HomeHero'
 import { ValuesRow } from '@/components/home/ValuesRow'
 import { QuoteBar } from '@/components/home/QuoteBar'
 import { FlagshipFeature } from '@/components/home/FlagshipFeature'
@@ -14,8 +14,8 @@ export default function Home() {
   return (
     <>
       <NavBar active="work" />
-      <main className="min-h-screen bg-surface-canvas text-surface-fg">
-        <HeroSystemsMap />
+      <main className="min-h-screen bg-paper-bg text-paper-ink">
+        <HomeHero />
         <ValuesRow />
         <QuoteBar />
         <FlagshipFeature />
