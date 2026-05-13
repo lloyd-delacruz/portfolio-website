@@ -23,4 +23,10 @@ describe('AIWorkflowAlgorithm', () => {
     const list = screen.getByRole('list', { name: /how i work with ai/i })
     expect(within(list).getAllByRole('listitem')).toHaveLength(7)
   })
+
+  it('exposes id="ai-workflow" on its section for anchor links', () => {
+    const { container } = render(<AIWorkflowAlgorithm />)
+    const section = container.querySelector('section#ai-workflow')
+    expect(section).not.toBeNull()
+  })
 })

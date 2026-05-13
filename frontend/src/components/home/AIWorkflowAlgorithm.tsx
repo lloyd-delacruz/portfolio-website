@@ -50,7 +50,7 @@ const HALF = CARD / 2
 
 export function AIWorkflowAlgorithm() {
   return (
-    <section className="relative mx-auto max-w-[1180px] px-6 py-20" aria-labelledby="ai-workflow-heading">
+    <section id="ai-workflow" className="relative mx-auto max-w-[1180px] px-6 py-20" aria-labelledby="ai-workflow-heading">
       <header className="max-w-2xl">
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">HOW I WORK WITH AI</p>
         <h2 id="ai-workflow-heading" className="mt-3 font-display text-4xl font-extrabold leading-tight text-ink sm:text-5xl">
