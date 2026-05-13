@@ -8,7 +8,7 @@ const META = [
   { k: 'Role', v: 'Product & systems design' },
   { k: 'Surface', v: 'iOS · Android · Web' },
   { k: 'Method', v: 'Zero-based budgeting' },
-  { k: 'Stack', v: 'React Native · Expo · Node · Postgres' },
+  { k: 'Stack', v: 'React Native · Expo · Node · Postgres · Prisma' },
 ]
 
 export function SwHero() {

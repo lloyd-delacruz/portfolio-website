@@ -13,9 +13,13 @@ export function SwClose() {
           <p className="mt-2 max-w-md text-sm leading-relaxed text-ink-soft">Happy to talk through the zero-based budgeting model, the onboarding flow, and how AI-assisted planning stays grounded and reversible.</p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <Link href="/work/apex-protocol" className="group inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-ink ghair-2 transition-colors hover:bg-white/70">
+          <Link href="/work" className="group inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-ink ghair-2 transition-colors hover:bg-white/70">
             <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-0.5" />
+            All work
+          </Link>
+          <Link href="/work/apex-protocol" className="group inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-ink ghair-2 transition-colors hover:bg-white/70">
             Next project
+            <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
           </Link>
           <Link href="/contact" className="group inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white soft-shadow-sm transition-transform hover:-translate-y-0.5" style={{ background: 'var(--teal)' }}>
             Get in touch
