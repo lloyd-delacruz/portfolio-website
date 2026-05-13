@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { X, ArrowUpRight, type LucideIcon } from 'lucide-react'
+import { X, ArrowUpRight, type LucideIcon, Atom, Wind } from 'lucide-react'
 
 type Project = { name: string; href?: string }
 
@@ -147,6 +147,124 @@ const AI_TOOLS: Tool[] = [
   },
 ]
 
+const FRONTEND_TOOLS: Tool[] = [
+  {
+    name: 'Next.js',
+    vendor: 'Vercel',
+    monogram: { text: 'N', bg: '#0a0a0a', fg: '#fdf8f3' },
+    tagline: 'The React framework for the web.',
+    what:
+      'A production framework built on React: file-system routing, server and client components, image optimization, and a build pipeline that handles static export, SSR, and edge rendering from the same codebase.',
+    trend:
+      'The default React stack in 2025. App Router and React Server Components shifted how teams think about where rendering happens — server-first by default, with islands of interactivity on the client.',
+    how:
+      'Compiles your `app/` directory into routes, decides per-component whether to render on the server or ship to the client, and bundles only what each page needs. Output can be a Node server, a static export, or edge functions.',
+    inWork: "Powers every page you're reading — this site, the case studies, and most of the work I ship to the browser.",
+    projects: [
+      { name: 'This site', href: '/' },
+      { name: 'EquiTrackr', href: '/work/equitrackr' },
+      { name: 'SpendWise', href: '/work/spendwise' },
+    ],
+    url: 'https://nextjs.org',
+    site: 'nextjs.org',
+  },
+  {
+    name: 'Astro',
+    vendor: 'Astro',
+    monogram: { text: 'A', bg: '#1c162e', fg: '#ff5d01' },
+    tagline: 'Content-first web framework with islands architecture.',
+    what:
+      'A framework optimized for content-heavy sites: ships zero JavaScript by default, lets you use React/Vue/Svelte components as islands of interactivity, and includes a content collection system for Markdown and MDX.',
+    trend:
+      'Part of the 2024–25 backlash against shipping megabytes of JavaScript for a blog. Astro, Hono, and a few others are pushing the "send HTML, hydrate selectively" model into mainstream use.',
+    how:
+      'Renders pages to HTML at build time, then hydrates only the components you explicitly mark as interactive. The rest of the page ships as plain markup — fast to load, easy to cache.',
+    inWork: 'For content-heavy work where the words are the product and a full SPA shell would be overkill.',
+    projects: [{ name: 'Explorations' }],
+    url: 'https://astro.build',
+    site: 'astro.build',
+  },
+  {
+    name: 'React',
+    vendor: 'Meta',
+    Icon: Atom,
+    tagline: 'A library for building UIs from components.',
+    what:
+      'A JavaScript library where you describe your UI as a tree of components — each one a function that takes data and returns markup. React keeps the rendered output in sync with the data as it changes.',
+    trend:
+      'Still the dominant UI library by miles. The 2024–25 era added Server Components, which split rendering between server and client — collapsing the line between framework and library.',
+    how:
+      'Maintains a virtual representation of the UI in memory. When state changes it diffs the new tree against the old one and applies the minimum set of DOM updates needed.',
+    inWork: 'Every interactive surface I build — pages, dashboards, charts — sits on React, usually via Next.js.',
+    projects: [
+      { name: 'This site', href: '/' },
+      { name: 'EquiTrackr', href: '/work/equitrackr' },
+      { name: 'Health dashboards', href: '/dashboards/life-expectancy' },
+    ],
+    url: 'https://react.dev',
+    site: 'react.dev',
+  },
+  {
+    name: 'TypeScript',
+    vendor: 'Microsoft',
+    monogram: { text: 'Ts', bg: '#3178c6', fg: '#ffffff' },
+    tagline: 'JavaScript with types.',
+    what:
+      'A superset of JavaScript that adds a static type system. Code compiles down to plain JS, but during development the compiler catches whole classes of errors before the code runs.',
+    trend:
+      'The default for any serious JavaScript project in 2025. Even traditionally-untyped ecosystems (React Native, Node CLIs, build tools) are moving to TS or TS-checked JSDoc.',
+    how:
+      'Runs as a compiler and language server: reads your code, infers or checks types against your annotations, and either emits JavaScript or surfaces errors. IDE integration gives you autocomplete and refactoring.',
+    inWork: 'Standard across every project — APIs, components, scripts. Strictness on; no escape hatches without a reason.',
+    projects: [
+      { name: 'This site', href: '/' },
+      { name: 'EquiTrackr', href: '/work/equitrackr' },
+      { name: 'SpendWise', href: '/work/spendwise' },
+    ],
+    url: 'https://www.typescriptlang.org',
+    site: 'typescriptlang.org',
+  },
+  {
+    name: 'Tailwind CSS',
+    vendor: 'Tailwind Labs',
+    Icon: Wind,
+    tagline: 'Utility-first CSS framework.',
+    what:
+      'Instead of writing CSS, you compose pre-defined utility classes directly in your markup — spacing, colors, typography, layout. The build step strips out unused classes so the shipped CSS stays small.',
+    trend:
+      'The most-adopted styling approach in modern React/Next codebases. v4 collapsed config into CSS itself and made theming through CSS variables a first-class concept.',
+    how:
+      'Scans your source for class names at build time, generates only the CSS you actually used, and exposes a theme layer via CSS variables you can override per project.',
+    inWork: 'Every component on this site styles through Tailwind — paired with shadcn/ui for primitives and custom utilities for the brand layer.',
+    projects: [
+      { name: 'This site', href: '/' },
+      { name: 'EquiTrackr', href: '/work/equitrackr' },
+      { name: 'SpendWise', href: '/work/spendwise' },
+    ],
+    url: 'https://tailwindcss.com',
+    site: 'tailwindcss.com',
+  },
+  {
+    name: 'shadcn/ui',
+    vendor: 'shadcn',
+    monogram: { text: 'sh', bg: '#1c162e', fg: '#fdf8f3' },
+    tagline: 'Copy-paste component library you actually own.',
+    what:
+      'Not a package — a CLI that drops Radix-based React components directly into your project, styled with Tailwind. You own the source, so you can modify any component without fighting library defaults.',
+    trend:
+      'The dominant approach for design-system primitives in React in 2025. Headless logic (Radix) plus owned, restyled markup has effectively replaced traditional component libraries like Material UI for new projects.',
+    how:
+      'A CLI fetches the source for a component and writes it into your `components/ui` folder. From then on it\'s your code — no package to update, no version conflicts to manage.',
+    inWork: 'The base layer for buttons, dialogs, dropdowns, and other primitives — restyled to fit the warm-paper aesthetic of this site.',
+    projects: [
+      { name: 'This site', href: '/' },
+      { name: 'EquiTrackr', href: '/work/equitrackr' },
+    ],
+    url: 'https://ui.shadcn.com',
+    site: 'ui.shadcn.com',
+  },
+]
+
 function ToolThumb({ tool }: { tool: Tool }) {
   if (tool.Icon) {
     const Icon = tool.Icon
@@ -238,6 +356,15 @@ const AI_ROW: RowContent = {
   tools: AI_TOOLS,
 }
 
+const FRONTEND_ROW: RowContent = {
+  eyebrow: 'The frontend',
+  headlineLead: 'The interface layer.',
+  headlineAccent: 'What you see and touch.',
+  description:
+    'What renders in the browser — component-driven, typed end-to-end, and tuned for fast pages. Same modal shape: what it is, where the field is now, how it works, and where it shows up in my work.',
+  tools: FRONTEND_TOOLS,
+}
+
 export function SystemsToolchain() {
   const [active, setActive] = useState<Tool | null>(null)
 
@@ -258,6 +385,7 @@ export function SystemsToolchain() {
   return (
     <section className="mx-auto max-w-[1180px] px-6 pt-4 pb-16 space-y-6">
       <ToolRow row={AI_ROW} onSelect={setActive} />
+      <ToolRow row={FRONTEND_ROW} onSelect={setActive} />
 
       {active && (
         <div
