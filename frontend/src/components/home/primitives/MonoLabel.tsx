@@ -6,7 +6,7 @@ type MonoLabelProps = { children: ReactNode; className?: string }
 
 export function MonoLabel({ children, className }: MonoLabelProps) {
   return (
-    <span className={cn('font-mono text-[10px] uppercase tracking-wide-label text-paper-ink-soft', className)}>
+    <span className={cn('font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-muted', className)}>
       {children}
     </span>
   )

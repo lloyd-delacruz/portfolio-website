@@ -32,7 +32,7 @@ export function ContactStrip() {
               </a>
             </li>
           ))}
-          <li><MonoLabel>vancouver, bc</MonoLabel></li>
+          <li><MonoLabel className="text-paper-ink-soft">vancouver, bc</MonoLabel></li>
         </ul>
       </div>
     </section>

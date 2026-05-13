@@ -27,9 +27,9 @@ export function FlagshipFeature() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
-              <MonoLabel>4 sites live</MonoLabel>
-              <MonoLabel>microsoft lists · qr workflows</MonoLabel>
-              <MonoLabel>v3.x</MonoLabel>
+              <MonoLabel className="text-paper-ink-soft">4 sites live</MonoLabel>
+              <MonoLabel className="text-paper-ink-soft">microsoft lists · qr workflows</MonoLabel>
+              <MonoLabel className="text-paper-ink-soft">v3.x</MonoLabel>
             </div>
           </div>
         </Link>

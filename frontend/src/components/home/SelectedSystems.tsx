@@ -27,7 +27,7 @@ export function SelectedSystems() {
                 <div>
                   <div className="flex items-baseline gap-3">
                     <h3 className="font-sans text-lg font-bold text-paper-ink">{e.title}</h3>
-                    <MonoLabel>{e.capability}</MonoLabel>
+                    <MonoLabel className="text-paper-ink-soft">{e.capability}</MonoLabel>
                   </div>
                   <p className="mt-1 text-sm text-paper-ink-soft">{e.description}</p>
                 </div>

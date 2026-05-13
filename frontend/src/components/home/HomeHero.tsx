@@ -28,7 +28,7 @@ export function HomeHero() {
             <CtaButton href="#systems" variant="outline">Explore the work</CtaButton>
           </div>
 
-          <div className="mx-auto mt-12 flex max-w-md items-stretch justify-center divide-x divide-paper-subtle">
+          <div className="mx-auto mt-12 flex max-w-md items-stretch justify-center sm:divide-x sm:divide-paper-subtle">
             {STATS.map((s) => (
               <div key={s.label} className="flex-1 px-4">
                 <StatItem value={s.value} label={s.label} />

@@ -27,9 +27,9 @@ export function LiveStatusPanel() {
             <div className="flex items-center justify-between mb-4">
               <span className="inline-flex items-center gap-2">
                 <LiveDot />
-                <MonoLabel>system status</MonoLabel>
+                <MonoLabel className="text-paper-ink-soft">system status</MonoLabel>
               </span>
-              <MonoLabel>v3.x · illustrative</MonoLabel>
+              <MonoLabel className="text-paper-ink-soft">v3.x · illustrative</MonoLabel>
             </div>
 
             <div className="font-sans text-3xl font-bold tracking-tight-h text-paper-ink">
@@ -49,7 +49,7 @@ export function LiveStatusPanel() {
             </ul>
 
             <div className="flex items-center justify-between border-t border-paper-subtle pt-3 mt-1">
-              <MonoLabel>uptime · 30d</MonoLabel>
+              <MonoLabel className="text-paper-ink-soft">uptime · 30d</MonoLabel>
               <span className="font-mono text-xs text-gold-ink">99.94%</span>
             </div>
           </div>
