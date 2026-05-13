@@ -12,20 +12,21 @@ export function HomeHero() {
         <div>
           <span className="anim-rise inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-soft ghair">
             <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--green)' }} />
-            Systems Engineer
+            AI Systems Architect
           </span>
 
           <h1 className="anim-rise mt-6 font-display text-[2.85rem] font-extrabold leading-[1.04] text-ink sm:text-[3.4rem] lg:text-[4rem]" style={{ animationDelay: '60ms' }}>
-            I build intelligent
+            I architect AI-native
             <br />
             systems that{' '}
             <br className="hidden sm:block" />
-            <span className="grad-plum-text">drive impact.</span>
+            <span className="grad-plum-text">run in production.</span>
           </h1>
 
-          <p className="anim-rise mt-6 max-w-[34ch] text-[1.05rem] leading-relaxed text-ink-soft" style={{ animationDelay: '120ms' }}>
-            I design and ship AI-native workflows and products that connect people, systems, and
-            data — turning complexity into clarity and outcomes.
+          <p className="anim-rise mt-6 max-w-[40ch] text-[1.05rem] leading-relaxed text-ink-soft" style={{ animationDelay: '120ms' }}>
+            I design and deploy enterprise AI orchestration — agents, workflows, event streams,
+            and decision layers that coordinate real operational work across multi-site
+            environments.
           </p>
 
           <div className="anim-rise mt-9 flex flex-wrap items-center gap-3" style={{ animationDelay: '180ms' }}>
@@ -38,10 +39,10 @@ export function HomeHero() {
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
-              href="/work"
+              href="/work/wheelchair-tracking"
               className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-ink ghair-2 transition-colors hover:bg-[var(--cream-2)]"
             >
-              View case studies
+              Read the wheelchair tracking case
             </Link>
           </div>
         </div>
