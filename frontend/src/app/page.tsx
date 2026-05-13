@@ -9,6 +9,7 @@ import { LiveStatusPanel } from '@/components/home/LiveStatusPanel'
 import { SelectedSystems } from '@/components/home/SelectedSystems'
 import { EssayStrip } from '@/components/home/EssayStrip'
 import { ContactStrip } from '@/components/home/ContactStrip'
+import { Reveal } from '@/components/home/Reveal'
 
 export default function Home() {
   return (
@@ -16,14 +17,14 @@ export default function Home() {
       <NavBar active="work" />
       <main className="min-h-screen bg-paper-bg text-paper-ink">
         <HomeHero />
-        <ValuesRow />
-        <QuoteBar />
-        <FlagshipFeature />
-        <CapabilityIndex />
-        <LiveStatusPanel />
-        <SelectedSystems />
-        <EssayStrip />
-        <ContactStrip />
+        <Reveal><ValuesRow /></Reveal>
+        <Reveal><QuoteBar /></Reveal>
+        <Reveal><FlagshipFeature /></Reveal>
+        <Reveal><CapabilityIndex /></Reveal>
+        <Reveal><LiveStatusPanel /></Reveal>
+        <Reveal><SelectedSystems /></Reveal>
+        <Reveal><EssayStrip /></Reveal>
+        <Reveal><ContactStrip /></Reveal>
       </main>
     </>
   )
