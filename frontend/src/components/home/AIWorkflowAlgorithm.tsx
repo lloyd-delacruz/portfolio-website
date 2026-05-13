@@ -186,13 +186,15 @@ export function AIWorkflowAlgorithm() {
                     transform: 'translate(-50%, -50%)',
                   }}
                 >
-                  {/* Sub-caption above */}
-                  <span
-                    className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted"
-                    style={{ bottom: `${CARD + 6}px` }}
-                  >
-                    {s.sub}
-                  </span>
+                  {/* Sub-caption above (omitted for the decision diamond) */}
+                  {!s.diamond && (
+                    <span
+                      className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted"
+                      style={{ bottom: `${CARD + 6}px` }}
+                    >
+                      {s.sub}
+                    </span>
+                  )}
 
                   {/* Animated inner wrapper — float keyed off the existing home2-float keyframes */}
                   <div
@@ -245,9 +247,11 @@ export function AIWorkflowAlgorithm() {
               <li key={s.key} className="flex w-full flex-col items-center">
                 {/* Card / diamond */}
                 <div className="flex flex-col items-center">
-                  <span className="mb-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
-                    {s.sub}
-                  </span>
+                  {!s.diamond && (
+                    <span className="mb-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+                      {s.sub}
+                    </span>
+                  )}
                   {s.diamond ? (
                     <div className="relative grid h-20 w-20 place-items-center">
                       <div
@@ -348,6 +352,7 @@ export function AIWorkflowAlgorithm() {
           </li>
         ))}
       </ol>
+      <p className="sr-only">If the pass check fails, return to Plan and repeat.</p>
     </section>
   )
 }
