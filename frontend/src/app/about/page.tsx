@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import { HomeNav } from '@/components/home/HomeNav'
 import { AboutHero } from '@/components/home/AboutHero'
+import { AboutCerts } from '@/components/home/AboutCerts'
 import { AboutJourney } from '@/components/home/AboutJourney'
 import { AboutValues } from '@/components/home/AboutValues'
 import { AboutSkills } from '@/components/home/AboutSkills'
 import { FooterCTA } from '@/components/home/FooterCTA'
 import { SiteFooter } from '@/components/home/SiteFooter'
-import { Reveal } from '@/components/home/Reveal'
 
 export const metadata: Metadata = {
   title: 'About — Lloyd Dela Cruz',
@@ -20,15 +20,10 @@ export default function AboutPage() {
       <HomeNav active="About" />
       <main>
         <AboutHero />
-        <Reveal>
-          <AboutJourney />
-        </Reveal>
-        <Reveal>
-          <AboutValues />
-        </Reveal>
-        <Reveal>
-          <AboutSkills />
-        </Reveal>
+        <AboutCerts />
+        <AboutJourney />
+        <AboutValues />
+        <AboutSkills />
         <FooterCTA />
       </main>
       <SiteFooter />
