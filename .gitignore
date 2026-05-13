@@ -60,3 +60,6 @@ frontend/*.tsbuildinfo
 
 # frontend dependencies
 frontend/node_modules/
+
+# git worktrees (do not commit)
+.worktrees/
