@@ -1,3 +1,4 @@
+// frontend/src/components/home/Window.tsx
 import type { ReactNode } from 'react'
 
 /**
