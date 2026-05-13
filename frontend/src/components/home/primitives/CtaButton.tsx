@@ -16,12 +16,11 @@ export function CtaButton({ href, children, variant = 'filled', className }: Cta
     <Link
       href={href}
       className={cn(
-        'group inline-flex items-center justify-between gap-8 rounded-md px-5 py-3',
-        'font-mono text-xs uppercase tracking-wide-label transition-colors',
-        'focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2',
+        'group inline-flex items-center gap-2.5 rounded-lg px-5 py-3 text-sm font-semibold transition-colors',
+        'focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-ink focus-visible:outline-offset-2',
         isFilled
-          ? 'bg-gold text-surface-canvas hover:bg-gold/90'
-          : 'border border-surface-strong text-surface-fg hover:border-gold/50 hover:text-gold',
+          ? 'bg-paper-ink text-paper-bg hover:bg-paper-ink/90'
+          : 'border border-paper-ink/25 text-paper-ink hover:border-gold-ink/60 hover:text-gold-ink',
         className,
       )}
     >

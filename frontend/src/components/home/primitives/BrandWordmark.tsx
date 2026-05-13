@@ -5,7 +5,7 @@ export function BrandWordmark() {
   return (
     <Link
       href="/"
-      className="font-serif text-2xl font-medium tracking-tight-h text-surface-fg transition-colors hover:text-gold focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2"
+      className="font-sans text-2xl font-bold tracking-tight-h text-paper-ink transition-colors hover:text-gold-ink focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-ink focus-visible:outline-offset-2"
       aria-label="Lloyd Dela Cruz — home"
     >
       LD
