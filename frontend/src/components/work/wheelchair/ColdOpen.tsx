@@ -1,4 +1,3 @@
-import { SystemsMap } from '@/components/home/SystemsMap'
 import { LiveDot, MonoLabel } from '@/components/home/primitives'
 
 const SITES = ['vgh', 'ubc', 'lions_gate', 'richmond'] as const
@@ -50,7 +49,42 @@ export function ColdOpen() {
           </div>
 
           <div className="relative aspect-square w-full max-w-md mx-auto rounded-2xl border border-surface-subtle bg-surface-card overflow-hidden">
-            <SystemsMap />
+            <svg viewBox="0 0 120 96" className="h-full w-full" aria-hidden="true">
+              <circle cx="60" cy="48" r="34" fill="hsl(var(--accent-gold) / 0.06)" />
+              {[
+                { x: 20, y: 18 },
+                { x: 100, y: 18 },
+                { x: 20, y: 78 },
+                { x: 100, y: 78 },
+              ].map((n, i) => (
+                <line
+                  key={i}
+                  x1="60" y1="48" x2={n.x} y2={n.y}
+                  stroke="hsl(var(--accent-gold) / 0.4)" strokeWidth={0.35}
+                />
+              ))}
+              {[
+                { x: 20, y: 18 },
+                { x: 100, y: 18 },
+                { x: 20, y: 78 },
+                { x: 100, y: 78 },
+              ].map((n, i) => (
+                <circle
+                  key={i}
+                  cx={n.x} cy={n.y} r="5.4"
+                  fill="hsl(var(--surface-canvas))"
+                  stroke="hsl(var(--accent-gold) / 0.55)" strokeWidth={0.35}
+                />
+              ))}
+              <circle cx="60" cy="48" r="11" fill="hsl(var(--surface-canvas))"
+                stroke="hsl(var(--accent-gold) / 0.7)" strokeWidth={0.4} />
+              <text x="60" y="47.5" textAnchor="middle"
+                fontSize="2.6" fontFamily="var(--font-geist-mono), monospace"
+                fill="hsl(var(--accent-gold))">workflow_core</text>
+              <text x="60" y="51" textAnchor="middle"
+                fontSize="2.4" fontFamily="var(--font-geist-mono), monospace"
+                fill="hsl(var(--surface-fg-secondary))">v3.x</text>
+            </svg>
           </div>
         </div>
       </div>

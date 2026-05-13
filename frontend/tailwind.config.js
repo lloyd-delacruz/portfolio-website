@@ -51,6 +51,8 @@ module.exports = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
+        'paper-subtle': 'rgba(0,0,0,0.08)',
+        'paper-border': 'rgba(42,37,32,0.16)',
         chart: {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',
@@ -68,6 +70,7 @@ module.exports = {
         },
         paper: {
           bg:       'hsl(var(--paper-bg))',
+          card:     'hsl(var(--paper-card))',
           ink:      'hsl(var(--paper-ink))',
           'ink-soft': 'hsl(var(--paper-ink-soft))',
         },
@@ -88,6 +91,7 @@ module.exports = {
         'surface-subtle': 'rgba(255,255,255,0.06)',
         'surface-strong': 'rgba(255,255,255,0.12)',
         'paper-subtle':   'rgba(0,0,0,0.08)',
+        'paper-border':   'rgba(42,37,32,0.16)',
       },
       fontFamily: {
         sans:  ['var(--font-geist-sans)', 'system-ui', '-apple-system', 'sans-serif'],

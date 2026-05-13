@@ -1,4 +1,7 @@
 export { LiveDot } from './LiveDot'
 export { MonoLabel } from './MonoLabel'
-export { AccentPill } from './AccentPill'
 export { BrandWordmark } from './BrandWordmark'
+export { CtaButton } from './CtaButton'
+export { IconBadge } from './IconBadge'
+export { StatItem } from './StatItem'
+export { SectionEyebrow } from './SectionEyebrow'

@@ -1,12 +1,16 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, Clock, ArrowRight, Search, Eye, ArrowLeft, Brain, BarChart3, Stethoscope, PieChart, Cpu, Code, Heart, Database, Smartphone, Cloud, Lightbulb } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowUpRight, Search } from 'lucide-react'
+import { NavBar } from '@/components/home/NavBar'
+import { MonoLabel } from '@/components/home/primitives'
+import { PreviewCanvas, variantFromCategory } from '@/components/blog/PreviewCanvas'
 import { cn } from '@/lib/utils'
 import type { BlogPost } from '@/lib/blog'
+
+type SortMode = 'latest' | 'topic'
 
 interface BlogIndexClientProps {
   initialPosts: BlogPost[]
@@ -14,293 +18,299 @@ interface BlogIndexClientProps {
 }
 
 const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientProps) => {
-  const router = useRouter()
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    () => initialCategories[0]?.id ?? 'all'
+  )
   const [searchTerm, setSearchTerm] = useState('')
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null)
-  const [posts] = useState<BlogPost[]>(initialPosts)
-  const [categories] = useState(initialCategories)
+  const [sortMode, setSortMode] = useState<SortMode>('latest')
 
-  // Filter posts based on search and category
-  const filteredPosts = posts.filter(post => {
-    const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-    return matchesCategory && matchesSearch
-  })
+  const visiblePosts = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase()
+    const filtered = initialPosts.filter((post) => {
+      const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory
+      if (!term) return matchesCategory
+      const matchesSearch =
+        post.title.toLowerCase().includes(term) ||
+        post.excerpt.toLowerCase().includes(term) ||
+        post.tags.some((tag) => tag.toLowerCase().includes(term))
+      return matchesCategory && matchesSearch
+    })
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'healthcare': return Heart
-      case 'development': return Code
-      case 'data-science': return BarChart3
-      case 'ai': return Brain
-      default: return Lightbulb
+    const byDateDesc = (a: BlogPost, b: BlogPost) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+
+    if (sortMode === 'latest') {
+      return [...filtered].sort(byDateDesc)
     }
+    return [...filtered].sort((a, b) => {
+      if (a.category !== b.category) return a.category.localeCompare(b.category)
+      return byDateDesc(a, b)
+    })
+  }, [initialPosts, selectedCategory, searchTerm, sortMode])
+
+  const clearFilters = () => {
+    setSelectedCategory('all')
+    setSearchTerm('')
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  }
-
-  const cardVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  }
+  const stats = useMemo(() => {
+    const essays = initialPosts.length
+    const topics = new Set(initialPosts.map((p) => p.category)).size
+    const latest = initialPosts.reduce<number>(
+      (max, p) => Math.max(max, new Date(p.date).getTime()),
+      0
+    )
+    const updated = latest
+      ? new Date(latest).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase()
+      : '—'
+    return { essays, topics, updated }
+  }, [initialPosts])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Back Button */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        className="fixed top-6 left-6 z-50"
-      >
-        <Link href="/">
-          <motion.button
-            whileHover={{ scale: 1.05, x: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-lg font-medium border border-white/20 hover:bg-white/20 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Home
-          </motion.button>
-        </Link>
-      </motion.div>
-
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20" />
-        <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Insights &
-              </span>
-              <br />
-              <span className="text-white">Innovation</span>
+    <>
+      <NavBar />
+      <main className="min-h-screen bg-surface-canvas text-surface-fg">
+        {/* Header band */}
+        <section className="border-b border-surface-subtle">
+          <div className="mx-auto max-w-6xl px-6 pt-32 pb-12 md:pt-40 md:pb-16">
+            <MonoLabel className="block mb-4">field notes · writing index</MonoLabel>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight-display leading-[1.06] text-surface-fg max-w-[22ch]">
+              Notes from the <span className="text-gold">workflow</span>.
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12">
-              Exploring the intersection of healthcare, technology, and data science through 
-              <span className="text-blue-400"> interactive stories</span> and 
-              <span className="text-purple-400"> visual experiences</span>
+            <p className="mt-6 max-w-[58ch] font-serif text-lg md:text-xl leading-[1.7] text-surface-fg-secondary">
+              Short essays on operational AI, healthcare workflows, and the systems
+              around the model — written from inside the shift, not above it.
             </p>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Search and Filter Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-col lg:flex-row gap-6 items-center justify-between mb-12"
-        >
-          {/* Search Bar */}
-          <div className="relative w-full lg:w-96">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search articles..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-            />
+            <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1">
+              <MonoLabel>{stats.essays.toString().padStart(2, '0')} essays</MonoLabel>
+              <MonoLabel>·</MonoLabel>
+              <MonoLabel>{stats.topics.toString().padStart(2, '0')} topics</MonoLabel>
+              <MonoLabel>·</MonoLabel>
+              <MonoLabel>updated {stats.updated}</MonoLabel>
+            </div>
           </div>
+        </section>
 
-          {/* Category Filter */}
-          <div className="flex flex-wrap gap-3">
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+        {/* Control band */}
+        <section className="border-b border-surface-subtle">
+          <div className="mx-auto max-w-6xl px-6 py-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            {/* Search */}
+            <label className="relative flex items-center w-full md:w-72">
+              <Search className="pointer-events-none absolute left-3 h-3.5 w-3.5 text-surface-fg-muted" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="search the index"
+                aria-label="Search the writing index"
                 className={cn(
-                  "px-6 py-2 rounded-full font-medium transition-all duration-200 flex items-center gap-2",
-                  selectedCategory === category.id
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25"
-                    : "bg-white/10 backdrop-blur-md text-gray-300 hover:bg-white/20 border border-white/20"
+                  'w-full rounded-md border border-surface-subtle bg-surface-card/50 py-2 pl-9 pr-3',
+                  'font-mono text-xs tracking-wide-label text-surface-fg placeholder:text-surface-fg-muted',
+                  'transition-colors focus:outline-none focus:border-surface-strong',
+                  'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40'
                 )}
-              >
-                {category.label}
-                <span className="text-xs bg-white/20 px-2 py-1 rounded-full">
-                  {category.count}
-                </span>
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
+              />
+            </label>
 
-        {/* Blog Posts Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          <AnimatePresence>
-            {filteredPosts.map((post) => (
-              <motion.article
-                key={post.slug}
-                variants={cardVariants}
-                layout
-                onHoverStart={() => setHoveredCard(post.slug)}
-                onHoverEnd={() => setHoveredCard(null)}
-                onClick={() => router.push(`/blog/${post.slug}`)}
-                className="group cursor-pointer"
-              >
-                <div className="relative h-full bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:shadow-2xl hover:shadow-purple-500/20">
-                  {/* Image Section */}
-                  <div className="relative h-64 overflow-hidden">
-                    <div className={cn(
-                      "absolute inset-0 bg-gradient-to-br opacity-80",
-                      post.gradient || 'from-cyan-600 via-blue-600 to-indigo-800'
-                    )} />
-                    <motion.div
-                      animate={{
-                        scale: hoveredCard === post.slug ? 1.1 : 1,
-                      }}
-                      transition={{ duration: 0.6, ease: "easeOut" }}
-                      className="absolute inset-0 bg-black/20"
-                    />
-                    
-                    {/* Main Icon */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <motion.div
-                        animate={{
-                          scale: hoveredCard === post.slug ? 1.2 : 1,
-                          rotate: hoveredCard === post.slug ? 5 : 0,
-                        }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="relative"
-                      >
-                        <div className="absolute inset-0 bg-white/10 rounded-full blur-xl transform scale-150" />
-                        {(() => {
-                          const IconComponent = getCategoryIcon(post.category)
-                          return <IconComponent className="w-16 h-16 text-white/90 relative z-10 drop-shadow-lg" />
-                        })()}
-                      </motion.div>
-                    </div>
-                    
-                    {/* Content Type Indicators */}
-                    <div className="absolute top-4 right-4 flex gap-2">
-                      {post.interactive && (
-                        <div className="bg-green-500/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
-                          <Eye className="w-3 h-3 text-white" />
-                          <span className="text-xs text-white font-medium">Interactive</span>
-                        </div>
+            {/* Category chips */}
+            <ul className="flex flex-wrap items-center gap-2">
+              {initialCategories.map((category) => {
+                const active = selectedCategory === category.id
+                return (
+                  <li key={category.id}>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCategory(category.id)}
+                      aria-pressed={active}
+                      className={cn(
+                        'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 transition-colors',
+                        'font-mono text-[10px] uppercase tracking-wide-label',
+                        'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40',
+                        active
+                          ? 'border-gold/50 bg-surface-elevated text-surface-fg'
+                          : 'border-surface-subtle bg-surface-card/50 text-surface-fg-secondary hover:text-surface-fg hover:border-surface-strong'
                       )}
-                    </div>
-
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-white font-medium capitalize">
-                        {post.category.replace('-', ' ')}
+                    >
+                      <span>{category.label.toLowerCase()}</span>
+                      <span className={cn('text-[10px]', active ? 'text-gold' : 'text-surface-fg-muted')}>
+                        {category.count.toString().padStart(2, '0')}
                       </span>
-                    </div>
-                  </div>
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
 
-                  {/* Content Section */}
-                  <div className="p-6">
-                    <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        {new Date(post.date).toLocaleDateString('en-US', { 
-                          month: 'short', 
-                          day: 'numeric',
-                          year: 'numeric'
-                        })}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {post.readTime}
-                      </div>
-                    </div>
+            {/* Sort toggle */}
+            <div className="flex items-center gap-1 rounded-full border border-surface-subtle bg-surface-card/50 p-1">
+              {(['latest', 'topic'] as SortMode[]).map((mode) => {
+                const active = sortMode === mode
+                return (
+                  <button
+                    key={mode}
+                    type="button"
+                    onClick={() => setSortMode(mode)}
+                    aria-pressed={active}
+                    className={cn(
+                      'rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-wide-label transition-colors',
+                      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40',
+                      active
+                        ? 'bg-surface-elevated text-surface-fg'
+                        : 'text-surface-fg-secondary hover:text-surface-fg'
+                    )}
+                  >
+                    {mode === 'latest' ? 'latest' : 'by topic'}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        </section>
 
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors duration-200">
-                      {post.title}
-                    </h3>
+        {/* Card grid */}
+        <section>
+          <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
+            <div className="mb-6 flex items-baseline justify-between">
+              <MonoLabel>selected writing</MonoLabel>
+              <MonoLabel>
+                {visiblePosts.length.toString().padStart(2, '0')} /{' '}
+                {initialPosts.length.toString().padStart(2, '0')}
+              </MonoLabel>
+            </div>
 
-                    <p className="text-gray-300 mb-4 line-clamp-3">
-                      {post.excerpt}
-                    </p>
+            <AnimatePresence mode="wait" initial={false}>
+              {visiblePosts.length === 0 ? (
+                <motion.div
+                  key="empty"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="border-y border-surface-subtle px-2 py-16 text-center"
+                >
+                  <MonoLabel className="block">no entries match</MonoLabel>
+                  <p className="mt-3 font-serif text-base text-surface-fg-secondary">
+                    Try a different search term or clear the active filters.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={clearFilters}
+                    className={cn(
+                      'mt-5 inline-flex items-center gap-1.5 rounded-full border border-surface-subtle bg-surface-card/50 px-3 py-1',
+                      'font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-secondary',
+                      'transition-colors hover:text-surface-fg hover:border-surface-strong',
+                      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40'
+                    )}
+                  >
+                    clear filters
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.ul
+                  key="grid"
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
+                >
+                  <AnimatePresence mode="popLayout">
+                    {visiblePosts.map((post, idx) => (
+                      <EssayCard key={post.slug} post={post} index={idx} />
+                    ))}
+                  </AnimatePresence>
+                </motion.ul>
+              )}
+            </AnimatePresence>
+          </div>
+        </section>
+      </main>
+    </>
+  )
+}
 
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {post.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 bg-white/10 text-gray-300 text-xs rounded-md"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+type EssayCardProps = { post: BlogPost; index: number }
 
-                    {/* Read More */}
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-400">By {post.author}</span>
-                      <motion.div
-                        className="flex items-center gap-2 text-blue-400 font-medium group-hover:gap-3 transition-all duration-200"
-                      >
-                        Read More
-                        <ArrowRight className="w-4 h-4" />
-                      </motion.div>
-                    </div>
-                  </div>
+function EssayCard({ post, index }: EssayCardProps) {
+  const [hovered, setHovered] = useState(false)
+  const variant = variantFromCategory(post.category)
+  const dateLabel = new Date(post.date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
 
-                  {/* Hover Effect Overlay */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{
-                      opacity: hoveredCard === post.slug ? 1 : 0,
-                    }}
-                    className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent pointer-events-none"
-                  />
-                </div>
-              </motion.article>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* No Results State */}
-        {filteredPosts.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center py-20"
-          >
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-2xl font-bold text-white mb-2">No articles found</h3>
-            <p className="text-gray-400">Try adjusting your search or filter criteria</p>
-          </motion.div>
+  return (
+    <motion.li
+      layout
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className="list-none"
+    >
+      <Link
+        href={`/blog/${post.slug}`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onFocus={() => setHovered(true)}
+        onBlur={() => setHovered(false)}
+        aria-label={`${post.title} — ${post.readTime}`}
+        className={cn(
+          'group block h-full rounded-lg border bg-surface-card p-5 transition-all',
+          'border-surface-subtle hover:border-surface-strong hover:-translate-y-0.5',
+          'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40'
         )}
-      </div>
-    </div>
+      >
+        {/* Header strip */}
+        <div className="mb-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <MonoLabel className="text-gold">
+              {(index + 1).toString().padStart(2, '0')}
+            </MonoLabel>
+            <MonoLabel>·</MonoLabel>
+            <MonoLabel>{post.category.replace(/-/g, ' ')}</MonoLabel>
+            <MonoLabel>·</MonoLabel>
+            <MonoLabel>{post.readTime}</MonoLabel>
+          </div>
+          <ArrowUpRight
+            className={cn(
+              'h-4 w-4 transition-all',
+              hovered
+                ? 'text-gold translate-x-0.5 -translate-y-0.5'
+                : 'text-surface-fg-muted'
+            )}
+          />
+        </div>
+
+        {/* Preview */}
+        <PreviewCanvas variant={variant} active={hovered} className="mb-5" />
+
+        {/* Title */}
+        <h2
+          className={cn(
+            'text-lg md:text-xl font-medium tracking-tight-h leading-snug line-clamp-2 transition-colors',
+            hovered ? 'text-gold' : 'text-surface-fg'
+          )}
+        >
+          {post.title}
+        </h2>
+
+        {/* Excerpt */}
+        <p className="mt-2 font-serif text-base leading-[1.7] text-surface-fg-secondary line-clamp-2">
+          {post.excerpt}
+        </p>
+
+        {/* Footer strip */}
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1">
+          <MonoLabel>{dateLabel}</MonoLabel>
+          {post.tags.slice(0, 2).map((tag) => (
+            <MonoLabel key={tag}>· {tag}</MonoLabel>
+          ))}
+        </div>
+      </Link>
+    </motion.li>
   )
 }
 
