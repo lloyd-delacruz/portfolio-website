@@ -69,8 +69,8 @@ export const PROJECTS: Project[] = [
     badge: 'APPLIED AI / POPULATION HEALTH',
     TagIcon: LineChart,
     variant: 'forecast',
-    accent: '#7DD3FC',
-    wash: 'linear-gradient(135deg,#0A0A0B,#111114)',
+    accent: 'var(--plum)',
+    wash: 'linear-gradient(135deg,#f3f0fb,#fbf7fe)',
     title: 'Population-Health Intelligence Platform',
     body: 'An AI-native forecasting layer over WHO, World Bank, and IMF indicators. Calibrated life-expectancy projections with explainable feature attribution for ministry-of-health planners.',
     stack: 'TypeScript, ensemble forecasting, quantile regression, SHAP, isotonic calibration',
@@ -80,8 +80,8 @@ export const PROJECTS: Project[] = [
     badge: 'APPLIED AI / CLINICAL DECISION SUPPORT',
     TagIcon: Stethoscope,
     variant: 'triage',
-    accent: '#7DD3FC',
-    wash: 'linear-gradient(135deg,#0A0A0B,#111114)',
+    accent: 'var(--plum)',
+    wash: 'linear-gradient(135deg,#f3f0fb,#fbf7fe)',
     title: 'Clinical Risk Engine',
     body: 'A calibrated inference system over biopsy feature vectors. Returns malignancy probability, CI band, and morphology-level attribution for clinician-in-the-loop triage.',
     stack: 'TypeScript, ensemble classifier, isotonic calibration, SHAP, ambiguity-flag triage policy',
@@ -121,42 +121,42 @@ function QrGlyph({ accent }: { accent: string }) {
 
 function ForecastMockup() {
   return (
-    <div className="flex flex-1 flex-col gap-2 rounded-md bg-[#0A0A0B] p-2.5">
+    <div className="flex flex-1 flex-col gap-2 rounded-md bg-white/85 p-2.5 ghair">
       <div className="flex items-center gap-1.5">
-        <span className="h-1.5 w-1.5 rounded-full bg-[#7DD3FC]" />
-        <span className="text-[10px] tracking-[0.12em] text-white/60">FORECAST · p50 38ms</span>
+        <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--plum)' }} />
+        <span className="text-[10px] tracking-[0.12em] text-ink-muted">FORECAST · p50 38ms</span>
       </div>
       <div className="flex h-12 items-end gap-1">
         {[3, 5, 6, 7, 8, 9, 10, 11, 12, 11, 12, 13].map((h, i) => (
-          <span key={i} className="w-1.5 rounded-sm bg-white/30" style={{ height: `${h * 6}%` }} />
+          <span key={i} className="w-1.5 rounded-sm" style={{ height: `${h * 6}%`, background: 'rgba(28,22,46,0.18)' }} />
         ))}
-        <span className="ml-1 w-1.5 rounded-sm bg-[#7DD3FC]" style={{ height: '84%' }} />
+        <span className="ml-1 w-1.5 rounded-sm" style={{ height: '84%', background: 'var(--plum)' }} />
       </div>
-      <Bar w="62%" c="#7DD3FC" />
-      <Bar w="40%" c="rgba(255,255,255,0.18)" />
+      <Bar w="62%" c="var(--plum)" />
+      <Bar w="40%" c="rgba(28,22,46,0.10)" />
     </div>
   )
 }
 
 function TriageMockup() {
   return (
-    <div className="flex flex-1 flex-col gap-2 rounded-md bg-[#0A0A0B] p-2.5">
+    <div className="flex flex-1 flex-col gap-2 rounded-md bg-white/85 p-2.5 ghair">
       <div className="flex items-center gap-1.5">
-        <span className="h-1.5 w-1.5 rounded-full bg-[#7DD3FC]" />
-        <span className="text-[10px] tracking-[0.12em] text-white/60">CASE · p(malig) 0.83</span>
+        <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--plum)' }} />
+        <span className="text-[10px] tracking-[0.12em] text-ink-muted">CASE · p(malig) 0.83</span>
       </div>
       <div className="grid grid-cols-5 gap-1">
         {Array.from({ length: 10 }).map((_, i) => (
           <span
             key={i}
             className="h-3 rounded-sm"
-            style={{ background: i < 8 ? '#7DD3FC' : 'rgba(255,255,255,0.18)' }}
+            style={{ background: i < 8 ? 'var(--plum)' : 'rgba(28,22,46,0.10)' }}
           />
         ))}
       </div>
       <div className="flex items-center gap-1">
-        <span className="h-2 w-2 border border-[#FCD34D]" />
-        <span className="text-[10px] tracking-[0.06em] text-white/60">AMBIGUITY FLAG</span>
+        <span className="h-2 w-2" style={{ border: '1px solid var(--amber)' }} />
+        <span className="text-[10px] tracking-[0.06em] text-ink-muted">AMBIGUITY FLAG</span>
       </div>
     </div>
   )
