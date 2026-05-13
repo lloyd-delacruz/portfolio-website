@@ -25,7 +25,7 @@ type Tool = {
   site: string
 }
 
-const TOOLS: Tool[] = [
+const AI_TOOLS: Tool[] = [
   {
     name: 'Claude Code',
     vendor: 'Anthropic',
@@ -187,6 +187,57 @@ function Section({ label, children }: { label: string; children: React.ReactNode
   )
 }
 
+type RowContent = {
+  eyebrow: string
+  headlineLead: string
+  headlineAccent: string
+  description: string
+  tools: Tool[]
+}
+
+function ToolRow({ row, onSelect }: { row: RowContent; onSelect: (t: Tool) => void }) {
+  return (
+    <div className="rounded-[1.6rem] bg-white/70 p-7 ghair sm:p-9">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">{row.eyebrow}</p>
+
+      <div className="mt-3 grid grid-cols-1 gap-6 lg:grid-cols-[1.1fr_1fr] lg:items-end">
+        <h2 className="font-display text-2xl font-extrabold leading-[1.15] text-ink sm:text-[2rem]">
+          {row.headlineLead}{' '}
+          <span className="text-plum">{row.headlineAccent}</span>
+        </h2>
+        <p className="max-w-md text-[1.02rem] leading-relaxed text-ink-soft">{row.description}</p>
+      </div>
+
+      <div className="mt-9 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {row.tools.map((t) => (
+          <button
+            key={t.name}
+            type="button"
+            onClick={() => onSelect(t)}
+            className="flex items-center gap-4 rounded-2xl bg-white p-5 text-left ghair lift"
+          >
+            <ToolThumb tool={t} />
+            <span>
+              <span className="block font-display text-[15px] font-bold text-ink">{t.name}</span>
+              <span className="mt-0.5 block text-[12px] text-ink-muted">{t.vendor}</span>
+              <span className="mt-1 block text-[12.5px] leading-snug text-ink-soft">{t.tagline}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+const AI_ROW: RowContent = {
+  eyebrow: 'The toolchain',
+  headlineLead: 'Agents do the heavy lifting.',
+  headlineAccent: 'I direct the work.',
+  description:
+    'A stack of agentic coding tools, each pointed at what it does best. Tap any one to see what it is, where the field is heading, how it works — and where it shows up in my work.',
+  tools: AI_TOOLS,
+}
+
 export function SystemsToolchain() {
   const [active, setActive] = useState<Tool | null>(null)
 
@@ -205,39 +256,8 @@ export function SystemsToolchain() {
   }, [active])
 
   return (
-    <section className="mx-auto max-w-[1180px] px-6 pt-4 pb-16">
-      <div className="rounded-[1.6rem] bg-white/70 p-7 ghair sm:p-9">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">The toolchain</p>
-
-        <div className="mt-3 grid grid-cols-1 gap-6 lg:grid-cols-[1.1fr_1fr] lg:items-end">
-          <h2 className="font-display text-2xl font-extrabold leading-[1.15] text-ink sm:text-[2rem]">
-            Agents do the heavy lifting.{' '}
-            <span className="text-plum">I direct the work.</span>
-          </h2>
-          <p className="max-w-md text-[1.02rem] leading-relaxed text-ink-soft">
-            A stack of agentic coding tools, each pointed at what it does best. Tap any one to see
-            what it is, where the field is heading, how it works — and where it shows up in my work.
-          </p>
-        </div>
-
-        <div className="mt-9 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {TOOLS.map((t) => (
-            <button
-              key={t.name}
-              type="button"
-              onClick={() => setActive(t)}
-              className="flex items-center gap-4 rounded-2xl bg-white p-5 text-left ghair lift"
-            >
-              <ToolThumb tool={t} />
-              <span>
-                <span className="block font-display text-[15px] font-bold text-ink">{t.name}</span>
-                <span className="mt-0.5 block text-[12px] text-ink-muted">{t.vendor}</span>
-                <span className="mt-1 block text-[12.5px] leading-snug text-ink-soft">{t.tagline}</span>
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
+    <section className="mx-auto max-w-[1180px] px-6 pt-4 pb-16 space-y-6">
+      <ToolRow row={AI_ROW} onSelect={setActive} />
 
       {active && (
         <div
