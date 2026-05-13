@@ -46,13 +46,6 @@ export function SystemArchitectureSketch() {
         <div className="absolute inset-0">
           {/* Connectors */}
           <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" fill="none" aria-hidden>
-            <defs>
-              <path
-                id="arch-path"
-                d={`M ${X(0) + HALF} ${ROW_Y} L ${X(4) - HALF} ${ROW_Y}`}
-              />
-            </defs>
-
             {NODES.slice(0, -1).map((n, i) => {
               const x1 = X(i) + HALF
               const x2 = X(i + 1) - HALF
