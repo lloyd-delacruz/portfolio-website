@@ -34,7 +34,7 @@ export function AIWorkflowAlgorithm() {
       </header>
 
       {/* Visible stage list — placeholder layout, replaced by the diagram in Task 2 */}
-      <ul className="mt-12 flex flex-wrap gap-4">
+      <ul aria-hidden="true" className="mt-12 flex flex-wrap gap-4">
         {STAGES.map((s) => (
           <li key={s.key} className="rounded-2xl bg-white px-4 py-3 ghair soft-shadow-sm">
             <span className="block text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted">{s.sub}</span>
