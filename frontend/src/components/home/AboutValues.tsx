@@ -38,14 +38,12 @@ export function AboutValues() {
   return (
     <section className="mx-auto max-w-[1180px] px-6 py-16">
       <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">What drives me</p>
-      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1fr] lg:items-end">
-        <h2 className="font-display text-3xl font-extrabold leading-[1.12] text-ink sm:text-[2.5rem]" style={{ letterSpacing: '-0.02em' }}>
-          What <span className="grad-plum-text">drives me.</span>
-        </h2>
-        <p className="max-w-md text-[1.05rem] leading-relaxed text-ink-soft">
-          The principles that guide my approach to healthcare technology.
-        </p>
-      </div>
+      <h2 className="mt-3 font-display text-3xl font-extrabold leading-[1.12] text-ink sm:text-[2.5rem]" style={{ letterSpacing: '-0.02em' }}>
+        What <span className="grad-plum-text">drives me.</span>
+      </h2>
+      <p className="mt-3 max-w-2xl text-[1.05rem] leading-relaxed text-ink-soft">
+        The principles that guide how I build systems and products.
+      </p>
 
       <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {VALUES.map(({ title, body, Icon, tint, bg }, i) => (

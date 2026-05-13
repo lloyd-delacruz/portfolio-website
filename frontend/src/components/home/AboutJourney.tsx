@@ -2,7 +2,7 @@
 
 // frontend/src/components/home/AboutJourney.tsx
 import { motion } from 'framer-motion'
-import { Briefcase, GraduationCap, HeartPulse, Sparkles, ArrowRight } from 'lucide-react'
+import { Briefcase, GraduationCap, HeartPulse, Sparkles } from 'lucide-react'
 import { usePrefersReducedMotion } from '@/lib/hooks/usePrefersReducedMotion'
 
 const ENTRIES = [
@@ -58,15 +58,13 @@ export function AboutJourney() {
   return (
     <section className="mx-auto max-w-[1180px] px-6 py-16">
       <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">Career evolution</p>
-      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1fr] lg:items-end">
-        <h2 className="font-display text-3xl font-extrabold leading-[1.12] text-ink sm:text-[2.5rem]" style={{ letterSpacing: '-0.02em' }}>
-          My professional <span className="grad-plum-text">journey.</span>
-        </h2>
-        <p className="max-w-md text-[1.05rem] leading-relaxed text-ink-soft">
-          From Industrial Engineering to Healthcare Analytics — a 20+ year evolution across
-          continents, disciplines, and industries.
-        </p>
-      </div>
+      <h2 className="mt-3 font-display text-3xl font-extrabold leading-[1.12] text-ink sm:text-[2.5rem]" style={{ letterSpacing: '-0.02em' }}>
+        My professional <span className="grad-plum-text">journey.</span>
+      </h2>
+      <p className="mt-3 max-w-2xl text-[1.05rem] leading-relaxed text-ink-soft">
+        From Industrial Engineering to AI-native systems — a 20+ year evolution across continents,
+        disciplines, and industries.
+      </p>
 
       <ol className="relative mt-12 space-y-7 pl-9 sm:pl-12">
         {/* rail */}
@@ -137,13 +135,6 @@ export function AboutJourney() {
                   </span>
                 ))}
               </div>
-
-              <ArrowRight
-                size={16}
-                style={{ color: e.tint }}
-                className="mt-5 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100"
-                aria-hidden
-              />
             </div>
           </motion.li>
         ))}

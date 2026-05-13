@@ -1,20 +1,12 @@
 // frontend/src/components/home/AboutHero.tsx
 import Image from 'next/image'
 import Link from 'next/link'
-import { MapPin, ArrowRight, Stethoscope, LineChart, Database, Brain } from 'lucide-react'
+import { MapPin, ArrowRight } from 'lucide-react'
 
 const STATS = [
   { value: '20+', label: 'Years Experience' },
   { value: '200+', label: 'Patient Plans / yr' },
   { value: '3', label: 'VCH Hospital Sites' },
-]
-
-// floating icon chips around the photo — a small echo of the homepage DiagramScene
-const CHIPS = [
-  { Icon: Stethoscope, color: 'var(--pink)',  cls: '-left-7 top-10',        delay: 0,   dur: 6.5 },
-  { Icon: LineChart,   color: 'var(--blue)',  cls: '-right-8 top-24',       delay: 0.8, dur: 7   },
-  { Icon: Database,    color: 'var(--plum)',  cls: '-left-9 bottom-24',     delay: 1.4, dur: 6.8 },
-  { Icon: Brain,       color: 'var(--amber)', cls: '-right-6 -bottom-6',    delay: 0.4, dur: 7.2 },
 ]
 
 export function AboutHero() {
@@ -30,12 +22,11 @@ export function AboutHero() {
           </span>
 
           <h1
-            className="anim-rise mt-6 font-display text-[2.85rem] font-extrabold leading-[1.04] text-ink sm:text-[3.4rem] lg:text-[4rem]"
+            className="anim-rise mt-6 font-display text-[2.5rem] font-extrabold leading-[1.06] text-ink sm:text-[3rem] lg:text-[3.4rem]"
             style={{ animationDelay: '60ms', letterSpacing: '-0.025em' }}
           >
-            From Industrial
-            <br className="hidden sm:block" /> Engineering to{' '}
-            <span className="grad-plum-text">Healthcare Innovation.</span>
+            Building AI-native systems grounded in{' '}
+            <span className="grad-plum-text">real-world operations.</span>
           </h1>
 
           <p
@@ -43,35 +34,39 @@ export function AboutHero() {
             style={{ animationDelay: '100ms' }}
           >
             <MapPin size={16} className="text-plum" strokeWidth={2} />
-            Vancouver, BC · Healthcare Technology · MSc Data Analytics (Dec 2025)
+            Vancouver, BC · AI Systems · Product Engineering · Operational Intelligence
           </p>
 
           <p
-            className="anim-rise mt-6 max-w-[56ch] text-[1.12rem] leading-[1.7] text-ink-soft"
+            className="anim-rise mt-6 max-w-[58ch] text-[1.08rem] leading-[1.7] text-ink-soft"
             style={{ animationDelay: '140ms' }}
           >
-            Results-driven data analytics professional with 20+ years of cross-functional
-            experience—8 of which are in healthcare operations, project management, and clinical
-            optimization. Currently completing an MSc in Data Analytics at Eastern University
-            (expected Dec 2025), while contributing to patient care and interdisciplinary
-            collaboration as a Rehabilitation Assistant at Vancouver Coastal Health, supporting
-            Neurology, General Surgery, Orthopedics/Trauma, ICU, and Rehab units.
+            AI-native systems builder with a background in Industrial Engineering, healthcare
+            operations, and modern product development. MSc in Data Analytics graduate from Eastern
+            University with experience building operational workflow systems, AI-assisted platforms,
+            and scalable full-stack applications using Claude, Cursor, OpenAI, LangChain, RAG
+            architectures, and modern AI engineering workflows.
           </p>
 
           <p
-            className="anim-rise mt-4 max-w-[56ch] text-[0.98rem] leading-[1.7] text-ink-muted"
-            style={{ animationDelay: '180ms' }}
+            className="anim-rise mt-4 max-w-[58ch] text-[0.98rem] leading-[1.7] text-ink-muted"
+            style={{ animationDelay: '170ms' }}
           >
-            Certified in BrainStation Data Analytics, Google Data Analytics, DeepLearning.AI Data
-            Engineering, and AWS AI Practitioner. Proficient in SQL, Python, R, and Tableau, with a
-            strong focus on data-driven decision-making, workflow optimization, and visual
-            storytelling. Adept at designing performance measurement frameworks and building
-            insightful dashboards that enhance clinical and operational efficiency. Successfully led
-            large-scale initiatives at IEQ Global Singapore, applying Lean Six Sigma methodologies
-            to reduce project timelines by 15% and cut operational costs by 20%.
+            Skilled in React, Next.js, TypeScript, Node.js, PostgreSQL, Prisma, Python, AWS, and
+            modern LLM tooling, with a strong focus on operational intelligence, workflow
+            orchestration, and thoughtful systems design.
           </p>
 
-          <div className="anim-rise mt-9 flex flex-wrap items-center gap-3" style={{ animationDelay: '210ms' }}>
+          <p
+            className="anim-rise mt-4 max-w-[58ch] text-[0.98rem] leading-[1.7] text-ink-muted"
+            style={{ animationDelay: '200ms' }}
+          >
+            Built real-world operational systems supporting healthcare logistics, workflow
+            visibility, equipment coordination, and AI-native product experiences through a
+            combination of systems thinking, modern engineering, and practical AI integration.
+          </p>
+
+          <div className="anim-rise mt-9 flex flex-wrap items-center gap-3" style={{ animationDelay: '230ms' }}>
             <Link
               href="/work"
               className="group inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white soft-shadow transition-transform hover:-translate-y-0.5"
@@ -88,7 +83,7 @@ export function AboutHero() {
             </Link>
           </div>
 
-          <div className="anim-rise mt-10 grid max-w-md grid-cols-3 gap-6" style={{ animationDelay: '250ms' }}>
+          <div className="anim-rise mt-10 grid max-w-md grid-cols-3 gap-6" style={{ animationDelay: '260ms' }}>
             {STATS.map(({ value, label }) => (
               <div key={label}>
                 <p className="font-display text-[2rem] font-extrabold leading-none text-plum" style={{ letterSpacing: '-0.02em' }}>
@@ -103,15 +98,15 @@ export function AboutHero() {
         </div>
 
         {/* right */}
-        <div className="anim-rise relative mx-auto w-full max-w-[22rem]" style={{ animationDelay: '280ms' }}>
+        <div className="anim-rise relative mx-auto w-full max-w-[24rem]" style={{ animationDelay: '280ms' }}>
           {/* glow */}
           <div
-            className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+            className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
             style={{ background: 'radial-gradient(closest-side, rgba(124,58,237,0.20), transparent)' }}
             aria-hidden
           />
           <div
-            className="absolute -bottom-6 -left-6 h-40 w-40 rounded-full blur-2xl"
+            className="absolute -bottom-6 -left-6 h-44 w-44 rounded-full blur-2xl"
             style={{ background: 'rgba(236,72,153,0.14)' }}
             aria-hidden
           />
@@ -122,7 +117,7 @@ export function AboutHero() {
               src="/images/my_photo.jpeg"
               alt="Lloyd Dela Cruz"
               fill
-              sizes="(max-width: 768px) 320px, 352px"
+              sizes="(max-width: 768px) 320px, 384px"
               className="object-cover object-top"
               priority
             />
@@ -130,22 +125,10 @@ export function AboutHero() {
           </div>
 
           {/* available pill */}
-          <div className="anim-float absolute -left-4 bottom-6 flex items-center gap-2 rounded-full bg-white px-3.5 py-2 ghair soft-shadow" style={{ animationDelay: '1.1s' }}>
+          <div className="anim-float absolute -left-3 bottom-5 flex items-center gap-2 rounded-full bg-white px-3.5 py-2 ghair soft-shadow" style={{ animationDelay: '1.1s' }}>
             <span className="anim-pulse h-2 w-2 rounded-full" style={{ background: 'var(--green)' }} />
-            <span className="text-[12px] font-semibold text-ink">Open to healthcare-tech work</span>
+            <span className="text-[12px] font-semibold text-ink">Open to AI-native product work</span>
           </div>
-
-          {/* floating icon chips */}
-          {CHIPS.map(({ Icon, color, cls, delay, dur }, i) => (
-            <div
-              key={i}
-              className={`anim-float absolute grid h-12 w-12 place-items-center rounded-2xl bg-white ghair soft-shadow-sm ${cls}`}
-              style={{ animationDelay: `${delay}s`, animationDuration: `${dur}s` }}
-              aria-hidden
-            >
-              <Icon size={20} style={{ color }} strokeWidth={1.9} />
-            </div>
-          ))}
         </div>
       </div>
     </section>
