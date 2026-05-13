@@ -236,15 +236,109 @@ export function AIWorkflowAlgorithm() {
         </div>
       </div>
 
-      {/* Mobile fallback (below md) — replaced with a real stack layout in Task 5 */}
-      <ul aria-hidden="true" className="mt-12 flex flex-col gap-3 md:hidden">
-        {STAGES.map((s) => (
-          <li key={s.key} className="rounded-2xl bg-white px-4 py-3 ghair soft-shadow-sm">
-            <span className="block text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted">{s.sub}</span>
-            <span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-ink">{s.label}</span>
-          </li>
-        ))}
-      </ul>
+      {/* Mobile stack (below md) */}
+      <div className="relative mt-12 md:hidden">
+        <ol className="relative flex flex-col items-center gap-0" aria-hidden>
+          {STAGES.map((s, i) => {
+            const isLast = i === STAGES.length - 1
+            return (
+              <li key={s.key} className="flex w-full flex-col items-center">
+                {/* Card / diamond */}
+                <div className="flex flex-col items-center">
+                  <span className="mb-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+                    {s.sub}
+                  </span>
+                  {s.diamond ? (
+                    <div className="relative grid h-20 w-20 place-items-center">
+                      <div
+                        className="absolute inset-0 rounded-md bg-white ghair-2 soft-shadow-sm"
+                        style={{ transform: 'rotate(45deg)' }}
+                      />
+                      <div className="relative flex flex-col items-center justify-center">
+                        <s.Icon size={18} style={{ color: s.color }} strokeWidth={1.9} />
+                        <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink">
+                          {s.label}
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="grid h-20 w-20 place-items-center rounded-2xl bg-white ghair soft-shadow-sm">
+                        <s.Icon size={22} style={{ color: s.color }} strokeWidth={1.9} />
+                      </div>
+                      <span className="mt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink">
+                        {s.label}
+                      </span>
+                    </>
+                  )}
+                </div>
+
+                {/* Vertical flow-line between this stage and the next, except after the last */}
+                {!isLast && (
+                  <svg viewBox="0 0 8 32" className="my-1 h-8 w-2" fill="none" aria-hidden>
+                    <line
+                      x1="4"
+                      y1="0"
+                      x2="4"
+                      y2="32"
+                      stroke={i === 4 ? 'var(--green)' : 'var(--plum)'}
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeOpacity={0.55}
+                      className="flow-line"
+                    />
+                  </svg>
+                )}
+              </li>
+            )
+          })}
+        </ol>
+
+        {/* Mobile loop-back: curved amber arrow on the left side from the diamond back up to Plan */}
+        <svg
+          viewBox="0 0 80 240"
+          className="pointer-events-none absolute left-0 top-0 h-full w-12"
+          preserveAspectRatio="none"
+          fill="none"
+          aria-hidden
+        >
+          <defs>
+            <marker
+              id="aiwf-arrow-mobile"
+              viewBox="0 0 10 10"
+              refX="8"
+              refY="5"
+              markerWidth="6"
+              markerHeight="6"
+              orient="auto-start-reverse"
+            >
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--amber)" />
+            </marker>
+          </defs>
+          {/* The arc spans roughly from the diamond (position 5 of 7) up to Plan (position 3 of 7).
+              Coordinates are normalized into the 0–240 viewBox; preserveAspectRatio=none lets the
+              parent's height stretch this to the real stack height. */}
+          <path
+            d="M 70 137 C 10 130, 10 70, 70 63"
+            stroke="var(--amber)"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeOpacity={0.75}
+            className="flow-line"
+            markerEnd="url(#aiwf-arrow-mobile)"
+          />
+          <text
+            x="20"
+            y="100"
+            fontSize="10"
+            fontWeight="700"
+            fill="var(--amber)"
+            style={{ letterSpacing: '0.14em' }}
+          >
+            NO
+          </text>
+        </svg>
+      </div>
 
       {/* Screen-reader linearization */}
       <ol className="sr-only" aria-label="How I work with AI">
