@@ -1,12 +1,11 @@
 // frontend/src/app/page.tsx
 import { HomeNav } from '@/components/home/HomeNav'
 import { HomeHero } from '@/components/home/HomeHero'
-import { TrustedRow } from '@/components/home/TrustedRow'
-import { MetricsStrip } from '@/components/home/MetricsStrip'
+import { BuiltWithRow } from '@/components/home/BuiltWithRow'
+import { ProductionIndicators } from '@/components/home/ProductionIndicators'
 import { Capabilities } from '@/components/home/Capabilities'
 import { AIWorkflowAlgorithm } from '@/components/home/AIWorkflowAlgorithm'
 import { FeaturedWork } from '@/components/home/FeaturedWork'
-import { CredibilityStrip } from '@/components/home/CredibilityStrip'
 import { FooterCTA } from '@/components/home/FooterCTA'
 import { SiteFooter } from '@/components/home/SiteFooter'
 import { Reveal } from '@/components/home/Reveal'
@@ -17,12 +16,11 @@ export default function Home() {
       <HomeNav />
       <main>
         <HomeHero />
-        <TrustedRow />
-        <Reveal><MetricsStrip /></Reveal>
+        <BuiltWithRow />
+        <Reveal><ProductionIndicators /></Reveal>
         <Reveal><Capabilities /></Reveal>
         <Reveal><AIWorkflowAlgorithm /></Reveal>
         <Reveal><FeaturedWork /></Reveal>
-        <Reveal><CredibilityStrip /></Reveal>
         <FooterCTA />
       </main>
       <SiteFooter />
