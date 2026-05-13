@@ -1,20 +1,21 @@
 // frontend/src/components/home/TrustedRow.tsx
-import { Terminal, Braces, Cloud, Box, Database, Workflow } from 'lucide-react'
+import { Sparkles, Workflow, LayoutGrid, Code2, Braces, Database, Cloud } from 'lucide-react'
 
 const TECH = [
-  { label: 'Python', Icon: Terminal },
-  { label: 'TypeScript', Icon: Braces },
-  { label: 'AWS', Icon: Cloud },
-  { label: 'Docker', Icon: Box },
-  { label: 'PostgreSQL', Icon: Database },
+  { label: 'Claude / OpenAI', Icon: Sparkles },
   { label: 'LangChain', Icon: Workflow },
+  { label: 'Power Platform', Icon: LayoutGrid },
+  { label: 'Next.js', Icon: Code2 },
+  { label: 'TypeScript', Icon: Braces },
+  { label: 'PostgreSQL', Icon: Database },
+  { label: 'AWS', Icon: Cloud },
 ]
 
 export function TrustedRow() {
   return (
     <section className="mx-auto max-w-[1180px] px-6 pb-14 pt-2">
       <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
-        Trusted to build with
+        Built with
       </p>
       <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3 opacity-70">
         {TECH.map(({ label, Icon }) => (
