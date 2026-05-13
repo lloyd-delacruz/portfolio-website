@@ -60,7 +60,7 @@ const AI_TOOLS: Tool[] = [
       'Spins up an isolated container with your repo, runs the task end to end, then reports back with a diff and a log of everything it did.',
     inWork: 'Runs in parallel with Claude Code on self-contained jobs and as an independent second opinion.',
     projects: [
-      { name: 'Health dashboards', href: '/dashboards/life-expectancy' },
+      { name: 'Population-health forecasting', href: '/work/population-health-intelligence' },
       { name: 'SpendWise', href: '/work/spendwise' },
       { name: 'EquiTrackr', href: '/work/equitrackr' },
     ],
@@ -80,7 +80,7 @@ const AI_TOOLS: Tool[] = [
       'Indexes your repo for context, then uses frontier models for completion, chat, and agentic edits — all inside the editor you already know.',
     inWork: 'Where I make the fast, in-context edits — layout polish, chart styling, quick fixes.',
     projects: [
-      { name: 'Health dashboards', href: '/dashboards/heart-disease-prediction' },
+      { name: 'Clinical risk inference', href: '/work/clinical-risk-engine' },
       { name: 'This site', href: '/' },
       { name: 'Wheelchair Tracking', href: '/work/wheelchair-tracking' },
     ],
@@ -139,7 +139,7 @@ const AI_TOOLS: Tool[] = [
     inWork: 'My research-and-review desk — architecture reviews, dataset exploration, multimodal checks of rendered pages.',
     projects: [
       { name: 'Wheelchair Tracking', href: '/work/wheelchair-tracking' },
-      { name: 'Life Expectancy analysis', href: '/dashboards/life-expectancy' },
+      { name: 'Population-health forecasting', href: '/work/population-health-intelligence' },
       { name: 'This site', href: '/' },
     ],
     url: 'https://gemini.google.com',
@@ -199,7 +199,7 @@ const FRONTEND_TOOLS: Tool[] = [
     projects: [
       { name: 'This site', href: '/' },
       { name: 'EquiTrackr', href: '/work/equitrackr' },
-      { name: 'Health dashboards', href: '/dashboards/life-expectancy' },
+      { name: 'Population-health forecasting', href: '/work/population-health-intelligence' },
     ],
     url: 'https://react.dev',
     site: 'react.dev',
