@@ -6,7 +6,7 @@ const SOCIALS = [
   { label: 'GitHub', href: 'https://github.com', Icon: Github },
   { label: 'LinkedIn', href: 'https://linkedin.com', Icon: Linkedin },
   { label: 'Twitter', href: 'https://twitter.com', Icon: Twitter },
-  { label: 'Email', href: 'mailto:lloyd.vince1985@gmail.com', Icon: Mail },
+  { label: 'Email', href: 'mailto:lloyd.delacruz@outlook.com', Icon: Mail },
 ]
 
 export function FooterCTA() {

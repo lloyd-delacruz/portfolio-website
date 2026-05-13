@@ -7,7 +7,6 @@ const LINKS = [
   { label: 'Systems', href: '/work' },
   { label: 'About', href: '/about' },
   { label: 'Thoughts', href: '/blog' },
-  { label: 'Resume', href: '/about#resume' },
 ]
 
 export function SiteFooter() {

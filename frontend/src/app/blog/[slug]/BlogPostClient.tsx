@@ -2,14 +2,24 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Calendar, Clock, Share2, BookOpen, Eye, Play } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Calendar, Clock, BookOpen, Eye, Play } from 'lucide-react'
 import Link from 'next/link'
+import { HomeNav } from '@/components/home/HomeNav'
+import { SiteFooter } from '@/components/home/SiteFooter'
 import { processMarkdown } from '@/lib/blog'
 import type { BlogPost } from '@/lib/blog'
 
 interface BlogPostClientProps {
   post: BlogPost
 }
+
+const Shell = ({ children }: { children: React.ReactNode }) => (
+  <div className="home2 min-h-screen">
+    <HomeNav active="Thoughts" />
+    <main>{children}</main>
+    <SiteFooter />
+  </div>
+)
 
 const BlogPostClient = ({ post }: BlogPostClientProps) => {
   const [processedContent, setProcessedContent] = useState<string>('')
@@ -33,130 +43,107 @@ const BlogPostClient = ({ post }: BlogPostClientProps) => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
-          <p className="text-white text-lg">Processing content...</p>
+      <Shell>
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <div className="text-center">
+            <div className="mx-auto mb-4 h-9 w-9 animate-spin rounded-full border-2 border-[var(--plum-soft)] border-t-plum" />
+            <p className="text-sm text-ink-muted">Processing content…</p>
+          </div>
         </div>
-      </div>
+      </Shell>
     )
   }
 
+  const dateLabel = new Date(post.date).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })
+
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${post.gradient} relative overflow-hidden`}>
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-white/3 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
+    <Shell>
+      <article className="mx-auto max-w-3xl px-6 pt-12 pb-16">
+        {/* Back */}
+        <Link href="/blog" className="group inline-flex items-center gap-1.5 text-sm font-semibold text-plum">
+          <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-0.5" />
+          All thoughts
+        </Link>
 
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
-        {/* Back Button */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
-        >
-          <Link href="/blog">
-            <motion.button
-              whileHover={{ scale: 1.05, x: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-lg font-medium border border-white/20 hover:bg-white/20 transition-colors"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Blog
-            </motion.button>
-          </Link>
-        </motion.div>
-
-        {/* Article Header */}
-        <motion.article
-          initial={{ y: 50, opacity: 0 }}
+          initial={{ y: 16, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          {/* Category and Meta */}
-          <div className="flex flex-wrap items-center gap-4 mb-6">
-            <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm text-white font-medium capitalize">
-              {post.category.replace('-', ' ')}
+          {/* Eyebrow + meta */}
+          <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[13px] text-ink-muted">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">
+              {post.category.replace(/-/g, ' ')}
             </span>
-            
-            <div className="flex items-center gap-4 text-sm text-gray-300">
-              <div className="flex items-center gap-1">
-                <Calendar className="w-4 h-4" />
-                {new Date(post.date).toLocaleDateString('en-US', { 
-                  month: 'long', 
-                  day: 'numeric',
-                  year: 'numeric'
-                })}
-              </div>
-              <div className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                {post.readTime}
-              </div>
-              <div className="flex items-center gap-1">
-                <BookOpen className="w-4 h-4" />
-                {post.author}
-              </div>
-            </div>
+            <span aria-hidden>·</span>
+            <span className="inline-flex items-center gap-1.5">
+              <Calendar size={13} /> {dateLabel}
+            </span>
+            <span aria-hidden>·</span>
+            <span className="inline-flex items-center gap-1.5">
+              <Clock size={13} /> {post.readTime}
+            </span>
+            <span aria-hidden>·</span>
+            <span className="inline-flex items-center gap-1.5">
+              <BookOpen size={13} /> {post.author}
+            </span>
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
+          <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight text-ink sm:text-5xl">
             {post.title}
           </h1>
 
-          {/* Tags and Badges */}
-          <div className="flex flex-wrap items-center gap-3 mb-8">
-            {post.tags.map((tag, index) => (
+          {post.excerpt && <p className="mt-4 text-lg leading-relaxed text-ink-soft">{post.excerpt}</p>}
+
+          {/* Tags */}
+          <div className="mt-6 flex flex-wrap items-center gap-2">
+            {post.tags.map((tag) => (
               <span
-                key={index}
-                className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-white border border-white/20"
+                key={tag}
+                className="rounded-full border border-[var(--line)] bg-white px-2.5 py-1 text-[11px] font-medium text-ink-soft"
               >
                 {tag}
               </span>
             ))}
-            
             {post.video && (
-              <div className="flex items-center gap-1 bg-red-500/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-white border border-red-400/30">
-                <Play className="w-3 h-3" />
-                Video Content
-              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--plum-soft)] px-2.5 py-1 text-[11px] font-semibold text-plum">
+                <Play size={11} /> Video
+              </span>
             )}
-            
             {post.interactive && (
-              <div className="flex items-center gap-1 bg-green-500/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-white border border-green-400/30">
-                <Eye className="w-3 h-3" />
-                Interactive
-              </div>
+              <span
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold"
+                style={{ background: 'rgba(16,185,129,0.12)', color: 'var(--green)' }}
+              >
+                <Eye size={11} /> Interactive
+              </span>
             )}
           </div>
+        </motion.div>
 
-          {/* Share Button */}
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="mb-12 inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-lg font-medium border border-white/20 hover:bg-white/20 transition-colors"
-          >
-            <Share2 className="h-4 w-4 mr-2" />
-            Share Article
-          </motion.button>
+        {/* Content */}
+        <div className="mt-10 border-t border-[var(--line)] pt-10">
+          <div className="blog-content" dangerouslySetInnerHTML={{ __html: processedContent }} />
+        </div>
 
-          {/* Content */}
-          <div className="prose prose-lg prose-invert max-w-none">
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-              <div 
-                className="blog-content text-gray-200 leading-relaxed"
-                dangerouslySetInnerHTML={{ 
-                  __html: processedContent
-                }}
-              />
-            </div>
-          </div>
-        </motion.article>
-      </div>
-    </div>
+        {/* Footer nav */}
+        <div className="mt-12 flex items-center justify-between border-t border-[var(--line)] pt-8">
+          <Link href="/blog" className="group inline-flex items-center gap-1.5 text-sm font-semibold text-plum">
+            <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-0.5" />
+            All thoughts
+          </Link>
+          <Link href="/contact" className="group inline-flex items-center gap-1.5 text-sm font-semibold text-plum">
+            Let&apos;s connect
+            <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </div>
+      </article>
+    </Shell>
   )
 }
 

@@ -38,10 +38,10 @@ export function CaseStudyClose() {
           <ul className="flex items-center gap-6">
             <li>
               <a
-                href="mailto:lloyd.vince1985@gmail.com"
+                href="mailto:lloyd.delacruz@outlook.com"
                 className="font-mono text-xs text-surface-fg hover:text-gold transition-colors rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2"
               >
-                lloyd.vince1985@gmail.com
+                lloyd.delacruz@outlook.com
               </a>
             </li>
             {LINKS.map((l) => (

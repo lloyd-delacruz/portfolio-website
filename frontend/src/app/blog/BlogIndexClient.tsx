@@ -4,9 +4,9 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUpRight, Search } from 'lucide-react'
-import { NavBar } from '@/components/home/NavBar'
-import { MonoLabel } from '@/components/home/primitives'
-import { PreviewCanvas, variantFromCategory } from '@/components/blog/PreviewCanvas'
+import { HomeNav } from '@/components/home/HomeNav'
+import { SiteFooter } from '@/components/home/SiteFooter'
+import { FooterCTA } from '@/components/home/FooterCTA'
 import { cn } from '@/lib/utils'
 import type { BlogPost } from '@/lib/blog'
 
@@ -16,6 +16,24 @@ interface BlogIndexClientProps {
   initialPosts: BlogPost[]
   initialCategories: Array<{ id: string; label: string; count: number }>
 }
+
+const ACCENTS = ['var(--plum)', 'var(--blue)', 'var(--green)', 'var(--coral)']
+const WASHES = [
+  'linear-gradient(135deg,#f3effe,#fbf5fe)',
+  'linear-gradient(135deg,#eef4fe,#f5f8fe)',
+  'linear-gradient(135deg,#ecfdf4,#f4fbf7)',
+  'linear-gradient(135deg,#fef0ee,#fdf6f5)',
+]
+
+function paletteIndex(key: string) {
+  let h = 0
+  for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) | 0
+  return Math.abs(h) % ACCENTS.length
+}
+
+const Eyebrow = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">{children}</span>
+)
 
 const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>(
@@ -61,54 +79,47 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
       0
     )
     const updated = latest
-      ? new Date(latest).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase()
+      ? new Date(latest).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
       : '—'
     return { essays, topics, updated }
   }, [initialPosts])
 
   return (
-    <>
-      <NavBar />
-      <main className="min-h-screen bg-surface-canvas text-surface-fg">
-        {/* Header band */}
-        <section className="border-b border-surface-subtle">
-          <div className="mx-auto max-w-6xl px-6 pt-32 pb-12 md:pt-40 md:pb-16">
-            <MonoLabel className="block mb-4">field notes · writing index</MonoLabel>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight-display leading-[1.06] text-surface-fg max-w-[22ch]">
-              Notes from the <span className="text-gold">workflow</span>.
-            </h1>
-            <p className="mt-6 max-w-[58ch] font-serif text-lg md:text-xl leading-[1.7] text-surface-fg-secondary">
-              Short essays on operational AI, healthcare workflows, and the systems
-              around the model — written from inside the shift, not above it.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1">
-              <MonoLabel>{stats.essays.toString().padStart(2, '0')} essays</MonoLabel>
-              <MonoLabel>·</MonoLabel>
-              <MonoLabel>{stats.topics.toString().padStart(2, '0')} topics</MonoLabel>
-              <MonoLabel>·</MonoLabel>
-              <MonoLabel>updated {stats.updated}</MonoLabel>
-            </div>
+    <div className="home2 min-h-screen">
+      <HomeNav active="Thoughts" />
+      <main>
+        {/* Header */}
+        <section className="mx-auto max-w-[1180px] px-6 pt-16 pb-10">
+          <Eyebrow>Field notes · writing index</Eyebrow>
+          <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold leading-tight text-ink sm:text-5xl">
+            Notes from the workflow.
+          </h1>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
+            Short essays on operational AI, healthcare workflows, and the systems around the model —
+            written from inside the shift, not above it.
+          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-ink-muted">
+            <span>{stats.essays} essays</span>
+            <span aria-hidden>·</span>
+            <span>{stats.topics} topics</span>
+            <span aria-hidden>·</span>
+            <span>updated {stats.updated}</span>
           </div>
         </section>
 
-        {/* Control band */}
-        <section className="border-b border-surface-subtle">
-          <div className="mx-auto max-w-6xl px-6 py-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        {/* Controls */}
+        <section className="mx-auto max-w-[1180px] px-6">
+          <div className="flex flex-col gap-4 rounded-2xl bg-white p-4 ghair soft-shadow-sm md:flex-row md:items-center md:justify-between">
             {/* Search */}
-            <label className="relative flex items-center w-full md:w-72">
-              <Search className="pointer-events-none absolute left-3 h-3.5 w-3.5 text-surface-fg-muted" />
+            <label className="relative flex w-full items-center md:w-72">
+              <Search className="pointer-events-none absolute left-3 h-4 w-4 text-ink-muted" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="search the index"
+                placeholder="Search the index"
                 aria-label="Search the writing index"
-                className={cn(
-                  'w-full rounded-md border border-surface-subtle bg-surface-card/50 py-2 pl-9 pr-3',
-                  'font-mono text-xs tracking-wide-label text-surface-fg placeholder:text-surface-fg-muted',
-                  'transition-colors focus:outline-none focus:border-surface-strong',
-                  'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40'
-                )}
+                className="w-full rounded-xl border border-[var(--line)] bg-[var(--cream-2)] py-2 pl-9 pr-3 text-sm text-ink placeholder:text-ink-muted transition-colors focus:border-plum focus:outline-none focus:ring-2 focus:ring-[var(--plum-soft)]"
               />
             </label>
 
@@ -123,17 +134,15 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
                       onClick={() => setSelectedCategory(category.id)}
                       aria-pressed={active}
                       className={cn(
-                        'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 transition-colors',
-                        'font-mono text-[10px] uppercase tracking-wide-label',
-                        'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40',
+                        'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-semibold transition-colors',
                         active
-                          ? 'border-gold/50 bg-surface-elevated text-surface-fg'
-                          : 'border-surface-subtle bg-surface-card/50 text-surface-fg-secondary hover:text-surface-fg hover:border-surface-strong'
+                          ? 'border-transparent bg-[var(--plum-soft)] text-plum'
+                          : 'border-[var(--line)] bg-white text-ink-soft hover:text-ink hover:border-[var(--line-strong)]'
                       )}
                     >
-                      <span>{category.label.toLowerCase()}</span>
-                      <span className={cn('text-[10px]', active ? 'text-gold' : 'text-surface-fg-muted')}>
-                        {category.count.toString().padStart(2, '0')}
+                      <span>{category.label}</span>
+                      <span className={active ? 'text-plum/70' : 'text-ink-muted'}>
+                        {category.count}
                       </span>
                     </button>
                   </li>
@@ -142,7 +151,7 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
             </ul>
 
             {/* Sort toggle */}
-            <div className="flex items-center gap-1 rounded-full border border-surface-subtle bg-surface-card/50 p-1">
+            <div className="flex items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--cream-2)] p-1">
               {(['latest', 'topic'] as SortMode[]).map((mode) => {
                 const active = sortMode === mode
                 return (
@@ -152,14 +161,11 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
                     onClick={() => setSortMode(mode)}
                     aria-pressed={active}
                     className={cn(
-                      'rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-wide-label transition-colors',
-                      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40',
-                      active
-                        ? 'bg-surface-elevated text-surface-fg'
-                        : 'text-surface-fg-secondary hover:text-surface-fg'
+                      'rounded-full px-3 py-1 text-[12px] font-semibold transition-colors',
+                      active ? 'bg-white text-ink soft-shadow-sm' : 'text-ink-muted hover:text-ink'
                     )}
                   >
-                    {mode === 'latest' ? 'latest' : 'by topic'}
+                    {mode === 'latest' ? 'Latest' : 'By topic'}
                   </button>
                 )
               })}
@@ -168,73 +174,68 @@ const BlogIndexClient = ({ initialPosts, initialCategories }: BlogIndexClientPro
         </section>
 
         {/* Card grid */}
-        <section>
-          <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
-            <div className="mb-6 flex items-baseline justify-between">
-              <MonoLabel>selected writing</MonoLabel>
-              <MonoLabel>
-                {visiblePosts.length.toString().padStart(2, '0')} /{' '}
-                {initialPosts.length.toString().padStart(2, '0')}
-              </MonoLabel>
-            </div>
-
-            <AnimatePresence mode="wait" initial={false}>
-              {visiblePosts.length === 0 ? (
-                <motion.div
-                  key="empty"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="border-y border-surface-subtle px-2 py-16 text-center"
-                >
-                  <MonoLabel className="block">no entries match</MonoLabel>
-                  <p className="mt-3 font-serif text-base text-surface-fg-secondary">
-                    Try a different search term or clear the active filters.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={clearFilters}
-                    className={cn(
-                      'mt-5 inline-flex items-center gap-1.5 rounded-full border border-surface-subtle bg-surface-card/50 px-3 py-1',
-                      'font-mono text-[10px] uppercase tracking-wide-label text-surface-fg-secondary',
-                      'transition-colors hover:text-surface-fg hover:border-surface-strong',
-                      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40'
-                    )}
-                  >
-                    clear filters
-                  </button>
-                </motion.div>
-              ) : (
-                <motion.ul
-                  key="grid"
-                  layout
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
-                >
-                  <AnimatePresence mode="popLayout">
-                    {visiblePosts.map((post, idx) => (
-                      <EssayCard key={post.slug} post={post} index={idx} />
-                    ))}
-                  </AnimatePresence>
-                </motion.ul>
-              )}
-            </AnimatePresence>
+        <section className="mx-auto max-w-[1180px] px-6 py-12">
+          <div className="mb-6 flex items-baseline justify-between">
+            <Eyebrow>Selected writing</Eyebrow>
+            <span className="text-[13px] text-ink-muted">
+              {visiblePosts.length} / {initialPosts.length}
+            </span>
           </div>
+
+          <AnimatePresence mode="wait" initial={false}>
+            {visiblePosts.length === 0 ? (
+              <motion.div
+                key="empty"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="rounded-2xl bg-white px-6 py-16 text-center ghair"
+              >
+                <Eyebrow>No entries match</Eyebrow>
+                <p className="mt-3 text-base text-ink-soft">
+                  Try a different search term or clear the active filters.
+                </p>
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-white px-4 py-1.5 text-[12px] font-semibold text-ink-soft transition-colors hover:text-ink hover:border-[var(--line-strong)]"
+                >
+                  Clear filters
+                </button>
+              </motion.div>
+            ) : (
+              <motion.ul
+                key="grid"
+                layout
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
+              >
+                <AnimatePresence mode="popLayout">
+                  {visiblePosts.map((post, idx) => (
+                    <EssayCard key={post.slug} post={post} index={idx} />
+                  ))}
+                </AnimatePresence>
+              </motion.ul>
+            )}
+          </AnimatePresence>
         </section>
+        <FooterCTA />
       </main>
-    </>
+      <SiteFooter />
+    </div>
   )
 }
 
 type EssayCardProps = { post: BlogPost; index: number }
 
 function EssayCard({ post, index }: EssayCardProps) {
-  const [hovered, setHovered] = useState(false)
-  const variant = variantFromCategory(post.category)
+  const pi = paletteIndex(post.category)
+  const accent = ACCENTS[pi]
+  const wash = WASHES[pi]
   const dateLabel = new Date(post.date).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
@@ -252,62 +253,36 @@ function EssayCard({ post, index }: EssayCardProps) {
     >
       <Link
         href={`/blog/${post.slug}`}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onFocus={() => setHovered(true)}
-        onBlur={() => setHovered(false)}
         aria-label={`${post.title} — ${post.readTime}`}
-        className={cn(
-          'group block h-full rounded-lg border bg-surface-card p-5 transition-all',
-          'border-surface-subtle hover:border-surface-strong hover:-translate-y-0.5',
-          'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold/40'
-        )}
+        className="lift group flex h-full flex-col overflow-hidden rounded-2xl bg-white ghair"
       >
-        {/* Header strip */}
-        <div className="mb-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <MonoLabel className="text-gold">
-              {(index + 1).toString().padStart(2, '0')}
-            </MonoLabel>
-            <MonoLabel>·</MonoLabel>
-            <MonoLabel>{post.category.replace(/-/g, ' ')}</MonoLabel>
-            <MonoLabel>·</MonoLabel>
-            <MonoLabel>{post.readTime}</MonoLabel>
-          </div>
-          <ArrowUpRight
-            className={cn(
-              'h-4 w-4 transition-all',
-              hovered
-                ? 'text-gold translate-x-0.5 -translate-y-0.5'
-                : 'text-surface-fg-muted'
-            )}
-          />
+        {/* Wash header */}
+        <div className="relative h-32 overflow-hidden" style={{ background: wash }}>
+          <span
+            className="absolute -right-2 -top-3 font-display text-[88px] font-extrabold leading-none"
+            style={{ color: accent, opacity: 0.14 }}
+          >
+            {(index + 1).toString().padStart(2, '0')}
+          </span>
+          <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft backdrop-blur">
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: accent }} />
+            {post.category.replace(/-/g, ' ')}
+          </span>
+          <span className="absolute bottom-3 left-3 text-[11px] font-medium text-ink-muted">{post.readTime}</span>
         </div>
 
-        {/* Preview */}
-        <PreviewCanvas variant={variant} active={hovered} className="mb-5" />
-
-        {/* Title */}
-        <h2
-          className={cn(
-            'text-lg md:text-xl font-medium tracking-tight-h leading-snug line-clamp-2 transition-colors',
-            hovered ? 'text-gold' : 'text-surface-fg'
-          )}
-        >
-          {post.title}
-        </h2>
-
-        {/* Excerpt */}
-        <p className="mt-2 font-serif text-base leading-[1.7] text-surface-fg-secondary line-clamp-2">
-          {post.excerpt}
-        </p>
-
-        {/* Footer strip */}
-        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1">
-          <MonoLabel>{dateLabel}</MonoLabel>
-          {post.tags.slice(0, 2).map((tag) => (
-            <MonoLabel key={tag}>· {tag}</MonoLabel>
-          ))}
+        <div className="flex flex-1 flex-col p-5">
+          <h2 className="font-display text-[16px] font-bold leading-snug text-ink line-clamp-2 transition-colors group-hover:text-plum">
+            {post.title}
+          </h2>
+          <p className="mt-2 flex-1 text-[13px] leading-relaxed text-ink-soft line-clamp-2">{post.excerpt}</p>
+          <div className="mt-4 flex items-center justify-between gap-2 pt-3 ghair-t">
+            <span className="text-[11px] leading-tight text-ink-muted">
+              {dateLabel}
+              {post.tags[0] ? ` · ${post.tags[0]}` : ''}
+            </span>
+            <ArrowUpRight size={15} style={{ color: accent }} className="shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </div>
         </div>
       </Link>
     </motion.li>

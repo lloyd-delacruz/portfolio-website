@@ -4,7 +4,7 @@ import { ArrowRight, QrCode, Network, Wallet, Dumbbell } from 'lucide-react'
 
 type Variant = 'states' | 'topology' | 'finance' | 'mobile'
 
-const PROJECTS: {
+export type Project = {
   badge: string
   TagIcon: typeof QrCode
   variant: Variant
@@ -14,7 +14,9 @@ const PROJECTS: {
   body: string
   stack: string
   href: string
-}[] = [
+}
+
+export const PROJECTS: Project[] = [
   {
     badge: 'HEALTHCARE OPERATIONS',
     TagIcon: QrCode,
@@ -196,6 +198,32 @@ function PreviewMock({ variant, accent }: { variant: Variant; accent: string }) 
   )
 }
 
+export function WorkCard({ p }: { p: Project }) {
+  return (
+    <Link
+      href={p.href}
+      className="lift group flex flex-col overflow-hidden rounded-2xl bg-white ghair"
+    >
+      <div className="relative h-40 overflow-hidden" style={{ background: p.wash }}>
+        <PreviewMock variant={p.variant} accent={p.accent} />
+        <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft backdrop-blur">
+          <p.TagIcon size={11} style={{ color: p.accent }} />
+          {p.badge}
+        </span>
+      </div>
+
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="font-display text-[15px] font-bold leading-snug text-ink">{p.title}</h3>
+        <p className="mt-2 flex-1 text-[13px] leading-relaxed text-ink-soft">{p.body}</p>
+        <div className="mt-4 flex items-center justify-between gap-2 pt-3 ghair-t">
+          <span className="text-[11px] leading-tight text-ink-muted">{p.stack}</span>
+          <ArrowRight size={15} style={{ color: p.accent }} className="shrink-0 transition-transform group-hover:translate-x-0.5" />
+        </div>
+      </div>
+    </Link>
+  )
+}
+
 export function FeaturedWork() {
   return (
     <section className="mx-auto max-w-[1180px] px-6 py-12">
@@ -209,28 +237,7 @@ export function FeaturedWork() {
 
       <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {PROJECTS.map((p) => (
-          <Link
-            key={p.title}
-            href={p.href}
-            className="lift group flex flex-col overflow-hidden rounded-2xl bg-white ghair"
-          >
-            <div className="relative h-40 overflow-hidden" style={{ background: p.wash }}>
-              <PreviewMock variant={p.variant} accent={p.accent} />
-              <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft backdrop-blur">
-                <p.TagIcon size={11} style={{ color: p.accent }} />
-                {p.badge}
-              </span>
-            </div>
-
-            <div className="flex flex-1 flex-col p-5">
-              <h3 className="font-display text-[15px] font-bold leading-snug text-ink">{p.title}</h3>
-              <p className="mt-2 flex-1 text-[13px] leading-relaxed text-ink-soft">{p.body}</p>
-              <div className="mt-4 flex items-center justify-between gap-2 pt-3 ghair-t">
-                <span className="text-[11px] leading-tight text-ink-muted">{p.stack}</span>
-                <ArrowRight size={15} style={{ color: p.accent }} className="shrink-0 transition-transform group-hover:translate-x-0.5" />
-              </div>
-            </div>
-          </Link>
+          <WorkCard key={p.title} p={p} />
         ))}
       </div>
     </section>

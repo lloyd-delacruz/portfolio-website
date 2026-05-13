@@ -1,31 +1,60 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { ArrowLeft, Mail, Phone, MapPin, Send, MessageSquare, Clock, CheckCircle } from 'lucide-react'
-import Link from 'next/link'
 import { useState } from 'react'
+import Link from 'next/link'
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  Send,
+  MessageCircle,
+  CheckCircle2,
+  AlertCircle,
+  ArrowRight,
+  Github,
+  Linkedin,
+} from 'lucide-react'
+import { HomeNav } from '@/components/home/HomeNav'
+import { SiteFooter } from '@/components/home/SiteFooter'
+
+const CONTACT_DETAILS = [
+  { Icon: Mail, label: 'Email', value: 'lloyd.delacruz@outlook.com', href: 'mailto:lloyd.delacruz@outlook.com', bg: 'var(--plum-soft)', tint: 'var(--plum)' },
+  { Icon: Phone, label: 'Phone', value: '604-358-7378', href: 'tel:6043587378', bg: '#d1fae5', tint: 'var(--green)' },
+  { Icon: MapPin, label: 'Location', value: 'Vancouver, BC · Remote available', bg: '#fce7f3', tint: 'var(--pink)' },
+  { Icon: Clock, label: 'Response time', value: 'Within 24 hours', bg: '#fef3c7', tint: '#b45309' },
+]
+
+const EXPERTISE = [
+  'AI-native product engineering',
+  'Operational intelligence',
+  'Healthcare analytics',
+  'Workflow orchestration',
+  'Full-stack development',
+  'Systems design',
+]
+
+const SOCIALS = [
+  { label: 'GitHub', href: 'https://github.com', Icon: Github },
+  { label: 'LinkedIn', href: 'https://linkedin.com', Icon: Linkedin },
+  { label: 'Email', href: 'mailto:lloyd.delacruz@outlook.com', Icon: Mail },
+]
+
+const FIELD_CLASS =
+  'w-full rounded-xl bg-[var(--cream-2)] px-4 py-3 text-sm text-ink ghair placeholder:text-ink-muted/70 transition-colors focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--plum)]/30'
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  })
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // Basic validation
+
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setSubmitStatus('error')
       return
@@ -37,9 +66,7 @@ export default function ContactPage() {
     try {
       const response = await fetch('https://formspree.io/f/xpwldjol', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
@@ -63,406 +90,223 @@ export default function ContactPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
-      {/* Back Button */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        className="fixed top-6 left-6 z-50"
-      >
-        <Link href="/">
-          <motion.button
-            whileHover={{ scale: 1.05, x: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-lg font-medium border border-white/20 hover:bg-white/20 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Home
-          </motion.button>
-        </Link>
-      </motion.div>
+    <div className="home2 min-h-screen">
+      <HomeNav />
+      <main>
+        {/* Hero */}
+        <section className="relative overflow-hidden">
+          <div className="hero-wash pointer-events-none absolute inset-0" aria-hidden />
+          <div className="relative mx-auto max-w-[1180px] px-6 pb-10 pt-14 lg:pt-20">
+            <span className="anim-rise inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-soft ghair">
+              <span className="anim-pulse h-1.5 w-1.5 rounded-full" style={{ background: 'var(--green)' }} />
+              Let&apos;s connect
+            </span>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 2, ease: "easeOut" }}
-            className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/20 rounded-full blur-xl"
-          />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 2.5, delay: 0.3, ease: "easeOut" }}
-            className="absolute top-3/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-xl"
-          />
-        </div>
+            <h1
+              className="anim-rise mt-6 max-w-[20ch] font-display text-[2.5rem] font-extrabold leading-[1.06] text-ink sm:text-[3rem] lg:text-[3.4rem]"
+              style={{ animationDelay: '60ms', letterSpacing: '-0.025em' }}
+            >
+              Let&apos;s build something{' '}
+              <span className="grad-plum-text">extraordinary together.</span>
+            </h1>
 
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 pt-20">
-          <div className="text-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="mb-8"
+            <p
+              className="anim-rise mt-5 max-w-[58ch] text-[1.08rem] leading-[1.7] text-ink-soft"
+              style={{ animationDelay: '110ms' }}
             >
-              <span className="px-4 py-2 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-full text-sm">
-                Let&apos;s Connect
-              </span>
-            </motion.div>
+              Whether you&apos;re exploring AI-native product work, need operational systems that
+              actually ship, or just want to trade notes — I&apos;d love to hear from you. Drop a
+              message below or reach out directly.
+            </p>
+          </div>
+        </section>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4 }}
-              className="text-5xl md:text-7xl font-bold text-white mb-6"
+        {/* Contact grid */}
+        <section className="mx-auto grid max-w-[1180px] grid-cols-1 gap-6 px-6 pb-16 lg:grid-cols-[1fr_1.15fr]">
+          {/* Left: details */}
+          <div className="anim-rise flex flex-col gap-6" style={{ animationDelay: '160ms' }}>
+            <div className="rounded-2xl bg-white p-7 ghair soft-shadow-sm">
+              <h2 className="font-display text-xl font-extrabold text-ink">Contact details</h2>
+              <div className="mt-6 flex flex-col gap-5">
+                {CONTACT_DETAILS.map(({ Icon, label, value, href, bg, tint }) => {
+                  const inner = (
+                    <>
+                      <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl" style={{ background: bg }}>
+                        <Icon size={20} style={{ color: tint }} strokeWidth={1.9} />
+                      </div>
+                      <div>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-muted">{label}</p>
+                        <p className="mt-0.5 text-sm font-medium text-ink">{value}</p>
+                      </div>
+                    </>
+                  )
+                  return href ? (
+                    <a key={label} href={href} className="flex items-center gap-4 transition-opacity hover:opacity-80">
+                      {inner}
+                    </a>
+                  ) : (
+                    <div key={label} className="flex items-center gap-4">
+                      {inner}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-white p-7 ghair soft-shadow-sm">
+              <h2 className="font-display text-xl font-extrabold text-ink">Where I can help</h2>
+              <ul className="mt-5 grid grid-cols-1 gap-x-5 gap-y-3 sm:grid-cols-2">
+                {EXPERTISE.map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-ink-soft">
+                    <CheckCircle2 size={15} className="shrink-0 text-plum" strokeWidth={2} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div
+              className="rounded-2xl p-7 ghair"
+              style={{ background: 'linear-gradient(105deg,#ede9fe 0%,#f5f0fe 45%,#fce7f3 100%)' }}
             >
-              Get In Touch
-            </motion.h1>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="text-xl md:text-2xl text-blue-200 mb-12 max-w-4xl mx-auto"
-            >
-              Ready to transform your healthcare operations through data analytics and AI? 
-              Let&apos;s start the conversation.
-            </motion.p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted">Find me on</p>
+              <div className="mt-3 flex gap-2">
+                {SOCIALS.map(({ label, href, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    aria-label={label}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="grid h-10 w-10 place-items-center rounded-full bg-white text-ink-soft ghair transition-colors hover:text-plum"
+                  >
+                    <Icon size={16} />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Information */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
-              className="space-y-8"
-            >
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20">
-                <h2 className="text-3xl font-bold text-white mb-8">Contact Information</h2>
-                
-                <div className="space-y-6">
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4">
-                      <Mail className="h-6 w-6 text-blue-300" />
-                    </div>
-                    <div>
-                      <p className="text-white font-medium">Email</p>
-                      <p className="text-white/80">lloyd.delacruz@outlook.com</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mr-4">
-                      <Phone className="h-6 w-6 text-green-300" />
-                    </div>
-                    <div>
-                      <p className="text-white font-medium">Phone</p>
-                      <p className="text-white/80">604-358-7378</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mr-4">
-                      <MapPin className="h-6 w-6 text-purple-300" />
-                    </div>
-                    <div>
-                      <p className="text-white font-medium">Location</p>
-                      <p className="text-white/80">Vancouver, BC • Remote Available</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center mr-4">
-                      <Clock className="h-6 w-6 text-orange-300" />
-                    </div>
-                    <div>
-                      <p className="text-white font-medium">Response Time</p>
-                      <p className="text-white/80">Within 24 hours</p>
-                    </div>
-                  </div>
-                </div>
+          {/* Right: form */}
+          <div className="anim-rise rounded-2xl bg-white p-7 ghair soft-shadow sm:p-9" style={{ animationDelay: '200ms' }}>
+            <div className="flex items-center gap-3">
+              <div className="grid h-11 w-11 place-items-center rounded-xl text-white" style={{ background: 'var(--plum)' }}>
+                <MessageCircle size={20} />
               </div>
+              <h2 className="font-display text-xl font-extrabold text-ink">Send a message</h2>
+            </div>
 
-              {/* Professional Focus */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20">
-                <h3 className="text-xl font-bold text-white mb-4">Areas of Expertise</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                    <span className="text-white/80 text-sm">Healthcare Analytics</span>
-                  </div>
-                  <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                    <span className="text-white/80 text-sm">Process Optimization</span>
-                  </div>
-                  <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                    <span className="text-white/80 text-sm">AI Implementation</span>
-                  </div>
-                  <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                    <span className="text-white/80 text-sm">Data Science</span>
-                  </div>
-                  <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                    <span className="text-white/80 text-sm">Strategic Planning</span>
-                  </div>
-                  <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                    <span className="text-white/80 text-sm">Team Leadership</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20"
-            >
-              <div className="flex items-center mb-6">
-                <MessageSquare className="h-6 w-6 text-white mr-2" />
-                <h2 className="text-2xl font-bold text-white">Send a Message</h2>
-              </div>
-
-              <form 
-                onSubmit={handleSubmit}
-                className="space-y-6"
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="name" className="block text-white font-medium mb-2">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="Your full name"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-white font-medium mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="your.email@company.com"
-                    />
-                  </div>
-                </div>
-
+            <form onSubmit={handleSubmit} className="mt-7 flex flex-col gap-5">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="subject" className="block text-white font-medium mb-2">
-                    Subject
-                  </label>
+                  <label htmlFor="name" className="mb-2 block text-sm font-medium text-ink">Full name</label>
                   <input
                     type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Healthcare Analytics Consultation"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-white font-medium mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
+                    id="name"
+                    name="name"
+                    value={formData.name}
                     onChange={handleInputChange}
                     required
-                    rows={6}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                    placeholder="Tell me about your project, challenges, or how I can help optimize your healthcare operations..."
+                    className={FIELD_CLASS}
+                    placeholder="Your full name"
                   />
                 </div>
-
-                {/* Success/Error Messages */}
-                {submitStatus === 'success' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-4 bg-green-500/20 border border-green-500/30 rounded-lg"
-                  >
-                    <div className="flex items-center">
-                      <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
-                      <p className="text-green-200 font-medium">Message sent successfully! I'll get back to you within 24 hours.</p>
-                    </div>
-                  </motion.div>
-                )}
-
-                {submitStatus === 'error' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-4 bg-red-500/20 border border-red-500/30 rounded-lg"
-                  >
-                    <div className="flex items-center">
-                      <Mail className="h-5 w-5 text-red-400 mr-2" />
-                      <p className="text-red-200 font-medium">There was an error sending your message. Please try again or email me directly.</p>
-                    </div>
-                  </motion.div>
-                )}
-
-                <motion.button
-                  whileHover={{ scale: isSubmitting ? 1 : 1.02, y: isSubmitting ? 0 : -2 }}
-                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`w-full inline-flex items-center justify-center px-6 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg ${
-                    isSubmitting 
-                      ? 'bg-gray-600 cursor-not-allowed' 
-                      : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
-                  } text-white`}
-                >
-                  <Send className={`h-5 w-5 mr-2 ${isSubmitting ? 'animate-pulse' : ''}`} />
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </motion.button>
-              </form>
-
-              <div className="mt-6 pt-6 border-t border-white/20">
-                <p className="text-white/60 text-sm text-center">
-                  Prefer direct contact? Email me at{' '}
-                  <a href="mailto:lloyd.delacruz@outlook.com" className="text-blue-300 hover:text-blue-200 transition-colors">
-                    lloyd.delacruz@outlook.com
-                  </a>
-                </p>
+                <div>
+                  <label htmlFor="email" className="mb-2 block text-sm font-medium text-ink">Email address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className={FIELD_CLASS}
+                    placeholder="you@company.com"
+                  />
+                </div>
               </div>
-            </motion.div>
+
+              <div>
+                <label htmlFor="subject" className="mb-2 block text-sm font-medium text-ink">Subject</label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  className={FIELD_CLASS}
+                  placeholder="What's this about?"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="mb-2 block text-sm font-medium text-ink">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={6}
+                  className={`${FIELD_CLASS} resize-none`}
+                  placeholder="Tell me about your project, idea, or what you're looking to build…"
+                />
+              </div>
+
+              {submitStatus === 'success' && (
+                <div className="flex items-center gap-2 rounded-xl bg-[#d1fae5] px-4 py-3 text-sm font-medium text-[#065f46]">
+                  <CheckCircle2 size={16} className="shrink-0" />
+                  Message sent — I&apos;ll get back to you within 24 hours.
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="flex items-center gap-2 rounded-xl bg-[#fee2e2] px-4 py-3 text-sm font-medium text-[#991b1b]">
+                  <AlertCircle size={16} className="shrink-0" />
+                  Something went wrong. Please try again or email me directly.
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="group inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white soft-shadow-sm transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                style={{ background: 'var(--plum)' }}
+              >
+                <Send size={15} className={isSubmitting ? 'animate-pulse' : 'transition-transform group-hover:translate-x-0.5'} />
+                {isSubmitting ? 'Sending…' : 'Send message'}
+              </button>
+
+              <p className="text-xs text-ink-muted">
+                Prefer email?{' '}
+                <a href="mailto:lloyd.delacruz@outlook.com" className="font-medium text-plum hover:text-[var(--plum-deep)]">
+                  lloyd.delacruz@outlook.com
+                </a>
+              </p>
+            </form>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Why Choose Me Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-900/50 to-purple-900/50">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-white mb-6">Why Partner With Me?</h2>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Unique combination of healthcare expertise and technical innovation
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 text-center">
-              <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="h-8 w-8 text-blue-300" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4">Proven Results</h3>
-              <p className="text-white/80">
-                20+ years of successful healthcare transformations with measurable improvements 
-                in efficiency and patient outcomes.
-              </p>
+        {/* Closing CTA */}
+        <section className="mx-auto max-w-[1180px] px-6 pb-16">
+          <div className="flex flex-col items-start gap-4 rounded-3xl bg-white px-9 py-10 ghair soft-shadow-sm sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="font-display text-2xl font-extrabold leading-tight text-ink sm:text-[1.75rem]">
+                Curious what I&apos;ve been building?
+              </h2>
+              <p className="mt-2 text-sm text-ink-soft">Take a look at recent systems and product work.</p>
             </div>
-
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 text-center">
-              <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Mail className="h-8 w-8 text-purple-300" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4">Responsive Communication</h3>
-              <p className="text-white/80">
-                Clear, timely communication throughout projects with regular updates 
-                and transparent reporting on progress.
-              </p>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 text-center">
-              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Clock className="h-8 w-8 text-green-300" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4">Strategic Approach</h3>
-              <p className="text-white/80">
-                Data-driven strategies that align with your organizational goals 
-                and deliver sustainable long-term value.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-r from-purple-900 to-blue-900">
-        <div className="container mx-auto px-4 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl font-bold text-white mb-8"
-          >
-            Ready to Get Started?
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-xl text-white/80 mb-8 max-w-2xl mx-auto"
-          >
-            Every great healthcare transformation begins with a conversation. 
-            Let&apos;s discuss your vision and challenges.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <motion.a
-              href="mailto:lloyd.delacruz@outlook.com"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center px-8 py-4 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+            <Link
+              href="/work"
+              className="group inline-flex shrink-0 items-center gap-2 rounded-xl bg-[var(--cream-2)] px-5 py-3 text-sm font-semibold text-ink ghair-2 transition-colors hover:bg-white"
             >
-              <Mail className="h-5 w-5 mr-2" />
-              Email Me Directly
-            </motion.a>
-            <motion.a
-              href="tel:6043587378"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold border border-white/20 hover:bg-white/20 transition-colors"
-            >
-              <Phone className="h-5 w-5 mr-2" />
-              Call Now
-            </motion.a>
-          </motion.div>
-        </div>
-      </section>
-    </main>
+              See my work
+              <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </div>
   )
 }

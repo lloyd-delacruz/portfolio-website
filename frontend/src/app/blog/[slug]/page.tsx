@@ -24,14 +24,16 @@ const BlogPostPage = ({ params }: BlogPostPageProps) => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Post Not Found</h1>
-          <p className="text-gray-300 mb-8">The blog post you're looking for doesn't exist.</p>
-          <Link href="/blog">
-            <button className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm text-white rounded-lg font-medium border border-white/20 hover:bg-white/20 transition-colors">
-              Back to Blog
-            </button>
+      <div className="home2 flex min-h-screen items-center justify-center bg-[var(--cream)]">
+        <div className="text-center px-6">
+          <h1 className="font-display text-4xl font-extrabold text-ink mb-3">Post not found</h1>
+          <p className="text-ink-soft mb-8">The thought you&apos;re looking for doesn&apos;t exist.</p>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white soft-shadow-sm transition-transform hover:-translate-y-0.5"
+            style={{ background: 'var(--plum)' }}
+          >
+            Back to all thoughts
           </Link>
         </div>
       </div>
