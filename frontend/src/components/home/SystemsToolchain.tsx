@@ -254,7 +254,7 @@ const FRONTEND_TOOLS: Tool[] = [
     trend:
       'The dominant approach for design-system primitives in React in 2025. Headless logic (Radix) plus owned, restyled markup has effectively replaced traditional component libraries like Material UI for new projects.',
     how:
-      'A CLI fetches the source for a component and writes it into your components/ui folder. From then on it\'s your code — no package to update, no version conflicts to manage.',
+      'A CLI fetches the source for a component and writes it into your components/ui folder. From then on it’s your code — no package to update, no version conflicts to manage.',
     inWork: 'The base layer for buttons, dialogs, dropdowns, and other primitives — restyled to fit the warm-paper aesthetic of this site.',
     projects: [
       { name: 'This site', href: '/' },
@@ -513,13 +513,13 @@ export function SystemsToolchain() {
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1c162e]/45 p-4 backdrop-blur-sm"
           onClick={() => setActive(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-label={active.name}
         >
           <div
             className="home2 max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 soft-shadow-lg sm:p-7"
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label={active.name}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
