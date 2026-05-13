@@ -1,26 +1,9 @@
 // frontend/src/components/home/AnchorCase.tsx
 import Link from 'next/link'
-import {
-  ArrowRight,
-  Building2,
-  QrCode,
-  Workflow,
-  Database,
-  Gauge,
-  Check,
-  type LucideIcon,
-} from 'lucide-react'
+import Image from 'next/image'
+import { ArrowRight, Check } from 'lucide-react'
 import { ANCHOR_CASE_HREF, StatusPill, CapabilityPill } from './FeaturedWork'
-
-type FlowNode = { Icon: LucideIcon; label: string }
-
-const FLOW: FlowNode[] = [
-  { Icon: Building2, label: 'Sites' },
-  { Icon: QrCode,    label: 'QR Scan' },
-  { Icon: Workflow,  label: 'Workflow' },
-  { Icon: Database,  label: 'Lifecycle DB' },
-  { Icon: Gauge,     label: 'Ops Dashboard' },
-]
+import { Window } from './Window'
 
 const BULLETS = [
   'Multi-site deployment with role-based coordination',
@@ -89,39 +72,23 @@ export function AnchorCase() {
           className="flex flex-col gap-5 p-7 lg:p-9"
           style={{ background: 'linear-gradient(135deg,#f3effe,#fbf5fe)' }}
         >
-          {/* deployment flow */}
-          <div className="rounded-2xl bg-white p-5 ghair soft-shadow-sm">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
-              Deployment flow
+          {/* live operations screenshot */}
+          <div className="rounded-2xl bg-white p-3 ghair soft-shadow-sm">
+            <p className="px-1 pb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+              Operations dashboard — live across 4 sites
             </p>
-            <div className="mt-4 flex items-center justify-between gap-1">
-              {FLOW.map((n, i) => (
-                <div key={n.label} className="flex items-center">
-                  <div className="flex flex-col items-center gap-1.5">
-                    <div
-                      className="grid h-9 w-9 place-items-center rounded-lg"
-                      style={{ background: 'var(--plum-soft)' }}
-                    >
-                      <n.Icon size={16} style={{ color: 'var(--plum)' }} strokeWidth={1.9} />
-                    </div>
-                    <span className="text-[9px] font-semibold uppercase tracking-[0.12em] text-ink-muted">
-                      {n.label}
-                    </span>
-                  </div>
-                  {i < FLOW.length - 1 && (
-                    <svg width="18" height="6" viewBox="0 0 18 6" className="mx-1" aria-hidden>
-                      <path
-                        d="M0 3 H14 M11 1 L15 3 L11 5"
-                        stroke="var(--plum)"
-                        strokeOpacity="0.45"
-                        strokeWidth="1.2"
-                        fill="none"
-                      />
-                    </svg>
-                  )}
-                </div>
-              ))}
-            </div>
+            <Window>
+              <div className="relative overflow-hidden rounded-md" style={{ aspectRatio: '16 / 9' }}>
+                <Image
+                  src="/images/Wheelchair_tracking.png"
+                  alt="Wheelchair tracking operations dashboard — site overview"
+                  fill
+                  sizes="(min-width: 1024px) 480px, 90vw"
+                  className="object-cover object-top"
+                  unoptimized
+                />
+              </div>
+            </Window>
           </div>
 
           {/* micro-stats */}
