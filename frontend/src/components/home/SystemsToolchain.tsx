@@ -3,14 +3,18 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { X, ArrowUpRight } from 'lucide-react'
+import { X, ArrowUpRight, type LucideIcon } from 'lucide-react'
 
 type Project = { name: string; href?: string }
+
+type Monogram = { text: string; bg: string; fg: string }
 
 type Tool = {
   name: string
   vendor: string
-  logo: string
+  logo?: string
+  Icon?: LucideIcon
+  monogram?: Monogram
   tagline: string
   what: string
   trend: string
@@ -143,6 +147,34 @@ const TOOLS: Tool[] = [
   },
 ]
 
+function ToolThumb({ tool, size = 22 }: { tool: Tool; size?: number }) {
+  if (tool.Icon) {
+    const Icon = tool.Icon
+    return (
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#f5f3f8] ghair">
+        <Icon size={size} className="text-ink" strokeWidth={1.75} />
+      </span>
+    )
+  }
+  if (tool.monogram) {
+    const { text, bg, fg } = tool.monogram
+    return (
+      <span
+        className="grid h-11 w-11 shrink-0 place-items-center rounded-xl ghair font-display text-[13px] font-bold tracking-tight"
+        style={{ background: bg, color: fg }}
+      >
+        {text}
+      </span>
+    )
+  }
+  return (
+    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#f5f3f8] ghair">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={tool.logo} alt="" className="h-[22px] w-[22px]" />
+    </span>
+  )
+}
+
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="mt-4">
@@ -193,10 +225,7 @@ export function SystemsToolchain() {
               onClick={() => setActive(t)}
               className="flex items-center gap-4 rounded-2xl bg-white p-5 text-left ghair lift"
             >
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#f5f3f8] ghair">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={t.logo} alt="" className="h-[22px] w-[22px]" />
-              </span>
+              <ToolThumb tool={t} />
               <span>
                 <span className="block font-display text-[15px] font-bold text-ink">{t.name}</span>
                 <span className="mt-0.5 block text-[12px] text-ink-muted">{t.vendor}</span>
@@ -221,10 +250,7 @@ export function SystemsToolchain() {
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#f5f3f8] ghair">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={active.logo} alt="" className="h-[22px] w-[22px]" />
-                </span>
+                <ToolThumb tool={active} />
                 <div>
                   <h3 className="font-display text-base font-bold text-ink">{active.name}</h3>
                   <p className="text-[12px] text-ink-muted">
