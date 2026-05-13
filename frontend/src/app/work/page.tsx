@@ -3,7 +3,6 @@ import { HomeNav } from '@/components/home/HomeNav'
 import { SiteFooter } from '@/components/home/SiteFooter'
 import { FooterCTA } from '@/components/home/FooterCTA'
 import { PROJECTS, WorkCard } from '@/components/home/FeaturedWork'
-import { WorkToolchain } from '@/components/home/WorkToolchain'
 
 export const metadata: Metadata = {
   title: 'Work — Lloyd Dela Cruz',
@@ -32,7 +31,6 @@ export default function WorkPage() {
             ))}
           </div>
         </section>
-        <WorkToolchain />
         <FooterCTA />
       </main>
       <SiteFooter />

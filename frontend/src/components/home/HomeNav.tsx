@@ -5,10 +5,9 @@ import { ArrowRight, Sun } from 'lucide-react'
 const LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Work', href: '/work' },
-  { label: 'Systems', href: '/work' },
+  { label: 'Systems', href: '/systems' },
   { label: 'About', href: '/about' },
   { label: 'Thoughts', href: '/blog' },
-  { label: 'Resume', href: '/about#resume' },
 ]
 
 export function HomeNav({ active = 'Home' }: { active?: string }) {
