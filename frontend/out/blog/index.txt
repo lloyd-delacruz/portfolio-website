@@ -1,7 +1,310 @@
-2:I[99893,["485","static/chunks/485-2de24a3116bc045d.js","610","static/chunks/610-d8e751ab2dd9ad6d.js","655","static/chunks/655-401e546ee1ae4dba.js","404","static/chunks/app/blog/page-b9c36e1d854b063c.js"],"default"]
-9:I[61742,[],""]
-a:I[59121,[],""]
-3:T4136,
+2:I[40826,["9485","static/chunks/9485-5c7d24446e777bd0.js","7610","static/chunks/7610-20c36bdea15f3fcc.js","5655","static/chunks/5655-32bcc5f95d7544ac.js","9404","static/chunks/app/blog/page-bb540c00c19d7ab5.js"],"default"]
+f:I[61742,[],""]
+10:I[59121,[],""]
+3:T1abb,
+# The Agent Stack: How I Wire Claude, Cursor, and MCP Into a Daily Workflow
+
+Every few months someone asks what my "AI setup" looks like. The honest answer used to be embarrassing: a tab of ChatGPT, a tab of Claude, and a lot of copy-paste. That stopped scaling around the time MCP landed.
+
+What I run now is less a stack and more a thin chain of agents talking to a handful of tools. Each layer does one thing. When something breaks, I know which layer to blame.
+
+<figure>
+<svg viewBox="0 0 720 280" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Layered diagram showing Editor, Agent, MCP, and Tools">
+  <defs>
+    <linearGradient id="layer1" x1="0" x2="1"><stop offset="0" stop-color="#ede9fe"/><stop offset="1" stop-color="#f6f4f1"/></linearGradient>
+    <linearGradient id="layer2" x1="0" x2="1"><stop offset="0" stop-color="#dbeafe"/><stop offset="1" stop-color="#f6f4f1"/></linearGradient>
+    <linearGradient id="layer3" x1="0" x2="1"><stop offset="0" stop-color="#d1fae5"/><stop offset="1" stop-color="#f6f4f1"/></linearGradient>
+    <linearGradient id="layer4" x1="0" x2="1"><stop offset="0" stop-color="#fee2e2"/><stop offset="1" stop-color="#f6f4f1"/></linearGradient>
+  </defs>
+  <rect x="20"  y="20"  width="680" height="48" rx="10" fill="url(#layer1)" stroke="rgba(28,22,46,0.09)"/>
+  <rect x="20"  y="80"  width="680" height="48" rx="10" fill="url(#layer2)" stroke="rgba(28,22,46,0.09)"/>
+  <rect x="20"  y="140" width="680" height="48" rx="10" fill="url(#layer3)" stroke="rgba(28,22,46,0.09)"/>
+  <rect x="20"  y="200" width="680" height="48" rx="10" fill="url(#layer4)" stroke="rgba(28,22,46,0.09)"/>
+  <text x="40"  y="50"  font-family="ui-sans-serif,system-ui" font-size="14" font-weight="700" fill="#1f1a2e">Editor</text>
+  <text x="120" y="50"  font-family="ui-sans-serif,system-ui" font-size="13" fill="#4b4660">Cursor / VS Code — where I read &amp; commit code</text>
+  <text x="40"  y="110" font-family="ui-sans-serif,system-ui" font-size="14" font-weight="700" fill="#1f1a2e">Agent</text>
+  <text x="120" y="110" font-family="ui-sans-serif,system-ui" font-size="13" fill="#4b4660">Claude Code — plans, edits, runs tools, asks me to confirm</text>
+  <text x="40"  y="170" font-family="ui-sans-serif,system-ui" font-size="14" font-weight="700" fill="#1f1a2e">MCP</text>
+  <text x="120" y="170" font-family="ui-sans-serif,system-ui" font-size="13" fill="#4b4660">Model Context Protocol — the thin contract between agent and tools</text>
+  <text x="40"  y="230" font-family="ui-sans-serif,system-ui" font-size="14" font-weight="700" fill="#1f1a2e">Tools</text>
+  <text x="120" y="230" font-family="ui-sans-serif,system-ui" font-size="13" fill="#4b4660">Filesystem · Git · Postgres · Linear · Figma · custom servers</text>
+</svg>
+<figcaption><em>Four layers, one direction of dependency. Nothing in the bottom row knows the layer above exists.</em></figcaption>
+</figure>
+
+## What each layer is actually for
+
+**Editor.** Cursor is my read-and-commit surface. I still scroll, scrub diffs, and pick branches like a human. The agent never owns the editor; it borrows it.
+
+**Agent.** Claude Code is the planner-and-doer. It's the thing that decides which file to open, which test to run, whether to ask me a question. It carries the conversation; the editor doesn't.
+
+**MCP.** This is the boring layer that made the rest of it click. Before MCP, every integration was a bespoke plugin with its own auth, its own logging, its own opinions. Now my agent speaks one language to every tool — and I can swap models without rewriting the toolbelt.
+
+**Tools.** Filesystem and git are table stakes. The non-obvious ones — a Postgres server scoped to read-only views, a Linear server that can only file tickets in one project, a Figma server I trust just enough to read — are where most of the leverage actually lives.
+
+## The rule I follow when adding anything new
+
+> A tool earns a place in the stack only if I can describe, in one sentence, what it is allowed to do.
+
+It sounds obvious. It is not how most people add MCP servers. The temptation is to install everything in the directory and let the agent figure out which one fits. That works for a week. Then you start getting tickets filed against the wrong repo, queries that should have been read-only writing to staging, and the agent confidently doing things you didn't notice it could.
+
+Scope first. Power second.
+
+## A typical day in the chain
+
+Here is the actual shape of a feature I shipped last week — adding a "saved filters" view to an internal dashboard.
+
+```text
+me        → "Saved filters. Per-user. Backed by Postgres."
+agent     → opens repo, reads schema, drafts migration
+me        → "Migration looks fine. Run it on dev."
+agent     → applies migration via mcp-postgres (read-write, dev only)
+agent     → writes the endpoint, writes the test, runs the test
+agent     → "Test fails on null user_id. Patch?"
+me        → "Patch."
+agent     → patches, reruns, files a Linear ticket linking the PR
+me        → reviews diff in editor, commits, opens PR
+```
+
+Three things made that flow tolerable:
+
+1. **The agent asked before each side-effect.** No silent migrations.
+2. **The MCP servers were scoped.** The Postgres server literally cannot touch production from this project.
+3. **I stayed in the editor for the things editors are good at** — reading the diff, naming the commit, deciding what to merge.
+
+## The seams that bite
+
+The cracks in this stack are not in the model. They are in the contracts between layers.
+
+- **Tool ambiguity.** Two MCP servers offering similar capabilities (say, two ways to read files) and the agent picks the wrong one. Fix: install fewer servers, or rename them so the descriptions don't overlap.
+- **Permission fatigue.** Every tool call asking "are you sure?" trains you to click yes without reading. Fix: a small allowlist for genuinely safe calls, and never expand it to anything that writes.
+- **Stale context.** The agent thinks the schema looks one way; the migration two days ago changed it. Fix: have the agent re-read before it edits, not just at session start.
+
+None of these are model problems. They are plumbing problems. The model is the easiest part to swap.
+
+## What I'd tell someone starting today
+
+Pick one editor. Pick one agent. Add MCP servers one at a time, and only after you've used the agent without them long enough to know what you're missing. The single biggest jump in usefulness for me wasn't a model upgrade — it was the day I deleted four MCP servers I never used and renamed the ones I kept so the agent stopped confusing them.
+
+A small, sharp stack beats a large, fuzzy one. Every time.
+
+---
+
+*Up next: a piece on the prompting patterns I lean on inside this chain. The stack matters, but the way you talk to the agent matters more.*
+4:T1911,
+# Ambient Scribes on the Ward: 90 Days With Voice-First Documentation
+
+The clinic where I shadowed the rollout has 18 exam rooms, three nurse stations, and the same EHR everyone else has. Nothing about it is special — which is why the data from the first 90 days of ambient scribing is worth writing down. If it works here, it works in a lot of places.
+
+The pitch was familiar: a passive microphone in the room, a model that listens to the visit, a structured note dropped into the EHR for the clinician to review and sign. No keyboard. No after-hours documentation.
+
+Here is what actually happened.
+
+<figure>
+<svg viewBox="0 0 720 230" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart comparing minutes per encounter before and after ambient scribe rollout">
+  <text x="20" y="28" font-family="ui-sans-serif,system-ui" font-size="13" font-weight="700" fill="#1f1a2e">Minutes of documentation per encounter</text>
+  <text x="20" y="46" font-family="ui-sans-serif,system-ui" font-size="11" fill="#8a849b">Median across 12 clinicians, 90-day window</text>
+
+  <!-- y-axis baseline -->
+  <line x1="160" y1="80" x2="160" y2="200" stroke="rgba(28,22,46,0.14)"/>
+  <line x1="160" y1="200" x2="700" y2="200" stroke="rgba(28,22,46,0.14)"/>
+
+  <!-- Before bar (10.8 min) -->
+  <rect x="170" y="100" width="486" height="32" rx="6" fill="#f87060" opacity="0.85"/>
+  <text x="40"  y="122" font-family="ui-sans-serif,system-ui" font-size="13" font-weight="700" fill="#1f1a2e">Before</text>
+  <text x="666" y="122" font-family="ui-sans-serif,system-ui" font-size="13" font-weight="700" fill="#1f1a2e">10.8 min</text>
+
+  <!-- After bar (4.2 min) -->
+  <rect x="170" y="156" width="189" height="32" rx="6" fill="#10b981" opacity="0.9"/>
+  <text x="40"  y="178" font-family="ui-sans-serif,system-ui" font-size="13" font-weight="700" fill="#1f1a2e">After</text>
+  <text x="369" y="178" font-family="ui-sans-serif,system-ui" font-size="13" font-weight="700" fill="#1f1a2e">4.2 min</text>
+
+  <!-- arrow + label -->
+  <text x="170" y="220" font-family="ui-sans-serif,system-ui" font-size="11" fill="#8a849b">Net: ~6.6 min saved per visit · ~28 visits/day · ~3 h/day reclaimed</text>
+</svg>
+<figcaption><em>The headline number is real. The story under the number is more interesting.</em></figcaption>
+</figure>
+
+## What the scribe gave back
+
+The minutes are real. Across twelve clinicians, median documentation time dropped from about eleven minutes per encounter to about four. Nobody hit the demo's promise of "zero typing," but everyone got a chunk of their evening back. Two physicians stopped charting at home entirely.
+
+The note quality, surprisingly, went *up*. The model writes a fuller HPI than most clinicians type, because it doesn't get tired. It captures the patient's own words, which makes the chart read more like a conversation than a checklist.
+
+## Where it tripped
+
+Three patterns showed up in almost every clinic.
+
+**1. The over-confident note.** The model fills in plausible structure even when the conversation was sparse. A 90-second encounter for a prescription refill came back as a half-page SOAP note with an assessment the clinician never said out loud. The fix is editorial, not technical: clinicians learned to read the assessment block first, and to delete anything they didn't say.
+
+**2. The room-noise problem.** The clinic has thin walls. The model sometimes picked up the next room. We mitigated with directional mics, but the deeper fix was a UI affordance — a one-tap "this isn't my patient" button that scraps the recording before it reaches the model.
+
+**3. The handoff seam.** Nurses do triage, the doc does the visit, sometimes a resident comes in. The scribe was scoped to "the visit," which meant the nurse's vitals and the resident's recheck lived in different worlds. Most of the documentation pain that didn't go away was sitting in those seams.
+
+## The workflow change that decided whether it stuck
+
+I expected the deciding factor to be note accuracy. It wasn't.
+
+The deciding factor was **where the review happened**.
+
+Clinicians who reviewed and signed the note immediately after the visit — in the room or in the doorway — kept using the scribe. Clinicians who batched reviews for the end of the day stopped using it within three weeks. The batched workflow turned a tool that saved minutes into a tool that produced a pile of homework.
+
+> The model writing the note is the easy part. The workflow change is whether your clinic agrees to read it within ten minutes of the visit ending.
+
+That sentence is the whole post, really.
+
+## What I'd tell a health system rolling this out
+
+- **Don't sell minutes saved.** Sell *evenings back*. Minutes per encounter is an abstraction; evenings back is a feeling clinicians can decide they want.
+- **Make the review immediate.** Build the workflow so the note appears in front of the clinician before they walk out of the room. Anything else accumulates.
+- **Give a single, obvious "throw it out" button.** Trust goes up, not down, when clinicians know they can kill a bad recording in one tap.
+- **Watch the seams.** The nurse handoff, the resident recheck, the curbside consult — these are where the model loses context and where the documentation pain comes back. Plan for them on day one.
+- **Audit a sample by hand, every week.** Not to grade the model. To find the *kinds* of errors it makes in your population, before they become a pattern.
+
+## What we're watching next
+
+The model is going to keep getting better. That's not the interesting variable. The interesting variables are:
+
+- Whether the structured fields the EHR really cares about (diagnosis codes, billing modifiers) can come out of the ambient note without the clinician hand-coding them.
+- Whether a nurse-mode scribe — listening through triage, vitals, and education — pays off the way the physician-mode one did.
+- Whether patients notice. So far they don't, beyond the consent sticker on the door. That's a finding, not nothing.
+
+Ninety days in, the scribe is a keeper. Not because it's magic. Because the clinic was willing to change the small thing — read the note while the patient is still walking down the hall — that the magic depended on.
+
+---
+
+*Related: how I think about the surrounding interface in [Calmer Interfaces: Designing EHRs for Fewer Clicks, More Care](/blog/calmer-interfaces-fewer-clicks-more-care).*
+5:T2162,
+# Calmer Interfaces: Designing EHRs for Fewer Clicks, More Care
+
+If you've spent any time watching a nurse triage a patient or a physician sign off on a discharge, you've watched a UI fight a human. Sixteen clicks to release a tray. Eleven to acknowledge an alert. The interface is not malicious. It is overgrown. Every click was added by a reasonable person solving a reasonable problem, and the sum is unreasonable.
+
+This is a piece about what happens when you take that overgrowth seriously as a design problem.
+
+<figure>
+<svg viewBox="0 0 720 240" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Click counts before and after redesign across five common tasks">
+  <text x="20" y="24" font-family="ui-sans-serif,system-ui" font-size="13" font-weight="700" fill="#1f1a2e">Clicks per task — before vs after</text>
+  <text x="20" y="42" font-family="ui-sans-serif,system-ui" font-size="11" fill="#8a849b">Measured on 14 clinicians across two clinics</text>
+
+  <g font-family="ui-sans-serif,system-ui" font-size="12" fill="#4b4660">
+    <!-- Row template repeated -->
+    <text x="20"  y="78">Sign verbal order</text>
+    <rect x="200" y="66" width="220" height="16" rx="4" fill="#f87060" opacity="0.6"/>
+    <text x="426" y="78" fill="#1f1a2e" font-weight="700">11</text>
+    <rect x="200" y="84" width="60"  height="16" rx="4" fill="#10b981"/>
+    <text x="266" y="96" fill="#1f1a2e" font-weight="700">3</text>
+
+    <text x="20"  y="118">Acknowledge BPA</text>
+    <rect x="200" y="106" width="120" height="16" rx="4" fill="#f87060" opacity="0.6"/>
+    <text x="326" y="118" fill="#1f1a2e" font-weight="700">6</text>
+    <rect x="200" y="124" width="40"  height="16" rx="4" fill="#10b981"/>
+    <text x="246" y="136" fill="#1f1a2e" font-weight="700">2</text>
+
+    <text x="20"  y="158">Release med tray</text>
+    <rect x="200" y="146" width="320" height="16" rx="4" fill="#f87060" opacity="0.6"/>
+    <text x="526" y="158" fill="#1f1a2e" font-weight="700">16</text>
+    <rect x="200" y="164" width="80"  height="16" rx="4" fill="#10b981"/>
+    <text x="286" y="176" fill="#1f1a2e" font-weight="700">4</text>
+
+    <text x="20"  y="198">Document allergy</text>
+    <rect x="200" y="186" width="160" height="16" rx="4" fill="#f87060" opacity="0.6"/>
+    <text x="366" y="198" fill="#1f1a2e" font-weight="700">8</text>
+    <rect x="200" y="204" width="40"  height="16" rx="4" fill="#10b981"/>
+    <text x="246" y="216" fill="#1f1a2e" font-weight="700">2</text>
+  </g>
+
+  <!-- Legend -->
+  <rect x="560" y="20" width="10" height="10" fill="#f87060" opacity="0.6"/><text x="576" y="29" font-family="ui-sans-serif,system-ui" font-size="11" fill="#4b4660">Before</text>
+  <rect x="620" y="20" width="10" height="10" fill="#10b981"/><text x="636" y="29" font-family="ui-sans-serif,system-ui" font-size="11" fill="#4b4660">After</text>
+</svg>
+<figcaption><em>The fix wasn't a redesign. It was a thousand small subtractions, each defended out loud.</em></figcaption>
+</figure>
+
+## The principle nobody writes down
+
+Every EHR design book talks about clicks, glanceability, cognitive load. None of them say the thing that matters:
+
+> **The interface should make the next correct action the cheapest one to do.**
+
+That's it. Not the most prominent. Not the most beautiful. The cheapest — fewest motor actions, least reading, no decision the user shouldn't have to make in this moment.
+
+When I started measuring our screens against that principle, the redesigns wrote themselves.
+
+## Redesign 1 — collapse the order-signing flow
+
+A verbal order used to take eleven clicks: open chart, find order, click sign, select reason, confirm timestamp, choose witness, confirm witness, attest, save, close, reopen if you needed to add a note.
+
+The new flow is three: open chart, sign, confirm. Everything else either has a sane default (current timestamp, the witness physically present per the badge tap, the attestation pre-checked) or moves out of the way (the note field opens *after* signing, not before).
+
+Nothing was removed from the data model. The audit log is unchanged. We just stopped asking the human to be the database.
+
+## Redesign 2 — turn alert acknowledgement into a glance
+
+Best-practice advisories (BPAs) are the textbook example of alert fatigue. The fix wasn't fewer alerts — it was making the acknowledgement honest.
+
+- **Severity affects shape, not just colour.** A critical alert is a vertical strip down the left of the chart, impossible to miss and impossible to confuse with the standard advisory chip.
+- **The two most common responses are buttons, not menus.** "Acknowledged — proceed" and "Acknowledged — not applicable" account for ~90% of clicks. They should not be hiding behind a dropdown.
+- **The dismissal is logged with the reason.** This is the part that makes everyone nervous and then nobody objects to once they see it. The audit trail gets *better*, not worse.
+
+Six clicks down to two. More important, the alerts that matter started getting read again.
+
+## Redesign 3 — release the medication tray in four taps
+
+Releasing a tray was the worst offender: sixteen clicks across three modals. We took it apart and asked, at each step, "what is the user really deciding here?" Most of the time the answer was nothing — the system already knew the answer.
+
+The new flow:
+
+1. Tap patient
+2. Tap tray
+3. Confirm the patient identity by scanning the band (this is the safety-critical step and the only one that requires a human)
+4. Tap release
+
+Everything else — time, route, dosing reconfirmation, witness rules — is computed from policy and displayed for review, not requested.
+
+## Redesign 4 — make documenting an allergy not feel like punishment
+
+Allergies are documented poorly because the form punishes you for trying. Eight clicks, three required dropdowns whose choices don't match what the patient actually said.
+
+The new field accepts a single sentence. The model behind it parses substance, reaction, and severity. The form *shows you the parse* before saving and lets you correct it in place. If you can't be bothered to correct it, the unstructured note is preserved alongside the structured fields. The chart never loses information.
+
+Eight clicks down to two. The structured fields improved because the cost of using them dropped.
+
+## Redesign 5 — give the home screen a job
+
+Most EHR home screens are dashboards. Dashboards are for monitoring; clinicians are not monitoring. They are *doing*. The home screen now shows a single column: the next correct action for each patient on your list, ranked. Vitals overdue. Order awaiting signature. Discharge ready for review.
+
+The dashboards still exist, one tap away, for the moments you actually need one. But they stopped being the first thing you saw, and the first thing you saw started telling you what to do.
+
+## The pattern across all five
+
+| | Before | After | What changed |
+|---|---|---|---|
+| Sign order | 11 | 3 | Defaults replaced prompts |
+| Ack alert | 6 | 2 | Common responses became buttons |
+| Release tray | 16 | 4 | Removed steps the system already knew |
+| Document allergy | 8 | 2 | Free text + parse-and-confirm |
+| Triage home | many | 1 list | Next action, not status board |
+
+Notice what isn't in that table: new icons, better colours, prettier typography, a redesigned logo. The visual layer barely moved. The work was in deciding which questions the interface had no right to ask.
+
+## What it cost
+
+This is the part most write-ups skip.
+
+- Each redesign required a real audit of the audit log. You can't remove a click without proving the data it captured either still arrives by another path or wasn't worth capturing.
+- Two of the five required policy changes, not just UI changes. Policy is slower than code. Budget for it.
+- One of them — the allergy parser — required the model in the loop to be auditable. We accepted a slower release in exchange for the ability to show, for every parse, which words drove which fields. That trade was worth it.
+
+## What it bought
+
+Two hours a shift, on average, across the floor. That's not the number that mattered. The number that mattered was the one nurse on the third week who said, "It feels like the chart is on my side now."
+
+That sentence is the brief for every healthcare UI I'm going to design from this point on.
+
+---
+
+*A companion piece on the model behind these notes lives in [Ambient Scribes on the Ward](/blog/ambient-scribes-90-days-voice-first-ehr). The interface story and the model story are the same story, told from two angles.*
+6:T4136,
 # Cerner Implementation at Vancouver Coastal Health: Transforming Healthcare Through Data and Innovation
 
 ## Introduction
@@ -360,7 +663,7 @@ Vancouver Coastal Health. (2021). Service Plan 2021/22–2023/24. https://www.vc
 
 Vancouver Coastal Health Research Institute (VCHRI). (2024). Starting your project with CST Cerner. https://www.vchri.ca/services/starting-your-project/cst-cerner
 
-*This analysis reflects the author's experience working within the VCH system during the CST implementation period. For current implementation status and specific technical details, readers should consult official VCH and CST project documentation.*4:T2bd9,
+*This analysis reflects the author's experience working within the VCH system during the CST implementation period. For current implementation status and specific technical details, readers should consult official VCH and CST project documentation.*7:T2bd9,
 # Coding with AI: How Large Language Models Are Reshaping Software Development Workflows
 
 I've been thinking a lot about how coding is changing—and not just in a technical sense. Something deeper is shifting. After watching Andrej Karpathy's recent talk at YC's AI Startup School, it finally clicked for me: we're not just automating code, we're redefining what it means to develop software in the first place.
@@ -593,7 +896,7 @@ The future of development isn't about replacing human creativity—it's about am
 
 - Tabarsi, B., Reichert, H., Limke, A., Kuttal, S., & Barnes, T. (2025). LLMs' reshaping of people, processes, products, and society in software development. arXiv. https://arxiv.org/abs/2503.05012
 
-*What's your experience with AI-assisted development? I'd love to hear how these tools are changing your workflow and what challenges you're facing. The conversation is just getting started.*5:T7c86,
+*What's your experience with AI-assisted development? I'd love to hear how these tools are changing your workflow and what challenges you're facing. The conversation is just getting started.*8:T7c86,
 # Data Science in Healthcare: Building Predictive Analytics for Better Patient Outcomes
 
 Healthcare generates vast amounts of data every day - from electronic health records and medical imaging to wearable devices and clinical trials. The challenge isn't collecting data; it's transforming this wealth of information into actionable insights that improve patient care and outcomes.
@@ -1449,7 +1752,7 @@ Key takeaways for implementing healthcare data science:
 
 The future of healthcare lies in the intelligent use of data to improve patient outcomes, reduce costs, and enhance the quality of care. By combining domain expertise with advanced analytics, we can build systems that truly make a difference in people's lives.
 
-*Ready to implement data science in your healthcare organization? Start with a pilot project focusing on a specific use case and gradually expand your capabilities as you build expertise and confidence in your data-driven approach.*6:T278c,
+*Ready to implement data science in your healthcare organization? Start with a pilot project focusing on a specific use case and gradually expand your capabilities as you build expertise and confidence in your data-driven approach.*9:T278c,
 # AI Revolution in Healthcare 2025: Breakthrough Innovations Transforming Patient Care
 
 The healthcare industry is experiencing an unprecedented transformation as artificial intelligence technologies mature and become more accessible. In 2025, we're witnessing breakthrough innovations that are fundamentally changing how healthcare is delivered, making it more personalized, efficient, and accessible than ever before.
@@ -1702,7 +2005,7 @@ Healthcare organizations that embrace AI thoughtfully and systematically will be
 
 As we continue through 2025 and beyond, the integration of AI in healthcare will deepen, creating new possibilities for treating disease, preventing illness, and promoting wellness. The future of healthcare is intelligent, personalized, and more hopeful than ever before.
 
-*Want to learn more about implementing AI in your healthcare organization? Explore our case studies and implementation guides for practical insights on healthcare AI transformation.*7:T2194,
+*Want to learn more about implementing AI in your healthcare organization? Explore our case studies and implementation guides for practical insights on healthcare AI transformation.*a:T2194,
 # My Journey into Software Development and Data Analytics
 
 My journey into software development and data analytics began in 2018. It all started out of curiosity—I wanted to create a website, so I signed up for a few online courses. I got hooked. I taught myself HTML and CSS, and that kicked off a deep interest in technology. Soon after, I completed Google's Data Analytics certification, which opened my eyes to the power of working with data, and I've been diving deeper ever since.
@@ -1846,7 +2149,387 @@ Whether you're just starting your tech journey or looking to make a change, reme
 
 ---
 
-**Connect with me**: If you're on a similar journey or working on interesting projects in healthcare tech, data analytics, or AI, let's connect and share experiences. The best part of this journey has been the community along the way.8:T2958,
+**Connect with me**: If you're on a similar journey or working on interesting projects in healthcare tech, data analytics, or AI, let's connect and share experiences. The best part of this journey has been the community along the way.b:T226b,
+# One Year of MCP: What the Standard Got Right, and What's Next
+
+A year ago this month, MCP went from a thing a few of us were squinting at in repos to a thing my non-engineer colleagues had heard of. The pivot point was almost invisible from the outside — a quiet wave of native integrations across every major editor and assistant — but it changed how I build.
+
+Twelve months in, it's worth saying what the standard actually did, and what it didn't.
+
+<figure>
+<svg viewBox="0 0 720 240" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MCP adoption timeline from launch to one year">
+  <text x="20" y="24" font-family="ui-sans-serif,system-ui" font-size="13" font-weight="700" fill="#1f1a2e">MCP — milestones I noticed, not benchmarks</text>
+
+  <!-- timeline base -->
+  <line x1="40" y1="140" x2="700" y2="140" stroke="rgba(28,22,46,0.14)" stroke-width="2"/>
+
+  <!-- tick + label helper repeated inline -->
+  <g font-family="ui-sans-serif,system-ui" font-size="11" fill="#4b4660">
+    <circle cx="80"  cy="140" r="6" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+    <text x="80"  y="170" text-anchor="middle">Nov '24</text>
+    <text x="80"  y="115" text-anchor="middle" fill="#1f1a2e" font-weight="700">spec drops</text>
+
+    <circle cx="200" cy="140" r="6" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+    <text x="200" y="170" text-anchor="middle">Feb '25</text>
+    <text x="200" y="115" text-anchor="middle" fill="#1f1a2e" font-weight="700">first wave of servers</text>
+
+    <circle cx="320" cy="140" r="6" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+    <text x="320" y="170" text-anchor="middle">May '25</text>
+    <text x="320" y="115" text-anchor="middle" fill="#1f1a2e" font-weight="700">OpenAI &amp; DeepMind adopt</text>
+
+    <circle cx="440" cy="140" r="6" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+    <text x="440" y="170" text-anchor="middle">Sep '25</text>
+    <text x="440" y="115" text-anchor="middle" fill="#1f1a2e" font-weight="700">IDE-native everywhere</text>
+
+    <circle cx="560" cy="140" r="6" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+    <text x="560" y="170" text-anchor="middle">Jan '26</text>
+    <text x="560" y="115" text-anchor="middle" fill="#1f1a2e" font-weight="700">scoped tokens land</text>
+
+    <circle cx="680" cy="140" r="6" fill="#6d28d9" stroke="#6d28d9" stroke-width="2"/>
+    <text x="680" y="170" text-anchor="middle">May '26</text>
+    <text x="680" y="115" text-anchor="middle" fill="#6d28d9" font-weight="700">today</text>
+  </g>
+
+  <!-- arrow at end -->
+  <polygon points="700,134 710,140 700,146" fill="rgba(28,22,46,0.14)"/>
+
+  <!-- footnote -->
+  <text x="40" y="210" font-family="ui-sans-serif,system-ui" font-size="11" fill="#8a849b">The interesting milestones aren't release notes; they're the months a thing stopped being a curiosity in my workflow and started being a default.</text>
+</svg>
+<figcaption><em>The standard's most important release was the one nobody announced — the day the JetBrains plugin gained native MCP and the conversation stopped being about which protocol.</em></figcaption>
+</figure>
+
+## What the standard got right
+
+**One contract instead of fifty.** Before MCP, every integration was a bespoke plugin: its own auth flow, its own logging, its own opinions about errors. Each one was forgivable; the sum was a tax. MCP didn't do anything *new*. It just made everyone agree on the shape of the same thing, and that turned out to be most of the value.
+
+**Servers, not endpoints.** Treating a tool as a server you connect to, rather than an endpoint you call, was the right abstraction. It moved auth, lifecycle, and capability discovery to one place. It also turned out to be the natural shape for security policy, which matters more than anyone wanted it to.
+
+**Capability discovery as a first-class concept.** The single biggest day-to-day improvement is that the agent doesn't have to be told what a tool can do. It asks. That sounds small. It is the difference between writing a config file every time you add a new tool and not.
+
+**Boring, on purpose.** The most underrated thing the spec did was refuse to be exciting. There is no LLM-specific magic in MCP. It is JSON, request/response, capabilities, errors. A junior engineer can read the whole spec in an afternoon and understand the entire surface. That is why it travelled.
+
+## What it didn't fix
+
+**Capability ambiguity.** Install three MCP servers that all expose `read_file` and the agent has to guess. The spec is silent on conflicts; in practice you end up with naming conventions and team norms doing the work the spec didn't. This will get standardised eventually. It hasn't yet.
+
+**Trust at scale.** Local servers, fine. Remote servers run by other people? You are pasting capabilities into your agent's context that you did not write. The first generation of MCP marketplaces are a security incident waiting for a quiet Tuesday. Scoped tokens, which landed in January, are necessary but not sufficient.
+
+**The "where does the state live" problem.** Tools that are stateful (a query session, a long-running build) sit awkwardly inside a protocol designed around capability calls. The current pattern is for servers to keep their own state and expose handles — which works, but no two servers do it the same way.
+
+## What changed in my workflow
+
+The honest answer is that I stopped writing integration code. Not less of it. None.
+
+I used to write a thin client every time I wanted my agent to talk to Postgres, or Linear, or our internal staging API. That code wasn't hard, but it wasn't free, and it was duplicated across every project. Now there's an MCP server for each — usually one I didn't write — and I just declare which ones a project uses.
+
+The leverage isn't in the protocol. It's in the libraries the protocol made worth writing.
+
+```yaml
+# .mcp.yaml — what a project looks like now
+servers:
+  - name: filesystem
+    scope: ./
+  - name: postgres-dev
+    url: stdio:./scripts/pg-dev-server
+    permissions: [read, migrate]
+  - name: linear
+    project: portfolio-website
+    permissions: [search, comment, create]
+```
+
+That file is the entire integration story for a project that, two years ago, would have been five hundred lines of glue.
+
+## The three questions still ahead
+
+**1 · How do you describe a tool well enough that the agent picks it confidently?**
+The current descriptions are good. They are not good enough at distinguishing two tools that overlap by 80%. The next generation of servers will need richer capability hints — preconditions, side effects, cost estimates — and a way for agents to reason about which to use without trial-and-error. This is the hardest open problem and probably the most valuable.
+
+**2 · What does "least privilege" mean for an MCP server you didn't write?**
+Scoped tokens are a start. The deeper question is whether the agent itself can audit a server's behaviour at runtime — "this server says it only reads, but I see it writing on this code path." That's a verification problem dressed up as a protocol problem.
+
+**3 · How does MCP play with multi-agent setups where one agent's tools are another agent's environment?**
+The protocol is fine at agent-to-tool. It is silent on agent-to-agent. The community will work this out, and the first standard pattern that ships will probably define the shape of multi-agent work for a decade.
+
+## What I'd tell a team adopting it today
+
+- **Don't write your own MCP server until you've used three.** You will be tempted on day one. Wait. The community has shipped most of what you need.
+- **Scope everything.** Every server. Every project. Permissions in writing, not in folklore.
+- **Read the spec.** It is genuinely short. The teams who treat MCP as a black box make different mistakes than the teams who read the spec.
+- **Invest in the audit log, not the connection log.** Knowing *that* a tool was called matters less than knowing *what it did*. Build for the audit before you have an audit problem.
+
+## One year in
+
+The thing I underestimated a year ago was how much of the value would be social, not technical. MCP made it cheap for people who don't know each other to ship tools that talk to each other. Standards do that when they're boring and right. This one is boring and right.
+
+The next year will be quieter, I think. The fights will be about capability description and trust, not about the protocol itself. The protocol is settled.
+
+Which is — and I mean this as a compliment — the best thing that could have happened to it.
+
+---
+
+*If you missed the original explainer, my [first piece on MCP](/blog/understanding-model-context-protocol-future-ai-integration) holds up surprisingly well — the shape of the standard hasn't changed, only the world around it.*
+c:T1e4b,
+# Prompting Like an Engineer: Ten Patterns I Lean On Every Day
+
+The fastest way to get worse output from a strong model is to type the way you'd type into a search bar. The fastest way to get *consistently* good output is to think of prompts as small, named patterns — the way you'd think of design patterns in code.
+
+These are the ten I reach for daily. None of them are clever. All of them survive model upgrades, which is what makes them worth writing down.
+
+<figure>
+<svg viewBox="0 0 720 320" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Grid of ten prompting pattern names">
+  <style>
+    .card{fill:#fbfaf8;stroke:rgba(28,22,46,0.09)}
+    .tag{font:600 11px ui-sans-serif,system-ui;fill:#6d28d9;letter-spacing:0.06em}
+    .name{font:700 13px ui-sans-serif,system-ui;fill:#1f1a2e}
+    .num{font:800 22px ui-sans-serif,system-ui;fill:#ede9fe}
+  </style>
+  <g>
+    <rect class="card" x="20"  y="20"  width="135" height="72" rx="10"/><text class="num" x="130" y="44">01</text><text class="tag" x="32" y="44">SCOPE</text><text class="name" x="32" y="68">Anchor the goal</text>
+    <rect class="card" x="165" y="20"  width="135" height="72" rx="10"/><text class="num" x="275" y="44">02</text><text class="tag" x="177" y="44">SHAPE</text><text class="name" x="177" y="68">Show the output</text>
+    <rect class="card" x="310" y="20"  width="135" height="72" rx="10"/><text class="num" x="420" y="44">03</text><text class="tag" x="322" y="44">ROLE</text><text class="name" x="322" y="68">Pick a stance</text>
+    <rect class="card" x="455" y="20"  width="135" height="72" rx="10"/><text class="num" x="565" y="44">04</text><text class="tag" x="467" y="44">CONTEXT</text><text class="name" x="467" y="68">Paste, don't recite</text>
+    <rect class="card" x="600" y="20"  width="100" height="72" rx="10"/><text class="num" x="675" y="44">05</text><text class="tag" x="612" y="44">CONSTRAIN</text><text class="name" x="612" y="68">Name what's off</text>
+
+    <rect class="card" x="20"  y="104" width="135" height="72" rx="10"/><text class="num" x="130" y="128">06</text><text class="tag" x="32" y="128">RUBRIC</text><text class="name" x="32" y="152">Grade before you ask</text>
+    <rect class="card" x="165" y="104" width="135" height="72" rx="10"/><text class="num" x="275" y="128">07</text><text class="tag" x="177" y="128">DRAFT</text><text class="name" x="177" y="152">Ask for a stub</text>
+    <rect class="card" x="310" y="104" width="135" height="72" rx="10"/><text class="num" x="420" y="128">08</text><text class="tag" x="322" y="128">COUNTER</text><text class="name" x="322" y="152">Steelman, then choose</text>
+    <rect class="card" x="455" y="104" width="135" height="72" rx="10"/><text class="num" x="565" y="128">09</text><text class="tag" x="467" y="128">CHECK</text><text class="name" x="467" y="152">Verify before claim</text>
+    <rect class="card" x="600" y="104" width="100" height="72" rx="10"/><text class="num" x="675" y="128">10</text><text class="tag" x="612" y="128">SHRINK</text><text class="name" x="612" y="152">Cut the prelude</text>
+  </g>
+  <text x="20" y="220" font-family="ui-sans-serif,system-ui" font-size="12" fill="#4b4660">Read left-to-right, top-to-bottom. The first row is what you say <em>before</em> the model answers; the second is what you do <em>after</em>.</text>
+</svg>
+</figure>
+
+## 1 · Anchor the goal
+
+Start with one sentence that names the outcome, not the task. "Help me write tests" is a task. "Help me catch the off-by-one that's breaking pagination on page 7" is a goal. The model treats the second one like a contract.
+
+## 2 · Show the output
+
+If you know what the result should look like — a code block, a table, a three-bullet summary — say so up front. Models can match almost any shape if you describe it once. They can't read your mind about whether you want prose or a list.
+
+```text
+Reply with a markdown table: column A is the field name,
+column B is the type, column C is one example value.
+```
+
+That's not formality. That's saving yourself a round-trip.
+
+## 3 · Pick a stance
+
+"You are a senior reviewer" works less because of the word "senior" and more because it pins a perspective. The wrong stance is "be a helpful assistant" — that's the default and it dilutes everything else. A specific stance ("you are the person who has to maintain this in a year") changes the answer in useful ways.
+
+## 4 · Paste, don't recite
+
+If you're asking about a file, paste the file. If you're asking about a schema, paste the schema. Models are excellent at reading exact context and bad at guessing it. The most common reason a prompt produces a wrong answer is that the prompt described the situation instead of showing it.
+
+## 5 · Name what's off the table
+
+Constraints sharpen output more than instructions do.
+
+```text
+- Don't add new dependencies.
+- Don't change the public function signature.
+- Don't write tests yet — I want to read the change first.
+```
+
+Three negative bullets save five minutes of "no, not like that."
+
+## 6 · Grade before you ask
+
+Write the rubric for a good answer *before* you ask the question. Even one line is enough:
+
+> A good answer is one I can paste into the PR description without editing.
+
+You'll catch yourself asking the wrong question half the time.
+
+## 7 · Ask for a stub
+
+For anything non-trivial, ask for the smallest scaffold first — function signatures, the outline of the doc, the table headers. Read it, react, then ask for the body. The model is faster than you, but you are better at deciding what to build than at fixing what's already built.
+
+## 8 · Steelman, then choose
+
+When the question has more than one defensible answer, ask for the two strongest cases *before* asking for a recommendation. You get a better recommendation, and — more importantly — you learn what the tradeoff actually is.
+
+```text
+Give me the strongest case for Postgres and the strongest case for SQLite
+for this app. Two paragraphs each. Then your recommendation.
+```
+
+## 9 · Verify before you claim
+
+Models hallucinate confidently. Treat any factual claim ("this function does X," "this library supports Y") as a hypothesis and check it. In code, that means running the test, not just reading the diff. In writing, it means clicking the link.
+
+This is the pattern with the highest ratio of "boring" to "saves your career."
+
+## 10 · Shrink the prelude
+
+Most prompts are 70% setup and 30% question. Reverse it. The model already knows it's an assistant. It doesn't need to be told to think carefully. Spend that token budget on the actual context.
+
+> Old: "Hi, I hope you're well. I'm working on a project where… I'd love it if you could…"
+> New: "Schema below. Add a unique index on (user_id, slug). Show the migration."
+
+## A composite, for shape
+
+Here's what these patterns look like stacked, in a real prompt I used last week:
+
+```text
+GOAL: Find the bug that's making /api/saved-filters 500 when user has no filters.
+
+CONTEXT:
+- handler: (pasted)
+- migration: (pasted)
+- failing test: (pasted)
+
+CONSTRAINTS:
+- Don't change the schema. The migration just ran.
+- Keep the response shape identical.
+
+OUTPUT:
+- The single-line fix, then a 2-sentence explanation.
+- Then the test that would have caught this.
+
+RUBRIC:
+- Good if I can ship it without further edits.
+```
+
+That prompt has six of the ten patterns in it. The model returned a one-line fix that was correct on the first try.
+
+---
+
+The patterns aren't tricks. They are what happens when you stop treating the model like a search box and start treating it like a junior engineer who has read everything but cannot read your monitor. Show your work to it the way you'd want a colleague to show their work to you.
+
+Almost everything else is downstream of that.
+d:T2144,
+# Building a Sepsis Early-Warning Signal from Vital-Sign Streams
+
+Sepsis is the boring failure mode that kills people. By the time the patient is obviously septic, the window where intervention is cheap is closed. Every paper on early-warning scores is trying to push that window back by hours, not days — and the hours matter.
+
+This is a notebook from a project I worked on quietly through the back end of last year: a sepsis early-warning model trained on multi-parameter bedside streams. I'm not going to publish the model. I am going to walk through the parts that were genuinely useful and the parts that looked useful in slides and weren't.
+
+<figure>
+<svg viewBox="0 0 720 270" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vital signs streams with rising risk score crossing a warning threshold">
+  <defs>
+    <linearGradient id="riskShade" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#f87060" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#f87060" stop-opacity="0.0"/>
+    </linearGradient>
+  </defs>
+
+  <text x="20" y="24" font-family="ui-sans-serif,system-ui" font-size="13" font-weight="700" fill="#1f1a2e">Bedside streams &amp; sepsis risk score (24 h window)</text>
+
+  <!-- axes -->
+  <line x1="50" y1="60" x2="50" y2="240" stroke="rgba(28,22,46,0.14)"/>
+  <line x1="50" y1="240" x2="700" y2="240" stroke="rgba(28,22,46,0.14)"/>
+
+  <!-- threshold band -->
+  <rect x="50" y="80" width="650" height="40" fill="url(#riskShade)"/>
+  <line x1="50" y1="100" x2="700" y2="100" stroke="#f87060" stroke-dasharray="4 4" opacity="0.8"/>
+  <text x="56" y="76" font-family="ui-sans-serif,system-ui" font-size="11" font-weight="700" fill="#f87060">Alert threshold</text>
+
+  <!-- heart rate (blue) -->
+  <polyline fill="none" stroke="#3b82f6" stroke-width="2"
+    points="50,200 110,198 170,192 230,188 290,176 350,160 410,148 470,134 530,128 590,124 650,120 700,118"/>
+  <text x="60" y="216" font-family="ui-sans-serif,system-ui" font-size="11" fill="#3b82f6">HR</text>
+
+  <!-- respiratory rate (green) -->
+  <polyline fill="none" stroke="#10b981" stroke-width="2"
+    points="50,222 110,220 170,216 230,212 290,202 350,190 410,178 470,168 530,160 590,154 650,150 700,148"/>
+  <text x="60" y="232" font-family="ui-sans-serif,system-ui" font-size="11" fill="#10b981">RR</text>
+
+  <!-- risk score (plum) -->
+  <polyline fill="none" stroke="#6d28d9" stroke-width="3"
+    points="50,225 110,220 170,210 230,196 290,178 350,156 410,134 470,116 530,98 590,86 650,78 700,72"/>
+
+  <!-- alert marker -->
+  <circle cx="530" cy="98" r="6" fill="#6d28d9"/>
+  <text x="540" y="94" font-family="ui-sans-serif,system-ui" font-size="11" font-weight="700" fill="#6d28d9">alert · 4–6 h before clinical recognition</text>
+
+  <!-- x labels -->
+  <text x="50"  y="258" font-family="ui-sans-serif,system-ui" font-size="11" fill="#8a849b">t-24h</text>
+  <text x="370" y="258" font-family="ui-sans-serif,system-ui" font-size="11" fill="#8a849b">t-12h</text>
+  <text x="690" y="258" font-family="ui-sans-serif,system-ui" font-size="11" fill="#8a849b">now</text>
+</svg>
+<figcaption><em>The risk curve, not any single vital, is what crosses the alert line. Individual streams almost never do — that's the whole point.</em></figcaption>
+</figure>
+
+## The naive baseline
+
+Every sepsis project starts the same way: pull SIRS, pull qSOFA, pull early-warning scores like NEWS2, and see what you get. The honest answer is: not bad. NEWS2 alone catches a meaningful share of cases with no machine learning at all. If your project can't beat NEWS2 by a clear margin, you don't have a project — you have a worse version of NEWS2 with more dependencies.
+
+I anchored the whole effort to that baseline. It kept the team grounded every time a fancy feature got proposed.
+
+## The data, honestly
+
+The reality of vital-sign data is that it is a lie until you clean it.
+
+- Half the temperature readings are oral thermometers logged thirty seconds after the patient drank water.
+- Heart rate from finger pulse oximeters is wrong any time the patient moved.
+- Blood pressure is missing for hours and then taken three times in five minutes because someone was worried.
+- Manual entries lag the event by anywhere from one to forty minutes.
+
+You cannot model your way out of this. You have to build a cleaning layer that knows what each device's failure mode looks like and refuses to feed garbage forward.
+
+```python
+def clean_vitals(stream: VitalsStream) -> VitalsStream:
+    return (
+        stream
+        .drop_where(device_artifact=True)            # spo2 dropouts, BP cuff inflation noise
+        .clip_to_physiological_range()               # HR 30–220, RR 4–60, etc.
+        .smooth(window="5min", method="median")      # noise, not signal
+        .resample_to("1min")                         # one cadence everywhere
+        .impute(strategy="last_observation_carried", max_gap="10min")
+    )
+```
+
+Boring. Indispensable. The single largest improvement in the model came not from changing the model but from being stricter about what we let through this function.
+
+## Features that earned their keep
+
+Most of the value lived in a small set of features, all of them derivatives, not levels.
+
+- **Trend slopes over rolling windows.** A heart rate of 105 is not interesting. A heart rate that has climbed 22 bpm in the last six hours is very interesting.
+- **Cross-vital divergence.** Specifically the shock index (HR / SBP). Sepsis often shows up here before it shows up anywhere else.
+- **Variability collapse.** Heart-rate variability goes down before any single vital becomes alarming. This is in the literature and it held up in our data.
+- **Time since last fluid bolus.** Not a vital, but available, and it shifts how you should read everything downstream.
+
+## Features that looked good in slides and weren't
+
+- **Temperature.** Septic patients are febrile in textbooks and afebrile in real wards. Temperature added almost nothing once HR and RR trends were in.
+- **WBC delta.** Lab values come in too sparsely to drive an early-warning signal. By the time the lab is back, the patient looks septic on the vitals.
+- **Deep nets trained end-to-end on raw streams.** They beat the baseline in the lab and lost to a tuned gradient-boosted model in production, every time. The gradient-boosted model was also dramatically easier to debug when it was wrong.
+
+## The threshold conversation nobody warns you about
+
+The hardest part of the project wasn't the model. It was the threshold meeting.
+
+A sepsis alert at 90% sensitivity and 70% specificity sounds great until you do the math on a 24-bed ward. That's seven false alarms per shift. Clinicians will ignore the seventh one. They might ignore the third.
+
+We ended up modelling alerts as a *budget*: how many can a single nurse absorb in a shift before the next one stops working? The answer at this hospital was around two. Everything about the threshold flowed from that constraint, not from the ROC curve.
+
+> A model that fires three times a shift is a worse model than one that fires once, even if its AUC is higher. The denominator is human attention, and you can't enlarge it.
+
+## What the alert actually says
+
+Late in the project we stopped showing a number. The clinicians did not want a risk score. They wanted three things:
+
+1. **Why now.** Which features moved, in which direction, in the last few hours.
+2. **What to check.** The two or three downstream things that, if the model is right, would also be true.
+3. **An out.** A one-click "not septic — here's why" that retrains the on-ward feedback loop without burying it in a ticket queue.
+
+When we added those three, adoption stopped being a project. It started being normal.
+
+## What's next
+
+The next version of this kind of system will not be a better classifier. It will be a better *conversation*. Something that says "the trend on this patient looks like the early phase of sepsis in patients who shared these features — what do you think?" and lets the clinician push back with one sentence and learn from the push-back. That's an LLM-shaped problem sitting on top of a classical-ML-shaped problem. Both layers have to be good. Neither one is enough alone.
+
+The boring part of the work — the cleaning, the threshold, the explanation — is still where the win is.
+
+---
+
+*If you want to see the same patterns applied to revenue and ops data instead of vitals, the [data-science archive](/blog) has earlier notebooks on predictive maintenance and patient flow.*
+e:T2958,
 # Understanding Model Context Protocol: The Future of AI Integration
 
 The artificial intelligence landscape is evolving rapidly, and with it comes the need for standardized ways to connect AI systems with external tools and data sources. Enter the **Model Context Protocol (MCP)** - Anthropic's groundbreaking open standard that's revolutionizing how we think about AI integration.
@@ -2092,6 +2775,6 @@ As major players like OpenAI and Google DeepMind continue to adopt and support M
 
 The revolution in AI integration has begun, and MCP is leading the charge. Whether you're a developer building AI applications, a business leader evaluating AI solutions, or simply someone interested in the future of technology, understanding MCP will be crucial for navigating the evolving landscape of artificial intelligence.
 
-*Ready to dive deeper into MCP? Check out Anthropic's official documentation and start building your first MCP integration today. The future of AI is modular, connected, and powered by protocols like MCP.*0:["5RxQjicCEpFhHrvCBNZdo",[[["",{"children":["blog",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",{"children":["blog",{"children":["__PAGE__",{},[["$L1",["$","$L2",null,{"initialPosts":[{"slug":"cerner-implementation-vch-transforming-healthcare-through-data","title":"Cerner Implementation at Vancouver Coastal Health: Transforming Healthcare Through Data and Innovation","excerpt":"An in-depth analysis of one of BC's most ambitious health IT projects—how Vancouver Coastal Health's Cerner implementation revolutionized clinical workflows, enhanced patient safety, and enabled data-driven healthcare innovation.","date":"2024-07-28","author":"Lloyd Dela Cruz","category":"healthcare","tags":["Healthcare Technology","EHR Implementation","Cerner","Digital Transformation","Vancouver Coastal Health","Health Informatics"],"readTime":"15 min read","featured":true,"image":"/images/blog/cerner-vch-implementation.jpg","video":false,"interactive":false,"gradient":"from-cyan-600 via-blue-600 to-indigo-800","content":"$3","publishedAt":"$D2024-07-28T00:00:00.000Z"},{"slug":"coding-with-ai-how-llms-are-reshaping-software-development","title":"Coding with AI: How Large Language Models Are Reshaping Software Development Workflows","excerpt":"Exploring the paradigm shift from traditional coding to AI-assisted development, where English becomes the new programming language and 'vibe coding' transforms how we build software.","date":"2025-06-28","author":"Lloyd Dela Cruz","category":"ai","tags":["AI","Software Development","LLMs","Programming","Future of Tech","Andrej Karpathy"],"readTime":"12 min read","featured":true,"image":"/images/blog/coding-with-ai.jpg","video":false,"interactive":false,"gradient":"from-cyan-600 via-blue-600 to-indigo-800","content":"$4","publishedAt":"$D2025-06-28T00:00:00.000Z"},{"slug":"data-science-healthcare-analytics","title":"Data Science in Healthcare: Building Predictive Analytics for Better Patient Outcomes","excerpt":"Learn how data science and machine learning are transforming healthcare analytics, from predictive modeling to real-time patient monitoring and population health insights.","date":"2025-11-15","author":"Lloyd Dela Cruz","category":"data-science","tags":["Data Science","Healthcare Analytics","Machine Learning","Python","Predictive Modeling"],"readTime":"15 min read","featured":false,"image":"/images/blog/healthcare-data-science.jpg","video":false,"interactive":true,"gradient":"from-emerald-600 via-teal-600 to-cyan-800","content":"$5","publishedAt":"$D2025-11-15T00:00:00.000Z"},{"slug":"healthcare-ai-revolution-2025","title":"AI Revolution in Healthcare 2025: Breakthrough Innovations Transforming Patient Care","excerpt":"Discover the latest AI innovations revolutionizing healthcare in 2025, from precision medicine and digital patient platforms to virtual health assistants and regulatory developments.","date":"2025-03-22","author":"Lloyd Dela Cruz","category":"healthcare","tags":["AI","Healthcare Innovation","Precision Medicine","Digital Health"],"readTime":"11 min read","featured":true,"image":"/images/blog/healthcare-ai-2025.jpg","video":false,"interactive":true,"gradient":"from-cyan-600 via-blue-600 to-indigo-800","content":"$6","publishedAt":"$D2025-03-22T00:00:00.000Z"},{"slug":"my-journey-into-software-development-and-data-analytics","title":"My Journey into Software Development and Data Analytics","excerpt":"From curiosity-driven HTML learning to AI certifications and real-world healthcare applications—discover how I transitioned from industrial engineering to tech, built meaningful connections, and created impactful solutions.","date":"2024-07-28","author":"Lloyd Dela Cruz","category":"development","tags":["Career Journey","Software Development","Data Analytics","Healthcare Technology","AI","AWS"],"readTime":"8 min read","featured":true,"image":"/images/blog/my-journey-into-tech.jpg","video":false,"interactive":false,"gradient":"from-cyan-600 via-blue-600 to-indigo-800","content":"$7","publishedAt":"$D2024-07-28T00:00:00.000Z"},{"slug":"understanding-model-context-protocol-future-ai-integration","title":"Understanding Model Context Protocol: The Future of AI Integration","excerpt":"Explore Anthropic's revolutionary MCP standard that's transforming how AI systems integrate with external tools and data sources, featuring rapid adoption by OpenAI and Google DeepMind.","date":"2025-06-20","author":"Lloyd Dela Cruz","category":"development","tags":["MCP","AI Integration","Anthropic","Protocol"],"readTime":"12 min read","featured":true,"image":"/images/blog/mcp-integration.jpg","video":false,"interactive":true,"gradient":"from-indigo-600 via-blue-600 to-purple-800","content":"$8","publishedAt":"$D2025-06-20T00:00:00.000Z"}],"initialCategories":[{"id":"all","label":"All Posts","count":6},{"id":"healthcare","label":"Healthcare","count":2},{"id":"ai","label":"Ai","count":1},{"id":"data-science","label":"Data Science","count":1},{"id":"development","label":"Development","count":2}]}],null],null],null]},[null,["$","$L9",null,{"parallelRouterKey":"children","segmentPath":["children","blog","children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$La",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","notFoundStyles":"$undefined"}]],null]},[[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/7f6bd37aab40623f.css","precedence":"next","crossOrigin":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/css/c7e48d16cf08d54a.css","precedence":"next","crossOrigin":"$undefined"}],["$","link","2",{"rel":"stylesheet","href":"/_next/static/css/db7dc2d762fc3926.css","precedence":"next","crossOrigin":"$undefined"}]],["$","html",null,{"lang":"en","className":"__variable_245d8d __variable_97c177 __variable_a11773 scroll-smooth","children":["$","body",null,{"className":"font-sans antialiased bg-surface-canvas text-surface-fg","children":["$","$L9",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$La",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],"notFoundStyles":[]}]}]}]],null],null],["$Lb",null]]]]
-b:[["$","meta","0",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","1",{"name":"theme-color","content":"#0a0a0c"}],["$","meta","2",{"charSet":"utf-8"}],["$","title","3",{"children":"Blog | Lloyd Dela Cruz - Healthcare Technology Expert"}],["$","meta","4",{"name":"description","content":"Explore insights on healthcare technology, AI, data science, and software development. Learn from real-world case studies and practical implementations."}],["$","meta","5",{"name":"author","content":"Lloyd Dela Cruz"}],["$","meta","6",{"name":"keywords","content":"healthcare technology, AI in healthcare, data science, software development, machine learning, health informatics, digital health, Lloyd Dela Cruz"}],["$","meta","7",{"name":"robots","content":"index, follow"}],["$","meta","8",{"name":"googlebot","content":"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"}],["$","link","9",{"rel":"canonical","href":"https://lloyddelacruz.com/blog/"}],["$","meta","10",{"property":"og:title","content":"Blog | Lloyd Dela Cruz - Healthcare Technology Expert"}],["$","meta","11",{"property":"og:description","content":"Explore insights on healthcare technology, AI, data science, and software development. Learn from real-world case studies and practical implementations."}],["$","meta","12",{"property":"og:url","content":"https://lloyddelacruz.com/blog/"}],["$","meta","13",{"property":"og:site_name","content":"Lloyd Dela Cruz"}],["$","meta","14",{"property":"og:locale","content":"en_US"}],["$","meta","15",{"property":"og:image","content":"https://lloyddelacruz.com/images/og-blog.jpg"}],["$","meta","16",{"property":"og:image:width","content":"1200"}],["$","meta","17",{"property":"og:image:height","content":"630"}],["$","meta","18",{"property":"og:image:alt","content":"Lloyd Dela Cruz Blog - Healthcare Technology Insights"}],["$","meta","19",{"property":"og:type","content":"website"}],["$","meta","20",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","21",{"name":"twitter:creator","content":"@lloyddelacruz"}],["$","meta","22",{"name":"twitter:title","content":"Blog | Lloyd Dela Cruz - Healthcare Technology Expert"}],["$","meta","23",{"name":"twitter:description","content":"Explore insights on healthcare technology, AI, data science, and software development."}],["$","meta","24",{"name":"twitter:image","content":"https://lloyddelacruz.com/images/og-blog.jpg"}],["$","link","25",{"rel":"shortcut icon","href":"/favicon.svg"}],["$","link","26",{"rel":"icon","href":"/favicon.svg"}],["$","link","27",{"rel":"apple-touch-icon","href":"/favicon.svg"}],["$","meta","28",{"name":"next-size-adjust"}]]
+*Ready to dive deeper into MCP? Check out Anthropic's official documentation and start building your first MCP integration today. The future of AI is modular, connected, and powered by protocols like MCP.*0:["ANSJXz7rCWHY9_f7pWsif",[[["",{"children":["blog",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",{"children":["blog",{"children":["__PAGE__",{},[["$L1",["$","$L2",null,{"initialPosts":[{"slug":"agent-stack-how-i-wire-claude-cursor-mcp","title":"The Agent Stack: How I Wire Claude, Cursor, and MCP Into a Daily Workflow","excerpt":"A practical look at the toolchain I lean on every day — what each layer actually does, where the seams are, and why the boring glue matters more than the model.","date":"2025-12-18","author":"Lloyd Dela Cruz","category":"development","tags":["AI","Claude Code","Cursor","MCP","Workflow"],"readTime":"9 min read","featured":true,"image":"/images/blog/agent-stack.jpg","video":false,"interactive":false,"gradient":"from-indigo-600 via-blue-600 to-purple-800","content":"$3","publishedAt":"$D2025-12-18T00:00:00.000Z"},{"slug":"ambient-scribes-90-days-voice-first-ehr","title":"Ambient Scribes on the Ward: 90 Days With Voice-First Documentation","excerpt":"Notes from a quarter of watching nurses and physicians actually use an ambient scribe — what it gave back, where it tripped, and the small workflow changes that decided whether it stuck.","date":"2026-01-22","author":"Lloyd Dela Cruz","category":"healthcare","tags":["Healthcare","EHR","Ambient AI","Clinical Workflow","Voice"],"readTime":"8 min read","featured":true,"image":"/images/blog/ambient-scribes.jpg","video":false,"interactive":false,"gradient":"from-cyan-600 via-blue-600 to-indigo-800","content":"$4","publishedAt":"$D2026-01-22T00:00:00.000Z"},{"slug":"calmer-interfaces-fewer-clicks-more-care","title":"Calmer Interfaces: Designing EHRs for Fewer Clicks, More Care","excerpt":"Five small redesigns that took a clinician's most common task from sixteen clicks to four — and the design principle underneath them that almost nobody articulates.","date":"2026-04-17","author":"Lloyd Dela Cruz","category":"healthcare","tags":["Healthcare","Design","EHR","UX","Clinical Workflow"],"readTime":"9 min read","featured":false,"image":"/images/blog/calm-interfaces.jpg","video":false,"interactive":false,"gradient":"from-cyan-600 via-blue-600 to-indigo-800","content":"$5","publishedAt":"$D2026-04-17T00:00:00.000Z"},{"slug":"cerner-implementation-vch-transforming-healthcare-through-data","title":"Cerner Implementation at Vancouver Coastal Health: Transforming Healthcare Through Data and Innovation","excerpt":"An in-depth analysis of one of BC's most ambitious health IT projects—how Vancouver Coastal Health's Cerner implementation revolutionized clinical workflows, enhanced patient safety, and enabled data-driven healthcare innovation.","date":"2024-07-28","author":"Lloyd Dela Cruz","category":"healthcare","tags":["Healthcare Technology","EHR Implementation","Cerner","Digital Transformation","Vancouver Coastal Health","Health Informatics"],"readTime":"15 min read","featured":true,"image":"/images/blog/cerner-vch-implementation.jpg","video":false,"interactive":false,"gradient":"from-cyan-600 via-blue-600 to-indigo-800","content":"$6","publishedAt":"$D2024-07-28T00:00:00.000Z"},{"slug":"coding-with-ai-how-llms-are-reshaping-software-development","title":"Coding with AI: How Large Language Models Are Reshaping Software Development Workflows","excerpt":"Exploring the paradigm shift from traditional coding to AI-assisted development, where English becomes the new programming language and 'vibe coding' transforms how we build software.","date":"2025-06-28","author":"Lloyd Dela Cruz","category":"ai","tags":["AI","Software Development","LLMs","Programming","Future of Tech","Andrej Karpathy"],"readTime":"12 min read","featured":true,"image":"/images/blog/coding-with-ai.jpg","video":false,"interactive":false,"gradient":"from-cyan-600 via-blue-600 to-indigo-800","content":"$7","publishedAt":"$D2025-06-28T00:00:00.000Z"},{"slug":"data-science-healthcare-analytics","title":"Data Science in Healthcare: Building Predictive Analytics for Better Patient Outcomes","excerpt":"Learn how data science and machine learning are transforming healthcare analytics, from predictive modeling to real-time patient monitoring and population health insights.","date":"2025-11-15","author":"Lloyd Dela Cruz","category":"data-science","tags":["Data Science","Healthcare Analytics","Machine Learning","Python","Predictive Modeling"],"readTime":"15 min read","featured":false,"image":"/images/blog/healthcare-data-science.jpg","video":false,"interactive":true,"gradient":"from-emerald-600 via-teal-600 to-cyan-800","content":"$8","publishedAt":"$D2025-11-15T00:00:00.000Z"},{"slug":"healthcare-ai-revolution-2025","title":"AI Revolution in Healthcare 2025: Breakthrough Innovations Transforming Patient Care","excerpt":"Discover the latest AI innovations revolutionizing healthcare in 2025, from precision medicine and digital patient platforms to virtual health assistants and regulatory developments.","date":"2025-03-22","author":"Lloyd Dela Cruz","category":"healthcare","tags":["AI","Healthcare Innovation","Precision Medicine","Digital Health"],"readTime":"11 min read","featured":true,"image":"/images/blog/healthcare-ai-2025.jpg","video":false,"interactive":true,"gradient":"from-cyan-600 via-blue-600 to-indigo-800","content":"$9","publishedAt":"$D2025-03-22T00:00:00.000Z"},{"slug":"my-journey-into-software-development-and-data-analytics","title":"My Journey into Software Development and Data Analytics","excerpt":"From curiosity-driven HTML learning to AI certifications and real-world healthcare applications—discover how I transitioned from industrial engineering to tech, built meaningful connections, and created impactful solutions.","date":"2024-07-28","author":"Lloyd Dela Cruz","category":"development","tags":["Career Journey","Software Development","Data Analytics","Healthcare Technology","AI","AWS"],"readTime":"8 min read","featured":true,"image":"/images/blog/my-journey-into-tech.jpg","video":false,"interactive":false,"gradient":"from-cyan-600 via-blue-600 to-indigo-800","content":"$a","publishedAt":"$D2024-07-28T00:00:00.000Z"},{"slug":"one-year-of-mcp-what-the-standard-got-right","title":"One Year of MCP: What the Standard Got Right, and What's Next","excerpt":"A year after the Model Context Protocol stopped being a curiosity and started being a default — what it changed in practice, what it didn't, and the three open questions still ahead of it.","date":"2026-05-08","author":"Lloyd Dela Cruz","category":"development","tags":["MCP","AI Integration","Anthropic","Tooling","Protocol"],"readTime":"11 min read","featured":true,"image":"/images/blog/one-year-mcp.jpg","video":false,"interactive":false,"gradient":"from-indigo-600 via-blue-600 to-purple-800","content":"$b","publishedAt":"$D2026-05-08T00:00:00.000Z"},{"slug":"prompting-like-an-engineer-ten-patterns","title":"Prompting Like an Engineer: Ten Patterns I Lean On Every Day","excerpt":"The ten habits that did more for my output than any model upgrade — phrased as patterns, with the exact shapes I reach for and the situations where each one earns its keep.","date":"2026-02-19","author":"Lloyd Dela Cruz","category":"ai","tags":["AI","Prompting","LLMs","Workflow","Claude"],"readTime":"10 min read","featured":true,"image":"/images/blog/prompting-patterns.jpg","video":false,"interactive":false,"gradient":"from-indigo-600 via-blue-600 to-purple-800","content":"$c","publishedAt":"$D2026-02-19T00:00:00.000Z"},{"slug":"sepsis-early-warning-vital-sign-streams","title":"Building a Sepsis Early-Warning Signal from Vital-Sign Streams","excerpt":"A builder's notebook for turning the noisy fire-hose of bedside monitors into a single, sober alert — the features that earned their keep, the ones that didn't, and the part nobody warns you about.","date":"2026-03-14","author":"Lloyd Dela Cruz","category":"data-science","tags":["Data Science","Healthcare","Sepsis","Time Series","Python"],"readTime":"13 min read","featured":false,"image":"/images/blog/sepsis-signal.jpg","video":false,"interactive":false,"gradient":"from-emerald-600 via-teal-600 to-cyan-800","content":"$d","publishedAt":"$D2026-03-14T00:00:00.000Z"},{"slug":"understanding-model-context-protocol-future-ai-integration","title":"Understanding Model Context Protocol: The Future of AI Integration","excerpt":"Explore Anthropic's revolutionary MCP standard that's transforming how AI systems integrate with external tools and data sources, featuring rapid adoption by OpenAI and Google DeepMind.","date":"2025-06-20","author":"Lloyd Dela Cruz","category":"development","tags":["MCP","AI Integration","Anthropic","Protocol"],"readTime":"12 min read","featured":true,"image":"/images/blog/mcp-integration.jpg","video":false,"interactive":true,"gradient":"from-indigo-600 via-blue-600 to-purple-800","content":"$e","publishedAt":"$D2025-06-20T00:00:00.000Z"}],"initialCategories":[{"id":"all","label":"All Posts","count":12},{"id":"development","label":"Development","count":4},{"id":"healthcare","label":"Healthcare","count":4},{"id":"ai","label":"Ai","count":2},{"id":"data-science","label":"Data Science","count":2}]}],null],null],null]},[null,["$","$Lf",null,{"parallelRouterKey":"children","segmentPath":["children","blog","children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L10",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","notFoundStyles":"$undefined"}]],null]},[[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/7f6bd37aab40623f.css","precedence":"next","crossOrigin":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/css/aa2c403a9d1a1a1c.css","precedence":"next","crossOrigin":"$undefined"}],["$","link","2",{"rel":"stylesheet","href":"/_next/static/css/db7dc2d762fc3926.css","precedence":"next","crossOrigin":"$undefined"}]],["$","html",null,{"lang":"en","className":"__variable_245d8d __variable_97c177 __variable_a11773 scroll-smooth","children":["$","body",null,{"className":"font-sans antialiased bg-surface-canvas text-surface-fg","children":["$","$Lf",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L10",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],"notFoundStyles":[]}]}]}]],null],null],["$L11",null]]]]
+11:[["$","meta","0",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","1",{"name":"theme-color","content":"#0a0a0c"}],["$","meta","2",{"charSet":"utf-8"}],["$","title","3",{"children":"Blog | Lloyd Dela Cruz - Healthcare Technology Expert"}],["$","meta","4",{"name":"description","content":"Explore insights on healthcare technology, AI, data science, and software development. Learn from real-world case studies and practical implementations."}],["$","meta","5",{"name":"author","content":"Lloyd Dela Cruz"}],["$","meta","6",{"name":"keywords","content":"healthcare technology, AI in healthcare, data science, software development, machine learning, health informatics, digital health, Lloyd Dela Cruz"}],["$","meta","7",{"name":"robots","content":"index, follow"}],["$","meta","8",{"name":"googlebot","content":"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"}],["$","link","9",{"rel":"canonical","href":"https://lloyddelacruz.com/blog/"}],["$","meta","10",{"property":"og:title","content":"Blog | Lloyd Dela Cruz - Healthcare Technology Expert"}],["$","meta","11",{"property":"og:description","content":"Explore insights on healthcare technology, AI, data science, and software development. Learn from real-world case studies and practical implementations."}],["$","meta","12",{"property":"og:url","content":"https://lloyddelacruz.com/blog/"}],["$","meta","13",{"property":"og:site_name","content":"Lloyd Dela Cruz"}],["$","meta","14",{"property":"og:locale","content":"en_US"}],["$","meta","15",{"property":"og:image","content":"https://lloyddelacruz.com/images/og-blog.jpg"}],["$","meta","16",{"property":"og:image:width","content":"1200"}],["$","meta","17",{"property":"og:image:height","content":"630"}],["$","meta","18",{"property":"og:image:alt","content":"Lloyd Dela Cruz Blog - Healthcare Technology Insights"}],["$","meta","19",{"property":"og:type","content":"website"}],["$","meta","20",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","21",{"name":"twitter:creator","content":"@lloyddelacruz"}],["$","meta","22",{"name":"twitter:title","content":"Blog | Lloyd Dela Cruz - Healthcare Technology Expert"}],["$","meta","23",{"name":"twitter:description","content":"Explore insights on healthcare technology, AI, data science, and software development."}],["$","meta","24",{"name":"twitter:image","content":"https://lloyddelacruz.com/images/og-blog.jpg"}],["$","link","25",{"rel":"shortcut icon","href":"/favicon.svg"}],["$","link","26",{"rel":"icon","href":"/favicon.svg"}],["$","link","27",{"rel":"apple-touch-icon","href":"/favicon.svg"}],["$","meta","28",{"name":"next-size-adjust"}]]
 1:null
