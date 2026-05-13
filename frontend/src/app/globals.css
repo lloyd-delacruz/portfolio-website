@@ -153,6 +153,7 @@
     --paper-bg: 39 44% 92%;                  /* #f4eee3 */
     --paper-ink: 30 14% 15%;                 /* #2a2520 */
     --paper-ink-soft: 36 22% 24%;            /* #4a3f2f */
+    --paper-card: 39 44% 96%;                /* #fbf7ef — raised surface on paper */
 
     /* Accents & signals */
     --accent-gold: 33 45% 60%;               /* #c79d6a */
