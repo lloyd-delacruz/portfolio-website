@@ -1,0 +1,13 @@
+// frontend/src/components/work/deep-dive/index.ts
+export * from './StatusChip'
+export * from './MonoOutputCard'
+export * from './NodeDiagram'
+export * from './SectionShell'
+export * from './DeepDiveHero'
+export * from './SystemArchDiagram'
+export * from './DataPipelineGraph'
+export * from './InferenceWorkflow'
+export * from './DecisionImpact'
+export * from './FutureScalability'
+export * from './ProjectAppendix'
+export * from './MovedTo'

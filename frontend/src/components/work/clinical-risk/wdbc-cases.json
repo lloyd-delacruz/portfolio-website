@@ -1,0 +1,74 @@
+{
+  "cases": [
+    {
+      "id": "WDBC-047",
+      "label": "Case 047 · borderline",
+      "features": {
+        "worst_concave_points": 0.122,
+        "worst_perimeter": 112.5,
+        "worst_radius": 17.1,
+        "mean_texture": 20.4,
+        "worst_smoothness": 0.131,
+        "mean_concavity": 0.094,
+        "worst_area": 905,
+        "mean_radius": 14.7
+      }
+    },
+    {
+      "id": "WDBC-112",
+      "label": "Case 112 · clear benign",
+      "features": {
+        "worst_concave_points": 0.045,
+        "worst_perimeter": 78.2,
+        "worst_radius": 11.6,
+        "mean_texture": 13.5,
+        "worst_smoothness": 0.092,
+        "mean_concavity": 0.024,
+        "worst_area": 395,
+        "mean_radius": 10.9
+      }
+    },
+    {
+      "id": "WDBC-219",
+      "label": "Case 219 · clear malignant",
+      "features": {
+        "worst_concave_points": 0.281,
+        "worst_perimeter": 185.4,
+        "worst_radius": 24.1,
+        "mean_texture": 24.8,
+        "worst_smoothness": 0.169,
+        "mean_concavity": 0.188,
+        "worst_area": 1820,
+        "mean_radius": 21.3
+      }
+    },
+    {
+      "id": "WDBC-301",
+      "label": "Case 301 · ambiguous",
+      "features": {
+        "worst_concave_points": 0.115,
+        "worst_perimeter": 107.0,
+        "worst_radius": 16.3,
+        "mean_texture": 19.0,
+        "worst_smoothness": 0.130,
+        "mean_concavity": 0.090,
+        "worst_area": 875,
+        "mean_radius": 14.1
+      }
+    },
+    {
+      "id": "WDBC-414",
+      "label": "Case 414 · moderate risk",
+      "features": {
+        "worst_concave_points": 0.165,
+        "worst_perimeter": 132.6,
+        "worst_radius": 19.4,
+        "mean_texture": 22.1,
+        "worst_smoothness": 0.148,
+        "mean_concavity": 0.122,
+        "worst_area": 1180,
+        "mean_radius": 16.9
+      }
+    }
+  ]
+}

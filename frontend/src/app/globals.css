@@ -605,3 +605,5 @@
   border: 1px solid var(--line);
 }
 .home2 .blog-content td { padding: 0.6rem 0.75rem; border: 1px solid var(--line); color: var(--ink-soft); }
+
+@import "../components/work/deep-dive/deep-dive.css";
