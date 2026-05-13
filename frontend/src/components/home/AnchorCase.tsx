@@ -10,6 +10,7 @@ import {
   Check,
   type LucideIcon,
 } from 'lucide-react'
+import { ANCHOR_CASE_HREF } from './FeaturedWork'
 
 type FlowNode = { Icon: LucideIcon; label: string }
 
@@ -69,7 +70,7 @@ export function AnchorCase() {
           </p>
 
           <Link
-            href="/work/wheelchair-tracking"
+            href={ANCHOR_CASE_HREF}
             className="group mt-6 inline-flex w-fit items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white soft-shadow-sm transition-transform hover:-translate-y-0.5"
             style={{ background: 'var(--plum)' }}
           >

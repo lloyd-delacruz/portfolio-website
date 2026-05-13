@@ -1,6 +1,10 @@
 // frontend/src/components/home/FeaturedWork.tsx
 import Link from 'next/link'
 import { ArrowRight, QrCode, Network, Wallet, Dumbbell } from 'lucide-react'
+import { AnchorCase } from './AnchorCase'
+
+/** Slug of the project promoted to the homepage anchor band (excluded from the grid). */
+export const ANCHOR_CASE_HREF = '/work/wheelchair-tracking'
 
 type Variant = 'states' | 'topology' | 'finance' | 'mobile'
 
@@ -26,7 +30,7 @@ export const PROJECTS: Project[] = [
     title: 'Multi-Site Wheelchair Tracking System',
     body: 'Operational tracking platform supporting 800+ wheelchairs and clinical assets across multiple hospital sites — QR workflows, utilization tracking, lifecycle coordination, and chain-of-custody visibility.',
     stack: 'Microsoft Lists, QR Systems, Power Platform, React, TypeScript',
-    href: '/work/wheelchair-tracking',
+    href: ANCHOR_CASE_HREF,
   },
   {
     badge: 'HEALTHCARE SYSTEMS',
@@ -225,6 +229,8 @@ export function WorkCard({ p }: { p: Project }) {
 }
 
 export function FeaturedWork() {
+  const gridProjects = PROJECTS.filter((p) => p.href !== ANCHOR_CASE_HREF)
+
   return (
     <section className="mx-auto max-w-[1180px] px-6 py-12">
       <div className="flex items-end justify-between">
@@ -235,8 +241,10 @@ export function FeaturedWork() {
         </Link>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {PROJECTS.map((p) => (
+      <AnchorCase />
+
+      <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {gridProjects.map((p) => (
           <WorkCard key={p.title} p={p} />
         ))}
       </div>
