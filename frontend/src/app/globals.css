@@ -429,6 +429,9 @@
   --green:        #10b981;
   --blue:         #3b82f6;
   --amber:        #f59e0b;
+  --teal:         #0d9488;
+  --teal-deep:    #0f766e;
+  --teal-soft:    #ccfbf1;
 
   background: var(--cream);
   color: var(--ink);
@@ -454,6 +457,15 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+.home2 .grad-swirl-text {
+  background: linear-gradient(100deg, #6d28d9 0%, #ec4899 32%, #0d9488 64%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.home2 .bg-swirl {
+  background: conic-gradient(from 210deg, #6d28d9, #ec4899, #f59e0b, #0d9488, #6d28d9);
 }
 
 .home2 .soft-shadow   { box-shadow: 0 1px 2px rgba(28,22,46,0.04), 0 8px 24px rgba(28,22,46,0.06); }
