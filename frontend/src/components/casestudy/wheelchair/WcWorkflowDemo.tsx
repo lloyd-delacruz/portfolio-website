@@ -67,7 +67,7 @@ export function WcWorkflowDemo() {
   return (
     <CsSection
       id="workflow"
-      eyebrow="03 · Operational workflow"
+      eyebrow="04 · Operational workflow"
       title="Watch a scan move the whole system."
       intro="One gesture, four effects. Step through it — or let it run."
       footnote="Interactive prototype · representative state model."

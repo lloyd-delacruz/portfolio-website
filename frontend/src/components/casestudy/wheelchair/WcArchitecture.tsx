@@ -2,6 +2,7 @@
 import {
   QrCode, Workflow, Database, Network, ArrowRight,
   LayoutDashboard, History, Wrench, ArrowLeftRight,
+  WifiOff, ShieldCheck, RefreshCw, FileLock2, CopyX, ClipboardEdit,
 } from 'lucide-react'
 import { CsSection, Module, Chip } from '../bits'
 
@@ -33,6 +34,39 @@ const LAYERS = [
   { Icon: Workflow, title: 'Workflow orchestration', body: 'The scan resolves to a state transition; rules decide what’s valid from here.' },
   { Icon: Database, title: 'Operational registry', body: 'One record per asset — current state, location, and full custody history.' },
   { Icon: Network, title: 'Multi-site coordination', body: 'One shared registry, role-shaped surfaces per site and for operations.' },
+]
+
+const CONSTRAINTS = [
+  {
+    Icon: WifiOff,
+    title: 'Intermittent connectivity',
+    body: 'Scans queue locally on the device when Wi-Fi or cellular drops; the registry reconciles the queued events in arrival order once the link is restored.',
+  },
+  {
+    Icon: ShieldCheck,
+    title: 'Scan validation',
+    body: 'Every scan is checked against the current state machine. Invalid transitions (e.g. Cleaning → In Use without an Available step) are rejected at the edge and logged.',
+  },
+  {
+    Icon: RefreshCw,
+    title: 'State reconciliation',
+    body: 'When two scans collide — a delayed offline event arriving after a newer one — the registry applies a deterministic last-writer-wins-by-timestamp rule and surfaces the conflict for review.',
+  },
+  {
+    Icon: FileLock2,
+    title: 'Audit logging',
+    body: 'Every state transition writes an append-only audit row with actor, site, timestamp, and prior state. The audit log is never edited — corrections are written as new compensating events.',
+  },
+  {
+    Icon: CopyX,
+    title: 'Duplicate-scan prevention',
+    body: 'Repeated scans of the same asset within a short debounce window resolve to a single transition; duplicates are recorded but do not double-count or re-fire downstream flags.',
+  },
+  {
+    Icon: ClipboardEdit,
+    title: 'Operational fallback workflow',
+    body: 'When the registry is unreachable, ward staff fall back to a paper handoff sheet keyed by asset ID; coordinators reconcile entries on the next available shift without losing chain-of-custody.',
+  },
 ]
 
 function StageCard({ Icon, label, sub, primary }: { Icon: typeof QrCode; label: string; sub: string; primary?: boolean }) {
@@ -111,6 +145,36 @@ export function WcArchitecture() {
           </div>
         ))}
       </div>
+
+      <Module className="mt-6">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
+            Reliability &amp; constraints · how the system behaves when things go wrong
+          </p>
+          <span className="text-[11px] text-ink-muted">production guarantees</span>
+        </div>
+        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {CONSTRAINTS.map(({ Icon, title, body }) => (
+            <div
+              key={title}
+              className="rounded-xl p-4"
+              style={{ background: 'var(--cream-2)', border: '1px solid var(--line)' }}
+            >
+              <div className="flex items-center gap-2">
+                <div className="grid h-7 w-7 place-items-center rounded-md bg-white ghair">
+                  <Icon size={14} style={{ color: 'var(--ink-soft)' }} strokeWidth={1.9} />
+                </div>
+                <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-ink">{title}</p>
+              </div>
+              <p className="mt-2.5 text-[12.5px] leading-relaxed text-ink-soft">{body}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-xs text-ink-muted">
+          These behaviours are not edge cases — they are the daily reality of running an asset registry across four
+          sites with mixed network conditions and shift-based staff turnover.
+        </p>
+      </Module>
     </CsSection>
   )
 }

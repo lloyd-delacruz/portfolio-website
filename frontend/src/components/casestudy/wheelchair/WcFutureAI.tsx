@@ -36,7 +36,7 @@ const CARDS = [
 export function WcFutureAI() {
   return (
     <CsSection
-      eyebrow="05 · Where this goes"
+      eyebrow="08 · Where this goes"
       title="The registry becomes the training set."
       intro="Every scan is already a labelled event. Over time that’s a clean operational dataset — and a foundation for intelligence that stays grounded in what the system actually records."
       footnote="Roadmap — no model where a rule will do."

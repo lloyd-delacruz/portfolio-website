@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { ArrowRight, ArrowLeft } from 'lucide-react'
 import { WcSystemMap } from './WcSystemMap'
+import { StatusPill, CapabilityPill } from '@/components/home/FeaturedWork'
 
 const META = [
   { k: 'Role', v: 'Systems design & build' },
@@ -22,10 +23,14 @@ export function WcHero() {
 
         <div className="mt-6 grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
           <div>
-            <span className="anim-rise inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-soft ghair">
-              <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--plum)' }} />
-              Healthcare Operations · Multi-Site
-            </span>
+            <div className="anim-rise flex flex-wrap items-center gap-1.5">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-soft ghair">
+                <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--plum)' }} />
+                Healthcare Operations · Multi-Site
+              </span>
+              <StatusPill status="production" />
+              <CapabilityPill kind="case-study" />
+            </div>
 
             <h1 className="anim-rise mt-5 font-display text-[2.5rem] font-extrabold leading-[1.06] text-ink sm:text-[3rem] lg:text-[3.4rem]" style={{ animationDelay: '60ms' }}>
               Multi-Site Wheelchair
