@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { X, ArrowUpRight, type LucideIcon, Atom, Wind } from 'lucide-react'
+import { X, ArrowUpRight, type LucideIcon, Atom, Wind, Hexagon, Route, Database } from 'lucide-react'
 
 type Project = { name: string; href?: string }
 
@@ -265,6 +265,118 @@ const FRONTEND_TOOLS: Tool[] = [
   },
 ]
 
+const BACKEND_TOOLS: Tool[] = [
+  {
+    name: 'Node.js',
+    vendor: 'OpenJS Foundation',
+    Icon: Hexagon,
+    tagline: 'JavaScript on the server.',
+    what:
+      'A runtime that lets you run JavaScript outside the browser — building HTTP servers, scripts, and tools with the same language and packages used on the front end.',
+    trend:
+      'Still the default for full-stack JS in 2025. The ecosystem is splitting between Node, Bun, and Deno — but Node remains the safe baseline for production work.',
+    how:
+      'Wraps V8 (Chrome’s JavaScript engine) with a non-blocking I/O event loop and a vast standard library. npm gives you a package for nearly every need; the runtime handles concurrency without threads.',
+    inWork: 'The default runtime for any service or build tooling I write — keeps the whole stack in one language.',
+    projects: [
+      { name: 'EquiTrackr', href: '/work/equitrackr' },
+      { name: 'SpendWise', href: '/work/spendwise' },
+      { name: 'This site', href: '/' },
+    ],
+    url: 'https://nodejs.org',
+    site: 'nodejs.org',
+  },
+  {
+    name: 'Express',
+    vendor: 'OpenJS Foundation',
+    Icon: Route,
+    tagline: 'Minimalist web framework for Node.js.',
+    what:
+      'A thin layer over Node’s HTTP module: routes, middleware, request/response helpers. Small surface, fast to learn, easy to embed inside larger services.',
+    trend:
+      'Still the most common Node web framework, though newer options (Fastify, Hono, Elysia) are pushing on performance and type safety. Express remains the safe choice for straightforward APIs.',
+    how:
+      'You define routes and middleware functions that chain together — each one looks at the request, optionally mutates state, and either responds or calls the next function in the chain.',
+    inWork: 'My go-to for small APIs and admin endpoints when the project doesn’t need a heavier framework.',
+    projects: [
+      { name: 'EquiTrackr', href: '/work/equitrackr' },
+      { name: 'SpendWise', href: '/work/spendwise' },
+    ],
+    url: 'https://expressjs.com',
+    site: 'expressjs.com',
+  },
+  {
+    name: 'Django',
+    vendor: 'Django Software Foundation',
+    monogram: { text: 'Dj', bg: '#092e20', fg: '#44b78b' },
+    tagline: 'The web framework for perfectionists with deadlines.',
+    what:
+      'A batteries-included Python framework: ORM, admin interface, auth, forms, templating, and a clear opinionated structure for organizing a project.',
+    trend:
+      'Still the dominant Python web framework. In 2025 it’s being paired with HTMX or React on the front end as teams move away from heavy SPA setups for internal tools and content sites.',
+    how:
+      'Maps URL patterns to view functions, views to templates, and models to database tables via the ORM. The admin generates a usable interface for your data with almost no code.',
+    inWork: 'When the workload is data-heavy and Python’s ecosystem (pandas, scikit-learn) needs to live next to the web layer.',
+    projects: [{ name: 'Explorations' }],
+    url: 'https://www.djangoproject.com',
+    site: 'djangoproject.com',
+  },
+  {
+    name: 'Wasp',
+    vendor: 'Wasp-lang',
+    monogram: { text: 'W', bg: '#ffcc00', fg: '#1c162e' },
+    tagline: 'Full-stack web framework configured in one file.',
+    what:
+      'Describes your whole app — pages, auth, data models, jobs — in a single Wasp config, then generates a React + Node + Prisma project around it. You write your domain logic, the framework wires up the rest.',
+    trend:
+      'Part of the 2024–25 wave of higher-level frameworks aiming to compress full-stack boilerplate. Wasp, RedwoodJS, and t3-stack all bet the wiring layer should be generated, not written.',
+    how:
+      'The Wasp compiler reads your .wasp config and outputs a runnable React/Node/Prisma project. You edit the generated React components and Node operations; Wasp re-generates the glue when the config changes.',
+    inWork: 'For greenfield apps where the auth, DB, and jobs wiring would otherwise eat the first week of work.',
+    projects: [{ name: 'Explorations' }],
+    url: 'https://wasp-lang.dev',
+    site: 'wasp-lang.dev',
+  },
+  {
+    name: 'Prisma',
+    vendor: 'Prisma',
+    Icon: Database,
+    tagline: 'Type-safe database ORM for Node and TypeScript.',
+    what:
+      'A schema-first ORM: you write a .prisma file defining tables and relations, and Prisma generates a fully-typed client for querying them, plus migrations to keep the database in sync.',
+    trend:
+      'The default TypeScript ORM in 2025, though Drizzle is gaining ground for projects that want closer-to-SQL ergonomics. Prisma’s bet on type safety end-to-end has held up.',
+    how:
+      'Generates a TypeScript client from your schema so every query returns precisely-typed results; the migration tool diffs your schema against the database and produces SQL migrations to apply.',
+    inWork: 'Owns the schema and queries on every backend I ship — SpendWise, EquiTrackr, and anything else with real data.',
+    projects: [
+      { name: 'SpendWise', href: '/work/spendwise' },
+      { name: 'EquiTrackr', href: '/work/equitrackr' },
+    ],
+    url: 'https://www.prisma.io',
+    site: 'prisma.io',
+  },
+  {
+    name: 'PostgreSQL',
+    vendor: 'PostgreSQL Global Dev Group',
+    monogram: { text: 'Pg', bg: '#336791', fg: '#ffffff' },
+    tagline: 'The world’s most advanced open-source relational database.',
+    what:
+      'A mature SQL database with strong ACID guarantees, rich types (JSON, arrays, ranges), full-text search, and an extension system that lets you bolt on capabilities like vector search and time-series.',
+    trend:
+      'The default operational database in 2025. SQLite-on-the-edge and DuckDB-for-analytics are taking specific workloads, but Postgres remains the safe general-purpose pick for production data.',
+    how:
+      'Stores data in tables on disk, executes SQL queries through a cost-based planner, and uses MVCC so reads don’t block writes. Replication, partitioning, and extensions let it scale up before you outgrow it.',
+    inWork: 'The primary datastore for everything I build that needs durable state — paired with Prisma for the application layer.',
+    projects: [
+      { name: 'SpendWise', href: '/work/spendwise' },
+      { name: 'EquiTrackr', href: '/work/equitrackr' },
+    ],
+    url: 'https://www.postgresql.org',
+    site: 'postgresql.org',
+  },
+]
+
 function ToolThumb({ tool }: { tool: Tool }) {
   if (tool.Icon) {
     const Icon = tool.Icon
@@ -365,6 +477,15 @@ const FRONTEND_ROW: RowContent = {
   tools: FRONTEND_TOOLS,
 }
 
+const BACKEND_ROW: RowContent = {
+  eyebrow: 'The backend',
+  headlineLead: 'Where the data lives.',
+  headlineAccent: 'And how it gets out.',
+  description:
+    'Typed APIs, real schemas, and the boring discipline that lets the front end stay simple. Tap any tool to see what it is, where the field is, and where it shows up in my work.',
+  tools: BACKEND_TOOLS,
+}
+
 export function SystemsToolchain() {
   const [active, setActive] = useState<Tool | null>(null)
 
@@ -386,6 +507,7 @@ export function SystemsToolchain() {
     <section className="mx-auto max-w-[1180px] px-6 pt-4 pb-16 space-y-6">
       <ToolRow row={AI_ROW} onSelect={setActive} />
       <ToolRow row={FRONTEND_ROW} onSelect={setActive} />
+      <ToolRow row={BACKEND_ROW} onSelect={setActive} />
 
       {active && (
         <div
