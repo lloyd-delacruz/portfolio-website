@@ -93,6 +93,83 @@ export function AIWorkflowAlgorithm() {
                   </g>
                 )
               })}
+
+              {/* Decision-branch labels */}
+              {(() => {
+                const gate = STAGES[4]  // PASS?
+                const plan = STAGES[2]  // PLAN
+                const review = STAGES[5]
+                const arcStartX = gate.cx
+                const arcStartY = ROW_Y - HALF       // top of diamond bounding box
+                const arcEndX = plan.cx
+                const arcEndY = ROW_Y - HALF         // top of Plan card
+                const c1x = gate.cx - 40
+                const c1y = 60
+                const c2x = plan.cx + 40
+                const c2y = 60
+                const apexX = (gate.cx + plan.cx) / 2
+                const apexY = 70
+
+                // Yes-branch midpoint between the diamond and Review (along the forward path).
+                const yesX = (gate.cx + review.cx) / 2
+                const yesY = ROW_Y - 12
+
+                return (
+                  <g>
+                    <defs>
+                      <marker
+                        id="aiwf-arrow"
+                        viewBox="0 0 10 10"
+                        refX="8"
+                        refY="5"
+                        markerWidth="6"
+                        markerHeight="6"
+                        orient="auto-start-reverse"
+                      >
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--amber)" />
+                      </marker>
+                    </defs>
+
+                    {/* Amber loop-back arc from the top of the diamond back to the top of Plan */}
+                    <path
+                      d={`M ${arcStartX} ${arcStartY} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${arcEndX} ${arcEndY}`}
+                      stroke="var(--amber)"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeOpacity={0.7}
+                      className="flow-line"
+                      markerEnd="url(#aiwf-arrow)"
+                    />
+                    <circle cx={arcStartX} cy={arcStartY} r={3.2} fill="var(--amber)" opacity={0.85} />
+
+                    {/* "no" at the apex of the loop-back arc */}
+                    <text
+                      x={apexX}
+                      y={apexY - 6}
+                      textAnchor="middle"
+                      fontSize="11"
+                      fontWeight="700"
+                      fill="var(--amber)"
+                      style={{ letterSpacing: '0.14em' }}
+                    >
+                      NO
+                    </text>
+
+                    {/* "yes" along the short forward segment between the diamond and Review */}
+                    <text
+                      x={yesX}
+                      y={yesY}
+                      textAnchor="middle"
+                      fontSize="11"
+                      fontWeight="700"
+                      fill="var(--green)"
+                      style={{ letterSpacing: '0.14em' }}
+                    >
+                      YES
+                    </text>
+                  </g>
+                )
+              })()}
             </svg>
 
             {/* Node cards / diamond, positioned in percentage-of-design-space coordinates */}
