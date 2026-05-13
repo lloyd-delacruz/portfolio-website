@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { X, ArrowUpRight, type LucideIcon, Atom, Wind, Hexagon, Route, Database } from 'lucide-react'
+import { X, ArrowUpRight, type LucideIcon, Atom, Wind, Hexagon, Route, Database, Layers } from 'lucide-react'
 
 type Project = { name: string; href?: string }
 
@@ -340,7 +340,7 @@ const BACKEND_TOOLS: Tool[] = [
   {
     name: 'Prisma',
     vendor: 'Prisma',
-    Icon: Database,
+    Icon: Layers,
     tagline: 'Type-safe database ORM for Node and TypeScript.',
     what:
       'A schema-first ORM: you write a .prisma file defining tables and relations, and Prisma generates a fully-typed client for querying them, plus migrations to keep the database in sync.',
@@ -359,7 +359,7 @@ const BACKEND_TOOLS: Tool[] = [
   {
     name: 'PostgreSQL',
     vendor: 'PostgreSQL Global Dev Group',
-    monogram: { text: 'Pg', bg: '#336791', fg: '#ffffff' },
+    Icon: Database,
     tagline: 'The world’s most advanced open-source relational database.',
     what:
       'A mature SQL database with strong ACID guarantees, rich types (JSON, arrays, ranges), full-text search, and an extension system that lets you bolt on capabilities like vector search and time-series.',
