@@ -61,3 +61,29 @@ describe('ProjectMeta — Flavor A (wheelchair-tracking)', () => {
     expect(getByRole('region', { name: /project metadata/i })).toBeInTheDocument()
   })
 })
+
+describe('ProjectMeta — Flavor C (equitrackr — thin stub)', () => {
+  it('renders Status, Role, Period, Stack only', () => {
+    const { getByText } = render(<ProjectMeta slug="equitrackr" />)
+    expect(getByText('Status')).toBeInTheDocument()
+    expect(getByText('Prototype')).toBeInTheDocument()
+    expect(getByText('Role')).toBeInTheDocument()
+    expect(getByText('Built solo')).toBeInTheDocument()
+    expect(getByText('Period')).toBeInTheDocument()
+    expect(getByText('Stack')).toBeInTheDocument()
+  })
+
+  it('omits Deployment, Scale, Live, Source', () => {
+    const { queryByText } = render(<ProjectMeta slug="equitrackr" />)
+    expect(queryByText('Deployment')).not.toBeInTheDocument()
+    expect(queryByText('Scale')).not.toBeInTheDocument()
+    expect(queryByText('Live')).not.toBeInTheDocument()
+    expect(queryByText('Source')).not.toBeInTheDocument()
+  })
+
+  it('status dot reflects prototype state', () => {
+    const { container } = render(<ProjectMeta slug="equitrackr" />)
+    const dot = container.querySelector('.project-meta__dot')
+    expect(dot).toHaveAttribute('data-state', 'prototype')
+  })
+})
