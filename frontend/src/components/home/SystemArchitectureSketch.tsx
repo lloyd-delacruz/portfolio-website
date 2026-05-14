@@ -20,15 +20,15 @@ type Satellite = {
   color: string
 }
 
-const W = 600
-const H = 520
+const W = 580
+const H = 440
 const CX = W / 2
 const CY = H / 2
-const ORBIT_RX = 240
-const ORBIT_RY = 175
+const ORBIT_RX = 230
+const ORBIT_RY = 145
 
-const ENGINE_W = 168
-const ENGINE_H = 168
+const ENGINE_W = 156
+const ENGINE_H = 156
 
 const SAT_W = 132
 const SAT_H = 64
@@ -93,7 +93,7 @@ export function SystemArchitectureSketch() {
               strokeDasharray="2 4"
             />
 
-            {/* Spokes from engine to each satellite */}
+            {/* Spokes from engine to each satellite — animated dashes (matches systems page) */}
             {SATELLITES.map((s, i) => {
               const p = orbitPosition(i, SATELLITES.length)
               return (
@@ -104,9 +104,11 @@ export function SystemArchitectureSketch() {
                   x2={p.x}
                   y2={p.y}
                   stroke="var(--plum)"
-                  strokeOpacity={0.22}
-                  strokeWidth={1}
+                  strokeOpacity={0.38}
+                  strokeWidth={1.25}
                   strokeLinecap="round"
+                  className="flow-line"
+                  style={{ animationDelay: `${i * 0.18}s` }}
                 />
               )
             })}
@@ -140,11 +142,11 @@ export function SystemArchitectureSketch() {
                 animationDuration: '8s',
               }}
             >
-              <Cpu size={32} strokeWidth={1.8} aria-hidden />
-              <span className="px-3 text-center font-display text-[14px] font-semibold leading-tight">
+              <Cpu size={28} strokeWidth={1.8} aria-hidden />
+              <span className="px-3 text-center font-display text-[13px] font-semibold leading-tight">
                 Wheelchair Tracking Engine
               </span>
-              <span className="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/70">
+              <span className="text-[9px] font-semibold uppercase tracking-[0.16em] text-white/70">
                 Orchestration core
               </span>
             </div>
