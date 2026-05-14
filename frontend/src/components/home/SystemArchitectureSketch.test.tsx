@@ -3,69 +3,57 @@ import { render, screen } from '@testing-library/react'
 import { SystemArchitectureSketch } from './SystemArchitectureSketch'
 
 describe('SystemArchitectureSketch', () => {
-  it('renders all five node titles', () => {
+  it('renders the three node titles', () => {
     render(<SystemArchitectureSketch />)
     for (const title of [
-      'QR scan / Mobile',
-      'Event stream',
-      'State engine',
-      'Decision layer',
+      'QR scan',
+      'State + decision engine',
       'Operations surface',
     ]) {
       expect(screen.getByText(title)).toBeInTheDocument()
     }
   })
 
-  it('renders each node secondary caption', () => {
+  it('renders each node caption directly under its node', () => {
     render(<SystemArchitectureSketch />)
-    for (const caption of [
-      'Clinical end',
-      'Audit log',
-      'Asset lifecycle',
-      'Routing rules',
-      'Dashboard · alerts',
-    ]) {
+    for (const caption of ['Clinical end', 'Lifecycle + routing', 'Dashboard · alerts']) {
       expect(screen.getByText(caption)).toBeInTheDocument()
     }
   })
 
-  it('renders the live-deployment caption beneath the diagram', () => {
+  it('does not render the removed five-node titles', () => {
     render(<SystemArchitectureSketch />)
-    expect(
-      screen.getByText(/wheelchair tracking — live across 4 sites · 800\+ assets/i),
-    ).toBeInTheDocument()
-  })
-
-  it('renders all five connector labels including the closing feedback edge', () => {
-    render(<SystemArchitectureSketch />)
-    for (const label of ['event', 'state transition', 'rule decision', 'signal', 'feedback']) {
-      expect(screen.getByText(label)).toBeInTheDocument()
+    for (const removed of ['Event stream', 'State engine', 'Decision layer', 'QR scan / Mobile']) {
+      expect(screen.queryByText(removed)).toBeNull()
     }
   })
 
-  it('exposes an aria-label that describes the cyclical topology', () => {
+  it('does not render decorative per-edge connector labels', () => {
     render(<SystemArchitectureSketch />)
-    const img = screen.getByRole('img', { name: /loop|cycle|feeds? back/i })
+    for (const label of ['event', 'state transition', 'rule decision', 'signal', 'feedback']) {
+      expect(screen.queryByText(label)).toBeNull()
+    }
+  })
+
+  it('renders the anchored live deployment row with site and asset counts', () => {
+    render(<SystemArchitectureSketch />)
+    expect(screen.getByText(/live/i)).toBeInTheDocument()
+    expect(screen.getByText(/4 sites/i)).toBeInTheDocument()
+    expect(screen.getByText(/800\+ assets/i)).toBeInTheDocument()
+    expect(screen.getByText(/microsoft lists \+ qr/i)).toBeInTheDocument()
+  })
+
+  it('exposes a descriptive aria-label for the diagram', () => {
+    render(<SystemArchitectureSketch />)
+    const img = screen.getByRole('img', { name: /scan|engine|operations|loop|cycle/i })
     expect(img).toBeInTheDocument()
   })
 
-  it('renders exactly one heartbeat pulse element with the anim-heartbeat utility', () => {
+  it('renders exactly one travel pulse and no sonar / ack / seg-wash overlays', () => {
     const { container } = render(<SystemArchitectureSketch />)
     expect(container.querySelectorAll('.anim-heartbeat')).toHaveLength(1)
-  })
-
-  it('renders exactly one counter-flow ack pulse element with the anim-ack utility', () => {
-    const { container } = render(<SystemArchitectureSketch />)
-    expect(container.querySelectorAll('.anim-ack')).toHaveLength(1)
-  })
-
-  it('renders five sonar ring elements (one per node beep)', () => {
-    const { container } = render(<SystemArchitectureSketch />)
-    expect(container.querySelectorAll('.anim-sonar')).toHaveLength(5)
-  })
-
-  it('renders five segment wash overlays (one per connector)', () => {
-    const { container } = render(<SystemArchitectureSketch />)
-    expect(container.querySelectorAll('.anim-seg-wash')).toHaveLength(5)
+    expect(container.querySelectorAll('.anim-sonar')).toHaveLength(0)
+    expect(container.querySelectorAll('.anim-ack')).toHaveLength(0)
+    expect(container.querySelectorAll('.anim-seg-wash')).toHaveLength(0)
   })
 })
