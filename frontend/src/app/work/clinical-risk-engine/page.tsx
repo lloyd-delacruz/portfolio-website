@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { HomeNav } from '@/components/home/HomeNav'
 import { SiteFooter } from '@/components/home/SiteFooter'
 import { Reveal } from '@/components/home/Reveal'
+import { ProjectMeta } from '@/components/work/ProjectMeta'
 import { CrHero } from '@/components/casestudy/clinicalRisk/CrHero'
 import { CrProblem } from '@/components/casestudy/clinicalRisk/CrProblem'
 import { CrArchitecture } from '@/components/casestudy/clinicalRisk/CrArchitecture'
@@ -23,6 +24,7 @@ export default function Page() {
       <HomeNav active="Work" />
       <main>
         <CrHero />
+        <ProjectMeta slug="clinical-risk-engine" />
         <Reveal>
           <CrProblem />
         </Reveal>
