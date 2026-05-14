@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { HomeNav } from '@/components/home/HomeNav'
 import { SiteFooter } from '@/components/home/SiteFooter'
 import { Reveal } from '@/components/home/Reveal'
+import { ProjectMeta } from '@/components/work/ProjectMeta'
 import { EtHero } from '@/components/casestudy/equitrackr/EtHero'
 import { EtProblem } from '@/components/casestudy/equitrackr/EtProblem'
 import { EtArchitecture } from '@/components/casestudy/equitrackr/EtArchitecture'
@@ -23,6 +24,7 @@ export default function Page() {
       <HomeNav active="Work" />
       <main>
         <EtHero />
+        <ProjectMeta slug="equitrackr" />
         <Reveal><EtProblem /></Reveal>
         <Reveal><EtArchitecture /></Reveal>
         <Reveal><EtConsoleDemo /></Reveal>
