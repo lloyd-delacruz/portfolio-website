@@ -45,8 +45,8 @@ export function WcSystemMap() {
             style={{ background: 'radial-gradient(closest-side, rgba(124,58,237,0.16), transparent)' }}
           />
 
-          {/* registry */}
-          <div className="anim-drift absolute left-1/2 top-1/2 flex h-[110px] w-[170px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-[18px] bg-white ghair-2 soft-shadow-lg">
+          {/* registry — statically centered so SVG connector endpoints land on the box edges */}
+          <div className="absolute left-1/2 top-1/2 flex h-[110px] w-[170px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-[18px] bg-white ghair-2 soft-shadow-lg">
             <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-muted">Operational</span>
             <span className="font-display text-xl font-extrabold text-plum">Registry</span>
             <span className="mt-1.5 inline-flex items-center gap-1.5 text-[11px] text-ink-soft">
@@ -55,17 +55,16 @@ export function WcSystemMap() {
             </span>
           </div>
 
-          {/* site cards */}
+          {/* site cards — statically positioned at symmetric corner anchors */}
           {SITES.map((s) => (
             <div
               key={s.key}
-              className="anim-float absolute flex flex-col justify-center rounded-2xl bg-white px-3 py-2 ghair soft-shadow-sm"
+              className="absolute flex flex-col justify-center rounded-2xl bg-white px-3 py-2 ghair soft-shadow-sm"
               style={{
                 width: CARD_W,
                 height: CARD_H,
                 left: `${(s.x / W) * 100}%`,
                 top: `${(s.y / H) * 100}%`,
-                animationDelay: `${(SITES.indexOf(s) % 4) * 0.7}s`,
               }}
             >
               <span className="text-[11px] font-semibold text-ink">{s.label}</span>
