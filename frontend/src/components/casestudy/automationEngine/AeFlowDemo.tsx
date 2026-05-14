@@ -31,7 +31,7 @@ function statusFor(stepId: number, activeStep: number): StepStatus {
 
 export function AeFlowDemo() {
   const reduced = usePrefersReducedMotion()
-  const [activeStep, setActiveStep] = useState<number>(reduced ? FLOW.steps.length : 1)
+  const [activeStep, setActiveStep] = useState<number>(reduced ? FLOW.steps.length + 1 : 1)
   const [playing, setPlaying] = useState<boolean>(!reduced)
 
   useEffect(() => {

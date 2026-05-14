@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { FeaturedWork, PROJECTS, ANCHOR_CASE_HREF } from './FeaturedWork'
 
 describe('FeaturedWork — composition', () => {
-  it('exports exactly 4 PROJECTS in the curated order: anchor, two new placeholders, SpendWise', () => {
+  it('exports exactly 4 PROJECTS in the curated order: anchor, clinical-genai, automation-engine, SpendWise', () => {
     expect(PROJECTS).toHaveLength(4)
     expect(PROJECTS[0].href).toBe(ANCHOR_CASE_HREF)
     expect(PROJECTS[0].title).toBe('Multi-Site Hospital Equipment Tracking & Analytics System')
@@ -26,7 +26,7 @@ describe('FeaturedWork — composition', () => {
     expect(sw?.body).toMatch(/non-healthcare proof point for product-engineering breadth/i)
   })
 
-  it('placeholder cards point at the new placeholder routes', () => {
+  it('non-anchor cards point at their case study routes', () => {
     expect(PROJECTS[1].href).toBe('/work/clinical-genai-pipeline')
     expect(PROJECTS[2].href).toBe('/work/healthcare-automation-engine')
   })
