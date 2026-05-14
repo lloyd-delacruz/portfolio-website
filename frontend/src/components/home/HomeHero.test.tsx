@@ -3,20 +3,20 @@ import { render, screen } from '@testing-library/react'
 import { HomeHero } from './HomeHero'
 
 describe('HomeHero', () => {
-  it('renders the shortened "Applied AI · Healthcare Ops" eyebrow', () => {
+  it('renders the "AI Systems Architect · Applied" eyebrow', () => {
     render(<HomeHero />)
-    expect(screen.getByText(/applied ai · healthcare ops/i)).toBeInTheDocument()
+    expect(screen.getByText(/ai systems architect · applied/i)).toBeInTheDocument()
   })
 
   it('renders the headline and sub-headline', () => {
     render(<HomeHero />)
     expect(
       screen.getByRole('heading', {
-        name: /i build ai systems that support healthcare operations/i,
+        name: /i architect ai systems that solve real-world problems/i,
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/multi-site workflows, event streams, and decision layers/i),
+      screen.getByText(/i design ai-native workflows — agents, llms, decision layers/i),
     ).toBeInTheDocument()
   })
 
@@ -28,7 +28,9 @@ describe('HomeHero', () => {
   it('renders the recruiter-readable status line', () => {
     render(<HomeHero />)
     expect(
-      screen.getByText(/open to applied ai, ai systems, and operational intelligence roles/i),
+      screen.getByText(
+        /open to ai architecture, systems engineering, and workflow automation roles/i,
+      ),
     ).toBeInTheDocument()
   })
 

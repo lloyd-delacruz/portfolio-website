@@ -12,31 +12,32 @@ export function HomeHero() {
         <div>
           <span className="anim-rise inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-soft ghair">
             <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--plum)' }} />
-            Applied AI · Healthcare Ops
+            AI Systems Architect · Applied
           </span>
 
           <h1
             className="anim-rise mt-6 max-w-[18ch] font-display text-[2.85rem] font-extrabold leading-[1.04] text-ink sm:text-[3.4rem] lg:text-[4rem]"
             style={{ animationDelay: '60ms' }}
           >
-            I build AI systems that{' '}
-            <span className="grad-plum-text">support healthcare operations.</span>
+            I architect AI systems that{' '}
+            <span className="grad-plum-text">solve real-world problems.</span>
           </h1>
 
           <p
-            className="anim-rise mt-6 max-w-[46ch] text-[1.05rem] leading-relaxed text-ink-soft"
+            className="anim-rise mt-6 max-w-[52ch] text-[1.05rem] leading-relaxed text-ink-soft"
             style={{ animationDelay: '120ms' }}
           >
-            Multi-site workflows, event streams, and decision layers —
-            designed to ship, observed in production.
+            I design AI-native workflows — agents, LLMs, decision layers,
+            and the plumbing between them — and ship them into production.
+            Engineered for reliability, observed in the wild.
           </p>
 
           <p
             className="anim-rise mt-6 text-[12px] leading-relaxed text-ink-muted"
             style={{ animationDelay: '180ms' }}
           >
-            Vancouver, Canada · Open to applied AI, AI systems, and operational intelligence roles ·
-            Currently shipping multi-site healthcare deployment
+            Vancouver, Canada · Open to AI architecture, systems engineering, and workflow automation roles ·
+            Currently shipping a multi-site AI workflow in healthcare
           </p>
 
           <div
