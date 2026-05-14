@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { HomeNav } from '@/components/home/HomeNav'
 import { SiteFooter } from '@/components/home/SiteFooter'
 import { Reveal } from '@/components/home/Reveal'
+import { ProjectMeta } from '@/components/work/ProjectMeta'
 import { WcHero } from '@/components/casestudy/wheelchair/WcHero'
 import { WcProblem } from '@/components/casestudy/wheelchair/WcProblem'
 import { WcArchitecture } from '@/components/casestudy/wheelchair/WcArchitecture'
@@ -25,6 +26,7 @@ export default function Page() {
       <HomeNav active="Work" />
       <main>
         <WcHero />
+        <ProjectMeta slug="wheelchair-tracking" />
         <Reveal><WcProblem /></Reveal>
         <Reveal><WcArchitecture /></Reveal>
         <Reveal><WcRoles /></Reveal>
