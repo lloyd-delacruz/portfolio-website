@@ -4,7 +4,7 @@ import { HomeHero } from '@/components/home/HomeHero'
 import { BuiltWithRow } from '@/components/home/BuiltWithRow'
 import { ProductionIndicators } from '@/components/home/ProductionIndicators'
 import { Capabilities } from '@/components/home/Capabilities'
-import { AIWorkflowAlgorithm } from '@/components/home/AIWorkflowAlgorithm'
+import { EngineeringLoop } from '@/components/home/EngineeringLoop'
 import { FeaturedWork } from '@/components/home/FeaturedWork'
 import { FooterCTA } from '@/components/home/FooterCTA'
 import { SiteFooter } from '@/components/home/SiteFooter'
@@ -19,7 +19,7 @@ export default function Home() {
         <BuiltWithRow />
         <Reveal><ProductionIndicators /></Reveal>
         <Reveal><Capabilities /></Reveal>
-        <Reveal><AIWorkflowAlgorithm /></Reveal>
+        <Reveal><EngineeringLoop /></Reveal>
         <Reveal><FeaturedWork /></Reveal>
         <FooterCTA />
       </main>

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { HomeNav } from '@/components/home/HomeNav'
 import { SiteFooter } from '@/components/home/SiteFooter'
 import { FooterCTA } from '@/components/home/FooterCTA'
-import { AIWorkflowAlgorithm } from '@/components/home/AIWorkflowAlgorithm'
+import { EngineeringLoop } from '@/components/home/EngineeringLoop'
 import { SystemsToolchain } from '@/components/home/SystemsToolchain'
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ export default function SystemsPage() {
             production systems — fast, but grounded in tested code, clean data, and real workflows.
           </p>
         </section>
-        <AIWorkflowAlgorithm />
+        <EngineeringLoop />
         <SystemsToolchain />
         <FooterCTA />
       </main>
