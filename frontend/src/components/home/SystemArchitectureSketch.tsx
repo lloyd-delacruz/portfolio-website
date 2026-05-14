@@ -121,6 +121,9 @@ export function SystemArchitectureSketch() {
       <p className="mt-4 text-center text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
         Wheelchair Tracking — live across 4 sites · 800+ assets
       </p>
+      <p className="mt-1.5 text-center text-[10px] uppercase tracking-[0.14em] text-ink-muted">
+        Microsoft Lists + QR workflows · React · TypeScript
+      </p>
     </div>
   )
 }
