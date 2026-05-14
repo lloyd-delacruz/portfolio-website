@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { HomeNav } from '@/components/home/HomeNav'
 import { SiteFooter } from '@/components/home/SiteFooter'
 import { Reveal } from '@/components/home/Reveal'
+import { ProjectMeta } from '@/components/work/ProjectMeta'
 import { SwHero } from '@/components/casestudy/spendwise/SwHero'
 import { SwProblem } from '@/components/casestudy/spendwise/SwProblem'
 import { SwExperience } from '@/components/casestudy/spendwise/SwExperience'
@@ -23,6 +24,7 @@ export default function Page() {
       <HomeNav active="Work" />
       <main>
         <SwHero />
+        <ProjectMeta slug="spendwise" />
         <Reveal><SwProblem /></Reveal>
         <Reveal><SwExperience /></Reveal>
         <Reveal><SwWorkflow /></Reveal>
