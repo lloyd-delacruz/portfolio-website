@@ -27,11 +27,13 @@ const NODES: Node[] = [
 const CONNECTOR_LABELS = ['event', 'state transition', 'rule decision', 'signal']
 
 // Design space — 5 evenly spaced columns over 560 wide; row centered at y=170.
+// Cards are 80x80 (one fifth of column-step 112) so each card → 32px breathing
+// room on each side for the connector segment + its label.
 const W = 560
 const H = 360
 const ROW_Y = 170
-const CARD_W = 96
-const CARD_H = 88
+const CARD_W = 80
+const CARD_H = 80
 const X = (i: number) => Math.round((W / 5) * (i + 0.5))
 const HALF = CARD_W / 2
 
@@ -65,7 +67,7 @@ export function SystemArchitectureSketch() {
                   <circle cx={x2} cy={ROW_Y} r={2.4} fill="var(--plum)" opacity={0.7} />
                   <text
                     x={(x1 + x2) / 2}
-                    y={ROW_Y - 10}
+                    y={ROW_Y - HALF - 8}
                     textAnchor="middle"
                     fontSize="9"
                     fontWeight="600"
