@@ -12,7 +12,7 @@ describe('EngineeringLoop', () => {
 
   it('renders all seven stage captions', () => {
     render(<EngineeringLoop />)
-    const captions = ['FRAME', 'SPEC', 'PLAN', 'DISPATCH AGENTS', 'PASS?', 'REVIEW', 'SHIP']
+    const captions = ['FRAME', 'SPEC', 'PLAN', 'BUILD', 'VERIFY', 'SHIP', 'OBSERVE']
     for (const caption of captions) {
       expect(screen.getAllByText(caption).length).toBeGreaterThan(0)
     }

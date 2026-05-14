@@ -4,9 +4,9 @@ import {
   FileText,
   ListChecks,
   Bot,
-  GitFork,
   ShieldCheck,
   Rocket,
+  Activity,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -19,8 +19,6 @@ type Stage = {
   color: string
   /** centre x in the 1080×360 design space */
   cx: number
-  /** true for the decision diamond at position 5 */
-  diamond?: boolean
 }
 
 // Design space for the desktop diagram. 7 nodes evenly spaced across 1080,
@@ -28,24 +26,22 @@ type Stage = {
 const W = 1080
 const H = 360
 const ROW_Y = 220
-const CARD = 96   // card side length; diamond bounding box is identical (rotated 45°)
+const CARD = 96   // card side length
 
 // Seven evenly spaced centres: 1080 / 7 ≈ 154.3 step, first at step/2.
 const X = (i: number) => Math.round((W / 7) * (i + 0.5))
 
 const STAGES: Stage[] = [
-  { key: 'frame',    label: 'FRAME',           sub: 'WITH THE OPERATOR',  longLabel: 'Frame the problem with the operator, not the dataset.',                                            Icon: Target,      color: 'var(--plum)',  cx: X(0) },
-  { key: 'spec',     label: 'SPEC',            sub: 'DESIGN BEFORE CODE', longLabel: 'Write the spec before any code.',                                                                  Icon: FileText,    color: 'var(--blue)',  cx: X(1) },
-  { key: 'plan',     label: 'PLAN',            sub: 'REVIEWABLE UNITS',   longLabel: 'Decompose the spec into a reviewable plan.',                                                       Icon: ListChecks,  color: 'var(--plum)',  cx: X(2) },
-  { key: 'dispatch', label: 'DISPATCH AGENTS', sub: 'TESTS FIRST',        longLabel: 'Dispatch agentic coding tools to do the work, tests first.',                                       Icon: Bot,         color: 'var(--pink)',  cx: X(3) },
-  { key: 'gate',     label: 'PASS?',           sub: 'DECISION GATE',      longLabel: 'Decision: do the tests pass and the behaviour match the spec? If no, loop back to Plan.',          Icon: GitFork,     color: 'var(--amber)', cx: X(4), diamond: true },
-  { key: 'review',   label: 'REVIEW',          sub: 'HUMAN IN THE LOOP',  longLabel: 'Review every diff yourself before merging.',                                                       Icon: ShieldCheck, color: 'var(--green)', cx: X(5) },
-  { key: 'ship',     label: 'SHIP',            sub: 'OBSERVABLE IN PROD', longLabel: 'Ship to production and monitor the running system.',                                               Icon: Rocket,      color: 'var(--plum)',  cx: X(6) },
+  { key: 'frame',   label: 'FRAME',   sub: 'WITH THE OPERATOR',     longLabel: 'Frame the problem with the operator, not the dataset.',                                                Icon: Target,      color: 'var(--plum)',  cx: X(0) },
+  { key: 'spec',    label: 'SPEC',    sub: 'DESIGN BEFORE CODE',    longLabel: 'Write the spec before any code.',                                                                      Icon: FileText,    color: 'var(--ink)',   cx: X(1) },
+  { key: 'plan',    label: 'PLAN',    sub: 'REVIEWABLE UNITS',      longLabel: 'Decompose the spec into a reviewable plan.',                                                           Icon: ListChecks,  color: 'var(--plum)',  cx: X(2) },
+  { key: 'build',   label: 'BUILD',   sub: 'TESTS WITH THE CODE',   longLabel: 'Build with agents — code and tests produced together, every step reviewable.',                          Icon: Bot,         color: 'var(--ink)',   cx: X(3) },
+  { key: 'verify',  label: 'VERIFY',  sub: 'MULTI-GATE',            longLabel: 'Verify against a stack of gates — types, lint, tests, eval/regression, secrets check, human review.',  Icon: ShieldCheck, color: 'var(--plum)',  cx: X(4) },
+  { key: 'ship',    label: 'SHIP',    sub: 'RELEASE-TAGGED',        longLabel: 'Ship with a release tag and a written rollback path.',                                                  Icon: Rocket,      color: 'var(--ink)',   cx: X(5) },
+  { key: 'observe', label: 'OBSERVE', sub: 'LOGS & FEEDBACK',       longLabel: 'Observe in production — logs, traces, and incident feedback drive the next loop.',                     Icon: Activity,    color: 'var(--plum)',  cx: X(6) },
 ]
 
-// Half-width of each node's visual footprint, used to compute connector
-// endpoints. The diamond's bounding box is the same size as a card, so the
-// same half-width applies.
+// Half-width of each node's visual footprint, used to compute connector endpoints.
 const HALF = CARD / 2
 
 export function EngineeringLoop() {
@@ -109,11 +105,11 @@ export function EngineeringLoop() {
 
               {/* Decision-branch labels */}
               {(() => {
-                const gate = STAGES[4]  // PASS?
+                const gate = STAGES[4]  // VERIFY
                 const plan = STAGES[2]  // PLAN
                 const review = STAGES[5]
                 const arcStartX = gate.cx
-                const arcStartY = ROW_Y - HALF       // top of diamond bounding box
+                const arcStartY = ROW_Y - HALF       // top of VERIFY card
                 const arcEndX = plan.cx
                 const arcEndY = ROW_Y - HALF         // top of Plan card
                 const c1x = gate.cx - 40
@@ -186,15 +182,13 @@ export function EngineeringLoop() {
                     transform: 'translate(-50%, -50%)',
                   }}
                 >
-                  {/* Sub-caption above (omitted for the decision diamond) */}
-                  {!s.diamond && (
-                    <span
-                      className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted"
-                      style={{ bottom: `${CARD + 6}px` }}
-                    >
-                      {s.sub}
-                    </span>
-                  )}
+                  {/* Sub-caption above */}
+                  <span
+                    className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted"
+                    style={{ bottom: `${CARD + 6}px` }}
+                  >
+                    {s.sub}
+                  </span>
 
                   {/* Animated inner wrapper — float keyed off the existing home2-float keyframes */}
                   <div
@@ -204,32 +198,15 @@ export function EngineeringLoop() {
                       animationDuration: `${6 + (delay % 2)}s`,
                     }}
                   >
-                    {s.diamond ? (
-                      <div className="grid h-full w-full place-items-center">
-                        <div
-                          className="absolute inset-0 rounded-md bg-white ghair-2 soft-shadow-sm"
-                          style={{ transform: 'rotate(45deg)' }}
-                        />
-                        <div className="relative flex flex-col items-center justify-center">
-                          <s.Icon size={20} style={{ color: s.color }} strokeWidth={1.9} />
-                          <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink">
-                            {s.label}
-                          </span>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <div className="grid h-full w-full place-items-center rounded-2xl bg-white ghair soft-shadow-sm">
-                          <s.Icon size={26} style={{ color: s.color }} strokeWidth={1.9} />
-                        </div>
-                        <span
-                          className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.16em] text-ink"
-                          style={{ top: `${CARD + 8}px` }}
-                        >
-                          {s.label}
-                        </span>
-                      </>
-                    )}
+                    <div className="grid h-full w-full place-items-center rounded-2xl bg-white ghair soft-shadow-sm">
+                      <s.Icon size={26} style={{ color: s.color }} strokeWidth={1.9} />
+                    </div>
+                    <span
+                      className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.16em] text-ink"
+                      style={{ top: `${CARD + 8}px` }}
+                    >
+                      {s.label}
+                    </span>
                   </div>
                 </div>
               )
@@ -245,36 +222,17 @@ export function EngineeringLoop() {
             const isLast = i === STAGES.length - 1
             return (
               <li key={s.key} className="flex w-full flex-col items-center">
-                {/* Card / diamond */}
+                {/* Card */}
                 <div className="flex flex-col items-center">
-                  {!s.diamond && (
-                    <span className="mb-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
-                      {s.sub}
-                    </span>
-                  )}
-                  {s.diamond ? (
-                    <div className="relative grid h-20 w-20 place-items-center">
-                      <div
-                        className="absolute inset-0 rounded-md bg-white ghair-2 soft-shadow-sm"
-                        style={{ transform: 'rotate(45deg)' }}
-                      />
-                      <div className="relative flex flex-col items-center justify-center">
-                        <s.Icon size={18} style={{ color: s.color }} strokeWidth={1.9} />
-                        <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink">
-                          {s.label}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="grid h-20 w-20 place-items-center rounded-2xl bg-white ghair soft-shadow-sm">
-                        <s.Icon size={22} style={{ color: s.color }} strokeWidth={1.9} />
-                      </div>
-                      <span className="mt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink">
-                        {s.label}
-                      </span>
-                    </>
-                  )}
+                  <span className="mb-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+                    {s.sub}
+                  </span>
+                  <div className="grid h-20 w-20 place-items-center rounded-2xl bg-white ghair soft-shadow-sm">
+                    <s.Icon size={22} style={{ color: s.color }} strokeWidth={1.9} />
+                  </div>
+                  <span className="mt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink">
+                    {s.label}
+                  </span>
                 </div>
 
                 {/* Vertical flow-line between this stage and the next, except after the last */}
