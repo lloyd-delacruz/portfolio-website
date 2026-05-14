@@ -3,10 +3,9 @@ import Link from 'next/link'
 import {
   ArrowRight,
   QrCode,
-  Network,
+  Brain,
+  Workflow,
   Wallet,
-  LineChart,
-  Stethoscope,
   Sparkles,
   BookOpen,
   PlayCircle,
@@ -46,61 +45,48 @@ export const PROJECTS: Project[] = [
     variant: 'states',
     accent: 'var(--plum)',
     wash: 'linear-gradient(135deg,#f3effe,#fbf5fe)',
-    title: 'Multi-Site Wheelchair Tracking System',
-    body: 'Operational tracking platform supporting 800+ wheelchairs and clinical assets across four hospital sites — QR workflows, utilization tracking, lifecycle coordination, and chain-of-custody visibility.',
-    stack: 'Microsoft Lists, QR Systems, Power Platform, React, TypeScript',
+    title: 'Multi-Site Hospital Equipment Tracking & Analytics System',
+    body: 'Production healthcare-operations platform deployed across 4 hospital sites — 800+ tracked assets coordinated through QR / barcode workflows, lifecycle visibility, operational analytics, and real-time chain-of-custody.',
+    stack: 'Power Platform · Microsoft Lists · React · TypeScript · QR / barcode workflows · operational analytics',
     href: ANCHOR_CASE_HREF,
     status: 'production',
     capabilities: ['case-study'],
     metric: { value: '4 sites · 800+', label: 'assets in production' },
   },
   {
-    badge: 'APPLIED AI / POPULATION HEALTH',
-    TagIcon: LineChart,
+    badge: 'APPLIED AI + DATA ENGINEERING',
+    TagIcon: Brain,
     variant: 'forecast',
     accent: 'var(--plum)',
     wash: 'linear-gradient(135deg,#f3f0fb,#fbf7fe)',
-    title: 'Population-Health Intelligence Platform',
-    body: 'An AI-native forecasting layer over WHO, World Bank, and IMF indicators. Calibrated life-expectancy projections with explainable feature attribution for ministry-of-health planners.',
-    stack: 'TypeScript, ensemble forecasting, quantile regression, SHAP, isotonic calibration',
-    href: '/work/population-health-intelligence',
-    status: 'prototype',
-    capabilities: ['ai-assisted', 'case-study', 'demo'],
+    title: 'Clinical GenAI Agent & Analytics Pipeline',
+    body: 'Structured LLM outputs, prompt chaining, and analytics pipelines feeding a normalized PostgreSQL schema — with token-cost optimization for production healthcare AI workflows.',
+    stack: 'Python · LLM workflows · structured output · PostgreSQL · prompt-chain orchestration',
+    href: '/work/clinical-genai-pipeline',
+    status: 'concept',
+    capabilities: ['ai-assisted', 'case-study'],
   },
   {
-    badge: 'APPLIED AI / CLINICAL DECISION SUPPORT',
-    TagIcon: Stethoscope,
-    variant: 'triage',
-    accent: 'var(--plum)',
-    wash: 'linear-gradient(135deg,#f3f0fb,#fbf7fe)',
-    title: 'Clinical Risk Engine',
-    body: 'A calibrated inference system over biopsy feature vectors. Returns malignancy probability, CI band, and morphology-level attribution for clinician-in-the-loop triage.',
-    stack: 'TypeScript, ensemble classifier, isotonic calibration, SHAP, ambiguity-flag triage policy',
-    href: '/work/clinical-risk-engine',
-    status: 'prototype',
-    capabilities: ['ai-assisted', 'case-study', 'demo'],
-  },
-  {
-    badge: 'HEALTHCARE SYSTEMS',
-    TagIcon: Network,
+    badge: 'CLOUD AUTOMATION + EVENT-DRIVEN SYSTEMS',
+    TagIcon: Workflow,
     variant: 'topology',
     accent: 'var(--blue)',
     wash: 'linear-gradient(135deg,#eef4fe,#f5f8fe)',
-    title: 'EquiTrackr',
-    body: 'Modern healthcare equipment workflow platform for tracking equipment states, operational workflows, maintenance coordination, and hospital logistics systems.',
-    stack: 'Next.js, TypeScript, Tailwind, PostgreSQL, Prisma',
-    href: '/work/equitrackr',
-    status: 'prototype',
-    capabilities: ['case-study', 'demo'],
+    title: 'Enterprise Healthcare Workflow Automation Engine',
+    body: 'Power Automate, Azure Functions, and webhook orchestration wired into the Microsoft enterprise ecosystem — real-time healthcare workflow automation and operational alert systems for clinical and operations teams.',
+    stack: 'Power Automate · Azure Functions · webhook orchestration · Microsoft Graph · operational alert systems',
+    href: '/work/healthcare-automation-engine',
+    status: 'concept',
+    capabilities: ['case-study'],
   },
   {
-    badge: 'FINTECH & PLANNING',
+    badge: 'FULL-STACK PRODUCT ENGINEERING',
     TagIcon: Wallet,
     variant: 'finance',
     accent: 'var(--green)',
     wash: 'linear-gradient(135deg,#ecfdf4,#f4fbf7)',
     title: 'SpendWise',
-    body: 'AI-native budgeting and financial planning platform focused on operational budgeting, transaction tracking, onboarding flows, and intelligent financial planning.',
+    body: 'Full-stack product platform demonstrating scalable application architecture, data modeling, and polished UX systems — a deliberate non-healthcare proof point for product-engineering breadth.',
     stack: 'React Native, Expo, Node.js, PostgreSQL, Prisma',
     href: '/work/spendwise',
     status: 'prototype',
@@ -408,9 +394,14 @@ export function FeaturedWork() {
 
   return (
     <section className="mx-auto max-w-[1180px] px-6 py-12">
-      <div className="flex items-end justify-between">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">Featured work</p>
-        <Link href="/work" className="group inline-flex items-center gap-1.5 text-sm font-semibold text-plum">
+      <div className="flex items-end justify-between gap-6">
+        <div className="max-w-[60ch]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">Featured work</p>
+          <p className="mt-2 text-[14.5px] leading-relaxed text-ink-soft">
+            A deliberate progression: real healthcare operations · applied AI & data engineering · enterprise automation · product-engineering breadth.
+          </p>
+        </div>
+        <Link href="/work" className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-plum">
           View all projects
           <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
         </Link>
