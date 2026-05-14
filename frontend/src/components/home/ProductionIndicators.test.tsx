@@ -22,7 +22,7 @@ describe('ProductionIndicators', () => {
     expect(screen.getByText(/currently available/i)).toBeInTheDocument()
     expect(
       screen.getByText(
-        /vancouver, bc · open to healthcare data, ai, and engineering roles — remote, hybrid, or on-site/i,
+        /vancouver, bc · open to healthcare data, analytics, ai, and application engineering roles — remote, hybrid, or on-site/i,
       ),
     ).toBeInTheDocument()
     const link = screen.getByRole('link', { name: /start a conversation/i })

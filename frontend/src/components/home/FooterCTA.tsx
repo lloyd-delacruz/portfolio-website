@@ -29,7 +29,7 @@ export function FooterCTA() {
         <div>
           <p className="text-sm leading-relaxed text-ink-soft">
             I&apos;m running a multi-site hospital equipment-tracking and analytics system in production,
-            and I&apos;m open to healthcare data, AI, and application engineering roles — remote, hybrid,
+            and I&apos;m open to healthcare data, analytics, AI, and application engineering roles — remote, hybrid,
             or on-site. The best way in is a short conversation.
           </p>
           <Link
