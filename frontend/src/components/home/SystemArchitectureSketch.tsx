@@ -64,7 +64,7 @@ export function SystemArchitectureSketch() {
     <div
       className="relative mx-auto w-full max-w-[600px]"
       role="img"
-      aria-label="Wheelchair Tracking Engine orchestrating eight components — QR scan, event stream, state engine, decision layer, mobile sync, multi-site replication, alerts bus, and operations surface — across 4 hospital sites."
+      aria-label="Artificial Intelligence engine orchestrating eight components — QR scan, event stream, state engine, decision layer, mobile sync, multi-site replication, alerts bus, and operations surface."
     >
       <div className="relative w-full" style={{ paddingBottom: `${(H / W) * 100}%` }}>
         <div className="absolute inset-0">
@@ -143,8 +143,8 @@ export function SystemArchitectureSketch() {
               }}
             >
               <Cpu size={28} strokeWidth={1.8} aria-hidden />
-              <span className="px-3 text-center font-display text-[13px] font-semibold leading-tight">
-                Wheelchair Tracking Engine
+              <span className="px-3 text-center font-display text-[14px] font-semibold leading-tight">
+                Artificial Intelligence
               </span>
               <span className="text-[9px] font-semibold uppercase tracking-[0.16em] text-white/70">
                 Orchestration core
@@ -196,22 +196,19 @@ export function SystemArchitectureSketch() {
         </div>
       </div>
 
-      {/* Free-floating proof row on cream */}
+      {/* Free-floating capability row on cream */}
       <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
-        <span className="inline-flex items-center gap-1.5 text-ink-soft">
-          <span className="h-2 w-2 rounded-full" style={{ background: 'var(--green)' }} aria-hidden />
-          Live
-        </span>
+        <span>Machine Learning</span>
         <span aria-hidden>·</span>
-        <span>4 sites</span>
+        <span>LLMs</span>
         <span aria-hidden>·</span>
-        <span>800+ assets</span>
+        <span>MCP</span>
         <span aria-hidden>·</span>
-        <span>Microsoft Lists + QR</span>
+        <span>Agents</span>
         <span aria-hidden>·</span>
-        <span>React</span>
+        <span>Skills</span>
         <span aria-hidden>·</span>
-        <span>TypeScript</span>
+        <span>Automation</span>
       </div>
     </div>
   )

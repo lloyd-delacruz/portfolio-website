@@ -27,7 +27,7 @@ const SATELLITE_CAPTIONS = [
 describe('SystemArchitectureSketch', () => {
   it('renders the central engine tile', () => {
     render(<SystemArchitectureSketch />)
-    expect(screen.getByText(/wheelchair tracking engine/i)).toBeInTheDocument()
+    expect(screen.getByText(/^artificial intelligence$/i)).toBeInTheDocument()
     expect(screen.getByText(/orchestration core/i)).toBeInTheDocument()
   })
 
@@ -52,17 +52,23 @@ describe('SystemArchitectureSketch', () => {
     }
   })
 
-  it('renders the free-floating proof row with site and asset counts', () => {
+  it('renders the free-floating capability row', () => {
     render(<SystemArchitectureSketch />)
-    expect(screen.getByText(/^live$/i)).toBeInTheDocument()
-    expect(screen.getByText(/4 sites/i)).toBeInTheDocument()
-    expect(screen.getByText(/800\+ assets/i)).toBeInTheDocument()
-    expect(screen.getByText(/microsoft lists \+ qr/i)).toBeInTheDocument()
+    for (const label of ['Machine Learning', 'LLMs', 'MCP', 'Agents', 'Skills', 'Automation']) {
+      expect(screen.getByText(label)).toBeInTheDocument()
+    }
+  })
+
+  it('no longer shows the previous live-deployment metadata', () => {
+    render(<SystemArchitectureSketch />)
+    expect(screen.queryByText(/4 sites/i)).toBeNull()
+    expect(screen.queryByText(/800\+ assets/i)).toBeNull()
+    expect(screen.queryByText(/microsoft lists \+ qr/i)).toBeNull()
   })
 
   it('exposes a descriptive aria-label for the diagram', () => {
     render(<SystemArchitectureSketch />)
-    const img = screen.getByRole('img', { name: /engine|orchestrat|satellite|tracking/i })
+    const img = screen.getByRole('img', { name: /artificial intelligence|engine|orchestrat/i })
     expect(img).toBeInTheDocument()
   })
 
