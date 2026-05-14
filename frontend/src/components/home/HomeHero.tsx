@@ -12,7 +12,7 @@ export function HomeHero() {
         <div>
           <span className="anim-rise inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-soft ghair">
             <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--plum)' }} />
-            Healthcare Operations &middot; Data &amp; AI Systems
+            Healthcare Operations · Data & AI Systems
           </span>
 
           <h1
