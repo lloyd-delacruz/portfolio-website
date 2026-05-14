@@ -12,7 +12,20 @@ const AI_TOOLS: AiTool[] = [
   { label: 'Antigravity',    logo: '/logos/antigravity.svg' },
 ]
 
-const STACK = ['Next.js', 'TypeScript', 'PostgreSQL', 'Microsoft Lists', 'QR workflows']
+const STACK = [
+  'SQL',
+  'Python',
+  'R',
+  'Tableau',
+  'Power BI',
+  'Next.js',
+  'TypeScript',
+  'FastAPI',
+  'PostgreSQL',
+  'Power Platform',
+  'Microsoft Lists',
+  'QR / barcode workflows',
+]
 
 export function BuiltWithRow() {
   return (

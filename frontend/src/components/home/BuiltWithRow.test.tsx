@@ -16,9 +16,22 @@ describe('BuiltWithRow', () => {
     }
   })
 
-  it('renders all stack item names', () => {
+  it('renders the full healthcare-aligned stack', () => {
     render(<BuiltWithRow />)
-    for (const item of ['Next.js', 'TypeScript', 'PostgreSQL', 'Microsoft Lists', 'QR workflows']) {
+    for (const item of [
+      'SQL',
+      'Python',
+      'R',
+      'Tableau',
+      'Power BI',
+      'Next.js',
+      'TypeScript',
+      'FastAPI',
+      'PostgreSQL',
+      'Power Platform',
+      'Microsoft Lists',
+      'QR / barcode workflows',
+    ]) {
       expect(screen.getByText(item)).toBeInTheDocument()
     }
   })
