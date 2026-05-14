@@ -15,6 +15,7 @@ type Stage = {
   label: string
   sub: string
   longLabel: string
+  artifact: string
   Icon: LucideIcon
   color: string
   /** centre x in the 1080×360 design space */
@@ -32,13 +33,13 @@ const CARD = 96   // card side length
 const X = (i: number) => Math.round((W / 7) * (i + 0.5))
 
 const STAGES: Stage[] = [
-  { key: 'frame',   label: 'FRAME',   sub: 'WITH THE OPERATOR',     longLabel: 'Frame the problem with the operator, not the dataset.',                                                Icon: Target,      color: 'var(--plum)',  cx: X(0) },
-  { key: 'spec',    label: 'SPEC',    sub: 'DESIGN BEFORE CODE',    longLabel: 'Write the spec before any code.',                                                                      Icon: FileText,    color: 'var(--ink)',   cx: X(1) },
-  { key: 'plan',    label: 'PLAN',    sub: 'REVIEWABLE UNITS',      longLabel: 'Decompose the spec into a reviewable plan.',                                                           Icon: ListChecks,  color: 'var(--plum)',  cx: X(2) },
-  { key: 'build',   label: 'BUILD',   sub: 'TESTS WITH THE CODE',   longLabel: 'Build with agents — code and tests produced together, every step reviewable.',                          Icon: Bot,         color: 'var(--ink)',   cx: X(3) },
-  { key: 'verify',  label: 'VERIFY',  sub: 'MULTI-GATE',            longLabel: 'Verify against a stack of gates — types, lint, tests, eval/regression, secrets check, human review.',  Icon: ShieldCheck, color: 'var(--plum)',  cx: X(4) },
-  { key: 'ship',    label: 'SHIP',    sub: 'RELEASE-TAGGED',        longLabel: 'Ship with a release tag and a written rollback path.',                                                  Icon: Rocket,      color: 'var(--ink)',   cx: X(5) },
-  { key: 'observe', label: 'OBSERVE', sub: 'LOGS & FEEDBACK',       longLabel: 'Observe in production — logs, traces, and incident feedback drive the next loop.',                     Icon: Activity,    color: 'var(--plum)',  cx: X(6) },
+  { key: 'frame',   label: 'FRAME',   sub: 'WITH THE OPERATOR',     longLabel: 'Frame the problem with the operator, not the dataset.',                                                artifact: 'brief',         Icon: Target,      color: 'var(--plum)',  cx: X(0) },
+  { key: 'spec',    label: 'SPEC',    sub: 'DESIGN BEFORE CODE',    longLabel: 'Write the spec before any code.',                                                                      artifact: 'spec.md',       Icon: FileText,    color: 'var(--ink)',   cx: X(1) },
+  { key: 'plan',    label: 'PLAN',    sub: 'REVIEWABLE UNITS',      longLabel: 'Decompose the spec into a reviewable plan.',                                                           artifact: 'plan.md',       Icon: ListChecks,  color: 'var(--plum)',  cx: X(2) },
+  { key: 'build',   label: 'BUILD',   sub: 'TESTS WITH THE CODE',   longLabel: 'Build with agents — code and tests produced together, every step reviewable.',                          artifact: 'diff+tests',    Icon: Bot,         color: 'var(--ink)',   cx: X(3) },
+  { key: 'verify',  label: 'VERIFY',  sub: 'MULTI-GATE',            longLabel: 'Verify against a stack of gates — types, lint, tests, eval/regression, secrets check, human review.',  artifact: 'gate report',   Icon: ShieldCheck, color: 'var(--plum)',  cx: X(4) },
+  { key: 'ship',    label: 'SHIP',    sub: 'RELEASE-TAGGED',        longLabel: 'Ship with a release tag and a written rollback path.',                                                  artifact: 'release notes', Icon: Rocket,      color: 'var(--ink)',   cx: X(5) },
+  { key: 'observe', label: 'OBSERVE', sub: 'LOGS & FEEDBACK',       longLabel: 'Observe in production — logs, traces, and incident feedback drive the next loop.',                     artifact: 'logs/traces',   Icon: Activity,    color: 'var(--plum)',  cx: X(6) },
 ]
 
 // Half-width of each node's visual footprint, used to compute connector endpoints.
@@ -207,6 +208,12 @@ export function EngineeringLoop() {
                     >
                       {s.label}
                     </span>
+                    <span
+                      className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] text-ink-muted"
+                      style={{ top: `${CARD + 28}px` }}
+                    >
+                      {s.artifact}
+                    </span>
                   </div>
                 </div>
               )
@@ -233,6 +240,7 @@ export function EngineeringLoop() {
                   <span className="mt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink">
                     {s.label}
                   </span>
+                  <span className="mt-0.5 font-mono text-[10px] text-ink-muted">{s.artifact}</span>
                 </div>
 
                 {/* Vertical flow-line between this stage and the next, except after the last */}

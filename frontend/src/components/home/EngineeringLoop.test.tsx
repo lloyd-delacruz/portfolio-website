@@ -23,4 +23,12 @@ describe('EngineeringLoop', () => {
     const list = screen.getByRole('list', { name: /how i work with ai/i })
     expect(within(list).getAllByRole('listitem')).toHaveLength(7)
   })
+
+  it('renders monospace artifact labels under each stage', () => {
+    render(<EngineeringLoop />)
+    const artifacts = ['brief', 'spec.md', 'plan.md', 'diff+tests', 'gate report', 'release notes', 'logs/traces']
+    for (const artifact of artifacts) {
+      expect(screen.getAllByText(artifact).length).toBeGreaterThan(0)
+    }
+  })
 })
