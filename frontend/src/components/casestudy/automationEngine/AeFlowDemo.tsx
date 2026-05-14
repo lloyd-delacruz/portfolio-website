@@ -108,7 +108,7 @@ export function AeFlowDemo() {
                 <li key={step.id}>
                   <button
                     type="button"
-                    aria-pressed={status === 'running'}
+                    aria-current={status === 'running' ? 'step' : undefined}
                     onClick={() => handleStepClick(step.id)}
                     className="flex w-full items-center gap-3 rounded-lg p-2 text-left transition-all duration-300"
                     style={{
