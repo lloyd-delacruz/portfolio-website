@@ -16,7 +16,7 @@ export function AeClose() {
     <section className="mx-auto max-w-[1180px] px-6 py-20">
       <div className="mx-auto max-w-2xl text-center">
         <p className="font-display text-2xl font-extrabold leading-snug text-ink sm:text-3xl">
-          "Most operations don't need a new platform. They need the existing one to talk to itself."
+          &ldquo;Most operations don&rsquo;t need a new platform. They need the existing one to talk to itself.&rdquo;
         </p>
         <ul className="mt-8 space-y-1.5 text-[11.5px] font-mono tracking-tight text-ink-muted">
           {PROD_REQS.map((r) => (
