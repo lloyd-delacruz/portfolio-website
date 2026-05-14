@@ -21,16 +21,16 @@ export function FooterCTA() {
             <MessageCircle size={22} />
           </div>
           <h2 className="font-display text-2xl font-extrabold leading-tight text-ink sm:text-3xl">
-            Let&apos;s architect{' '}
-            <span className="grad-plum-text">your next system.</span>
+            Let&apos;s build the next{' '}
+            <span className="grad-plum-text">healthcare system.</span>
           </h2>
         </div>
 
         <div>
           <p className="text-sm leading-relaxed text-ink-soft">
-            I&apos;m currently shipping a multi-site healthcare deployment and have capacity for one more
-            applied-AI engagement. The best way in is a 20-minute conversation about the system you&apos;re
-            trying to build.
+            I&apos;m running a multi-site hospital equipment-tracking and analytics system in production,
+            and I&apos;m open to healthcare data, AI, and application engineering roles — remote, hybrid,
+            or on-site. The best way in is a short conversation.
           </p>
           <Link
             href="/contact"
