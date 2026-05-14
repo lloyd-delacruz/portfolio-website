@@ -43,8 +43,8 @@ const ENTRIES = [
     period: '2022 — Present',
     title: 'Engineering, analytics & applied AI',
     body:
-      'Began layering engineering and analytics work on top of clinical practice. Completed an MSc in Data Analytics at Eastern University; earned certifications across analytics, cloud, and applied AI (BrainStation, Google, DeepLearning.AI, AWS AI Practitioner); shipped the first version of a wheelchair-logistics platform now used across three VCH hospital sites. Still at VCH — open to product engineering, applied AI, and operational software work where healthcare context becomes an operational advantage.',
-    skills: ['Python', 'SQL', 'Tableau', 'AWS', 'Next.js', 'TypeScript', 'Applied AI', 'RAG'],
+      'Began layering engineering, data, and applied AI work on top of clinical practice. Completed an MSc in Data Analytics at Eastern University; earned certifications across analytics, cloud, and applied AI (BrainStation, Google, DeepLearning.AI, AWS AI Practitioner); shipped a wheelchair-tracking platform now running across four VCH sites with 800+ tracked assets; and built a portfolio of healthcare prototypes — a clinical GenAI documentation pipeline, an enterprise workflow automation engine, and applied-ML risk and population-health tools. Still at VCH — open to healthcare data, analytics, AI, and application engineering roles.',
+    skills: ['Python', 'SQL', 'Tableau', 'AWS', 'Next.js', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Applied AI'],
     Icon: Sparkles,
     tint: 'var(--coral)',
     soft: '#ffe4e0',
