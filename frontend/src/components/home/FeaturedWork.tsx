@@ -72,10 +72,10 @@ export const PROJECTS: Project[] = [
     accent: 'var(--blue)',
     wash: 'linear-gradient(135deg,#eef4fe,#f5f8fe)',
     title: 'Enterprise Healthcare Workflow Automation Engine',
-    body: 'Power Automate, Azure Functions, and webhook orchestration wired into the Microsoft enterprise ecosystem — real-time healthcare workflow automation and operational alert systems for clinical and operations teams.',
+    body: 'Power Automate flows, Azure Functions, and webhook orchestration wired into the Microsoft 365 ecosystem — built prototypes of the patterns that turn manual hospital handoffs into event-driven workflows.',
     stack: 'Power Automate · Azure Functions · webhook orchestration · Microsoft Graph · operational alert systems',
     href: '/work/healthcare-automation-engine',
-    status: 'concept',
+    status: 'prototype',
     capabilities: ['case-study'],
   },
   {

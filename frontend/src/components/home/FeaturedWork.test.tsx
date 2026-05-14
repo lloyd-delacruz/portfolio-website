@@ -30,6 +30,14 @@ describe('FeaturedWork — composition', () => {
     expect(PROJECTS[1].href).toBe('/work/clinical-genai-pipeline')
     expect(PROJECTS[2].href).toBe('/work/healthcare-automation-engine')
   })
+
+  it('automation engine card is prototype-tier with built-prototype framing', () => {
+    const ae = PROJECTS.find((p) => p.href === '/work/healthcare-automation-engine')
+    expect(ae).toBeDefined()
+    expect(ae!.status).toBe('prototype')
+    expect(ae!.body).toMatch(/built prototypes/i)
+    expect(ae!.body).toMatch(/microsoft 365/i)
+  })
 })
 
 describe('FeaturedWork — render', () => {
