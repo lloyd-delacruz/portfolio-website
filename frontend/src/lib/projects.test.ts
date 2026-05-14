@@ -15,15 +15,17 @@ describe('PROJECTS registry', () => {
     })
   })
 
-  it('contains all seven in-scope projects', () => {
+  it('contains all nine in-scope projects', () => {
     const expected = [
       'wheelchair-tracking',
       'clinical-risk-engine',
       'population-health-intelligence',
+      'clinical-genai-pipeline',
       'apex-protocol',
       'equitrackr',
       'spendwise',
       'website-gemms',
+      'healthcare-automation-engine',
     ]
     expected.forEach((slug) => {
       expect(PROJECTS[slug]).toBeDefined()

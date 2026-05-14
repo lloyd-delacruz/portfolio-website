@@ -60,6 +60,17 @@ export const PROJECTS: Record<string, ProjectMetaRecord> = {
     scale: '8-stage pipeline · 6 tables · synthetic notes',
   },
 
+  'healthcare-automation-engine': {
+    slug: 'healthcare-automation-engine',
+    title: 'Enterprise Healthcare Workflow Automation Engine',
+    status: 'prototype',
+    role: 'System design · Power Platform & Azure engineering',
+    period: '2025',
+    deployment: 'Built prototypes · Microsoft 365 enterprise tenant',
+    stack: ['Power Automate', 'Azure Functions', 'Microsoft Graph', 'SharePoint / Lists', 'Webhooks', 'TypeScript'],
+    scale: '4 reusable patterns · cross-system orchestration',
+  },
+
   'apex-protocol': {
     slug: 'apex-protocol',
     title: 'Apex Protocol',
