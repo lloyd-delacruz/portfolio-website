@@ -26,7 +26,7 @@ const CLUSTERS: Cluster[] = [
     title: 'Applied AI & Data Systems',
     Icon: Brain,
     tint: 'var(--plum-deep)',
-    bg: '#ede9fe',
+    bg: 'var(--plum-soft)',
     bullets: [
       'SQL · Python · R',
       'Prompt engineering · LLM workflows',
