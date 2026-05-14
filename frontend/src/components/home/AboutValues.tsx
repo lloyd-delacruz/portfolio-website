@@ -53,12 +53,12 @@ const VALUES: Value[] = [
         'A model is one component in a larger system. Picking the right one, scoping it tightly, and giving it good context matters more than the model itself. I treat prompting, evals, retrieval, and tool calls as engineering — versioned, tested, and observable.',
       proof: [
         {
-          label: 'Stack',
-          text: 'Hands-on with Claude, OpenAI, LangChain, RAG patterns, vector stores, and structured-output tool use.',
+          label: 'Built patterns',
+          text: 'Schema-constrained LLM extraction with validation gates and human review (Clinical GenAI pipeline). Event-driven orchestration with audit, retry, and dead-letter routing (Healthcare Automation Engine).',
         },
         {
-          label: 'Workflow',
-          text: 'Daily driver of Cursor + Claude Code for production engineering, not just side projects.',
+          label: 'Shipped inference',
+          text: 'Client-side ML inference shipped as a static export — the model runs in the browser, no server (Clinical Risk Engine, Population Health Intelligence).',
         },
       ],
     },
