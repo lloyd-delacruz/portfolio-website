@@ -27,18 +27,18 @@ const GROUPS: Group[] = [
     bg: 'var(--plum-soft)',
     summary:
       'I build LLM-powered features the way I build any other engineering — scoped, tested, and observable. Retrieval, tool use, structured generation, and human checkpoints, used where they earn their place.',
-    tools: ['Claude', 'OpenAI', 'LangChain', 'RAG', 'Vector DBs', 'Cursor'],
+    tools: ['Claude', 'OpenAI', 'FastAPI', 'PostgreSQL', 'Microsoft Graph', 'Vector DBs'],
     detail: {
       body:
         'I treat LLMs the way I treat any other dependency: scope them tightly, give them good context, and put real engineering around the boundary. Prompts and evals go in version control next to the rest of the code.',
       highlights: [
         {
-          label: 'Patterns',
-          text: 'Retrieval-augmented workflows, multi-step tool use, structured-output schemas, and human-in-the-loop checkpoints.',
+          label: 'Built patterns',
+          text: 'Schema-constrained LLM extraction · event-driven Microsoft Graph orchestration · client-side ML inference shipped as static export · human-in-the-loop review queues.',
         },
         {
-          label: 'Daily workflow',
-          text: 'Cursor and Claude Code for production engineering — not just prototypes.',
+          label: 'In production / prototype',
+          text: 'Wheelchair tracking (4 sites · 800+ assets · live). Clinical GenAI pipeline, healthcare automation engine, clinical risk engine, population-health intelligence (prototypes / case studies).',
         },
       ],
     },
@@ -73,14 +73,14 @@ const GROUPS: Group[] = [
     bg: '#d1fae5',
     summary:
       "Nine years inside Vancouver Coastal Health — frontline care, equipment logistics, and the operational gaps that don't show up in reports. The domain context that informs how I scope and build healthcare products.",
-    tools: ['VCH operations', 'Clinical workflows', 'Equipment logistics', 'Lean Six Sigma', 'Cerner', 'Stakeholder comms'],
+    tools: ['VCH operations', 'Clinical workflows', 'Equipment logistics', 'Microsoft 365 ecosystem', 'Cerner', 'Lean Six Sigma'],
     detail: {
       body:
         'I\'ve worked the floors I now design software for. That shapes what I prioritise: humane interfaces, sensible fallbacks, and a clear-eyed view of what actually changes behaviour in a clinical setting.',
       highlights: [
         {
           label: 'Operations',
-          text: 'Project leadership and workflow design across 3 VCH hospital sites; supported 200+ patient plans per year.',
+          text: 'Project leadership and workflow design across 4 VCH hospital sites; supported 200+ patient care plans per year.',
         },
         {
           label: 'Method',
