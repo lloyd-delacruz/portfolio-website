@@ -10,6 +10,7 @@ import {
   Sparkles,
   BookOpen,
   PlayCircle,
+  FileText,
 } from 'lucide-react'
 import { AnchorCase } from './AnchorCase'
 import { Window } from './Window'
@@ -17,7 +18,7 @@ import { Window } from './Window'
 /** Slug of the project promoted to the homepage anchor band (excluded from the grid). */
 export const ANCHOR_CASE_HREF = '/work/wheelchair-tracking'
 
-type Variant = 'states' | 'topology' | 'finance' | 'mobile' | 'forecast' | 'triage'
+type Variant = 'states' | 'topology' | 'finance' | 'mobile' | 'forecast' | 'triage' | 'extraction'
 
 export type ProjectStatus = 'production' | 'prototype' | 'concept'
 export type ProjectCapability = 'ai-assisted' | 'case-study' | 'demo'
@@ -104,6 +105,19 @@ export const PROJECTS: Project[] = [
     href: '/work/spendwise',
     status: 'prototype',
     capabilities: ['case-study', 'demo'],
+  },
+  {
+    badge: 'APPLIED AI / CLINICAL DOCUMENTATION',
+    TagIcon: FileText,
+    variant: 'extraction',
+    accent: 'var(--plum)',
+    wash: 'linear-gradient(135deg,#f3f0fb,#fbf7fe)',
+    title: 'Clinical GenAI Agent & Analytics Pipeline',
+    body: 'AI-assisted rehab documentation pipeline that converts messy dictated therapy notes into structured recovery metrics and analytics-ready data — with validation, audit, and human review built in.',
+    stack: 'FastAPI, Python, PostgreSQL, LLMs, React, TypeScript',
+    href: '/work/clinical-genai-pipeline',
+    status: 'prototype',
+    capabilities: ['ai-assisted', 'case-study'],
   },
 ]
 
@@ -275,6 +289,37 @@ function PreviewMock({ variant, accent }: { variant: Variant; accent: string }) 
                 ))}
               </div>
               <Bar w="55%" />
+            </div>
+          </div>
+        )}
+
+        {variant === 'extraction' && (
+          <div className="flex flex-1 items-center gap-2">
+            {/* note lines */}
+            <div className="flex flex-1 flex-col gap-1.5">
+              <Bar w="80%" />
+              <Bar w="60%" />
+              <Bar w="72%" />
+              <Bar w="48%" />
+            </div>
+            {/* arrow */}
+            <svg width="18" height="10" viewBox="0 0 18 10" aria-hidden>
+              <path d="M0 5 H14 M11 1 L15 5 L11 9" stroke={accent} strokeOpacity="0.6" strokeWidth="1.3" fill="none" />
+            </svg>
+            {/* JSON-style panel */}
+            <div className="flex w-[68px] shrink-0 flex-col gap-1 rounded-md bg-white/85 p-1.5" style={{ border: `1px solid ${SOFT}` }}>
+              <div className="flex items-center gap-1">
+                <span className="h-1 flex-1 rounded-full" style={{ background: accent, opacity: 0.6 }} />
+                <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--green)' }} />
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="h-1 flex-1 rounded-full" style={{ background: accent, opacity: 0.45 }} />
+                <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--amber)' }} />
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="h-1 flex-1 rounded-full" style={{ background: accent, opacity: 0.6 }} />
+                <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--green)' }} />
+              </div>
             </div>
           </div>
         )}
