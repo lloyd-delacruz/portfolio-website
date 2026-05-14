@@ -49,6 +49,17 @@ export const PROJECTS: Record<string, ProjectMetaRecord> = {
     scale: '193 countries · WHO · World Bank · IMF',
   },
 
+  'clinical-genai-pipeline': {
+    slug: 'clinical-genai-pipeline',
+    title: 'Clinical GenAI Agent & Analytics Pipeline',
+    status: 'prototype',
+    role: 'System design · Applied AI engineering',
+    period: '2025',
+    deployment: 'Designed pipeline · synthetic data only',
+    stack: ['FastAPI', 'Python', 'PostgreSQL', 'LLM structured outputs', 'React', 'TypeScript'],
+    scale: '8-stage pipeline · 6 tables · synthetic notes',
+  },
+
   'apex-protocol': {
     slug: 'apex-protocol',
     title: 'Apex Protocol',
