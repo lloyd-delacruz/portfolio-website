@@ -56,7 +56,7 @@ export const PROJECTS: Project[] = [
   {
     badge: 'APPLIED AI + DATA ENGINEERING',
     TagIcon: Brain,
-    variant: 'forecast',
+    variant: 'triage',
     accent: 'var(--plum)',
     wash: 'linear-gradient(135deg,#f3f0fb,#fbf7fe)',
     title: 'Clinical GenAI Agent & Analytics Pipeline',
