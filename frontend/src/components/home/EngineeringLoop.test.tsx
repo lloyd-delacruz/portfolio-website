@@ -31,4 +31,21 @@ describe('EngineeringLoop', () => {
       expect(screen.getAllByText(artifact).length).toBeGreaterThan(0)
     }
   })
+
+  it('renders the three decision-diamond question labels', () => {
+    render(<EngineeringLoop />)
+    for (const question of ['CLEAR?', 'GATE?', 'HEALTHY?']) {
+      expect(screen.getAllByText(question).length).toBeGreaterThan(0)
+    }
+  })
+
+  it('renders three amber NO arcs', () => {
+    const { container } = render(<EngineeringLoop />)
+    expect(container.querySelectorAll('[data-testid="no-arc"]').length).toBe(3)
+  })
+
+  it('renders three green YES branch labels', () => {
+    const { container } = render(<EngineeringLoop />)
+    expect(container.querySelectorAll('[data-testid="yes-branch"]').length).toBe(3)
+  })
 })
