@@ -1,6 +1,5 @@
 // frontend/src/components/home/FeaturedWork.tsx
 import Link from 'next/link'
-import Image from 'next/image'
 import {
   ArrowRight,
   QrCode,
@@ -37,8 +36,6 @@ export type Project = {
   capabilities: ProjectCapability[]
   /** Short, concrete proof point shown on flagship/featured cards. */
   metric?: { value: string; label: string }
-  /** Real product screenshot shown in window chrome in place of the abstract PreviewMock. */
-  screenshot?: { src: string; alt: string }
 }
 
 export const PROJECTS: Project[] = [
@@ -68,7 +65,6 @@ export const PROJECTS: Project[] = [
     href: '/work/population-health-intelligence',
     status: 'prototype',
     capabilities: ['ai-assisted', 'case-study', 'demo'],
-    screenshot: { src: '/images/Life_Expectancy.png', alt: 'Life-expectancy forecasting dashboard' },
   },
   {
     badge: 'APPLIED AI / CLINICAL DECISION SUPPORT',
@@ -82,7 +78,6 @@ export const PROJECTS: Project[] = [
     href: '/work/clinical-risk-engine',
     status: 'prototype',
     capabilities: ['ai-assisted', 'case-study', 'demo'],
-    screenshot: { src: '/images/Heart_Prediction.png', alt: 'Clinical risk prediction interface' },
   },
   {
     badge: 'HEALTHCARE SYSTEMS',
@@ -341,24 +336,7 @@ export function WorkCard({ p }: { p: Project }) {
       className="lift group flex flex-col overflow-hidden rounded-2xl bg-white ghair"
     >
       <div className="relative h-40 overflow-hidden" style={{ background: p.wash }}>
-        {p.screenshot ? (
-          <div className="absolute inset-0 flex gap-2 p-3">
-            <Window>
-              <div className="relative flex-1 overflow-hidden rounded">
-                <Image
-                  src={p.screenshot.src}
-                  alt={p.screenshot.alt}
-                  fill
-                  sizes="(min-width: 1024px) 360px, 90vw"
-                  className="object-cover object-top"
-                  unoptimized
-                />
-              </div>
-            </Window>
-          </div>
-        ) : (
-          <PreviewMock variant={p.variant} accent={p.accent} />
-        )}
+        <PreviewMock variant={p.variant} accent={p.accent} />
         <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-soft backdrop-blur">
           <p.TagIcon size={11} style={{ color: p.accent }} />
           {p.badge}
