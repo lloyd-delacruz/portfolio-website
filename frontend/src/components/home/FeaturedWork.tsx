@@ -126,7 +126,7 @@ function QrGlyph({ accent }: { accent: string }) {
 
 function PreviewMock({ variant, accent }: { variant: Variant; accent: string }) {
   return (
-    <div className="absolute inset-0 flex gap-2 p-3">
+    <div className="absolute inset-0 flex gap-2 p-3" aria-hidden="true">
       {/* mini sidebar — all variants */}
       <div className="hidden w-9 shrink-0 flex-col gap-1.5 rounded-md bg-white/70 p-2 sm:flex">
         <div className="h-2 w-2 rounded-full" style={{ background: accent }} />
