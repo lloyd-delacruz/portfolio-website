@@ -3,14 +3,12 @@ import { render, screen } from '@testing-library/react'
 import { HomeHero } from './HomeHero'
 
 describe('HomeHero', () => {
-  it('renders the Applied AI Systems Builder eyebrow', () => {
+  it('renders the shortened "Applied AI · Healthcare Ops" eyebrow', () => {
     render(<HomeHero />)
-    expect(
-      screen.getByText(/applied ai systems builder · healthcare operations/i),
-    ).toBeInTheDocument()
+    expect(screen.getByText(/applied ai · healthcare ops/i)).toBeInTheDocument()
   })
 
-  it('renders the new headline and sub-headline', () => {
+  it('renders the headline and sub-headline', () => {
     render(<HomeHero />)
     expect(
       screen.getByRole('heading', {
@@ -20,6 +18,11 @@ describe('HomeHero', () => {
     expect(
       screen.getByText(/multi-site workflows, event streams, and decision layers/i),
     ).toBeInTheDocument()
+  })
+
+  it('does not force a hard line break inside the headline', () => {
+    const { container } = render(<HomeHero />)
+    expect(container.querySelector('h1 br')).toBeNull()
   })
 
   it('renders the recruiter-readable status line', () => {
