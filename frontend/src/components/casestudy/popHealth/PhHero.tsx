@@ -2,13 +2,6 @@
 import Link from 'next/link'
 import { ArrowRight, ArrowLeft, Globe, Database, Brain, Zap } from 'lucide-react'
 
-const META = [
-  { k: 'Role', v: 'Applied AI engineering' },
-  { k: 'Coverage', v: '193 countries' },
-  { k: 'Sources', v: 'WHO · World Bank · IMF' },
-  { k: 'Status', v: 'Prototype' },
-]
-
 function PhSystemMap() {
   // 4 small icon nodes (Globe → Database → Brain → Zap) connected by a faint plum signal line.
   // Inline SVG, no separate file (per spec §11.2).
@@ -121,18 +114,6 @@ export function PhHero() {
                 Start from the problem
               </Link>
             </div>
-
-            <dl
-              className="anim-rise mt-9 grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4"
-              style={{ animationDelay: '220ms' }}
-            >
-              {META.map((m) => (
-                <div key={m.k}>
-                  <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">{m.k}</dt>
-                  <dd className="mt-1 text-sm font-medium text-ink">{m.v}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
           <div className="anim-rise" style={{ animationDelay: '260ms' }}>

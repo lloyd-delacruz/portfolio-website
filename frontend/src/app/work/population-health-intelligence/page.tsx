@@ -10,6 +10,7 @@ import { PhForecastDemo } from '@/components/casestudy/popHealth/PhForecastDemo'
 import { PhImpact } from '@/components/casestudy/popHealth/PhImpact'
 import { PhFutureAI } from '@/components/casestudy/popHealth/PhFutureAI'
 import { PhClose } from '@/components/casestudy/popHealth/PhClose'
+import { ProjectMeta } from '@/components/work/ProjectMeta'
 
 export const metadata: Metadata = {
   title: 'Population-Health Intelligence Platform — Lloyd Dela Cruz',
@@ -23,6 +24,7 @@ export default function Page() {
       <HomeNav active="Work" />
       <main>
         <PhHero />
+        <ProjectMeta slug="population-health-intelligence" />
         <Reveal>
           <PhProblem />
         </Reveal>
