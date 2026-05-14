@@ -19,91 +19,55 @@ type Stage = {
   artifact: string
   Icon: LucideIcon
   color: string
-  cx: number
-  cy: number
+  col: number   // 1..5 — the column on the grid
+  row: 1 | 2    // which row
 }
 
 type Decision = {
   key: string
   question: string
-  cx: number
-  cy: number
-  yesAt: { x: number; y: number }      // green YES label position
-  noArc: string                         // SVG cubic path for the amber NO arc
-  noLabelAt: { x: number; y: number }   // amber NO label position
-  noTarget: string                      // e.g. "SPEC" for mobile chip
+  col: number
+  row: 1 | 2
+  noTarget: string
 }
 
-// Design space — shifted right by 20 vs. the previous version so the leftmost
-// column (FRAME / HEALTHY?) has breathing room, and so the HEALTHY→FRAME NO arc
-// can bow out without crowding the viewBox edge.
-const W = 720
-const H = 460
-const ROW1_Y = 110
-const ROW2_Y = 360
-const CARD = 84
-const HALF = CARD / 2
-const DIAMOND = 48
+// ───── Strict 5×2 grid ──────────────────────────────────────────────────────
+const W = 740
+const H = 380
+const COLS_X = [100, 260, 420, 580, 700]   // five columns, evenly spaced
+const ROW_Y = { 1: 100, 2: 300 } as const
+
+const CARD_W = 100
+const CARD_H = 60
+const HALF_W = CARD_W / 2
+const HALF_H = CARD_H / 2
+
+const DIAMOND = 52
 const DHALF = DIAMOND / 2
 
+// Helper: x position for a 1-based column index.
+const X = (col: number) => COLS_X[col - 1]
+
+// Stage cards. Row 1 reads L→R; Row 2 is placed so each Row-2 card sits
+// directly below its Row-1 counterpart in the same column, but the flow
+// arrows point R→L (VERIFY → SHIP → OBSERVE → HEALTHY?).
 const STAGES: Stage[] = [
-  { key: 'frame',   label: 'FRAME',   sub: 'WITH THE OPERATOR',   longLabel: 'Frame the problem with the operator, not the dataset.',                                              artifact: 'brief',         Icon: Target,      color: 'var(--plum)', cx: 100, cy: ROW1_Y },
-  { key: 'spec',    label: 'SPEC',    sub: 'DESIGN BEFORE CODE',  longLabel: 'Write the spec before any code.',                                                                    artifact: 'spec.md',       Icon: FileText,    color: 'var(--ink)',  cx: 240, cy: ROW1_Y },
-  { key: 'plan',    label: 'PLAN',    sub: 'REVIEWABLE UNITS',    longLabel: 'Decompose the spec into a reviewable plan.',                                                         artifact: 'plan.md',       Icon: ListChecks,  color: 'var(--plum)', cx: 520, cy: ROW1_Y },
-  { key: 'build',   label: 'BUILD',   sub: 'TESTS WITH THE CODE', longLabel: 'Build with agents — code and tests produced together, every step reviewable.',                       artifact: 'diff+tests',    Icon: Bot,         color: 'var(--ink)',  cx: 660, cy: ROW1_Y },
-  { key: 'verify',  label: 'VERIFY',  sub: 'MULTI-GATE',          longLabel: 'Verify against a stack of gates — types, lint, tests, eval/regression, secrets check, human review.', artifact: 'gate report',   Icon: ShieldCheck, color: 'var(--plum)', cx: 660, cy: ROW2_Y },
-  { key: 'ship',    label: 'SHIP',    sub: 'RELEASE-TAGGED',      longLabel: 'Ship with a release tag and a written rollback path.',                                                artifact: 'release notes', Icon: Rocket,      color: 'var(--ink)',  cx: 380, cy: ROW2_Y },
-  { key: 'observe', label: 'OBSERVE', sub: 'LOGS & FEEDBACK',     longLabel: 'Observe in production — logs, traces, and incident feedback drive the next loop.',                   artifact: 'logs/traces',   Icon: Activity,    color: 'var(--plum)', cx: 240, cy: ROW2_Y },
+  // Row 1 (L→R)
+  { key: 'frame',   col: 1, row: 1, label: 'FRAME',   sub: 'WITH THE OPERATOR',   longLabel: 'Frame the problem with the operator, not the dataset.',                                              artifact: 'brief',         Icon: Target,      color: 'var(--plum)' },
+  { key: 'spec',    col: 2, row: 1, label: 'SPEC',    sub: 'DESIGN BEFORE CODE',  longLabel: 'Write the spec before any code.',                                                                    artifact: 'spec.md',       Icon: FileText,    color: 'var(--ink)'  },
+  { key: 'plan',    col: 4, row: 1, label: 'PLAN',    sub: 'REVIEWABLE UNITS',    longLabel: 'Decompose the spec into a reviewable plan.',                                                         artifact: 'plan.md',       Icon: ListChecks,  color: 'var(--plum)' },
+  { key: 'build',   col: 5, row: 1, label: 'BUILD',   sub: 'TESTS WITH THE CODE', longLabel: 'Build with agents — code and tests produced together, every step reviewable.',                       artifact: 'diff+tests',    Icon: Bot,         color: 'var(--ink)'  },
+  // Row 2 (R→L flow), columns mirror Row 1
+  { key: 'verify',  col: 5, row: 2, label: 'VERIFY',  sub: 'MULTI-GATE',          longLabel: 'Verify against a stack of gates — types, lint, tests, eval/regression, secrets check, human review.', artifact: 'gate report',   Icon: ShieldCheck, color: 'var(--plum)' },
+  { key: 'ship',    col: 3, row: 2, label: 'SHIP',    sub: 'RELEASE-TAGGED',      longLabel: 'Ship with a release tag and a written rollback path.',                                                artifact: 'release notes', Icon: Rocket,      color: 'var(--ink)'  },
+  { key: 'observe', col: 2, row: 2, label: 'OBSERVE', sub: 'LOGS & FEEDBACK',     longLabel: 'Observe in production — logs, traces, and incident feedback drive the next loop.',                   artifact: 'logs/traces',   Icon: Activity,    color: 'var(--plum)' },
 ]
 
-// Decision diamonds. NO arcs land on CLEAN edges of target cards (top edge for SPEC,
-// right edge for PLAN, left edge for FRAME) so they never cross a label.
+// Three decision diamonds, each in its own column so NO arcs are straight.
 const DECISIONS: Decision[] = [
-  {
-    key: 'clear',
-    question: 'CLEAR?',
-    cx: 380,
-    cy: ROW1_Y,
-    yesAt: { x: 450, y: ROW1_Y - 10 },
-    // CLEAR? top vertex (380, 86) → SPEC top edge (240, 68).
-    // Tangent: straight UP from start, straight DOWN onto SPEC. Symmetric rainbow.
-    noArc: `M 380 ${ROW1_Y - DHALF} C 380 18, 240 18, 240 ${ROW1_Y - HALF}`,
-    noLabelAt: { x: 310, y: 16 },
-    noTarget: 'SPEC',
-  },
-  {
-    key: 'gate',
-    question: 'GATE?',
-    cx: 520,
-    cy: ROW2_Y,
-    yesAt: { x: 450, y: ROW2_Y - 10 },
-    // GATE? top vertex (520, 336) → PLAN right edge (562, 110).
-    // Tangent: straight UP from diamond top, then horizontal LEFT into PLAN's right side.
-    // C2 = (588, 110) gives a clean arc that just kisses the endpoint without
-    // overshooting and looping back like a hook.
-    noArc: `M 520 ${ROW2_Y - DHALF} C 520 220, 588 ${ROW1_Y}, ${520 + HALF} ${ROW1_Y}`,
-    noLabelAt: { x: 578, y: 174 },
-    noTarget: 'PLAN',
-  },
-  {
-    key: 'healthy',
-    question: 'HEALTHY?',
-    cx: 100,
-    cy: ROW2_Y,
-    yesAt: { x: 100, y: ROW2_Y + DHALF + 16 },
-    // HEALTHY? left vertex (76, 360) → FRAME left edge (58, 110).
-    // Tangent: straight LEFT from diamond left, then horizontal RIGHT into FRAME's left side.
-    noArc: `M ${100 - DHALF} ${ROW2_Y} C 30 ${ROW2_Y}, 30 ${ROW1_Y}, ${100 - HALF} ${ROW1_Y}`,
-    noLabelAt: { x: 30, y: 222 },
-    noTarget: 'FRAME',
-  },
-]
-
-// NO-arc start ports (small amber dots at each diamond vertex where the arc begins)
-const NO_PORTS = [
-  { cx: 380, cy: ROW1_Y - DHALF },  // top of CLEAR?
-  { cx: 520, cy: ROW2_Y - DHALF },  // top of GATE?
-  { cx: 100 - DHALF, cy: ROW2_Y },  // left of HEALTHY?
+  { key: 'clear',   col: 3, row: 1, question: 'CLEAR?',   noTarget: 'SPEC'  },  // sits between SPEC and PLAN in Row 1
+  { key: 'gate',    col: 4, row: 2, question: 'GATE?',    noTarget: 'PLAN'  },  // sits between SHIP and VERIFY in Row 2, directly under PLAN
+  { key: 'healthy', col: 1, row: 2, question: 'HEALTHY?', noTarget: 'FRAME' },  // at the end of Row 2 R→L flow, directly under FRAME
 ]
 
 function diamondPoints(cx: number, cy: number, d: number) {
@@ -133,8 +97,8 @@ export function EngineeringLoop() {
         </p>
       </header>
 
-      {/* Desktop decision tree (md and up) */}
-      <div className="relative mx-auto mt-14 hidden w-full max-w-[780px] md:block">
+      {/* Desktop decision tree — strict 5×2 grid (md and up) */}
+      <div className="relative mx-auto mt-14 hidden w-full max-w-[820px] md:block">
         <div className="relative w-full" style={{ paddingBottom: `${(H / W) * 100}%` }}>
           <div className="absolute inset-0">
             <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" fill="none" aria-hidden>
@@ -159,104 +123,136 @@ export function EngineeringLoop() {
                   markerHeight="5"
                   orient="auto"
                 >
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--plum)" fillOpacity={0.55} />
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--plum)" fillOpacity={0.6} />
                 </marker>
               </defs>
 
-              {/* ── Row 1 forward connectors (plum dashed, L→R, arrowhead at end) ─── */}
-              <line x1={100 + HALF}  y1={ROW1_Y} x2={240 - HALF}  y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
-              <line x1={240 + HALF}  y1={ROW1_Y} x2={380 - DHALF} y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
-              <line x1={380 + DHALF} y1={ROW1_Y} x2={520 - HALF}  y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
-              <line x1={520 + HALF}  y1={ROW1_Y} x2={660 - HALF}  y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              {/* ── Row 1 forward connectors (L→R) ───────────────────────────────── */}
+              {/* FRAME(c1) → SPEC(c2) */}
+              <line x1={X(1) + HALF_W} y1={ROW_Y[1]} x2={X(2) - HALF_W}  y2={ROW_Y[1]} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              {/* SPEC(c2) → ◇CLEAR?(c3) */}
+              <line x1={X(2) + HALF_W} y1={ROW_Y[1]} x2={X(3) - DHALF}   y2={ROW_Y[1]} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              {/* ◇CLEAR?(c3) → PLAN(c4) — YES branch */}
+              <line x1={X(3) + DHALF}  y1={ROW_Y[1]} x2={X(4) - HALF_W}  y2={ROW_Y[1]} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              {/* PLAN(c4) → BUILD(c5) */}
+              <line x1={X(4) + HALF_W} y1={ROW_Y[1]} x2={X(5) - HALF_W}  y2={ROW_Y[1]} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
 
-              {/* Vertical drop: BUILD → VERIFY (right edge) */}
-              <line x1={660} y1={ROW1_Y + HALF} x2={660} y2={ROW2_Y - HALF} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              {/* ── Vertical drop on the right: BUILD(c5,r1) → VERIFY(c5,r2) ───── */}
+              <line x1={X(5)} y1={ROW_Y[1] + HALF_H} x2={X(5)} y2={ROW_Y[2] - HALF_H} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
 
-              {/* ── Row 2 forward connectors (plum dashed, R→L flow, arrowhead at end) */}
-              <line x1={660 - HALF}  y1={ROW2_Y} x2={520 + DHALF} y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
-              <line x1={520 - DHALF} y1={ROW2_Y} x2={380 + HALF}  y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
-              <line x1={380 - HALF}  y1={ROW2_Y} x2={240 + HALF}  y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
-              <line x1={240 - HALF}  y1={ROW2_Y} x2={100 + DHALF} y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              {/* ── Row 2 forward connectors (R→L flow) ──────────────────────────── */}
+              {/* VERIFY(c5) → ◇GATE?(c4) */}
+              <line x1={X(5) - HALF_W} y1={ROW_Y[2]} x2={X(4) + DHALF}   y2={ROW_Y[2]} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              {/* ◇GATE?(c4) → SHIP(c3) — YES branch */}
+              <line x1={X(4) - DHALF}  y1={ROW_Y[2]} x2={X(3) + HALF_W}  y2={ROW_Y[2]} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              {/* SHIP(c3) → OBSERVE(c2) */}
+              <line x1={X(3) - HALF_W} y1={ROW_Y[2]} x2={X(2) + HALF_W}  y2={ROW_Y[2]} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              {/* OBSERVE(c2) → ◇HEALTHY?(c1) */}
+              <line x1={X(2) - HALF_W} y1={ROW_Y[2]} x2={X(1) + DHALF}   y2={ROW_Y[2]} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
 
-              {/* ── Diamond shapes (drawn FIRST so arcs emerge cleanly on top) ───── */}
+              {/* ── Diamonds (drawn before NO arcs so arcs emerge on top) ────────── */}
               {DECISIONS.map((d) => (
                 <polygon
                   key={`diamond-${d.key}`}
-                  points={diamondPoints(d.cx, d.cy, DHALF)}
+                  points={diamondPoints(X(d.col), ROW_Y[d.row], DHALF)}
                   fill="white"
                   stroke="var(--line)"
                   strokeWidth={1}
                 />
               ))}
 
-              {/* ── Amber NO arcs (drawn on top of diamonds so they emerge crisply) */}
-              {DECISIONS.map((d) => (
-                <path
-                  key={`no-arc-${d.key}`}
-                  d={d.noArc}
-                  stroke="var(--amber)"
-                  strokeWidth={2}
-                  strokeOpacity={0.75}
-                  strokeLinecap="round"
-                  className="flow-line"
-                  markerEnd="url(#eloop-arrow)"
-                  data-testid="no-arc"
-                />
-              ))}
+              {/* ── NO arc 1: ◇CLEAR? → SPEC (orthogonal up-left-down) ──────────── */}
+              {/* From CLEAR? top vertex up to y=40, across to col 2, down to SPEC top edge. */}
+              <path
+                d={`M ${X(3)} ${ROW_Y[1] - DHALF} V 40 H ${X(2)} V ${ROW_Y[1] - HALF_H}`}
+                stroke="var(--amber)"
+                strokeWidth={2}
+                strokeOpacity={0.75}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="flow-line"
+                markerEnd="url(#eloop-arrow)"
+                data-testid="no-arc"
+              />
 
-              {/* NO-arc start ports (amber dots on top of arcs + diamonds) */}
-              {NO_PORTS.map((p, i) => (
-                <circle key={`no-port-${i}`} cx={p.cx} cy={p.cy} r={3} fill="var(--amber)" />
-              ))}
+              {/* ── NO arc 2: ◇GATE? → PLAN (perfectly straight vertical) ───────── */}
+              {/* Both at col 4, so this is a clean vertical line. */}
+              <line
+                x1={X(4)} y1={ROW_Y[2] - DHALF}
+                x2={X(4)} y2={ROW_Y[1] + HALF_H}
+                stroke="var(--amber)"
+                strokeWidth={2}
+                strokeOpacity={0.75}
+                strokeLinecap="round"
+                className="flow-line"
+                markerEnd="url(#eloop-arrow)"
+                data-testid="no-arc"
+              />
 
-              {/* ── NO labels ────────────────────────────────────────────────────── */}
+              {/* ── NO arc 3: ◇HEALTHY? → FRAME (perfectly straight vertical) ───── */}
+              {/* Both at col 1, so this is a clean vertical line. */}
+              <line
+                x1={X(1)} y1={ROW_Y[2] - DHALF}
+                x2={X(1)} y2={ROW_Y[1] + HALF_H}
+                stroke="var(--amber)"
+                strokeWidth={2}
+                strokeOpacity={0.75}
+                strokeLinecap="round"
+                className="flow-line"
+                markerEnd="url(#eloop-arrow)"
+                data-testid="no-arc"
+              />
+
+              {/* ── Diamond port dots (amber) at each NO-arc start vertex ────────── */}
+              <circle cx={X(3)} cy={ROW_Y[1] - DHALF} r={3} fill="var(--amber)" />
+              <circle cx={X(4)} cy={ROW_Y[2] - DHALF} r={3} fill="var(--amber)" />
+              <circle cx={X(1)} cy={ROW_Y[2] - DHALF} r={3} fill="var(--amber)" />
+
+              {/* ── Diamond question labels (inside the diamond, in plum) ────────── */}
               {DECISIONS.map((d) => (
                 <text
-                  key={`no-label-${d.key}`}
-                  x={d.noLabelAt.x}
-                  y={d.noLabelAt.y}
+                  key={`q-${d.key}`}
+                  x={X(d.col)}
+                  y={ROW_Y[d.row] + 4}
                   textAnchor="middle"
-                  fontSize="11"
-                  fontWeight="700"
-                  fill="var(--amber)"
-                  style={{ letterSpacing: '0.14em' }}
+                  fontSize="10"
+                  fontWeight="800"
+                  fill="var(--plum)"
+                  fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
+                  style={{ letterSpacing: '0.04em' }}
                 >
-                  NO
+                  {d.question}
                 </text>
               ))}
 
-              {/* ── Green YES branch labels (3 total) ────────────────────────────── */}
-              {DECISIONS.map((d) => (
-                <text
-                  key={`yes-${d.key}`}
-                  x={d.yesAt.x}
-                  y={d.yesAt.y}
-                  textAnchor="middle"
-                  fontSize="11"
-                  fontWeight="700"
-                  fill="var(--green)"
-                  style={{ letterSpacing: '0.14em' }}
-                  data-testid="yes-branch"
-                >
-                  YES
-                </text>
-              ))}
+              {/* ── YES labels (green, above each forward branch after a diamond) ─ */}
+              <text x={(X(3) + X(4)) / 2} y={ROW_Y[1] - 14} textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--green)" style={{ letterSpacing: '0.14em' }} data-testid="yes-branch">YES</text>
+              <text x={(X(3) + X(4)) / 2} y={ROW_Y[2] - 14} textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--green)" style={{ letterSpacing: '0.14em' }} data-testid="yes-branch">YES</text>
+              <text x={X(1)} y={ROW_Y[2] + DHALF + 18} textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--green)" style={{ letterSpacing: '0.14em' }} data-testid="yes-branch">YES</text>
+
+              {/* ── NO labels (amber, beside each NO arc) ────────────────────────── */}
+              {/* CLEAR? NO sits on the horizontal segment of its L-path */}
+              <text x={(X(2) + X(3)) / 2} y={32} textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--amber)" style={{ letterSpacing: '0.14em' }}>NO</text>
+              {/* GATE? NO sits to the right of the vertical at col 4 */}
+              <text x={X(4) + 16} y={(ROW_Y[1] + ROW_Y[2]) / 2 + 4} textAnchor="start" fontSize="11" fontWeight="700" fill="var(--amber)" style={{ letterSpacing: '0.14em' }}>NO</text>
+              {/* HEALTHY? NO sits to the left of the vertical at col 1 */}
+              <text x={X(1) - 16} y={(ROW_Y[1] + ROW_Y[2]) / 2 + 4} textAnchor="end" fontSize="11" fontWeight="700" fill="var(--amber)" style={{ letterSpacing: '0.14em' }}>NO</text>
             </svg>
 
-            {/* Stage cards (HTML overlay, percentage-positioned). No above-card
-                sub-caption — the label + artifact below is enough, and arcs need
-                the space above each card to land cleanly. */}
+            {/* Stage cards as HTML overlay (positioned by percent of viewBox) */}
             {STAGES.map((s, i) => {
+              const cx = X(s.col)
+              const cy = ROW_Y[s.row]
               const delay = i * 0.2
               return (
                 <div
                   key={s.key}
                   className="absolute"
                   style={{
-                    width: CARD,
-                    height: CARD,
-                    left: `${(s.cx / W) * 100}%`,
-                    top: `${(s.cy / H) * 100}%`,
+                    width: CARD_W,
+                    height: CARD_H,
+                    left: `${(cx / W) * 100}%`,
+                    top: `${(cy / H) * 100}%`,
                     transform: 'translate(-50%, -50%)',
                   }}
                 >
@@ -268,17 +264,17 @@ export function EngineeringLoop() {
                     }}
                   >
                     <div className="grid h-full w-full place-items-center rounded-2xl bg-white ghair soft-shadow-sm">
-                      <s.Icon size={24} style={{ color: s.color }} strokeWidth={1.9} />
+                      <s.Icon size={22} style={{ color: s.color }} strokeWidth={1.9} />
                     </div>
                     <span
                       className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.16em] text-ink"
-                      style={{ top: `${CARD + 6}px` }}
+                      style={{ top: `${CARD_H + 6}px` }}
                     >
                       {s.label}
                     </span>
                     <span
                       className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] text-ink-muted"
-                      style={{ top: `${CARD + 24}px` }}
+                      style={{ top: `${CARD_H + 24}px` }}
                     >
                       {s.artifact}
                     </span>
@@ -286,32 +282,11 @@ export function EngineeringLoop() {
                 </div>
               )
             })}
-
-            {/* Diamond question labels (HTML overlay so they pick up font-mono).
-                Row 1 (CLEAR?) goes BELOW its diamond (above is reserved for the NO arc).
-                Row 2 diamonds (GATE?, HEALTHY?) go ABOVE their diamonds (below is reserved
-                for the row's stage labels). */}
-            {DECISIONS.map((d) => {
-              const isRow1 = d.cy === ROW1_Y
-              const yPx = isRow1 ? d.cy + DHALF + 8 : d.cy - DHALF - 8
-              return (
-                <span
-                  key={`q-${d.key}`}
-                  className={`absolute -translate-x-1/2 ${isRow1 ? '' : '-translate-y-full'} whitespace-nowrap font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-muted`}
-                  style={{
-                    left: `${(d.cx / W) * 100}%`,
-                    top: `${(yPx / H) * 100}%`,
-                  }}
-                >
-                  {d.question}
-                </span>
-              )
-            })}
           </div>
         </div>
       </div>
 
-      {/* Mobile stack (below md) */}
+      {/* Mobile stack (below md) — unchanged shape, decisions inline */}
       <div className="relative mt-12 md:hidden">
         <ol className="relative flex flex-col items-center gap-0" aria-hidden>
           {STAGES.map((s, i) => {
@@ -349,7 +324,7 @@ export function EngineeringLoop() {
                 {decisionAfter && (
                   <div className="my-2 flex items-center gap-3">
                     <div
-                      className="grid h-8 w-8 place-items-center bg-white ghair soft-shadow-sm font-mono text-[10px] font-bold text-ink-muted"
+                      className="grid h-8 w-8 place-items-center bg-white ghair soft-shadow-sm font-mono text-[10px] font-bold text-plum"
                       style={{ transform: 'rotate(45deg)' }}
                     >
                       <span style={{ transform: 'rotate(-45deg)' }}>?</span>
@@ -366,9 +341,7 @@ export function EngineeringLoop() {
                   </div>
                 )}
 
-                {!isLast && !decisionAfter && (
-                  <span aria-hidden className="block h-2 w-px" />
-                )}
+                {!isLast && !decisionAfter && <span aria-hidden className="block h-2 w-px" />}
               </li>
             )
           })}
