@@ -5,8 +5,8 @@ import { Building2, Boxes, HeartPulse, Rocket, ArrowRight } from 'lucide-react'
 const METRICS = [
   { value: '4',        label: 'Hospital sites · live deployment',     Icon: Building2,  tint: 'var(--plum)',  bg: 'var(--plum-soft)' },
   { value: '800+',     label: 'Assets under one shared state model',  Icon: Boxes,      tint: 'var(--amber)', bg: '#fef3c7' },
-  { value: '10+',      label: 'Years in healthcare operations',       Icon: HeartPulse, tint: 'var(--green)', bg: '#d1fae5' },
-  { value: 'Aug 2025', label: 'Wheelchair tracking — in production since', Icon: Rocket, tint: 'var(--blue)', bg: '#dbeafe' },
+  { value: '9+',       label: 'Years in healthcare operations',       Icon: HeartPulse, tint: 'var(--green)', bg: '#d1fae5' },
+  { value: 'Aug 2025', label: 'Equipment-tracking system live since', Icon: Rocket,     tint: 'var(--blue)',  bg: '#dbeafe' },
 ]
 
 export function ProductionIndicators() {
@@ -33,7 +33,7 @@ export function ProductionIndicators() {
             Currently available
           </p>
           <p className="mt-1 text-xs leading-relaxed text-ink-muted">
-            Vancouver, Canada · Open to applied AI, AI systems, and operational intelligence roles
+            Vancouver, BC · open to healthcare data, AI, and engineering roles — remote, hybrid, or on-site
           </p>
           <Link
             href="/contact"
