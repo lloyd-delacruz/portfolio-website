@@ -209,19 +209,21 @@ The `[data-register="dark"]` attribute lands on the dark deep-dive page wrappers
 
 ## Retrofit & integration
 
-Nine pages get the strip in this PR. Each falls into one of the three flavors:
+Seven pages get the strip in this PR. Each falls into one of the three flavors:
 
 | Page | Flavor | Notes |
 |---|---|---|
-| `/work/wheelchair-tracking` | A | Strip inserts directly below the existing hero |
-| `/work/clinical-risk-engine` | B | **Replace** the ad-hoc hero line `STATUS ◉ Inference live · Latency p50 22ms · Calibrated Brier 0.041`. The two technical facts (latency, Brier) move to the Appendix section (where the deep-dive spec already houses model performance) |
-| `/work/population-health-intelligence` | B | **Replace** the ad-hoc hero line `STATUS ◉ Inference live · Latency p50 38ms · 193 countries · ~3.1k records`. `scale: "193 countries · 3.1k records"` carries the load-bearing facts; latency moves to the Appendix |
-| `/work/apex-protocol` | C | Strip is the credibility floor until sub-project #2 lifts the page |
-| `/work/equitrackr` | C | Same |
-| `/work/spendwise` | C | Same |
-| `/work/website-gemms` | C | Same |
-| `/case-studies/wheelchair-inventory-optimization` | A | Sister to wheelchair-tracking; same meta values |
-| `/case-studies/project-management-analytics` | A or C | Per-project decision during implementation |
+| `/work/wheelchair-tracking` | A | Strip inserts directly below `<WcHero />` |
+| `/work/clinical-risk-engine` | B | **Replace** the 4-field `<dl>` META block at the bottom of `CrHero.tsx` (`Role · Dataset · Features · Status`) with `<ProjectMeta slug="clinical-risk-engine" />`. The block's existing values fold into the registry entry. |
+| `/work/population-health-intelligence` | B | **Replace** the 4-field `<dl>` META block at the bottom of `PhHero.tsx` (`Role · Coverage · Sources · Status`) with `<ProjectMeta slug="population-health-intelligence" />`. Same fold-in pattern as clinical-risk-engine. |
+| `/work/apex-protocol` | C | Page is a `<PlaceholderCaseStudy>`. Render `<ProjectMeta />` inside the placeholder via a new optional `meta` prop slot, OR insert the strip below the placeholder block. Resolved by implementation plan. |
+| `/work/equitrackr` | C | Full case-study structure; strip inserts directly below `<EtHero />` |
+| `/work/spendwise` | C | Full case-study structure; strip inserts directly below `<SwHero />` |
+| `/work/website-gemms` | C | Page is a `<PlaceholderCaseStudy>`. Same handling as apex-protocol. |
+
+**Note on register assumption (corrected from earlier draft).** All seven pages render inside the `.home2` warm-cream wrapper. The dark deep-dive register described in `[[2026-05-13-applied-ai-system-deep-dives-design]]` was never implemented — those pages also live in `.home2`. The `[data-register="dark"]` CSS in this spec is kept as **future-proofing only**; no page receives that attribute in this PR.
+
+**Out of scope: the two legacy `/case-studies/*` pages** (`wheelchair-inventory-optimization`, `project-management-analytics`) use a Framer-Motion-plus-gradient register entirely separate from `.home2`. Retrofitting them requires register migration, which is a different cleanup. They get their own follow-up.
 
 ### Per-project content sourcing
 
@@ -234,7 +236,14 @@ Two content questions surface to the user during implementation:
 
 ### Deep-dive hero replacement detail
 
-The existing hero on `/work/clinical-risk-engine` and `/work/population-health-intelligence` ends with a single mono line. That line goes away. The strip below the hero subsumes it. Latency / Brier / dataset-size numbers survive — they move to a small ancillary mono line inside the Appendix section of those pages.
+Each deep-dive hero (`CrHero.tsx`, `PhHero.tsx`) carries a 4-field `<dl>` block immediately below the CTAs (the `META` array rendered as a grid of label/value pairs). That `<dl>` is replaced by `<ProjectMeta slug="..." />` rendered **outside** the hero component, immediately below it in the page composition. The hero loses the META array and its `<dl>` render entirely; the new strip subsumes the responsibility.
+
+Existing META values map to registry fields as follows:
+
+- **Clinical Risk Engine:** `Role = Applied AI engineering` → `role`; `Dataset = Wisconsin Diagnostic (569)` and `Features = 30 cell-morphology signals` → fold into `scale: "Wisconsin Diagnostic · 569 cases · 30 features"`; `Status = Prototype` → `status: 'prototype'`.
+- **Population-Health:** `Role = Applied AI engineering` → `role`; `Coverage = 193 countries` and `Sources = WHO · World Bank · IMF` → fold into `scale: "193 countries · WHO · World Bank · IMF"`; `Status = Prototype` → `status: 'prototype'`.
+
+This corrects the previous draft of this spec which referenced a non-existent "ad-hoc mono status line" and an Appendix-move of latency/Brier numbers (those numbers are not currently on the pages).
 
 ### Out of scope (explicit)
 
@@ -304,28 +313,27 @@ Three test files added under the existing patterns in this repo:
 
 **Modified:**
 
-- `frontend/src/app/globals.css` — add `.project-meta` block (warm-cream defaults + `[data-register="dark"]` override)
-- `frontend/src/app/work/wheelchair-tracking/page.tsx` — render `<ProjectMeta slug="wheelchair-tracking" />` below the hero
-- `frontend/src/app/work/clinical-risk-engine/page.tsx` — render `<ProjectMeta />`, drop the ad-hoc mono status line from the hero, move latency / Brier to the Appendix
-- `frontend/src/app/work/population-health-intelligence/page.tsx` — same pattern as clinical-risk-engine
-- `frontend/src/app/work/apex-protocol/page.tsx` — render `<ProjectMeta />`
-- `frontend/src/app/work/equitrackr/page.tsx` — render `<ProjectMeta />`
-- `frontend/src/app/work/spendwise/page.tsx` — render `<ProjectMeta />`
-- `frontend/src/app/work/website-gemms/page.tsx` — render `<ProjectMeta />`
-- `frontend/src/app/case-studies/wheelchair-inventory-optimization/page.tsx` — render `<ProjectMeta />`
-- `frontend/src/app/case-studies/project-management-analytics/page.tsx` — render `<ProjectMeta />`
-- The two deep-dive pages also get a `data-register="dark"` attribute on their page wrappers so the CSS picks up the dark treatment
+- `frontend/src/app/globals.css` — add `.project-meta` block (warm-cream defaults; `[data-register="dark"]` override kept as future-proofing, not applied to any current page)
+- `frontend/src/app/work/wheelchair-tracking/page.tsx` — render `<ProjectMeta slug="wheelchair-tracking" />` below `<WcHero />`
+- `frontend/src/app/work/clinical-risk-engine/page.tsx` — render `<ProjectMeta slug="clinical-risk-engine" />` below `<CrHero />`
+- `frontend/src/app/work/population-health-intelligence/page.tsx` — render `<ProjectMeta slug="population-health-intelligence" />` below `<PhHero />`
+- `frontend/src/app/work/apex-protocol/page.tsx` — render `<ProjectMeta slug="apex-protocol" />` (placement TBD by implementation plan — likely below `<PlaceholderCaseStudy>` or via a new prop slot)
+- `frontend/src/app/work/equitrackr/page.tsx` — render `<ProjectMeta slug="equitrackr" />` below `<EtHero />`
+- `frontend/src/app/work/spendwise/page.tsx` — render `<ProjectMeta slug="spendwise" />` below `<SwHero />`
+- `frontend/src/app/work/website-gemms/page.tsx` — render `<ProjectMeta slug="website-gemms" />` (same placement question as apex-protocol)
+- `frontend/src/components/casestudy/clinicalRisk/CrHero.tsx` — remove the `META` constant and the `<dl>` block that renders it
+- `frontend/src/components/casestudy/popHealth/PhHero.tsx` — remove the `META` constant and the `<dl>` block that renders it
 
 **Deleted:** none.
 
 ## Success criteria
 
-- Every `/work/*` and `/case-studies/*` page renders the strip directly below the hero.
-- The two AI deep-dives no longer carry their ad-hoc mono status line in the hero; that information is now in the strip + appendix.
-- A recruiter scanning any project page can identify status, role, period, deployment, stack within the first 600 px without scrolling.
+- All seven `/work/*` pages in scope render the strip directly below the hero (or for `<PlaceholderCaseStudy>` pages, in the equivalent position resolved by the implementation plan).
+- The two AI deep-dives no longer carry their 4-field `<dl>` META block inside the hero; the equivalent facts now live in the strip's registry entries.
+- A recruiter scanning any project page can identify status, role, period, deployment (when set), and stack within the first 600 px without scrolling.
 - No invented or unsupported fields visible anywhere — every value on every page traces back to a known fact.
 - `npm run type-check` and `npm run lint` pass.
-- All three new test files pass.
+- Both new test files pass (`ProjectMeta.test.tsx`, `projects.test.ts`).
 - Bundle size delta < 5 KB.
 
 ## Open follow-ups (post-implementation, not in this spec)
