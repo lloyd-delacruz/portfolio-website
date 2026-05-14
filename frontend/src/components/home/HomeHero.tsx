@@ -12,15 +12,14 @@ export function HomeHero() {
         <div>
           <span className="anim-rise inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-soft ghair">
             <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--plum)' }} />
-            Applied AI Systems Builder · Healthcare Operations
+            Applied AI · Healthcare Ops
           </span>
 
           <h1
-            className="anim-rise mt-6 font-display text-[2.85rem] font-extrabold leading-[1.04] text-ink sm:text-[3.4rem] lg:text-[4rem]"
+            className="anim-rise mt-6 max-w-[18ch] font-display text-[2.85rem] font-extrabold leading-[1.04] text-ink sm:text-[3.4rem] lg:text-[4rem]"
             style={{ animationDelay: '60ms' }}
           >
             I build AI systems that{' '}
-            <br className="hidden sm:block" />
             <span className="grad-plum-text">support healthcare operations.</span>
           </h1>
 
@@ -32,9 +31,17 @@ export function HomeHero() {
             designed to ship, observed in production.
           </p>
 
-          <div
-            className="anim-rise mt-9 flex flex-wrap items-center gap-3"
+          <p
+            className="anim-rise mt-6 text-[12px] leading-relaxed text-ink-muted"
             style={{ animationDelay: '180ms' }}
+          >
+            Vancouver, Canada · Open to applied AI, AI systems, and operational intelligence roles ·
+            Currently shipping multi-site healthcare deployment
+          </p>
+
+          <div
+            className="anim-rise mt-6 flex flex-wrap items-center gap-6"
+            style={{ animationDelay: '240ms' }}
           >
             <Link
               href="/work/wheelchair-tracking"
@@ -46,19 +53,12 @@ export function HomeHero() {
             </Link>
             <Link
               href="#ai-workflow"
-              className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-ink ghair-2 transition-colors hover:bg-[var(--cream-2)]"
+              className="group inline-flex items-center gap-1.5 text-sm font-semibold text-ink transition-colors hover:text-[var(--plum)]"
             >
               AI workflow methodology
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" aria-hidden />
             </Link>
           </div>
-
-          <p
-            className="anim-rise mt-6 max-w-[60ch] text-[12px] leading-relaxed text-ink-muted"
-            style={{ animationDelay: '240ms' }}
-          >
-            Vancouver, Canada · Open to applied AI, AI systems, and operational intelligence roles ·
-            Currently shipping multi-site healthcare deployment
-          </p>
         </div>
 
         {/* right */}
