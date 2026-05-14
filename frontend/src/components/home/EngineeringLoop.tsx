@@ -64,10 +64,11 @@ const DECISIONS: Decision[] = [
     question: 'CLEAR?',
     cx: 380,
     cy: ROW1_Y,
-    yesAt: { x: 450, y: ROW1_Y - 8 },
-    // CLEAR? top → SPEC top, high apex
+    yesAt: { x: 450, y: ROW1_Y - 10 },
+    // CLEAR? top vertex (380, 86) → SPEC top edge (240, 68).
+    // Tangent: straight UP from start, straight DOWN onto SPEC. Symmetric rainbow.
     noArc: `M 380 ${ROW1_Y - DHALF} C 380 18, 240 18, 240 ${ROW1_Y - HALF}`,
-    noLabelAt: { x: 310, y: 14 },
+    noLabelAt: { x: 310, y: 12 },
     noTarget: 'SPEC',
   },
   {
@@ -75,10 +76,11 @@ const DECISIONS: Decision[] = [
     question: 'GATE?',
     cx: 520,
     cy: ROW2_Y,
-    yesAt: { x: 450, y: ROW2_Y - 8 },
-    // GATE? top → PLAN right edge (lands horizontally into PLAN's right side)
-    noArc: `M 520 ${ROW2_Y - DHALF} C 615 280, 615 ${ROW1_Y}, ${520 + HALF} ${ROW1_Y}`,
-    noLabelAt: { x: 632, y: 232 },
+    yesAt: { x: 450, y: ROW2_Y - 10 },
+    // GATE? top vertex (520, 336) → PLAN right edge (562, 110).
+    // Tangent: straight UP from diamond top, then horizontal LEFT into PLAN's right side.
+    noArc: `M 520 ${ROW2_Y - DHALF} C 520 220, 615 ${ROW1_Y}, ${520 + HALF} ${ROW1_Y}`,
+    noLabelAt: { x: 600, y: 232 },
     noTarget: 'PLAN',
   },
   {
@@ -86,12 +88,20 @@ const DECISIONS: Decision[] = [
     question: 'HEALTHY?',
     cx: 100,
     cy: ROW2_Y,
-    yesAt: { x: 100, y: ROW2_Y + DHALF + 18 },
-    // HEALTHY? left → FRAME left edge (lands horizontally into FRAME's left side)
-    noArc: `M ${100 - DHALF} ${ROW2_Y} C 30 320, 30 ${ROW1_Y}, ${100 - HALF} ${ROW1_Y}`,
-    noLabelAt: { x: 24, y: 232 },
+    yesAt: { x: 100, y: ROW2_Y + DHALF + 16 },
+    // HEALTHY? left vertex (76, 360) → FRAME left edge (58, 110).
+    // Tangent: straight LEFT from diamond left, then horizontal RIGHT into FRAME's left side.
+    noArc: `M ${100 - DHALF} ${ROW2_Y} C 30 ${ROW2_Y}, 30 ${ROW1_Y}, ${100 - HALF} ${ROW1_Y}`,
+    noLabelAt: { x: 18, y: 232 },
     noTarget: 'FRAME',
   },
+]
+
+// NO-arc start ports (small amber dots at each diamond vertex where the arc begins)
+const NO_PORTS = [
+  { cx: 380, cy: ROW1_Y - DHALF },  // top of CLEAR?
+  { cx: 520, cy: ROW2_Y - DHALF },  // top of GATE?
+  { cx: 100 - DHALF, cy: ROW2_Y },  // left of HEALTHY?
 ]
 
 function diamondPoints(cx: number, cy: number, d: number) {
@@ -130,30 +140,46 @@ export function EngineeringLoop() {
                 <marker
                   id="eloop-arrow"
                   viewBox="0 0 10 10"
-                  refX="8"
+                  refX="9"
                   refY="5"
                   markerWidth="6"
                   markerHeight="6"
-                  orient="auto-start-reverse"
+                  orient="auto"
                 >
                   <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--amber)" />
                 </marker>
+                <marker
+                  id="eloop-arrow-plum"
+                  viewBox="0 0 10 10"
+                  refX="9"
+                  refY="5"
+                  markerWidth="5"
+                  markerHeight="5"
+                  orient="auto"
+                >
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--plum)" fillOpacity={0.55} />
+                </marker>
               </defs>
 
-              {/* ── Row 1 forward connectors (plum dashed, L→R) ──────────────────── */}
-              <line x1={100 + HALF} y1={ROW1_Y} x2={240 - HALF}  y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" />
-              <line x1={240 + HALF} y1={ROW1_Y} x2={380 - DHALF} y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" />
-              <line x1={380 + DHALF} y1={ROW1_Y} x2={520 - HALF} y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" />
-              <line x1={520 + HALF} y1={ROW1_Y} x2={660 - HALF}  y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" />
+              {/* ── Row 1 forward connectors (plum dashed, L→R, arrowhead at end) ─── */}
+              <line x1={100 + HALF}  y1={ROW1_Y} x2={240 - HALF}  y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              <line x1={240 + HALF}  y1={ROW1_Y} x2={380 - DHALF} y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              <line x1={380 + DHALF} y1={ROW1_Y} x2={520 - HALF}  y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              <line x1={520 + HALF}  y1={ROW1_Y} x2={660 - HALF}  y2={ROW1_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
 
               {/* Vertical drop: BUILD → VERIFY (right edge) */}
-              <line x1={660} y1={ROW1_Y + HALF} x2={660} y2={ROW2_Y - HALF} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" />
+              <line x1={660} y1={ROW1_Y + HALF} x2={660} y2={ROW2_Y - HALF} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
 
-              {/* ── Row 2 forward connectors (plum dashed, R→L flow) ─────────────── */}
-              <line x1={660 - HALF}  y1={ROW2_Y} x2={520 + DHALF} y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" />
-              <line x1={520 - DHALF} y1={ROW2_Y} x2={380 + HALF}  y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" />
-              <line x1={380 - HALF}  y1={ROW2_Y} x2={240 + HALF}  y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" />
-              <line x1={240 - HALF}  y1={ROW2_Y} x2={100 + DHALF} y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" />
+              {/* ── Row 2 forward connectors (plum dashed, R→L flow, arrowhead at end) */}
+              <line x1={660 - HALF}  y1={ROW2_Y} x2={520 + DHALF} y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              <line x1={520 - DHALF} y1={ROW2_Y} x2={380 + HALF}  y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              <line x1={380 - HALF}  y1={ROW2_Y} x2={240 + HALF}  y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+              <line x1={240 - HALF}  y1={ROW2_Y} x2={100 + DHALF} y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
+
+              {/* NO-arc start ports (amber dots at each diamond vertex) */}
+              {NO_PORTS.map((p, i) => (
+                <circle key={`no-port-${i}`} cx={p.cx} cy={p.cy} r={3.2} fill="var(--amber)" opacity={0.85} />
+              ))}
 
               {/* ── Amber NO arcs (3 total) ──────────────────────────────────────── */}
               {DECISIONS.map((d) => (
