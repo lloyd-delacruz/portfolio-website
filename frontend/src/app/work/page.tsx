@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 const APPLIED_AI_HREFS = new Set([
   '/work/clinical-risk-engine',
   '/work/population-health-intelligence',
+  '/work/clinical-genai-pipeline',
 ])
 
 // Tiered partition: flagship deployment, applied AI, then product & operational work.
