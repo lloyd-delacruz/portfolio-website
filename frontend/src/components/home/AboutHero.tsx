@@ -6,7 +6,7 @@ import { MapPin, ArrowRight } from 'lucide-react'
 const STATS = [
   { value: '9+', label: 'Years at VCH' },
   { value: '200+', label: 'Patient plans / yr' },
-  { value: '3', label: 'Multi-site VCH' },
+  { value: '4 / 800+', label: 'Sites · assets' },
 ]
 
 export function AboutHero() {
@@ -53,9 +53,11 @@ export function AboutHero() {
           >
             Over the last several years I&apos;ve moved from frontline care into the systems side
             of healthcare — an MSc in Data Analytics, certifications in analytics, cloud, and
-            applied AI, and a wheelchair-logistics platform now running across three Vancouver
-            Coastal Health sites. I&apos;m still a Rehabilitation Assistant at VCH; the engineering
-            work grew out of problems I kept watching happen on shift.
+            applied AI, and a wheelchair-logistics platform now running across four Vancouver
+            Coastal Health sites. Alongside it sits a growing portfolio of healthcare data,
+            applied-AI, and automation systems — clinical documentation pipelines, workflow
+            automation, risk and population-health tools. I&apos;m still a Rehabilitation Assistant
+            at VCH; the engineering work grew out of problems I kept watching happen on shift.
           </p>
 
           <div className="anim-rise mt-9 flex flex-wrap items-center gap-3" style={{ animationDelay: '230ms' }}>
@@ -119,7 +121,7 @@ export function AboutHero() {
           {/* available pill */}
           <div className="anim-float absolute -left-3 bottom-5 flex items-center gap-2 rounded-full bg-white px-3.5 py-2 ghair soft-shadow" style={{ animationDelay: '1.1s' }}>
             <span className="anim-pulse h-2 w-2 rounded-full" style={{ background: 'var(--green)' }} />
-            <span className="text-[12px] font-semibold text-ink">Open to product engineering &amp; applied AI work</span>
+            <span className="text-[12px] font-semibold text-ink">Open to healthcare data, analytics, AI &amp; application engineering roles</span>
           </div>
         </div>
       </div>
