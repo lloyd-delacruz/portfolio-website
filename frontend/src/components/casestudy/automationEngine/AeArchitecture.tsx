@@ -1,5 +1,5 @@
 // frontend/src/components/casestudy/automationEngine/AeArchitecture.tsx
-import { Webhook, Workflow, Send, Database } from 'lucide-react'
+import { Webhook, Workflow, Send } from 'lucide-react'
 import { CsSection, Module, Chip } from '../bits'
 
 type Layer = {
