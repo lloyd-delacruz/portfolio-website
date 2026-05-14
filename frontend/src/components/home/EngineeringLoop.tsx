@@ -68,7 +68,7 @@ const DECISIONS: Decision[] = [
     // CLEAR? top vertex (380, 86) → SPEC top edge (240, 68).
     // Tangent: straight UP from start, straight DOWN onto SPEC. Symmetric rainbow.
     noArc: `M 380 ${ROW1_Y - DHALF} C 380 18, 240 18, 240 ${ROW1_Y - HALF}`,
-    noLabelAt: { x: 310, y: 12 },
+    noLabelAt: { x: 310, y: 16 },
     noTarget: 'SPEC',
   },
   {
@@ -79,8 +79,10 @@ const DECISIONS: Decision[] = [
     yesAt: { x: 450, y: ROW2_Y - 10 },
     // GATE? top vertex (520, 336) → PLAN right edge (562, 110).
     // Tangent: straight UP from diamond top, then horizontal LEFT into PLAN's right side.
-    noArc: `M 520 ${ROW2_Y - DHALF} C 520 220, 615 ${ROW1_Y}, ${520 + HALF} ${ROW1_Y}`,
-    noLabelAt: { x: 600, y: 232 },
+    // C2 = (588, 110) gives a clean arc that just kisses the endpoint without
+    // overshooting and looping back like a hook.
+    noArc: `M 520 ${ROW2_Y - DHALF} C 520 220, 588 ${ROW1_Y}, ${520 + HALF} ${ROW1_Y}`,
+    noLabelAt: { x: 578, y: 174 },
     noTarget: 'PLAN',
   },
   {
@@ -92,7 +94,7 @@ const DECISIONS: Decision[] = [
     // HEALTHY? left vertex (76, 360) → FRAME left edge (58, 110).
     // Tangent: straight LEFT from diamond left, then horizontal RIGHT into FRAME's left side.
     noArc: `M ${100 - DHALF} ${ROW2_Y} C 30 ${ROW2_Y}, 30 ${ROW1_Y}, ${100 - HALF} ${ROW1_Y}`,
-    noLabelAt: { x: 18, y: 232 },
+    noLabelAt: { x: 30, y: 222 },
     noTarget: 'FRAME',
   },
 ]
@@ -140,10 +142,10 @@ export function EngineeringLoop() {
                 <marker
                   id="eloop-arrow"
                   viewBox="0 0 10 10"
-                  refX="9"
+                  refX="10"
                   refY="5"
-                  markerWidth="6"
-                  markerHeight="6"
+                  markerWidth="7"
+                  markerHeight="7"
                   orient="auto"
                 >
                   <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--amber)" />
@@ -151,7 +153,7 @@ export function EngineeringLoop() {
                 <marker
                   id="eloop-arrow-plum"
                   viewBox="0 0 10 10"
-                  refX="9"
+                  refX="10"
                   refY="5"
                   markerWidth="5"
                   markerHeight="5"
@@ -176,36 +178,51 @@ export function EngineeringLoop() {
               <line x1={380 - HALF}  y1={ROW2_Y} x2={240 + HALF}  y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
               <line x1={240 - HALF}  y1={ROW2_Y} x2={100 + DHALF} y2={ROW2_Y} stroke="var(--plum)" strokeWidth={2} strokeOpacity={0.45} strokeLinecap="round" className="flow-line" markerEnd="url(#eloop-arrow-plum)" />
 
-              {/* NO-arc start ports (amber dots at each diamond vertex) */}
-              {NO_PORTS.map((p, i) => (
-                <circle key={`no-port-${i}`} cx={p.cx} cy={p.cy} r={3.2} fill="var(--amber)" opacity={0.85} />
+              {/* ── Diamond shapes (drawn FIRST so arcs emerge cleanly on top) ───── */}
+              {DECISIONS.map((d) => (
+                <polygon
+                  key={`diamond-${d.key}`}
+                  points={diamondPoints(d.cx, d.cy, DHALF)}
+                  fill="white"
+                  stroke="var(--line)"
+                  strokeWidth={1}
+                />
               ))}
 
-              {/* ── Amber NO arcs (3 total) ──────────────────────────────────────── */}
+              {/* ── Amber NO arcs (drawn on top of diamonds so they emerge crisply) */}
               {DECISIONS.map((d) => (
-                <g key={`no-${d.key}`}>
-                  <path
-                    d={d.noArc}
-                    stroke="var(--amber)"
-                    strokeWidth={2}
-                    strokeOpacity={0.7}
-                    strokeLinecap="round"
-                    className="flow-line"
-                    markerEnd="url(#eloop-arrow)"
-                    data-testid="no-arc"
-                  />
-                  <text
-                    x={d.noLabelAt.x}
-                    y={d.noLabelAt.y}
-                    textAnchor="middle"
-                    fontSize="11"
-                    fontWeight="700"
-                    fill="var(--amber)"
-                    style={{ letterSpacing: '0.14em' }}
-                  >
-                    NO
-                  </text>
-                </g>
+                <path
+                  key={`no-arc-${d.key}`}
+                  d={d.noArc}
+                  stroke="var(--amber)"
+                  strokeWidth={2}
+                  strokeOpacity={0.75}
+                  strokeLinecap="round"
+                  className="flow-line"
+                  markerEnd="url(#eloop-arrow)"
+                  data-testid="no-arc"
+                />
+              ))}
+
+              {/* NO-arc start ports (amber dots on top of arcs + diamonds) */}
+              {NO_PORTS.map((p, i) => (
+                <circle key={`no-port-${i}`} cx={p.cx} cy={p.cy} r={3} fill="var(--amber)" />
+              ))}
+
+              {/* ── NO labels ────────────────────────────────────────────────────── */}
+              {DECISIONS.map((d) => (
+                <text
+                  key={`no-label-${d.key}`}
+                  x={d.noLabelAt.x}
+                  y={d.noLabelAt.y}
+                  textAnchor="middle"
+                  fontSize="11"
+                  fontWeight="700"
+                  fill="var(--amber)"
+                  style={{ letterSpacing: '0.14em' }}
+                >
+                  NO
+                </text>
               ))}
 
               {/* ── Green YES branch labels (3 total) ────────────────────────────── */}
@@ -223,17 +240,6 @@ export function EngineeringLoop() {
                 >
                   YES
                 </text>
-              ))}
-
-              {/* ── Diamond shapes (SVG polygons) ────────────────────────────────── */}
-              {DECISIONS.map((d) => (
-                <polygon
-                  key={`diamond-${d.key}`}
-                  points={diamondPoints(d.cx, d.cy, DHALF)}
-                  fill="white"
-                  stroke="var(--line)"
-                  strokeWidth={1}
-                />
               ))}
             </svg>
 
