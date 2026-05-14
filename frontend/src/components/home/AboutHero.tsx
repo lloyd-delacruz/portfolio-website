@@ -25,8 +25,8 @@ export function AboutHero() {
             className="anim-rise mt-6 font-display text-[2.5rem] font-extrabold leading-[1.06] text-ink sm:text-[3rem] lg:text-[3.4rem]"
             style={{ animationDelay: '60ms', letterSpacing: '-0.025em' }}
           >
-            Healthcare operations, engineered{' '}
-            <span className="grad-plum-text">from the inside.</span>
+            Operational systems for healthcare, engineered from{' '}
+            <span className="grad-plum-text">inside the workflow.</span>
           </h1>
 
           <p
