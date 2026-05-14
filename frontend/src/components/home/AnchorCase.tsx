@@ -23,10 +23,10 @@ const FLOW: FlowNode[] = [
 ]
 
 const BULLETS = [
-  'Multi-site deployment with role-based coordination',
-  'QR-driven workflows for intake, dispatch, and return',
+  'Multi-site coordination across 4 hospitals',
+  'QR / barcode workflows for intake, dispatch, and return',
+  'Operational analytics on utilization, dwell time, and rotation',
   'Lifecycle visibility from acquisition to retirement',
-  'Real-time chain-of-custody across hospital units',
 ]
 
 const STATS = [
@@ -43,7 +43,7 @@ export function AnchorCase() {
         {/* left column — copy */}
         <div className="flex flex-col p-7 lg:p-9">
           <span className="inline-flex w-fit items-center gap-2 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-plum" style={{ background: 'var(--plum-soft)' }}>
-            Anchor case · Enterprise deployment
+            Anchor system · Production deployment
           </span>
 
           <div className="mt-4 flex flex-wrap items-center gap-1.5">
@@ -52,13 +52,13 @@ export function AnchorCase() {
           </div>
 
           <h3 className="mt-4 font-display text-2xl font-extrabold leading-[1.15] text-ink sm:text-[1.9rem]">
-            Multi-Site Wheelchair Tracking System
+            Multi-Site Hospital Equipment Tracking & Analytics System
           </h3>
 
           <p className="mt-3 max-w-[58ch] text-[15px] leading-relaxed text-ink-soft">
-            Production asset-tracking platform deployed across multiple hospital sites —
-            coordinating 800+ wheelchairs and clinical assets with QR-driven workflows,
-            lifecycle visibility, and chain-of-custody tracking.
+            Production healthcare-operations platform deployed across 4 hospital sites — 800+ tracked
+            assets coordinated through QR / barcode workflows, lifecycle visibility, operational
+            analytics, and real-time chain-of-custody.
           </p>
 
           <ul className="mt-5 space-y-2.5">
@@ -71,7 +71,7 @@ export function AnchorCase() {
           </ul>
 
           <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
-            Power Platform · Microsoft Lists · React · TypeScript · QR systems
+            Power Platform · Microsoft Lists · React · TypeScript · QR / barcode workflows · operational analytics
           </p>
 
           <Link
