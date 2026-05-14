@@ -17,58 +17,135 @@ type Node = {
 }
 
 const NODES: Node[] = [
-  { key: 'scan',     Icon: ScanLine, color: 'var(--plum)',  title: 'QR scan / Mobile',  caption: 'Clinical end'        },
-  { key: 'events',   Icon: Radio,    color: 'var(--amber)', title: 'Event stream',      caption: 'Audit log'           },
-  { key: 'state',    Icon: Database, color: 'var(--blue)',  title: 'State engine',      caption: 'Asset lifecycle'     },
-  { key: 'decision', Icon: GitFork,  color: 'var(--green)', title: 'Decision layer',    caption: 'Routing rules'       },
+  { key: 'scan',     Icon: ScanLine, color: 'var(--plum)',  title: 'QR scan / Mobile',   caption: 'Clinical end'        },
+  { key: 'events',   Icon: Radio,    color: 'var(--amber)', title: 'Event stream',       caption: 'Audit log'           },
+  { key: 'state',    Icon: Database, color: 'var(--blue)',  title: 'State engine',       caption: 'Asset lifecycle'     },
+  { key: 'decision', Icon: GitFork,  color: 'var(--green)', title: 'Decision layer',     caption: 'Routing rules'       },
   { key: 'ops',      Icon: Gauge,    color: 'var(--pink)',  title: 'Operations surface', caption: 'Dashboard · alerts' },
 ]
 
-const CONNECTOR_LABELS = ['event', 'state transition', 'rule decision', 'signal']
+const CONNECTOR_LABELS = [
+  'event',
+  'state transition',
+  'rule decision',
+  'signal',
+  'feedback',
+] as const
 
-// Design space — 5 evenly spaced columns over 560 wide; row centered at y=170.
-// Cards are 80x80 (one fifth of column-step 112) so each card → 32px breathing
-// room on each side for the connector segment + its label.
-const W = 560
-const H = 360
-const ROW_Y = 170
+// Pentagon geometry. ViewBox is near-square so vertices fit with margin.
+const W = 480
+const H = 440
+const CX = W / 2
+const CY = H / 2 + 10
+const R = 150
 const CARD_W = 80
 const CARD_H = 80
-const X = (i: number) => Math.round((W / 5) * (i + 0.5))
 const HALF = CARD_W / 2
+
+const VERTEX_ANGLES_DEG = [90, 18, -54, -126, 162] as const
+
+const VERTICES = VERTEX_ANGLES_DEG.map((deg) => {
+  const rad = (deg * Math.PI) / 180
+  return {
+    x: CX + R * Math.cos(rad),
+    y: CY - R * Math.sin(rad),
+  }
+})
+
+function segmentEndpoints(
+  a: { x: number; y: number },
+  b: { x: number; y: number },
+) {
+  const dx = b.x - a.x
+  const dy = b.y - a.y
+  const len = Math.hypot(dx, dy)
+  const ux = dx / len
+  const uy = dy / len
+  return {
+    x1: a.x + ux * HALF,
+    y1: a.y + uy * HALF,
+    x2: b.x - ux * HALF,
+    y2: b.y - uy * HALF,
+  }
+}
+
+function labelPosition(
+  a: { x: number; y: number },
+  b: { x: number; y: number },
+  offset = 22,
+) {
+  const mx = (a.x + b.x) / 2
+  const my = (a.y + b.y) / 2
+  const dx = b.x - a.x
+  const dy = b.y - a.y
+  const len = Math.hypot(dx, dy)
+  const nx = -dy / len
+  const ny = dx / len
+  const outward = (mx - CX) * nx + (my - CY) * ny >= 0 ? 1 : -1
+  return { x: mx + nx * offset * outward, y: my + ny * offset * outward }
+}
+
+const PENTAGON_PATH = (() => {
+  let d = ''
+  for (let i = 0; i < 5; i++) {
+    const a = VERTICES[i]
+    const b = VERTICES[(i + 1) % 5]
+    const { x1, y1, x2, y2 } = segmentEndpoints(a, b)
+    d += (i === 0 ? `M ${x1} ${y1} ` : `L ${x1} ${y1} `) + `L ${x2} ${y2} `
+  }
+  d += 'Z'
+  return d
+})()
 
 export function SystemArchitectureSketch() {
   return (
     <div
       className="relative mx-auto w-full max-w-[560px]"
       role="img"
-      aria-label="System architecture — QR scan to event stream to state engine to decision layer to operations surface, live across 4 hospital sites"
+      aria-label="System architecture loop — QR scan, event stream, state engine, decision layer, and operations surface arranged as a closed cycle that feeds back into new scans. Live across 4 hospital sites."
     >
       <div className="relative w-full" style={{ paddingBottom: `${(H / W) * 100}%` }}>
         <div className="absolute inset-0">
-          {/* Connectors */}
+          {/* Connectors + labels */}
           <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" fill="none" aria-hidden>
-            {NODES.slice(0, -1).map((n, i) => {
-              const x1 = X(i) + HALF
-              const x2 = X(i + 1) - HALF
+            {VERTICES.map((a, i) => {
+              const b = VERTICES[(i + 1) % 5]
+              const { x1, y1, x2, y2 } = segmentEndpoints(a, b)
+              const lp = labelPosition(a, b)
               return (
-                <g key={`seg-${n.key}`}>
+                <g key={`seg-${i}`}>
                   <line
                     x1={x1}
-                    y1={ROW_Y}
+                    y1={y1}
                     x2={x2}
-                    y2={ROW_Y}
+                    y2={y2}
                     stroke="var(--plum)"
                     strokeWidth={1.5}
                     strokeOpacity={0.45}
                     strokeLinecap="round"
                   />
-                  <circle cx={x1} cy={ROW_Y} r={2.4} fill="var(--plum)" opacity={0.7} />
-                  <circle cx={x2} cy={ROW_Y} r={2.4} fill="var(--plum)" opacity={0.7} />
+                  <line
+                    x1={x1}
+                    y1={y1}
+                    x2={x2}
+                    y2={y2}
+                    stroke="var(--plum)"
+                    strokeWidth={2.5}
+                    strokeLinecap="round"
+                    pathLength={1}
+                    strokeDasharray="1 1"
+                    strokeDashoffset={1}
+                    opacity={0}
+                    className="anim-seg-wash"
+                    style={{ animationDelay: `${i * 1.0}s` }}
+                  />
+                  <circle cx={x1} cy={y1} r={2.4} fill="var(--plum)" opacity={0.7} />
+                  <circle cx={x2} cy={y2} r={2.4} fill="var(--plum)" opacity={0.7} />
                   <text
-                    x={(x1 + x2) / 2}
-                    y={ROW_Y - HALF - 8}
+                    x={lp.x}
+                    y={lp.y}
                     textAnchor="middle"
+                    dominantBaseline="middle"
                     fontSize="9"
                     fontWeight="600"
                     fill="var(--ink-muted)"
@@ -80,43 +157,70 @@ export function SystemArchitectureSketch() {
               )
             })}
 
-            {/* Quiet pulse dot travelling the full forward path */}
+            {/* Heartbeat pulse — main rhythm */}
             <circle
-              r={3}
+              r={3.5}
               fill="var(--plum)"
-              opacity={0.85}
-              className="anim-travel"
-              style={{ offsetPath: `path('M ${X(0) + HALF} ${ROW_Y} L ${X(4) - HALF} ${ROW_Y}')` }}
+              className="anim-heartbeat"
+              style={{ offsetPath: `path('${PENTAGON_PATH}')` }}
             />
+
+            {/* Counter-flow ack pulse — quieter feedback signal, runs every ~3 main loops */}
+            <circle
+              r={2}
+              fill="var(--ink-soft)"
+              opacity={0}
+              className="anim-ack"
+              style={{ offsetPath: `path('${PENTAGON_PATH}')` }}
+            />
+
+            {/* Sonar rings — one per node, fires during that node's dwell */}
+            {VERTICES.map((v, i) => (
+              <circle
+                key={`sonar-${i}`}
+                cx={v.x}
+                cy={v.y}
+                r={0}
+                fill="none"
+                stroke="var(--plum)"
+                strokeWidth={1.5}
+                opacity={0}
+                className="anim-sonar"
+                style={{ animationDelay: `${i * 1.0}s` }}
+              />
+            ))}
           </svg>
 
           {/* Node cards */}
-          {NODES.map((n, i) => (
-            <div
-              key={n.key}
-              className="absolute"
-              style={{
-                width: CARD_W,
-                height: CARD_H,
-                left: `${(X(i) / W) * 100}%`,
-                top: `${(ROW_Y / H) * 100}%`,
-                transform: 'translate(-50%, -50%)',
-              }}
-            >
-              <div className="flex h-full w-full flex-col items-center justify-center gap-1 rounded-2xl bg-white ghair soft-shadow-sm">
-                <n.Icon size={22} style={{ color: n.color }} strokeWidth={1.9} />
-                <span className="px-1 text-center font-display text-[12px] font-semibold leading-tight text-ink">
-                  {n.title}
+          {NODES.map((n, i) => {
+            const v = VERTICES[i]
+            return (
+              <div
+                key={n.key}
+                className="absolute"
+                style={{
+                  width: CARD_W,
+                  height: CARD_H,
+                  left: `${(v.x / W) * 100}%`,
+                  top: `${(v.y / H) * 100}%`,
+                  transform: 'translate(-50%, -50%)',
+                }}
+              >
+                <div className="flex h-full w-full flex-col items-center justify-center gap-1 rounded-2xl bg-white ghair soft-shadow-sm">
+                  <n.Icon size={22} style={{ color: n.color }} strokeWidth={1.9} />
+                  <span className="px-1 text-center font-display text-[12px] font-semibold leading-tight text-ink">
+                    {n.title}
+                  </span>
+                </div>
+                <span
+                  className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.14em] text-ink-muted"
+                  style={{ top: `${CARD_H + 6}px` }}
+                >
+                  {n.caption}
                 </span>
               </div>
-              <span
-                className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.14em] text-ink-muted"
-                style={{ top: `${CARD_H + 6}px` }}
-              >
-                {n.caption}
-              </span>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
 

@@ -510,12 +510,63 @@
   100% { offset-distance: 100%; opacity: 0; }
 }
 
+/* Heartbeat pulse: 5 dwell plateaus + 5 glide ramps along the closed pentagon path.
+   Each node-pair cycle = 1 s = 600 ms dwell + 400 ms glide.
+   offset-distance percentages match segment fractions of total path length (each segment is 1/5 of the closed path). */
+@keyframes home2-heartbeat {
+  /* Start at Scan (offset 0%), dwell 600 ms */
+  0%   { offset-distance: 0%;    opacity: 1; }
+  12%  { offset-distance: 0%;    opacity: 1; }   /* end of Scan dwell */
+  20%  { offset-distance: 20%;   opacity: 1; }   /* arrive Events (after 400 ms glide) */
+  32%  { offset-distance: 20%;   opacity: 1; }   /* end of Events dwell */
+  40%  { offset-distance: 40%;   opacity: 1; }   /* arrive State */
+  52%  { offset-distance: 40%;   opacity: 1; }
+  60%  { offset-distance: 60%;   opacity: 1; }   /* arrive Decision */
+  72%  { offset-distance: 60%;   opacity: 1; }
+  80%  { offset-distance: 80%;   opacity: 1; }   /* arrive Ops */
+  92%  { offset-distance: 80%;   opacity: 1; }
+  100% { offset-distance: 100%;  opacity: 1; }   /* back to Scan (closes the loop) */
+}
+
+/* Sonar ring: invisible most of the loop, then expands + fades during its assigned dwell window. */
+@keyframes home2-sonar {
+  0%,   100% { r: 0;  opacity: 0; }
+  4%         { r: 0;  opacity: 0.35; }
+  16%        { r: 42; opacity: 0; }
+}
+
+/* Segment wash: a single bright sweep along one connector during its glide window.
+   The dot's glide for segment i happens at t ≈ [i*1.0 + 0.6, i*1.0 + 1.0] s within the 5 s loop.
+   With pathLength=1 and stroke-dasharray '1 1', stroke-dashoffset 1 = hidden, 0 = filled, -1 = hidden again.
+   So we sweep from offset 1 → 0 across the 400 ms glide, then snap back to 1 for the rest of the loop. */
+@keyframes home2-seg-wash {
+  0%,  12% { stroke-dashoffset: 1; opacity: 0; }
+  13%      { stroke-dashoffset: 1; opacity: 0.9; }
+  20%      { stroke-dashoffset: 0; opacity: 0.9; }
+  26%      { stroke-dashoffset: 0; opacity: 0; }
+  27%, 100%{ stroke-dashoffset: 1; opacity: 0; }
+}
+
+/* Counter-flow ack pulse: 15 s cycle. Visible for ~2 s near the start, dormant for the remaining ~13 s.
+   Travels offset-distance 100% → 0% (Ops → Scan, reverse direction). */
+@keyframes home2-ack {
+  0%   { offset-distance: 100%; opacity: 0; }
+  3%   { offset-distance: 100%; opacity: 0.4; }
+  13%  { offset-distance: 0%;   opacity: 0.4; }
+  16%  { offset-distance: 0%;   opacity: 0; }
+  100% { offset-distance: 0%;   opacity: 0; }
+}
+
 .home2 .anim-float  { animation: home2-float 7s ease-in-out infinite; }
 .home2 .anim-drift  { animation: home2-drift 6s ease-in-out infinite; }
 .home2 .anim-rise   { animation: home2-rise .7s cubic-bezier(.2,.7,.3,1) both; }
 .home2 .anim-pulse  { animation: home2-pulse 2.2s ease-in-out infinite; }
-.home2 .anim-travel { animation: home2-dot-travel 6s linear infinite; }
-.home2 .flow-line   { stroke-dasharray: 3 5; animation: home2-dash 1.4s linear infinite; }
+.home2 .anim-travel    { animation: home2-dot-travel 6s linear infinite; }
+.home2 .anim-heartbeat { animation: home2-heartbeat 5s linear infinite; }
+.home2 .anim-sonar     { animation: home2-sonar 5s ease-out infinite; }
+.home2 .anim-seg-wash  { animation: home2-seg-wash 5s linear infinite; }
+.home2 .anim-ack       { animation: home2-ack 15s linear infinite; }
+.home2 .flow-line      { stroke-dasharray: 3 5; animation: home2-dash 1.4s linear infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   .home2 .anim-float,
@@ -523,8 +574,15 @@
   .home2 .anim-rise,
   .home2 .anim-pulse,
   .home2 .anim-travel,
+  .home2 .anim-heartbeat,
+  .home2 .anim-sonar,
+  .home2 .anim-seg-wash,
+  .home2 .anim-ack,
   .home2 .flow-line { animation: none !important; }
   .home2 .anim-rise { opacity: 1; transform: none; }
+  .home2 .anim-heartbeat,
+  .home2 .anim-ack { opacity: 0; }
+  .home2 .anim-sonar { opacity: 0; r: 0; }
 }
 
 /* Blog article content — light register inside .home2 */
