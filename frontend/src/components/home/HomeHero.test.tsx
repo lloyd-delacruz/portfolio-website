@@ -3,20 +3,20 @@ import { render, screen } from '@testing-library/react'
 import { HomeHero } from './HomeHero'
 
 describe('HomeHero', () => {
-  it('renders the "AI Systems Architect · Applied" eyebrow', () => {
+  it('renders the "Healthcare Operations · Data & AI Systems" eyebrow', () => {
     render(<HomeHero />)
-    expect(screen.getByText(/ai systems architect · applied/i)).toBeInTheDocument()
+    expect(screen.getByText(/healthcare operations · data & ai systems/i)).toBeInTheDocument()
   })
 
   it('renders the headline and sub-headline', () => {
     render(<HomeHero />)
     expect(
       screen.getByRole('heading', {
-        name: /i architect ai systems that solve real-world problems/i,
+        name: /operational healthcare systems, engineered from inside the workflow/i,
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/i design ai-native workflows — agents, llms, decision layers/i),
+      screen.getByText(/9 years inside hospital operations, an msc in data science/i),
     ).toBeInTheDocument()
   })
 
@@ -29,9 +29,10 @@ describe('HomeHero', () => {
     render(<HomeHero />)
     expect(
       screen.getByText(
-        /open to ai architecture, systems engineering, and workflow automation roles/i,
+        /open to healthcare data, analytics, ai, and application engineering roles — remote, hybrid, or on-site/i,
       ),
     ).toBeInTheDocument()
+    expect(screen.getByText(/vancouver, bc/i)).toBeInTheDocument()
   })
 
   it('primary CTA links to the production system case study', () => {
@@ -40,9 +41,9 @@ describe('HomeHero', () => {
     expect(cta).toHaveAttribute('href', '/work/wheelchair-tracking')
   })
 
-  it('secondary CTA anchors to the ai-workflow section', () => {
+  it('secondary CTA anchors to the core-capabilities section', () => {
     render(<HomeHero />)
-    const cta = screen.getByRole('link', { name: /ai workflow methodology/i })
-    expect(cta).toHaveAttribute('href', '#ai-workflow')
+    const cta = screen.getByRole('link', { name: /core capabilities/i })
+    expect(cta).toHaveAttribute('href', '#core-capabilities')
   })
 })
