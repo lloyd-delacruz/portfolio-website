@@ -33,7 +33,7 @@ export function ProductionIndicators() {
             Currently available
           </p>
           <p className="mt-1 text-xs leading-relaxed text-ink-muted">
-            Vancouver, BC · open to healthcare data, AI, and engineering roles — remote, hybrid, or on-site
+            Vancouver, BC · Open to healthcare data, AI, and engineering roles — remote, hybrid, or on-site
           </p>
           <Link
             href="/contact"
