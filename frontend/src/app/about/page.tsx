@@ -11,7 +11,7 @@ import { SiteFooter } from '@/components/home/SiteFooter'
 export const metadata: Metadata = {
   title: 'About — Lloyd Dela Cruz',
   description:
-    'Healthcare operations engineer with nine years inside Vancouver Coastal Health — building workflow systems, analytics tools, and applied AI for clinical use.',
+    'Healthcare operations engineer with nine years inside Vancouver Coastal Health — building workflow systems, analytics tools, applied AI, and event-driven automation for clinical use. A portfolio of shipped and prototyped systems across four VCH sites and beyond.',
 }
 
 export default function AboutPage() {
