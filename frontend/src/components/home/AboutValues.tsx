@@ -32,7 +32,7 @@ const VALUES: Value[] = [
       proof: [
         {
           label: 'Wheelchair logistics',
-          text: 'Modelled equipment movement across 3 VCH hospital sites — inventory, dispatch, return — instead of optimising any single screen.',
+          text: 'Modelled equipment movement across 4 VCH hospital sites — inventory, dispatch, return — instead of optimising any single screen.',
         },
         {
           label: 'AI orchestration',
