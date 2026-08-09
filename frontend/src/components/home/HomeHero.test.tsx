@@ -8,7 +8,7 @@ describe('HomeHero', () => {
     expect(screen.getByText(/healthcare systems engineer/i)).toBeInTheDocument()
   })
 
-  it('renders the headline and sub-headline', () => {
+  it('renders the headline and one-sentence sub-headline', () => {
     render(<HomeHero />)
     expect(
       screen.getByRole('heading', {
@@ -16,7 +16,7 @@ describe('HomeHero', () => {
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/before i wrote the software for them/i),
+      screen.getByText(/i spent years on hospital and rehab floors before i wrote the software for them\./i),
     ).toBeInTheDocument()
   })
 
@@ -25,13 +25,17 @@ describe('HomeHero', () => {
     expect(container.querySelector('h1 br')).toBeNull()
   })
 
-  it('renders the discipline, location and live-deployment line', () => {
+  it('renders the discipline proof row', () => {
     render(<HomeHero />)
     expect(
-      screen.getByText(/clinical workflows · backend architecture · applied ai/i),
+      screen.getByText(/clinical workflows · backend systems · applied ai/i),
     ).toBeInTheDocument()
+  })
+
+  it('renders a subtle location + live-deployment caption', () => {
+    render(<HomeHero />)
     expect(screen.getByText(/vancouver, bc/i)).toBeInTheDocument()
-    expect(screen.getByText(/live across 4 vancouver coastal health sites/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/4 vch sites/i).length).toBeGreaterThan(0)
   })
 
   it('primary CTA is "See the live system" and links to the flagship case study', () => {
@@ -44,6 +48,11 @@ describe('HomeHero', () => {
     render(<HomeHero />)
     const cta = screen.getByRole('link', { name: /view all projects/i })
     expect(cta).toHaveAttribute('href', '/work')
+  })
+
+  it('renders the desk visual showing the live system instead of a generic capability diagram', () => {
+    render(<HomeHero />)
+    expect(screen.getByRole('img', { name: /capacity_service\.py code editor/i })).toBeInTheDocument()
   })
 
   /**

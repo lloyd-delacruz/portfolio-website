@@ -1,7 +1,7 @@
 // frontend/src/components/home/HomeHero.tsx
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { SystemArchitectureSketch } from './SystemArchitectureSketch'
 
 export function HomeHero() {
   return (
@@ -24,20 +24,17 @@ export function HomeHero() {
           </h1>
 
           <p
-            className="anim-rise mt-6 max-w-[52ch] text-[1.05rem] leading-relaxed text-ink-soft"
+            className="anim-rise mt-6 max-w-[46ch] text-[1.05rem] leading-relaxed text-ink-soft"
             style={{ animationDelay: '120ms' }}
           >
             I spent years on hospital and rehab floors before I wrote the software for them.
-            Now I build the multi-tenant, audit-enforced systems clinical operations run on —
-            equipment fleets, provisioning, and clinical retrieval.
           </p>
 
           <p
-            className="anim-rise mt-6 text-[12px] leading-relaxed text-ink-muted"
-            style={{ animationDelay: '180ms' }}
+            className="anim-rise mt-5 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted"
+            style={{ animationDelay: '150ms' }}
           >
-            Clinical workflows · Backend architecture · Applied AI — Vancouver, BC · Currently running a
-            multi-site equipment-tracking system live across 4 Vancouver Coastal Health sites
+            Clinical workflows · Backend systems · Applied AI
           </p>
 
           <div
@@ -60,11 +57,26 @@ export function HomeHero() {
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" aria-hidden />
             </Link>
           </div>
+
+          <p
+            className="anim-rise mt-5 inline-flex items-center gap-2 text-[11px] text-ink-muted"
+            style={{ animationDelay: '260ms' }}
+          >
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: 'var(--green)' }} aria-hidden />
+            Vancouver, BC · Live · 4 VCH sites
+          </p>
         </div>
 
         {/* right */}
-        <div className="anim-rise" style={{ animationDelay: '220ms' }}>
-          <SystemArchitectureSketch />
+        <div className="anim-rise relative mx-auto aspect-[992/941] w-full max-w-[560px]" style={{ animationDelay: '220ms' }}>
+          <Image
+            src="/images/hero-desk-visual.png"
+            alt="Laptop showing the capacity_service.py code editor split with a Sites overview panel listing four Vancouver Coastal Health sites, surrounded by a capacity trend chart, a discharge workflow status card, sticky notes reading 'People first. Systems second.' and a clinical-needs-to-better-outcomes flow, a hand typing on the trackpad, and a notebook sketch of the operational flow next to a 'Built with: Python, FastAPI, PostgreSQL, Redis, React' note."
+            fill
+            sizes="(max-width: 1024px) 90vw, 560px"
+            className="object-contain"
+            priority
+          />
         </div>
       </div>
     </section>
