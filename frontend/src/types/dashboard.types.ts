@@ -10,7 +10,7 @@ export interface DashboardMetric {
 export interface ChartDataPoint {
   name: string;
   value: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface DashboardConfig {
@@ -58,10 +58,10 @@ export interface HappinessData {
 
 export interface LifeExpectancyData {
   // Define structure based on your life expectancy dashboard
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface InventoryData {
   // Define structure based on your inventory dashboard
-  [key: string]: any;
+  [key: string]: unknown;
 }

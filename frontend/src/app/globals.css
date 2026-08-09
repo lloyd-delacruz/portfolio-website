@@ -418,7 +418,10 @@
   --cream-2:      #f6f4f1;
   --ink:          #1f1a2e;
   --ink-soft:     #4b4660;
-  --ink-muted:    #8a849b;
+  /* #8a849b measured 3.44:1 on --cream — failed WCAG AA (4.5:1) for the
+     small-text roles this token is used in. #6f6a80 measures 4.97:1 on
+     --cream and 5.19:1 on white. */
+  --ink-muted:    #6f6a80;
   --line:         rgba(28, 22, 46, 0.09);
   --line-strong:  rgba(28, 22, 46, 0.14);
   --plum:         #6d28d9;
@@ -433,6 +436,18 @@
   --teal-deep:    #0f766e;
   --teal-soft:    #ccfbf1;
 
+  /* Ink-safe semantic colors. White text on --green/--amber/--coral measured
+     2.15–2.81:1 (fails WCAG AA). These pair a tinted background with a dark,
+     same-hue ink so status chips stay legible: 4.6–6.1:1 on white. */
+  --green-ink:    #047857;
+  --green-tint:   #d1fae5;
+  --amber-ink:    #b45309;
+  --amber-tint:   #fef3c7;
+  --blue-ink:     #1d4ed8;
+  --blue-tint:    #dbeafe;
+  --coral-ink:    #b91c1c;
+  --coral-tint:   #fee2e2;
+
   background: var(--cream);
   color: var(--ink);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
@@ -441,6 +456,40 @@
 .home2 .font-display {
   font-family: var(--font-jakarta), var(--font-geist-sans), system-ui, sans-serif;
   letter-spacing: -0.02em;
+}
+
+/* Keyboard focus. Previously every focus rule in the codebase lived in
+   components with no importers, so keyboard navigation was invisible on
+   every live page. `:focus-visible` (not `:focus`) so pointer users don't
+   see a ring on click. */
+.home2 a:focus-visible,
+.home2 button:focus-visible,
+.home2 input:focus-visible,
+.home2 textarea:focus-visible,
+.home2 select:focus-visible,
+.home2 summary:focus-visible,
+.home2 [tabindex]:focus-visible {
+  outline: 2px solid var(--plum);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Skip link — first tab stop, visually hidden until focused. */
+.home2 .skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--plum);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 0 0 6px 0;
+}
+
+.home2 .skip-link:focus {
+  left: 0;
 }
 
 .home2 .text-ink        { color: var(--ink); }
@@ -753,6 +802,21 @@
   padding: 2px 8px;
   border-radius: 4px;
   color: var(--meta-ink);
+}
+
+/* Design-stage technologies read as provisional: dashed border, no fill.
+   Visually distinct from shipped stack chips at a glance. */
+.home2 .project-meta__chip--designed {
+  border-style: dashed;
+  color: var(--ink-muted);
+}
+
+.home2 .project-meta__note {
+  margin: 6px 0 0;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+  flex-basis: 100%;
 }
 
 @media (max-width: 640px) {

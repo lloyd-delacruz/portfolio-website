@@ -17,6 +17,7 @@ import {
 } from 'lucide-react'
 import { HomeNav } from '@/components/home/HomeNav'
 import { SiteFooter } from '@/components/home/SiteFooter'
+import { SOCIAL_LINKS } from '@/lib/constants'
 
 const CONTACT_DETAILS = [
   { Icon: Mail, label: 'Email', value: 'lloyd.delacruz@outlook.com', href: 'mailto:lloyd.delacruz@outlook.com', bg: 'var(--plum-soft)', tint: 'var(--plum)' },
@@ -35,8 +36,8 @@ const EXPERTISE = [
 ]
 
 const SOCIALS = [
-  { label: 'GitHub', href: 'https://github.com', Icon: Github },
-  { label: 'LinkedIn', href: 'https://linkedin.com', Icon: Linkedin },
+  { label: 'GitHub', href: SOCIAL_LINKS.GITHUB, Icon: Github },
+  { label: 'LinkedIn', href: SOCIAL_LINKS.LINKEDIN, Icon: Linkedin },
   { label: 'Email', href: 'mailto:lloyd.delacruz@outlook.com', Icon: Mail },
 ]
 
@@ -106,17 +107,16 @@ export default function ContactPage() {
               className="anim-rise mt-6 max-w-[20ch] font-display text-[2.5rem] font-extrabold leading-[1.06] text-ink sm:text-[3rem] lg:text-[3.4rem]"
               style={{ animationDelay: '60ms', letterSpacing: '-0.025em' }}
             >
-              Let&apos;s build something{' '}
-              <span className="grad-plum-text">extraordinary together.</span>
+              Tell me what you&apos;re{' '}
+              <span className="grad-plum-text">trying to build.</span>
             </h1>
 
             <p
               className="anim-rise mt-5 max-w-[58ch] text-[1.08rem] leading-[1.7] text-ink-soft"
               style={{ animationDelay: '110ms' }}
             >
-              Whether you&apos;re exploring AI-native product work, need operational systems that
-              actually ship, or just want to trade notes — I&apos;d love to hear from you. Drop a
-              message below or reach out directly.
+              Operational systems, applied AI work, or a healthcare workflow that needs an
+              engineer who&apos;s worked the floor — send the details below or reach out directly.
             </p>
           </div>
         </section>
@@ -254,14 +254,14 @@ export default function ContactPage() {
               </div>
 
               {submitStatus === 'success' && (
-                <div className="flex items-center gap-2 rounded-xl bg-[#d1fae5] px-4 py-3 text-sm font-medium text-[#065f46]">
+                <div role="status" aria-live="polite" className="flex items-center gap-2 rounded-xl bg-[#d1fae5] px-4 py-3 text-sm font-medium text-[#065f46]">
                   <CheckCircle2 size={16} className="shrink-0" />
                   Message sent — I&apos;ll get back to you within 24 hours.
                 </div>
               )}
 
               {submitStatus === 'error' && (
-                <div className="flex items-center gap-2 rounded-xl bg-[#fee2e2] px-4 py-3 text-sm font-medium text-[#991b1b]">
+                <div role="alert" aria-live="assertive" className="flex items-center gap-2 rounded-xl bg-[#fee2e2] px-4 py-3 text-sm font-medium text-[#991b1b]">
                   <AlertCircle size={16} className="shrink-0" />
                   Something went wrong. Please try again or email me directly.
                 </div>

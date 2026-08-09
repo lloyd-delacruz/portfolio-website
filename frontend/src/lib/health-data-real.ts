@@ -35,7 +35,7 @@ export type RealHealthData = {
 }
 
 // Processed data from the Life Expectancy CSV
-const rawCSVData = [
+const rawCSVData: RawCountryHealthData[] = [
   {country: "Afghanistan", year: 2015, status: "Developing", lifeExpectancy: 65.0, adultMortality: 263, infantDeaths: 62, alcohol: 0.01, percentageExpenditure: 71.279624, hepatitisB: 65, measles: 1154, bmi: 19.1, underFiveDeaths: 83, polio: 6, totalExpenditure: 8.16, diphtheria: 65, hivAids: 0.1, gdp: 584.259210, population: 33736494, thinness1_19: 17.2, thinness5_9: 17.3, incomeComposition: 0.479, schooling: 10.1},
   {country: "Afghanistan", year: 2014, status: "Developing", lifeExpectancy: 59.9, adultMortality: 271, infantDeaths: 64, alcohol: 0.01, percentageExpenditure: 73.523582, hepatitisB: 62, measles: 492, bmi: 18.6, underFiveDeaths: 86, polio: 58, totalExpenditure: 8.18, diphtheria: 62, hivAids: 0.1, gdp: 612.696514, population: 327582, thinness1_19: 17.5, thinness5_9: 17.5, incomeComposition: 0.476, schooling: 10.0},
   {country: "Afghanistan", year: 2013, status: "Developing", lifeExpectancy: 59.9, adultMortality: 268, infantDeaths: 66, alcohol: 0.01, percentageExpenditure: 73.219243, hepatitisB: 64, measles: 430, bmi: 18.1, underFiveDeaths: 89, polio: 62, totalExpenditure: 8.13, diphtheria: 64, hivAids: 0.1, gdp: 631.744976, population: 31731688, thinness1_19: 17.7, thinness5_9: 17.7, incomeComposition: 0.470, schooling: 9.9},
@@ -62,7 +62,21 @@ const rawCSVData = [
   {country: "United States", year: 2015, status: "Developed", lifeExpectancy: 79.3, adultMortality: 124, infantDeaths: 0, alcohol: 9.30, percentageExpenditure: 9403.651480, hepatitisB: 91, measles: 667, bmi: 67.3, underFiveDeaths: 0, polio: 91, totalExpenditure: 17.1, diphtheria: 91, hivAids: 0.6, gdp: 56863.425000, population: 321418821, thinness1_19: 1.2, thinness5_9: 1.1, incomeComposition: 0.915, schooling: 16.3}
 ]
 
-function computeAdditionalMetrics(data: any): RealHealthData {
+type RawCountryHealthData = Omit<
+  RealHealthData,
+  | 'id'
+  | 'wellnessScore'
+  | 'healthcareAccess'
+  | 'mentalHealthScore'
+  | 'physicalActivityLevel'
+  | 'nutritionScore'
+  | 'socialSupportScore'
+  | 'economicStability'
+  | 'diseasePrevalence'
+  | 'vaccinationRate'
+>
+
+function computeAdditionalMetrics(data: RawCountryHealthData): RealHealthData {
   // Compute additional metrics for dashboard compatibility
   const wellnessScore = Math.min(100, Math.max(0, 
     (data.lifeExpectancy / 85 * 30) + 

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, RadialBarChart, RadialBar } from 'recharts';
-import { TrendingUp, DollarSign, Activity, Users, Building, MapPin, Calendar, ChevronRight, ArrowUpRight, ArrowDownRight, Sparkles, Heart, Pill, Building2, Wrench, FileText, Download, Filter } from 'lucide-react';
+import React, { useState } from 'react';
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { TrendingUp, DollarSign, Activity, Users, Building, MapPin, Calendar, ArrowUpRight, Sparkles, Heart, Pill, Building2, Wrench, FileText } from 'lucide-react';
 
 const HospitalSpendingDashboard = () => {
-  const [loading, setLoading] = useState(false);
-  const [selectedProvince, setSelectedProvince] = useState('Canada (excl. Que., Nun.)');
+  const [loading] = useState(false);
 
   // Mock data for demonstration - replace with actual data loading
   const data = [
@@ -58,12 +57,21 @@ const HospitalSpendingDashboard = () => {
   ];
 
   // Custom tooltip
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  type TooltipPayloadEntry = { value: number; name: string; color: string }
+  const CustomTooltip = ({
+    active,
+    payload,
+    label,
+  }: {
+    active?: boolean
+    payload?: TooltipPayloadEntry[]
+    label?: string | number
+  }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
           <p className="text-gray-800 font-semibold mb-2">{label}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry, index) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
               {entry.name}: ${entry.value.toFixed(1)}B
             </p>
@@ -234,7 +242,7 @@ const HospitalSpendingDashboard = () => {
                     ))}
                   </Pie>
                   <Tooltip 
-                    formatter={(value: any) => `$${(value / 1000).toFixed(1)}B`}
+                    formatter={(value: number) => `$${(value / 1000).toFixed(1)}B`}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -304,7 +312,7 @@ const HospitalSpendingDashboard = () => {
                     <XAxis type="number" stroke="#6b7280" tickFormatter={(value) => `$${(value / 1000).toFixed(1)}B`} />
                     <YAxis type="category" dataKey="province" stroke="#6b7280" width={40} />
                     <Tooltip 
-                      formatter={(value: any) => `$${value.toLocaleString()}M`}
+                      formatter={(value: number) => `$${value.toLocaleString()}M`}
                     />
                     <Bar dataKey="spending" fill="#2563eb" radius={[0, 4, 4, 0]} />
                   </BarChart>
@@ -359,7 +367,7 @@ const HospitalSpendingDashboard = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Labor-Intensive Sector</h3>
-                  <p className="text-sm text-gray-600">Human resources account for {compensationPercent}% of gross hospital expenditures, underscoring healthcare's dependence on skilled professionals.</p>
+                  <p className="text-sm text-gray-600">Human resources account for {compensationPercent}% of gross hospital expenditures, underscoring healthcare&apos;s dependence on skilled professionals.</p>
                 </div>
               </div>
             </div>

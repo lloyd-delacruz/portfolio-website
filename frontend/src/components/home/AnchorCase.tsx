@@ -15,25 +15,35 @@ import { ANCHOR_CASE_HREF, StatusPill, CapabilityPill } from './FeaturedWork'
 type FlowNode = { Icon: LucideIcon; label: string }
 
 const FLOW: FlowNode[] = [
-  { Icon: Building2, label: 'Sites' },
   { Icon: QrCode,    label: 'QR Scan' },
-  { Icon: Workflow,  label: 'Workflow' },
-  { Icon: Database,  label: 'Lifecycle DB' },
-  { Icon: Gauge,     label: 'Ops Dashboard' },
+  { Icon: Workflow,  label: 'RPC' },
+  { Icon: Database,  label: 'State + Audit' },
+  { Icon: Building2, label: 'Tenant RLS' },
+  { Icon: Gauge,     label: 'Dashboards' },
+]
+
+/**
+ * The canonical 11 states, read from src/constants/workflow.js in the source
+ * repository, where they are documented as mirroring the database CHECK
+ * constraint exactly.
+ */
+const WORKFLOW_STATES = [
+  'Requested', 'Acknowledged', 'Searching', 'Waiting', 'On Hold', 'Assigned',
+  'In Use', 'Discharged', 'Completed', 'Cleaning', 'Available',
 ]
 
 const BULLETS = [
-  'Multi-site coordination across 4 hospitals',
-  'QR / barcode workflows for intake, dispatch, and return',
-  'Operational analytics on utilization, dwell time, and rotation',
-  'Lifecycle visibility from acquisition to retirement',
+  'Live across 4 Vancouver Coastal Health sites, tracking 800+ assets',
+  'An 11-state request lifecycle whose transitions are gated by role in the database',
+  'Postgres row-level security isolating every tenant, enforced below the API',
+  'QR scanning driving intake, assignment, and return from the floor',
 ]
 
 const STATS = [
-  { value: '4 sites',    label: 'deployed' },
-  { value: '800+',       label: 'assets tracked' },
-  { value: 'Multi-site', label: 'coordination' },
-  { value: 'Chain',      label: 'of custody' },
+  { value: '4 sites',  label: 'live deployment' },
+  { value: '800+',     label: 'assets tracked' },
+  { value: '11',       label: 'workflow states' },
+  { value: '243',      label: 'test files' },
 ]
 
 export function AnchorCase() {
@@ -43,7 +53,7 @@ export function AnchorCase() {
         {/* left column — copy */}
         <div className="flex flex-col p-7 lg:p-9">
           <span className="inline-flex w-fit items-center gap-2 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-plum" style={{ background: 'var(--plum-soft)' }}>
-            Anchor system · Production deployment
+            Flagship system · Live deployment
           </span>
 
           <div className="mt-4 flex flex-wrap items-center gap-1.5">
@@ -52,13 +62,13 @@ export function AnchorCase() {
           </div>
 
           <h3 className="mt-4 font-display text-2xl font-extrabold leading-[1.15] text-ink sm:text-[1.9rem]">
-            Multi-Site Hospital Equipment Tracking & Analytics System
+            Multi-Tenant Clinical Equipment Tracking
           </h3>
 
           <p className="mt-3 max-w-[58ch] text-[15px] leading-relaxed text-ink-soft">
-            Production healthcare-operations platform deployed across 4 hospital sites — 800+ tracked
-            assets coordinated through QR / barcode workflows, lifecycle visibility, operational
-            analytics, and real-time chain-of-custody.
+            Running across 4 Vancouver Coastal Health sites, tracking 800+ wheelchairs and clinical
+            assets through an 11-state lifecycle the database enforces directly — so a transition
+            that skips a step, or a role that is not permitted to make it, simply cannot be written.
           </p>
 
           <ul className="mt-5 space-y-2.5">
@@ -71,7 +81,7 @@ export function AnchorCase() {
           </ul>
 
           <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
-            Power Platform · Microsoft Lists · React · TypeScript · QR / barcode workflows · operational analytics
+            React · Vite · Supabase · PostgreSQL · Row-Level Security · Edge Functions · QR workflows
           </p>
 
           <Link
@@ -89,10 +99,30 @@ export function AnchorCase() {
           className="flex flex-col gap-5 p-7 lg:p-9"
           style={{ background: 'linear-gradient(135deg,#f3effe,#fbf5fe)' }}
         >
-          {/* deployment flow */}
+          {/* request lifecycle — the canonical 11 states from the source repo */}
           <div className="rounded-2xl bg-white p-5 ghair soft-shadow-sm">
             <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
-              Deployment flow
+              Request lifecycle · 11 states
+            </p>
+            <ol className="mt-3 flex flex-wrap gap-1">
+              {WORKFLOW_STATES.map((state, i) => (
+                <li
+                  key={state}
+                  className="rounded px-1.5 py-[3px] text-[9.5px] font-medium leading-none text-ink-soft"
+                  style={{
+                    background: i === WORKFLOW_STATES.length - 1 ? 'var(--plum-soft)' : 'rgba(28,22,46,0.05)',
+                  }}
+                >
+                  {state}
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* enforcement path */}
+          <div className="rounded-2xl bg-white p-5 ghair soft-shadow-sm">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+              Enforcement path
             </p>
             <div className="mt-4 flex items-center justify-between gap-1">
               {FLOW.map((n, i) => (

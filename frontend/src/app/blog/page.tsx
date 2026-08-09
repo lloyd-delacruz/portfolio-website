@@ -3,41 +3,25 @@ import { loadPostsFromFiles } from '@/lib/blog-server'
 import { getCategories } from '@/lib/blog'
 import type { Metadata } from 'next'
 
+const TITLE = 'Notes from the workflow — Lloyd Dela Cruz'
+const DESCRIPTION =
+  'Short essays on operational AI, healthcare workflows, and the systems around the model — written from inside the shift, not above it.'
+
 export const metadata: Metadata = {
-  title: 'Blog | Lloyd Dela Cruz - Healthcare Technology Expert',
-  description: 'Explore insights on healthcare technology, AI, data science, and software development. Learn from real-world case studies and practical implementations.',
-  keywords: [
-    'healthcare technology',
-    'AI in healthcare', 
-    'data science',
-    'software development',
-    'machine learning',
-    'health informatics',
-    'digital health',
-    'Lloyd Dela Cruz'
-  ].join(', '),
+  title: TITLE,
+  description: DESCRIPTION,
   openGraph: {
-    title: 'Blog | Lloyd Dela Cruz - Healthcare Technology Expert',
-    description: 'Explore insights on healthcare technology, AI, data science, and software development. Learn from real-world case studies and practical implementations.',
-    url: 'https://lloyddelacruz.com/blog',
+    title: TITLE,
+    description: DESCRIPTION,
+    url: '/blog',
     siteName: 'Lloyd Dela Cruz',
-    images: [
-      {
-        url: 'https://lloyddelacruz.com/images/og-blog.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Lloyd Dela Cruz Blog - Healthcare Technology Insights',
-      },
-    ],
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog | Lloyd Dela Cruz - Healthcare Technology Expert',
-    description: 'Explore insights on healthcare technology, AI, data science, and software development.',
-    images: ['https://lloyddelacruz.com/images/og-blog.jpg'],
-    creator: '@lloyddelacruz',
+    title: TITLE,
+    description: DESCRIPTION,
   },
   robots: {
     index: true,
@@ -51,7 +35,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://lloyddelacruz.com/blog',
+    canonical: '/blog',
   },
 }
 

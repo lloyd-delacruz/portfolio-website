@@ -5,41 +5,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Separator } from '@/components/ui/separator'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-// import { WorldMap } from '@/components/dashboard/WorldMap'
-// import { LifeExpectancyChart } from '@/components/dashboard/LifeExpectancyChart'
-// import { HealthMetricsChart } from '@/components/dashboard/HealthMetricsChart'
-// import { WellnessDistribution } from '@/components/dashboard/WellnessDistribution'
-// import { GenderHealthComparison } from '@/components/dashboard/GenderHealthComparison'
-// import { AgeGroupAnalysis } from '@/components/dashboard/AgeGroupAnalysis'
 import { realHealthData as healthData, realCountries as countries, availableYears, developmentStatus } from '@/lib/health-data-real'
-import { ArrowLeft, Download, Shuffle, Info, TrendingUp, Globe, BarChart3, Heart, Calendar, AlertCircle, Zap, ExternalLink, Filter, X, Search, MapPin, Activity, Target, Play, Shield, Brain, Users } from 'lucide-react'
+import { ArrowLeft, Download, Shuffle, Info, TrendingUp, Globe, BarChart3, Heart, Calendar, Zap, Filter, X, Search, MapPin, Activity, Target, Shield, Brain, Users } from 'lucide-react'
 import Link from 'next/link'
-
-// Statistical insights for enhanced UX
-const getDatasetInsights = (data: any[]) => {
-  if (data.length === 0) return null
-  
-  const avgLifeExpectancy = data.reduce((acc, d) => acc + d.lifeExpectancy, 0) / data.length
-  const countries = new Set(data.map(d => d.country))
-  const developedCount = data.filter(d => d.status === 'Developed').length
-  const developingCount = data.filter(d => d.status === 'Developing').length
-  
-  return {
-    avgLifeExpectancy: Math.round(avgLifeExpectancy),
-    totalCountries: countries.size,
-    developedCount,
-    developingCount,
-    dataPoints: data.length
-  }
-}
 
 export default function HealthDashboard() {
   const [selectedCountry, setSelectedCountry] = useState<string>('all')
   const [selectedYear, setSelectedYear] = useState<string>('2015') // Default to most recent year
   const [selectedStatus, setSelectedStatus] = useState<string>('all')
-  const [animationKey, setAnimationKey] = useState(0)
+  const [, setAnimationKey] = useState(0)
   const [showDatasetInfo, setShowDatasetInfo] = useState(false)
 
   const filteredData = useMemo(() => {
@@ -92,7 +66,7 @@ export default function HealthDashboard() {
                       Global Health Intelligence
                     </h1>
                     <p className="text-slate-600 dark:text-slate-400 text-lg font-medium">
-                      WHO Life Expectancy Analytics • Master's Research Dashboard
+                      WHO Life Expectancy Analytics • Master&apos;s Research Dashboard
                     </p>
                   </div>
                 </div>
@@ -259,7 +233,7 @@ export default function HealthDashboard() {
                     Academic Context
                   </h4>
                   <div className="space-y-1 text-sm text-slate-600 dark:text-slate-400">
-                    <p>• Master's degree coursework</p>
+                    <p>• Master&apos;s degree coursework</p>
                     <p>• Statistical analysis & modeling</p>
                     <p>• Data visualization research</p>
                     <p>• Public health informatics</p>
@@ -619,7 +593,7 @@ export default function HealthDashboard() {
                 </div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">No Data Found</h3>
                 <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-                  The current filter combination doesn't match any records. Try adjusting your filters or clearing them to explore the dataset.
+                  The current filter combination doesn&apos;t match any records. Try adjusting your filters or clearing them to explore the dataset.
                 </p>
                 <Button onClick={clearFilters} className="mt-4" variant="outline">
                   Clear All Filters
@@ -633,7 +607,7 @@ export default function HealthDashboard() {
         <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
           <div className="text-center space-y-2">
             <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
-              WHO Life Expectancy Dataset • Kaggle Research Data • Master's Thesis Project
+              WHO Life Expectancy Dataset • Kaggle Research Data • Master&apos;s Thesis Project
             </p>
             <p className="text-xs text-slate-500">
               Built with Next.js, TypeScript, Tailwind CSS & Recharts • © {new Date().getFullYear()} Lloyd Dela Cruz

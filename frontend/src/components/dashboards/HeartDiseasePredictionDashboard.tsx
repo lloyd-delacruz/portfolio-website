@@ -142,7 +142,7 @@ export function HeartDiseasePredictionDashboard() {
     }, 2000);
   };
 
-  const updatePatientData = (field: string, value: any) => {
+  const updatePatientData = (field: string, value: string | number) => {
     setPatientData(prev => ({ ...prev, [field]: value }));
   };
 

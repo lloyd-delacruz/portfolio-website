@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { loadPostsFromFiles } from '@/lib/blog-server'
 import type { BlogPost } from '@/lib/blog'
 import type { Metadata } from 'next'
+import { SITE_URL } from '@/lib/constants'
 
 // Blog content is now loaded from markdown files
 
@@ -61,9 +62,11 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://lloyddelacruz.com'
-  const postUrl = `${baseUrl}/blog/${post.slug}`
-  const imageUrl = post.image ? `${baseUrl}${post.image}` : `${baseUrl}/images/og-default.jpg`
+  const postUrl = `${SITE_URL}/blog/${post.slug}`
+  // Only set an OG image when the post actually ships one — pointing at a
+  // generic fallback that doesn't exist produces a broken social-card image,
+  // which is worse than omitting `images` entirely.
+  const imageUrl = post.image ? `${SITE_URL}${post.image}` : undefined
 
   return {
     title: `${post.title} | Lloyd Dela Cruz`,
@@ -74,15 +77,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       title: post.title,
       description: post.excerpt,
       url: postUrl,
-      siteName: 'Lloyd Dela Cruz - Healthcare Technology Expert',
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
+      siteName: 'Lloyd Dela Cruz',
+      images: imageUrl
+        ? [{ url: imageUrl, width: 1200, height: 630, alt: post.title }]
+        : undefined,
       locale: 'en_US',
       type: 'article',
       publishedTime: post.date,
@@ -93,8 +91,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: [imageUrl],
-      creator: '@lloyddelacruz',
+      images: imageUrl ? [imageUrl] : undefined,
     },
     robots: {
       index: true,

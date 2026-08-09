@@ -1,215 +1,138 @@
 // frontend/src/components/home/SystemArchitectureSketch.tsx
 import {
   ScanLine,
-  Radio,
+  ShieldCheck,
   Database,
-  GitFork,
-  Smartphone,
-  Network,
-  Bell,
+  Sparkles,
   Gauge,
-  Cpu,
   type LucideIcon,
 } from 'lucide-react'
 
-type Satellite = {
+type Stage = {
   key: string
   Icon: LucideIcon
   title: string
   caption: string
-  color: string
+  /** Emphasised node — the point the whole diagram is making. */
+  emphasis?: boolean
 }
 
-const W = 580
-const H = 440
-const CX = W / 2
-const CY = H / 2
-const ORBIT_RX = 230
-const ORBIT_RY = 145
-
-const ENGINE_W = 156
-const ENGINE_H = 156
-
-const SAT_W = 132
-const SAT_H = 64
-
-const SATELLITES: Satellite[] = [
-  { key: 'scan',     Icon: ScanLine,   title: 'QR Scan',             caption: 'Clinical input',     color: 'var(--plum)'  },
-  { key: 'events',   Icon: Radio,      title: 'Event Stream',        caption: 'Audit log',          color: 'var(--amber)' },
-  { key: 'state',    Icon: Database,   title: 'State Engine',        caption: 'Asset lifecycle',    color: 'var(--blue)'  },
-  { key: 'decision', Icon: GitFork,    title: 'Decision Layer',      caption: 'Routing rules',      color: 'var(--green)' },
-  { key: 'mobile',   Icon: Smartphone, title: 'Mobile Sync',         caption: 'Offline-tolerant',   color: 'var(--pink)'  },
-  { key: 'sites',    Icon: Network,    title: 'Multi-Site',          caption: '4 hospitals',        color: '#6366f1'      },
-  { key: 'alerts',   Icon: Bell,       title: 'Alerts Bus',          caption: 'Escalation paths',   color: 'var(--amber)' },
-  { key: 'ops',      Icon: Gauge,      title: 'Operations Surface',  caption: 'Dashboard · alerts', color: 'var(--plum)'  },
+/**
+ * The enforcement path shared by the systems in this portfolio: input is
+ * captured at the point of care, every write goes through a policy boundary,
+ * state and audit live together in Postgres, and operations read from that
+ * same state. AI is one stage labelled with what it does — not an orbiting
+ * centrepiece.
+ */
+const STAGES: Stage[] = [
+  { key: 'input',  Icon: ScanLine,   title: 'Clinical input', caption: 'QR scan · form' },
+  { key: 'policy', Icon: ShieldCheck, title: 'Policy boundary', caption: 'Role gate · RLS', emphasis: true },
+  { key: 'state',  Icon: Database,   title: 'State + audit',  caption: 'Postgres' },
+  { key: 'assist', Icon: Sparkles,   title: 'Retrieval',      caption: 'Cited answers' },
+  { key: 'ops',    Icon: Gauge,      title: 'Operations',     caption: 'Role dashboards' },
 ]
 
-function orbitPosition(i: number, total: number) {
-  // Start at the top (-π/2), proceed clockwise.
-  const angle = (i / total) * Math.PI * 2 - Math.PI / 2
-  return {
-    x: CX + ORBIT_RX * Math.cos(angle),
-    y: CY + ORBIT_RY * Math.sin(angle),
-  }
+function Connector() {
+  return (
+    <div className="flex items-center justify-center" aria-hidden>
+      {/* Horizontal on md+, vertical below — the diagram reflows rather than
+          shrinking labels to an unreadable size. */}
+      <svg
+        className="hidden h-3 w-5 md:block"
+        viewBox="0 0 20 12"
+        fill="none"
+      >
+        <path
+          d="M0 6 H14 M11 2.5 L15.5 6 L11 9.5"
+          stroke="var(--plum)"
+          strokeOpacity="0.5"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <svg className="h-5 w-3 md:hidden" viewBox="0 0 12 20" fill="none">
+        <path
+          d="M6 0 V14 M2.5 11 L6 15.5 L9.5 11"
+          stroke="var(--plum)"
+          strokeOpacity="0.5"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  )
 }
-
-// Ellipse path the orbit pulse traces. Two arcs to form a closed ellipse.
-const ORBIT_PATH =
-  `M ${CX + ORBIT_RX} ${CY} ` +
-  `A ${ORBIT_RX} ${ORBIT_RY} 0 1 1 ${CX - ORBIT_RX} ${CY} ` +
-  `A ${ORBIT_RX} ${ORBIT_RY} 0 1 1 ${CX + ORBIT_RX} ${CY} Z`
 
 export function SystemArchitectureSketch() {
   return (
-    <div
-      className="relative mx-auto w-full max-w-[600px]"
+    <figure
+      className="mx-auto w-full max-w-[600px]"
       role="img"
-      aria-label="Artificial Intelligence engine orchestrating eight components — QR scan, event stream, state engine, decision layer, mobile sync, multi-site replication, alerts bus, and operations surface."
+      aria-label="System enforcement path: clinical input is captured by QR scan or form, passes through a policy boundary of role gates and row-level security, is written to state and audit in Postgres, supports cited retrieval, and surfaces on role-specific operations dashboards. Operations feeds back into clinical input."
     >
-      <div className="relative w-full" style={{ paddingBottom: `${(H / W) * 100}%` }}>
-        <div className="absolute inset-0">
-          {/* Connectors from each satellite to the engine */}
-          <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" fill="none" aria-hidden>
-            <defs>
-              <radialGradient id="orbit-halo" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="var(--plum)" stopOpacity="0.10" />
-                <stop offset="60%" stopColor="var(--plum)" stopOpacity="0.04" />
-                <stop offset="100%" stopColor="var(--plum)" stopOpacity="0" />
-              </radialGradient>
-            </defs>
+      <div className="rounded-2xl bg-white p-5 ghair soft-shadow sm:p-6">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
+          Enforcement path
+        </p>
 
-            {/* Soft halo behind the engine */}
-            <ellipse cx={CX} cy={CY} rx={ORBIT_RX + 30} ry={ORBIT_RY + 30} fill="url(#orbit-halo)" />
-
-            {/* Faint orbit ring */}
-            <ellipse
-              cx={CX}
-              cy={CY}
-              rx={ORBIT_RX}
-              ry={ORBIT_RY}
-              stroke="var(--plum)"
-              strokeOpacity={0.12}
-              strokeWidth={1}
-              strokeDasharray="2 4"
-            />
-
-            {/* Spokes from engine to each satellite — animated dashes (matches systems page) */}
-            {SATELLITES.map((s, i) => {
-              const p = orbitPosition(i, SATELLITES.length)
-              return (
-                <line
-                  key={`spoke-${s.key}`}
-                  x1={CX}
-                  y1={CY}
-                  x2={p.x}
-                  y2={p.y}
-                  stroke="var(--plum)"
-                  strokeOpacity={0.38}
-                  strokeWidth={1.25}
-                  strokeLinecap="round"
-                  className="flow-line"
-                  style={{ animationDelay: `${i * 0.18}s` }}
-                />
-              )
-            })}
-
-            {/* Single orbit pulse traveling the ellipse */}
-            <circle
-              r={3.5}
-              fill="var(--plum)"
-              className="anim-heartbeat"
-              style={{ offsetPath: `path('${ORBIT_PATH}')`, animationDuration: '10s' }}
-            />
-          </svg>
-
-          {/* Engine tile (centered) */}
-          <div
-            className="absolute"
-            style={{
-              width: ENGINE_W,
-              height: ENGINE_H,
-              left: `${(CX / W) * 100}%`,
-              top: `${(CY / H) * 100}%`,
-              transform: 'translate(-50%, -50%)',
-            }}
-          >
-            <div
-              className="anim-float relative flex h-full w-full flex-col items-center justify-center gap-2 rounded-2xl text-white"
-              style={{
-                background: 'linear-gradient(135deg, var(--plum-deep) 0%, var(--plum) 100%)',
-                boxShadow:
-                  '0 1px 2px rgba(28,22,46,0.08), 0 14px 40px rgba(109,40,217,0.32), 0 0 0 1px rgba(255,255,255,0.06) inset',
-                animationDuration: '8s',
-              }}
-            >
-              <Cpu size={28} strokeWidth={1.8} aria-hidden />
-              <span className="px-3 text-center font-display text-[14px] font-semibold leading-tight">
-                Artificial Intelligence
-              </span>
-              <span className="text-[9px] font-semibold uppercase tracking-[0.16em] text-white/70">
-                Orchestration core
-              </span>
-            </div>
-          </div>
-
-          {/* Satellite tiles */}
-          {SATELLITES.map((s, i) => {
-            const p = orbitPosition(i, SATELLITES.length)
-            const delay = i * 0.3
-            return (
+        <div className="mt-4 flex flex-col items-stretch gap-1 md:flex-row md:items-center">
+          {STAGES.map((stage, i) => (
+            <div key={stage.key} className="contents">
               <div
-                key={s.key}
-                className="absolute"
+                className="flex flex-1 items-center gap-3 rounded-xl px-3 py-2.5 md:flex-col md:items-center md:gap-1.5 md:px-2 md:py-3 md:text-center"
                 style={{
-                  width: SAT_W,
-                  height: SAT_H,
-                  left: `${(p.x / W) * 100}%`,
-                  top: `${(p.y / H) * 100}%`,
-                  transform: 'translate(-50%, -50%)',
+                  background: stage.emphasis ? 'var(--plum-soft)' : 'rgba(28,22,46,0.035)',
                 }}
               >
                 <div
-                  className="anim-float flex h-full w-full items-center gap-2.5 rounded-xl bg-white px-2.5 py-2 ghair soft-shadow-sm"
-                  style={{
-                    animationDelay: `${delay}s`,
-                    animationDuration: `${6 + (i % 2)}s`,
-                  }}
+                  className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white"
+                  style={{ border: '1px solid var(--line)' }}
                 >
-                  <span
-                    className="grid h-7 w-7 shrink-0 place-items-center rounded-md"
-                    style={{ background: `color-mix(in srgb, ${s.color} 14%, transparent)` }}
-                  >
-                    <s.Icon size={15} style={{ color: s.color }} strokeWidth={2} aria-hidden />
-                  </span>
-                  <div className="min-w-0 flex flex-col">
-                    <span className="truncate font-display text-[11.5px] font-semibold leading-tight text-ink">
-                      {s.title}
-                    </span>
-                    <span className="truncate text-[8.5px] font-semibold uppercase tracking-[0.12em] text-ink-muted">
-                      {s.caption}
-                    </span>
-                  </div>
+                  <stage.Icon
+                    size={15}
+                    strokeWidth={1.9}
+                    style={{ color: stage.emphasis ? 'var(--plum)' : 'var(--ink-soft)' }}
+                    aria-hidden
+                  />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-display text-[11.5px] font-semibold leading-tight text-ink">
+                    {stage.title}
+                  </p>
+                  <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-ink-muted">
+                    {stage.caption}
+                  </p>
                 </div>
               </div>
-            )
-          })}
+              {i < STAGES.length - 1 && <Connector />}
+            </div>
+          ))}
+        </div>
+
+        {/* feedback edge */}
+        <div className="mt-3 flex items-center gap-2 border-t border-[var(--line)] pt-3">
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
+            <path
+              d="M13 5 H3 M6 1.5 L2 5 L6 8.5"
+              stroke="var(--plum)"
+              strokeOpacity="0.55"
+              strokeWidth="1.3"
+              strokeDasharray="2.5 2"
+              strokeLinecap="round"
+            />
+          </svg>
+          <p className="text-[10px] leading-tight text-ink-muted">
+            Operational signal feeds back into the next request
+          </p>
         </div>
       </div>
 
-      {/* Free-floating capability row on cream */}
-      <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
-        <span>Machine Learning</span>
-        <span aria-hidden>·</span>
-        <span>LLMs</span>
-        <span aria-hidden>·</span>
-        <span>MCP</span>
-        <span aria-hidden>·</span>
-        <span>Agents</span>
-        <span aria-hidden>·</span>
-        <span>Skills</span>
-        <span aria-hidden>·</span>
-        <span>Automation</span>
-      </div>
-    </div>
+      <figcaption className="mt-3 text-center text-[11px] leading-relaxed text-ink-muted">
+        The state machine and tenant isolation live in the database, so the client cannot write a
+        transition it is not permitted to make — live today across 4 Vancouver Coastal Health sites.
+      </figcaption>
+    </figure>
   )
 }

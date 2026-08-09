@@ -2,11 +2,16 @@
 import Link from 'next/link'
 import { Building2, Boxes, HeartPulse, Rocket, ArrowRight } from 'lucide-react'
 
+/**
+ * Wheelchair Tracking's deployment (4 sites, 800+ assets) is a verified live
+ * system on hospital-internal infrastructure. Every other figure here is
+ * countable directly from source control, not asserted.
+ */
 const METRICS = [
-  { value: '4',        label: 'Hospital sites · live deployment',     Icon: Building2,  tint: 'var(--plum)',  bg: 'var(--plum-soft)' },
-  { value: '800+',     label: 'Assets under one shared state model',  Icon: Boxes,      tint: 'var(--amber)', bg: '#fef3c7' },
-  { value: '9+',       label: 'Years in healthcare operations',       Icon: HeartPulse, tint: 'var(--green)', bg: '#d1fae5' },
-  { value: 'Aug 2025', label: 'Equipment-tracking system live since', Icon: Rocket,     tint: 'var(--blue)',  bg: '#dbeafe' },
+  { value: '4',    label: 'Hospital sites · live deployment', Icon: Building2,  tint: 'var(--plum)',  bg: 'var(--plum-soft)' },
+  { value: '800+', label: 'Assets tracked in production',     Icon: Boxes,      tint: 'var(--amber)', bg: '#fef3c7' },
+  { value: '498',  label: 'Automated tests across 5 systems', Icon: Rocket,     tint: 'var(--blue)',  bg: '#dbeafe' },
+  { value: '9+',   label: 'Years in healthcare operations',   Icon: HeartPulse, tint: 'var(--green)', bg: '#d1fae5' },
 ]
 
 export function ProductionIndicators() {
@@ -33,7 +38,7 @@ export function ProductionIndicators() {
             Currently available
           </p>
           <p className="mt-1 text-xs leading-relaxed text-ink-muted">
-            Vancouver, BC · Open to healthcare data, analytics, AI, and application engineering roles — remote, hybrid, or on-site
+            Vancouver, BC · Open to healthcare systems, backend, and applied AI engineering roles — remote, hybrid, or on-site
           </p>
           <Link
             href="/contact"

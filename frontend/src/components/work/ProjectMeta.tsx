@@ -23,6 +23,7 @@ export function ProjectMeta({ slug }: Props) {
   }
 
   const hasStack = record.stack && record.stack.length > 0
+  const hasDesignedWith = record.designedWith && record.designedWith.length > 0
   const hasContent =
     record.status ||
     record.statusLabel ||
@@ -32,7 +33,8 @@ export function ProjectMeta({ slug }: Props) {
     record.scale ||
     record.live?.href ||
     record.source?.href ||
-    hasStack
+    hasStack ||
+    hasDesignedWith
 
   if (!hasContent) return null
 
@@ -98,13 +100,28 @@ export function ProjectMeta({ slug }: Props) {
         )}
         {hasStack && (
           <div className="project-meta__field project-meta__field--wide">
-            <dt>Stack</dt>
+            <dt>Built with</dt>
             <dd>
               {record.stack!.map((chip) => (
                 <span key={chip} className="project-meta__chip">
                   {chip}
                 </span>
               ))}
+            </dd>
+          </div>
+        )}
+        {hasDesignedWith && (
+          <div className="project-meta__field project-meta__field--wide">
+            <dt>Designed with</dt>
+            <dd>
+              {record.designedWith!.map((chip) => (
+                <span key={chip} className="project-meta__chip project-meta__chip--designed">
+                  {chip}
+                </span>
+              ))}
+              <p className="project-meta__note">
+                Design-stage technologies. Not implemented in a shipped codebase.
+              </p>
             </dd>
           </div>
         )}

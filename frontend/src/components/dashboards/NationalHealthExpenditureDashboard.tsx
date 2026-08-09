@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { TrendingUp, DollarSign, Activity, Users, Building, MapPin, Calendar, ChevronRight, ArrowUpRight, ArrowDownRight, FileText, Download, Filter, ArrowLeft } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { TrendingUp, DollarSign, Activity, Users, Building, Calendar, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
 const NationalHealthExpenditureDashboard = () => {
-  const router = useRouter();
   const [chartType, setChartType] = useState('total');
   const [startYear, setStartYear] = useState(2000);
   const [endYear, setEndYear] = useState(2022);
@@ -64,23 +62,17 @@ const NationalHealthExpenditureDashboard = () => {
     const endIdx = healthData.years.indexOf(endYear) + 1;
     const years = healthData.years.slice(startIdx, endIdx);
     
-    let data: number[], label: string, color: string;
-    
+    let data: number[];
+
     switch(chartType) {
       case 'total':
         data = healthData.totalExpenditure.slice(startIdx, endIdx);
-        label = 'Total Expenditure (Millions $)';
-        color = '#0066FF';
         break;
       case 'percapita':
         data = healthData.perCapita.slice(startIdx, endIdx);
-        label = 'Per Capita Expenditure ($)';
-        color = '#00C781';
         break;
       case 'gdp':
         data = healthData.gdpPercentage.slice(startIdx, endIdx);
-        label = 'Percentage of GDP (%)';
-        color = '#FFB800';
         break;
       case 'growth':
         data = [];
@@ -89,13 +81,9 @@ const NationalHealthExpenditureDashboard = () => {
           data.push(growth);
         }
         years.shift();
-        label = 'Year-over-Year Growth (%)';
-        color = '#FF3B30';
         break;
       default:
         data = healthData.totalExpenditure.slice(startIdx, endIdx);
-        label = 'Total Expenditure (Millions $)';
-        color = '#0066FF';
     }
     
     return years.map((year, index) => ({
@@ -128,7 +116,16 @@ const NationalHealthExpenditureDashboard = () => {
     gdpPercentage: (healthData.gdpPercentage[index] / healthData.gdpPercentage[baseYearIdx]) * 100
   }));
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  type TooltipPayloadEntry = { value: number; name: string; color: string }
+  const CustomTooltip = ({
+    active,
+    payload,
+    label,
+  }: {
+    active?: boolean
+    payload?: TooltipPayloadEntry[]
+    label?: string | number
+  }) => {
     if (active && payload && payload.length) {
       const data = payload[0];
       let formattedValue = '';
@@ -337,7 +334,7 @@ const NationalHealthExpenditureDashboard = () => {
                   ))}
                 </Pie>
                 <Tooltip 
-                  formatter={(value: any) => `$${(value / 1000).toFixed(1)}B`}
+                  formatter={(value: number) => `$${(value / 1000).toFixed(1)}B`}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -429,7 +426,7 @@ const NationalHealthExpenditureDashboard = () => {
               <XAxis dataKey="year" stroke="#666" />
               <YAxis stroke="#666" />
               <Tooltip 
-                formatter={(value: any, name: string) => [`${value.toFixed(0)}`, name]}
+                formatter={(value: number, name: string) => [`${value.toFixed(0)}`, name]}
               />
               <Legend />
               <Line 

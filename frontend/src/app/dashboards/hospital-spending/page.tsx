@@ -15,14 +15,14 @@ export default function HospitalSpendingPage() {
         transition={{ duration: 0.6 }}
         className="fixed top-6 left-6 z-50"
       >
-        <Link href="/projects">
+        <Link href="/work">
           <motion.button
             whileHover={{ scale: 1.05, x: -2 }}
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center px-4 py-2 bg-white/90 backdrop-blur-sm text-gray-700 rounded-lg font-medium border border-gray-200 hover:bg-white transition-colors shadow-sm"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Projects
+            Back to Work
           </motion.button>
         </Link>
       </motion.div>

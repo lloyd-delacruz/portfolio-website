@@ -7,32 +7,33 @@ describe('ProductionIndicators', () => {
     render(<ProductionIndicators />)
     expect(screen.getByText('4')).toBeInTheDocument()
     expect(screen.getByText('800+')).toBeInTheDocument()
+    expect(screen.getByText('498')).toBeInTheDocument()
     expect(screen.getByText('9+')).toBeInTheDocument()
-    expect(screen.getByText(/aug 2025/i)).toBeInTheDocument()
   })
 
-  it('labels the live-deployment metric and the equipment-tracking metric', () => {
+  it('labels the verified live deployment and the engineering-evidence metrics', () => {
     render(<ProductionIndicators />)
     expect(screen.getByText(/hospital sites · live deployment/i)).toBeInTheDocument()
-    expect(screen.getByText(/equipment-tracking system live since/i)).toBeInTheDocument()
+    expect(screen.getByText(/assets tracked in production/i)).toBeInTheDocument()
+    expect(screen.getByText(/automated tests across 5 systems/i)).toBeInTheDocument()
   })
 
-  it('renders the rewritten availability paragraph + contact link', () => {
+  it('renders the availability paragraph + contact link', () => {
     render(<ProductionIndicators />)
     expect(screen.getByText(/currently available/i)).toBeInTheDocument()
     expect(
       screen.getByText(
-        /vancouver, bc · open to healthcare data, analytics, ai, and application engineering roles — remote, hybrid, or on-site/i,
+        /vancouver, bc · open to healthcare systems, backend, and applied ai engineering roles — remote, hybrid, or on-site/i,
       ),
     ).toBeInTheDocument()
     const link = screen.getByRole('link', { name: /start a conversation/i })
     expect(link).toHaveAttribute('href', '/contact')
   })
 
-  it('does NOT render dropped/inflated claims', () => {
+  it('does NOT render inflated claims beyond what was verified', () => {
     render(<ProductionIndicators />)
     expect(screen.queryByText('10+')).toBeNull()
     expect(screen.queryByText(/50\+/)).toBeNull()
-    expect(screen.queryByText(/8\+/)).toBeNull()
+    expect(screen.queryByText('1,500+')).toBeNull()
   })
 })

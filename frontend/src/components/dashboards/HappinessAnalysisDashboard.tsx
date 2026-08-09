@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   LineChart, Line, AreaChart, Area, BarChart, Bar, ScatterChart, Scatter, 
   RadarChart, Radar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, 
@@ -6,8 +6,8 @@ import {
   PolarRadiusAxis, ComposedChart, LabelList
 } from 'recharts';
 import { 
-  Globe, TrendingUp, TrendingDown, Award, MapPin, Brain, Heart, Users, 
-  DollarSign, Shield, Gift, ChevronRight, Download, Filter,
+  Globe, TrendingUp, TrendingDown, Award, MapPin, Brain, Heart, Users,
+  DollarSign, Shield, Gift, ChevronRight,
   BarChart3, PieChartIcon, Activity, Sparkles, Target, AlertCircle,
   ArrowUpRight, ArrowDownRight, Calendar, Zap, Flag, Crown
 } from 'lucide-react';
@@ -52,7 +52,7 @@ interface FactorCorrelation {
   correlation: number;
   importance: number;
   description: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 interface CountryProgress {
@@ -93,18 +93,12 @@ type RankColors = {
 interface SectionHeaderProps {
   title: string;
   subtitle?: string;
-  icon?: React.ComponentType<any>;
+  icon?: React.ComponentType<{ className?: string }>;
 }
 
 const HappinessAnalysisDashboard: React.FC = () => {
   const [activeSection, setActiveSection] = useState('overview');
-  const [selectedYear, setSelectedYear] = useState('2019');
   // Removed unused state variables: selectedRegion, tooltipContent
-  const [animationComplete, setAnimationComplete] = useState(false);
-
-  useEffect(() => {
-    setAnimationComplete(true);
-  }, []);
 
   // Enhanced color palette
   const colors = {
@@ -631,7 +625,7 @@ const HappinessAnalysisDashboard: React.FC = () => {
             {/* Top Countries Performance */}
             <div className="bg-white rounded-2xl shadow-xl p-8">
               <h3 className="text-xl font-bold text-gray-800 mb-2">Top 10 Countries Performance (2019)</h3>
-              <p className="text-sm text-gray-600 mb-6">Happiness scores of the world's happiest nations</p>
+              <p className="text-sm text-gray-600 mb-6">Happiness scores of the world&apos;s happiest nations</p>
               
               {/* Custom visualization instead of standard bar chart */}
               <div className="space-y-3 max-w-4xl mx-auto">
@@ -728,7 +722,7 @@ const HappinessAnalysisDashboard: React.FC = () => {
 
             {/* Regional Overview Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {regionalData.slice(0, 6).map((region, index) => (
+              {regionalData.slice(0, 6).map((region) => (
                 <div key={region.region} className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="font-bold text-gray-800">{region.region}</h4>
@@ -1268,7 +1262,7 @@ const HappinessAnalysisDashboard: React.FC = () => {
                   Greatest Improvements
                 </h3>
                 <div className="space-y-4">
-                  {countryProgressData.filter(c => c.change > 0).slice(0, 5).map((country, index) => (
+                  {countryProgressData.filter(c => c.change > 0).slice(0, 5).map((country) => (
                     <div key={country.country} className="bg-white rounded-xl p-4 shadow-md">
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-bold text-gray-800">{country.country}</h4>
@@ -1296,7 +1290,7 @@ const HappinessAnalysisDashboard: React.FC = () => {
                   Significant Declines
                 </h3>
                 <div className="space-y-4">
-                  {countryProgressData.filter(c => c.change < 0).slice(0, 5).map((country, index) => (
+                  {countryProgressData.filter(c => c.change < 0).slice(0, 5).map((country) => (
                     <div key={country.country} className="bg-white rounded-xl p-4 shadow-md">
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-bold text-gray-800">{country.country}</h4>

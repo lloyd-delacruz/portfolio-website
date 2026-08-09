@@ -5,15 +5,20 @@ import { ArrowRight } from 'lucide-react'
 import { HomeNav } from '@/components/home/HomeNav'
 import { SiteFooter } from '@/components/home/SiteFooter'
 
+const TARGET = '/work/population-health-intelligence/'
+
 export const metadata: Metadata = {
   title: 'Population-Health Intelligence Platform — Lloyd Dela Cruz',
   description: 'This case study has moved to /work/population-health-intelligence.',
+  alternates: { canonical: '/work/population-health-intelligence' },
+  robots: { index: false, follow: true },
 }
 
 export default function Page() {
   return (
     <div className="home2 min-h-screen">
       <HomeNav active="Work" />
+      <meta httpEquiv="refresh" content={`0; url=${TARGET}`} />
       <main className="mx-auto flex max-w-[720px] flex-col items-start gap-6 px-6 py-24">
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">
           This case study has moved

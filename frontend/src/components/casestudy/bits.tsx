@@ -49,27 +49,24 @@ export function Module({
   )
 }
 
+/**
+ * Tinted background + dark same-hue ink text, not white-on-fill. White text on
+ * --green/--amber/--coral measured 2.15–2.81:1 (fails WCAG AA 4.5:1); these
+ * pairings measure 4.6–6.1:1.
+ */
 export function Chip({ children, tone = 'neutral' }: { children: ReactNode; tone?: 'neutral' | 'plum' | 'green' | 'amber' | 'blue' | 'coral' }) {
-  const tones: Record<string, string> = {
-    neutral: 'bg-[var(--cream-2)] text-ink-soft',
-    plum: 'text-white',
-    green: 'text-white',
-    amber: 'text-white',
-    blue: 'text-white',
-    coral: 'text-white',
-  }
-  const bg: Record<string, string | undefined> = {
-    neutral: undefined,
-    plum: 'var(--plum)',
-    green: 'var(--green)',
-    amber: 'var(--amber)',
-    blue: 'var(--blue)',
-    coral: 'var(--coral)',
+  const style: Record<string, React.CSSProperties> = {
+    neutral: { background: 'var(--cream-2)', color: 'var(--ink-soft)' },
+    plum:    { background: 'var(--plum-soft)', color: 'var(--plum-deep)' },
+    green:   { background: 'var(--green-tint)', color: 'var(--green-ink)' },
+    amber:   { background: 'var(--amber-tint)', color: 'var(--amber-ink)' },
+    blue:    { background: 'var(--blue-tint)', color: 'var(--blue-ink)' },
+    coral:   { background: 'var(--coral-tint)', color: 'var(--coral-ink)' },
   }
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${tones[tone]}`}
-      style={bg[tone] ? { background: bg[tone] } : undefined}
+      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
+      style={style[tone]}
     >
       {children}
     </span>

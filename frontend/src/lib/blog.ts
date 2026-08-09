@@ -1,6 +1,5 @@
 import { remark } from 'remark'
 import remarkGfm from 'remark-gfm'
-import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'

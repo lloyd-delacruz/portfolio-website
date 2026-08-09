@@ -1,21 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import { 
-  Activity, 
-  AlertTriangle, 
-  CheckCircle, 
-  Clock, 
-  TrendingUp, 
-  TrendingDown,
+import {
+  Activity,
+  AlertTriangle,
+  CheckCircle,
+  TrendingUp,
   MapPin,
   Wrench,
   Users,
   Calendar,
-  Filter,
-  RefreshCw,
-  Download
 } from "lucide-react";
 
 // Mock data for wheelchair inventory
@@ -50,14 +45,6 @@ const mockData = {
 };
 
 export function InventoryManagementDashboard() {
-  const [selectedSite, setSelectedSite] = useState<string>("all");
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
-  const handleRefresh = () => {
-    setIsRefreshing(true);
-    setTimeout(() => setIsRefreshing(false), 1000);
-  };
-
   const getUtilizationColor = (utilization: number) => {
     if (utilization >= 70) return "text-red-600 bg-red-50";
     if (utilization >= 60) return "text-yellow-600 bg-yellow-50";

@@ -37,6 +37,12 @@ export type Project = {
   metric?: { value: string; label: string }
 }
 
+/**
+ * Card copy is held to the same evidentiary standard as the project registry:
+ * every figure below was counted directly against the source repository.
+ * No adoption, deployment or performance claim appears here, because none
+ * could be verified.
+ */
 export const PROJECTS: Project[] = [
   {
     badge: 'HEALTHCARE OPERATIONS',
@@ -44,39 +50,41 @@ export const PROJECTS: Project[] = [
     variant: 'states',
     accent: 'var(--plum)',
     wash: 'linear-gradient(135deg,#f3effe,#fbf5fe)',
-    title: 'Multi-Site Hospital Equipment Tracking & Analytics System',
-    body: 'Production healthcare-operations platform deployed across 4 hospital sites — 800+ tracked assets coordinated through QR / barcode workflows, lifecycle visibility, operational analytics, and real-time chain-of-custody.',
-    stack: 'Power Platform · Microsoft Lists · React · TypeScript · QR / barcode workflows · operational analytics',
+    title: 'Multi-Tenant Clinical Equipment Tracking',
+    body: 'Live across 4 Vancouver Coastal Health sites — 800+ assets tracked through an 11-state request lifecycle the database enforces directly. Postgres row-level security isolates every tenant; QR scanning drives the floor workflow.',
+    stack: 'React · Vite · Supabase · PostgreSQL · Row-Level Security · QR workflows',
     href: ANCHOR_CASE_HREF,
     status: 'production',
     capabilities: ['case-study'],
-    metric: { value: '4 sites · 800+', label: 'assets in production' },
+    metric: { value: '4 sites · 800+', label: 'assets tracked' },
   },
   {
-    badge: 'APPLIED AI / CLINICAL DOCUMENTATION',
-    TagIcon: FileText,
-    variant: 'extraction',
-    accent: 'var(--plum)',
-    wash: 'linear-gradient(135deg,#f3f0fb,#fbf7fe)',
-    title: 'Clinical GenAI Agent & Analytics Pipeline',
-    body: 'AI-assisted rehab documentation pipeline that converts messy dictated therapy notes into structured recovery metrics and analytics-ready data — with validation, audit, and human review built in.',
-    stack: 'FastAPI, Python, PostgreSQL, LLMs, React, TypeScript',
-    href: '/work/clinical-genai-pipeline',
-    status: 'prototype',
-    capabilities: ['ai-assisted', 'case-study'],
-  },
-  {
-    badge: 'CLOUD AUTOMATION + EVENT-DRIVEN SYSTEMS',
+    badge: 'HEALTHCARE / REGULATED DATA',
     TagIcon: Workflow,
     variant: 'topology',
     accent: 'var(--blue)',
     wash: 'linear-gradient(135deg,#eef4fe,#f5f8fe)',
-    title: 'Enterprise Healthcare Workflow Automation Engine',
-    body: 'Power Automate flows, Azure Functions, and webhook orchestration wired into the Microsoft 365 ecosystem — built prototypes of the patterns that turn manual hospital handoffs into event-driven workflows.',
-    stack: 'Power Automate · Azure Functions · webhook orchestration · Microsoft Graph · operational alert systems',
-    href: '/work/healthcare-automation-engine',
+    title: 'MEPP 2.0 — Equipment Provisioning',
+    body: 'Provisioning system-of-record where vendors structurally cannot receive patient identity. Encrypted PHI stays searchable through a keyed blind index, and row-level security is forced at the database role.',
+    stack: 'TypeScript · PostgreSQL · Row-Level Security · AES-256-GCM · OpenAPI',
+    href: '/work/mepp',
     status: 'prototype',
     capabilities: ['case-study'],
+    metric: { value: '112 tests · 31', label: 'hand-authored migrations' },
+  },
+  {
+    badge: 'APPLIED AI / CLINICAL RETRIEVAL',
+    TagIcon: FileText,
+    variant: 'extraction',
+    accent: 'var(--plum)',
+    wash: 'linear-gradient(135deg,#f3f0fb,#fbf7fe)',
+    title: 'Clinical AI Assistant',
+    body: 'Retrieval-grounded clinical answers with page-level citations — and a refusal path engineered so the model says what it is missing instead of improvising from memory.',
+    stack: 'Python · LangChain · ChromaDB · OpenAI embeddings · PostgreSQL',
+    href: '/work/clinical-ai-assistant',
+    status: 'prototype',
+    capabilities: ['ai-assisted', 'case-study'],
+    metric: { value: '52 tests', label: 'concentrated on retrieval' },
   },
   {
     badge: 'FULL-STACK PRODUCT ENGINEERING',
@@ -85,11 +93,12 @@ export const PROJECTS: Project[] = [
     accent: 'var(--green)',
     wash: 'linear-gradient(135deg,#ecfdf4,#f4fbf7)',
     title: 'SpendWise',
-    body: 'Full-stack product platform demonstrating scalable application architecture, data modeling, and polished UX systems — a deliberate non-healthcare proof point for product-engineering breadth.',
-    stack: 'React Native, Expo, Node.js, PostgreSQL, Prisma',
+    body: 'Envelope budgeting on a double-entry ledger Postgres will not let you edit — zero-sum validated at commit, with triggers forbidding UPDATE and DELETE outright.',
+    stack: 'React Native · Expo · Express · Prisma · PostgreSQL',
     href: '/work/spendwise',
     status: 'prototype',
     capabilities: ['case-study', 'demo'],
+    metric: { value: '85 tests · CI', label: 'the only repo with CI' },
   },
 ]
 
@@ -384,7 +393,7 @@ export function FeaturedWork() {
         <div className="max-w-[60ch]">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-plum">Featured work</p>
           <p className="mt-2 text-[14.5px] leading-relaxed text-ink-soft">
-            A deliberate progression: real healthcare operations · applied AI & data engineering · enterprise automation · product-engineering breadth.
+            Four systems where the hard part was in the data layer: tenant isolation, encrypted-but-searchable identity, an append-only ledger, and retrieval that knows when to refuse.
           </p>
         </div>
         <Link href="/work" className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-plum">
