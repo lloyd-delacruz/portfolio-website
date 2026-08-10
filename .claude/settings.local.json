@@ -63,7 +63,8 @@
       "Bash(touch:*)",
       "Bash(timeout:*)",
       "WebFetch(domain:ourworldindata.org)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(sips -s format png --resampleWidth 64 t.svg --out t.png)"
     ],
     "deny": []
   }
