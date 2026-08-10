@@ -1,4 +1,6 @@
 // frontend/src/components/casestudy/wheelchair/WcHero.tsx
+'use client'
+
 import Link from 'next/link'
 import { ArrowRight, ArrowLeft, Accessibility } from 'lucide-react'
 import { WcSystemMap } from './WcSystemMap'
@@ -57,6 +59,18 @@ export function WcHero() {
               </a>
               <Link
                 href="#demo-guide"
+                onClick={(e) => {
+                  // next/link's client-side navigation does not reliably
+                  // scroll same-page hash targets in this app — drive the
+                  // scroll explicitly rather than relying on it. href stays
+                  // for no-JS fallback, right-click-copy, and SEO.
+                  const target = document.getElementById('demo-guide')
+                  if (target) {
+                    e.preventDefault()
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    history.replaceState(null, '', '#demo-guide')
+                  }
+                }}
                 className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-ink ghair-2 transition-colors hover:bg-[var(--cream-2)]"
               >
                 Demo Instructions
