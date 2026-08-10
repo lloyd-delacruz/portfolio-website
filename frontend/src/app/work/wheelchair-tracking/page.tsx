@@ -8,6 +8,7 @@ import { WcProblem } from '@/components/casestudy/wheelchair/WcProblem'
 import { WcArchitecture } from '@/components/casestudy/wheelchair/WcArchitecture'
 import { WcRoles } from '@/components/casestudy/wheelchair/WcRoles'
 import { WcWorkflowDemo } from '@/components/casestudy/wheelchair/WcWorkflowDemo'
+import { WcDemoGuide } from '@/components/casestudy/wheelchair/WcDemoGuide'
 import { WcDashboards } from '@/components/casestudy/wheelchair/WcDashboards'
 import { WcImpact } from '@/components/casestudy/wheelchair/WcImpact'
 import { WcRollout } from '@/components/casestudy/wheelchair/WcRollout'
@@ -31,6 +32,7 @@ export default function Page() {
         <Reveal><WcArchitecture /></Reveal>
         <Reveal><WcRoles /></Reveal>
         <Reveal><WcWorkflowDemo /></Reveal>
+        <Reveal><WcDemoGuide /></Reveal>
         <Reveal><WcDashboards /></Reveal>
         <Reveal><WcImpact /></Reveal>
         <Reveal><WcRollout /></Reveal>
