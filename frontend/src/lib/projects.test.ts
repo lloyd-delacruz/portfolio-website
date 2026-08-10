@@ -81,8 +81,6 @@ describe('PROJECTS registry — factual accuracy guards', () => {
 
   it('no project carries a live link that was not verified to resolve', () => {
     // Only projects with a verified reachable URL may carry a `live` link.
-    // (Wheelchair Tracking's deployment is real but hospital-internal, so it
-    // is described in `deployment`, not linked — there is no public URL.)
     Object.values(PROJECTS).forEach((record) => {
       if (record.live?.href) {
         expect(record.live.href).toMatch(/^https:\/\//)
@@ -93,6 +91,15 @@ describe('PROJECTS registry — factual accuracy guards', () => {
   it('wheelchair-tracking is the one verified live deployment in the registry', () => {
     expect(PROJECTS['wheelchair-tracking'].status).toBe('live')
     expect(PROJECTS['wheelchair-tracking'].deployment).toMatch(/vancouver coastal health/i)
+  })
+
+  it('wheelchair-tracking links to the public seeded-data demo, not a claim of exposing real hospital data', () => {
+    const record = PROJECTS['wheelchair-tracking']
+    expect(record.live?.href).toBe('https://wheelchair-tracking.vercel.app/')
+    expect(record.live?.label).toMatch(/demo/i)
+    // The production claim and the public-demo claim must both survive —
+    // neither field should be describing the other's deployment.
+    expect(record.deployment).toMatch(/hospital-internal/i)
   })
 
   it('design studies carry no implemented stack for their conceptual technologies', () => {

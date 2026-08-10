@@ -50,10 +50,13 @@ export const PROJECTS: Record<string, ProjectMetaRecord> = {
     statusLabel: 'Live · 4 VCH sites',
     role: 'Built solo · 830 of 838 commits',
     period: 'Aug 2025 – present',
-    // Runs on hospital-internal infrastructure, which is why there is no
-    // public demo link — the Vercel preview URL is a staging artefact, not
-    // the production deployment.
+    // The system runs on hospital-internal infrastructure in production.
+    // wheelchair-tracking.vercel.app is a separate, publicly reachable build
+    // seeded with synthetic demo data (confirmed isolated from any real
+    // health-authority data) — kept live specifically so this case study can
+    // be tried hands-on. See docs/guides/ in the source repo for role docs.
     deployment: 'Hospital-internal deployment · 4 Vancouver Coastal Health sites',
+    live: { href: 'https://wheelchair-tracking.vercel.app/', label: 'Live demo (seeded data)' },
     stack: ['React 18', 'Vite', 'JavaScript', 'Supabase', 'PostgreSQL', 'Row-Level Security', 'Edge Functions'],
     scale: '4 sites · 800+ assets tracked · 90 migrations · 243 test files',
     tier: 'flagship',
