@@ -1,6 +1,6 @@
 // frontend/src/components/casestudy/wheelchair/WcHero.tsx
 import Link from 'next/link'
-import { ArrowRight, ArrowLeft } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Accessibility } from 'lucide-react'
 import { WcSystemMap } from './WcSystemMap'
 import { StatusPill, CapabilityPill } from '@/components/home/FeaturedWork'
 
@@ -44,19 +44,22 @@ export function WcHero() {
             </p>
 
             <div className="anim-rise mt-7 flex flex-wrap items-center gap-3" style={{ animationDelay: '180ms' }}>
-              <Link
-                href="#workflow"
+              <a
+                href="https://wheelchair-tracking.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white soft-shadow transition-transform hover:-translate-y-0.5"
                 style={{ background: 'var(--plum)' }}
               >
-                See the workflow
+                <Accessibility size={16} />
+                View Live Demo
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-              </Link>
+              </a>
               <Link
-                href="#problem"
+                href="#demo-guide"
                 className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-ink ghair-2 transition-colors hover:bg-[var(--cream-2)]"
               >
-                Start from the problem
+                Demo Instructions
               </Link>
             </div>
 
