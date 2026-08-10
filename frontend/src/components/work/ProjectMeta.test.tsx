@@ -56,9 +56,10 @@ describe('ProjectMeta — Flavor A (wheelchair-tracking)', () => {
     expect(queryByText('TypeScript')).not.toBeInTheDocument()
   })
 
-  it('does not render Live or Source fields when unset', () => {
-    const { queryByText } = render(<ProjectMeta slug="wheelchair-tracking" />)
-    expect(queryByText('Live')).not.toBeInTheDocument()
+  it('renders the Live field (public seeded-data demo) but never Source (repo is private)', () => {
+    const { getByText, queryByText } = render(<ProjectMeta slug="wheelchair-tracking" />)
+    expect(getByText('Live')).toBeInTheDocument()
+    expect(getByText('Live demo (seeded data)')).toBeInTheDocument()
     expect(queryByText('Source')).not.toBeInTheDocument()
   })
 
